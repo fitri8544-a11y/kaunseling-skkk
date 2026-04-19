@@ -147,5 +147,38 @@ function goBack(){
 newRound();
 </script>
 
+<script>
+function goBack(){
+  window.history.back();
+}
+
+function closeGame(){
+  window.location.href = "menu.html";
+}
+</script>
+
 </body>
+
+<!-- HEADER GAME -->
+<div class="fixed top-0 left-0 w-full flex justify-between items-center px-4 py-3 bg-white/10 backdrop-blur text-white z-50">
+
+  <!-- BACK -->
+  <button onclick="goBack()" 
+    class="bg-white/20 px-3 py-1 rounded hover:bg-white/30 transition">
+    ← Kembali
+  </button>
+
+  <!-- TITLE -->
+  <div class="font-semibold text-sm md:text-base">
+    🎭 Teka Emosi
+  </div>
+
+  <!-- CLOSE -->
+  <button onclick="closeGame()" 
+    class="bg-red-500 px-3 py-1 rounded hover:bg-red-600 transition">
+    ✕ Tutup
+  </button>
+
+</div>
+
 </html>

@@ -112,14 +112,15 @@
 <div class="max-w-6xl mx-auto mt-10 grid md:grid-cols-4 gap-6 px-6">
 
   <!-- CARD TEMPLATE -->
-  <div class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
-              hover:scale-105 hover:shadow-purple-400/40 transition duration-300 cursor-pointer">
+  <div onclick="window.location.href='games/kuiz.html'" 
+     class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
+            hover:scale-105 hover:shadow-purple-400/40 transition duration-300 cursor-pointer">
 
-    <div class="text-3xl mb-3">🧠</div>
-    <h3 class="text-lg font-semibold text-white">Kuiz Minda Sihat</h3>
-    <p class="text-sm text-white/70 mt-2">Penilaian kesejahteraan pelajar</p>
+  <div class="text-3xl mb-3">🧠</div>
+  <h3 class="text-lg font-semibold text-white">Kuiz Minda Sihat</h3>
+  <p class="text-sm text-white/70 mt-2">Penilaian kesejahteraan pelajar</p>
 
-  </div>
+</div>
 
   <div class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
               hover:scale-105 hover:shadow-pink-400/40 transition duration-300 cursor-pointer">
@@ -131,7 +132,7 @@
   </div>
 
   <!-- GAME CARD (HIGHLIGHT) -->
-  <div onclick="openGame()" 
+  <div onclick="go('games/menu.html')" 
        class="bg-gradient-to-r from-purple-500 to-blue-500 p-6 rounded-2xl shadow-xl 
               hover:scale-105 hover:shadow-purple-500/60 transition duration-300 cursor-pointer text-center">
 
@@ -316,17 +317,20 @@ setInterval(animateSlogan, 8000);
     <!-- RENDAH -->
     <div id="gameRendah" class="grid md:grid-cols-3 gap-4">
 
-      <div class="bg-purple-100 p-6 rounded-xl text-center hover:scale-105 transition cursor-pointer">
+      <div onclick="window.location.href='games/memory.html'"
+      class="bg-purple-100 p-6 rounded-xl text-center hover:scale-105 transition cursor-pointer">
         <div class="text-4xl mb-2">🎴</div>
         <p class="font-semibold text-gray-800">Memory Card</p>
       </div>
 
-      <div class="bg-blue-100 p-6 rounded-xl text-center hover:scale-105 transition cursor-pointer">
+      <div onclick="window.location.href='games/hangman.html'"
+      class="bg-blue-100 p-6 rounded-xl text-center hover:scale-105 transition cursor-pointer">
         <div class="text-4xl mb-2">🔤</div>
         <p class="font-semibold text-gray-800">Hangman</p>
       </div>
 
-      <div class="bg-pink-100 p-6 rounded-xl text-center hover:scale-105 transition cursor-pointer">
+      <div onclick="window.location.href='games/teka-emosi.html'"
+      class="bg-pink-100 p-6 rounded-xl text-center hover:scale-105 transition cursor-pointer">
         <div class="text-4xl mb-2">🎭</div>
         <p class="font-semibold text-gray-800">Teka Emosi</p>
       </div>
@@ -346,12 +350,14 @@ setInterval(animateSlogan, 8000);
     <!-- MENENGAH -->
     <div id="gameMenengah" class="hidden grid md:grid-cols-3 gap-4">
 
-      <div class="bg-purple-200 p-6 rounded-xl text-center hover:scale-105 transition cursor-pointer">
+      <div onclick="window.location.href='games/situasi-emosi.html'"
+      class="bg-purple-200 p-6 rounded-xl text-center hover:scale-105 transition cursor-pointer">
         <div class="text-4xl mb-2">🧠</div>
         <p class="font-semibold text-gray-800">Situasi Emosi</p>
       </div>
 
-      <div class="bg-blue-200 p-6 rounded-xl text-center hover:scale-105 transition cursor-pointer">
+      <div onclick="window.location.href='games/decision.html'"
+      class="bg-blue-200 p-6 rounded-xl text-center hover:scale-105 transition cursor-pointer">
         <div class="text-4xl mb-2">⚖️</div>
         <p class="font-semibold text-gray-800">Decision Making</p>
       </div>

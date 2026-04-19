@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <title>HEALINK System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-[#1e1b4b] via-purple-700 to-blue-600 min-h-screen text-white">
+
+<!-- HEADER -->
+<div class="text-center mt-10">
+
+  <div class="text-center mt-10">
+
+  <!-- TITLE -->
+  <h1 class="text-4xl md:text-5xl font-extrabold 
+    bg-gradient-to-r from-purple-400 via-pink-300 to-blue-300 
+    bg-[length:200%_200%] bg-clip-text text-transparent 
+    animate-gradientMove animate-float">
+
+    HEALINK
+
+  </h1>
+
+  <!-- SUBTITLE -->
+  <p class="mt-3 text-lg text-white/90 animate-subFloat drop-shadow-md">
+    Smart Student Wellness System
+  </p>
+
+  <!-- TAGLINE TAMBAHAN (LETak SINI) -->
+  <p class="text-xs text-white/70 mt-2">
+    Digital Guidance & Counseling Platform
+  </p>
+
+  <!-- TARIKH & SLOGAN -->
+<div class="mt-6 text-sm text-white/80">
+
+  <div class="flex items-center justify-center gap-2">
+    <span>📅</span>
+    <span id="tarikhHari"></span> | 🕒 <span id="masa"></span>
+  </div>
+
+  <p id="sloganHari" 
+   class="italic text-lg md:text-xl text-purple-200 mt-3 tracking-wide drop-shadow-lg">
+</p>
+
+</div>
+
+</div>
+
+<style>
+/* Gradient bergerak */
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Floating tajuk */
+@keyframes float {
+  0%,100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Subtitle floating lembut */
+@keyframes subFloat {
+  0%,100% { transform: translateY(0px); opacity: 0.9; }
+  50% { transform: translateY(3px); opacity: 1; }
+}
+
+.animate-gradientMove {
+  animation: gradientMove 6s ease infinite;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-subFloat {
+  animation: subFloat 5s ease-in-out infinite;
+}
+
+#sloganHari {
+  transition: opacity 0.5s ease;
+  min-height: 30px;
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.4s ease;
+}
+</style>
+
+<!-- AI STATUS BAR -->
+<div class="max-w-4xl mx-auto mt-8 bg-white/10 backdrop-blur rounded-xl p-5 text-center shadow-lg">
+  🤖 AI System Status: <span class="text-green-300 font-semibold">ACTIVE</span>  
+  | 📊 Real-Time Monitoring Enabled
+</div>
+
+<!-- MAIN DASHBOARD -->
+<div class="max-w-6xl mx-auto mt-10 grid md:grid-cols-4 gap-6 px-6">
+
+  <!-- CARD TEMPLATE -->
+  <div class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
+              hover:scale-105 hover:shadow-purple-400/40 transition duration-300 cursor-pointer">
+
+    <div class="text-3xl mb-3">🧠</div>
+    <h3 class="text-lg font-semibold text-white">Kuiz Minda Sihat</h3>
+    <p class="text-sm text-white/70 mt-2">Penilaian kesejahteraan pelajar</p>
+
+  </div>
+
+  <div class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
+              hover:scale-105 hover:shadow-pink-400/40 transition duration-300 cursor-pointer">
+
+    <div class="text-3xl mb-3">🌡️</div>
+    <h3 class="text-lg font-semibold text-white">Emotion Tracker</h3>
+    <p class="text-sm text-white/70 mt-2">Pantauan emosi harian</p>
+
+  </div>
+
+  <!-- GAME CARD (HIGHLIGHT) -->
+  <div onclick="openGame()" 
+       class="bg-gradient-to-r from-purple-500 to-blue-500 p-6 rounded-2xl shadow-xl 
+              hover:scale-105 hover:shadow-purple-500/60 transition duration-300 cursor-pointer text-center">
+
+    <div class="text-4xl mb-3">🎮</div>
+    <h3 class="text-lg font-semibold text-white">Permainan Minda Sihat</h3>
+    <p class="text-sm text-white/80 mt-2">Aktiviti interaktif pelajar</p>
+
+  </div>
+
+  <div class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
+              hover:scale-105 hover:shadow-blue-400/40 transition duration-300 cursor-pointer">
+
+    <div class="text-3xl mb-3">📊</div>
+    <h3 class="text-lg font-semibold text-white">Ketahui Status Anda</h3>
+    <p class="text-sm text-white/70 mt-2">Data & trend pelajar</p>
+
+  </div>
+
+  <div class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
+              hover:scale-105 hover:shadow-indigo-400/40 transition duration-300 cursor-pointer">
+
+    <div class="text-3xl mb-3">💬</div>
+    <h3 class="text-lg font-semibold text-white">HEAL TALK SPACE</h3>
+    <p class="text-sm text-white/70 mt-2">Berhubung dengan kaunselor</p>
+
+  </div>
+
+  <div class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
+              hover:scale-105 hover:shadow-green-400/40 transition duration-300 cursor-pointer">
+
+    <div class="text-3xl mb-3">🧘</div>
+    <h3 class="text-lg font-semibold text-white">Teknik Intervensi</h3>
+    <p class="text-sm text-white/70 mt-2">Teknik kawalan emosi</p>
+
+  </div>
+
+  <div class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
+              hover:scale-105 hover:shadow-yellow-400/40 transition duration-300 cursor-pointer">
+
+    <div class="text-3xl mb-3">💪</div>
+    <h3 class="text-lg font-semibold text-white">Coping Skills</h3>
+    <p class="text-sm text-white/70 mt-2">Kemahiran daya tindak</p>
+
+  </div>
+
+  <div class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
+              hover:scale-105 hover:shadow-red-400/40 transition duration-300 cursor-pointer">
+
+    <div class="text-3xl mb-3">❤️</div>
+    <h3 class="text-lg font-semibold text-white">Emotion Regulation</h3>
+    <p class="text-sm text-white/70 mt-2">Pengurusan emosi</p>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="text-center text-sm text-gray-300 mt-16 pb-6">
+  © 2026 HEALINK System | Sekolah Kebangsaan Kuala Ketil
+</div>
+
+<script>
+function paparkanTarikh() {
+  const hari = ["Ahad","Isnin","Selasa","Rabu","Khamis","Jumaat","Sabtu"];
+  const bulan = [
+    "Januari","Februari","Mac","April","Mei","Jun",
+    "Julai","Ogos","September","Oktober","November","Disember"
+  ];
+
+  const tarikh = new Date();
+
+  const hariIni = hari[tarikh.getDay()];
+  const hariBulan = tarikh.getDate();
+  const bulanIni = bulan[tarikh.getMonth()];
+  const tahun = tarikh.getFullYear();
+
+  const fullTarikh = `${hariIni}, ${hariBulan} ${bulanIni} ${tahun}`;
+
+  document.getElementById("tarikhHari").innerText = fullTarikh;
+}
+
+paparkanTarikh();
+</script>
+
+<script>
+function paparkanMasa() {
+  const now = new Date();
+  document.getElementById("masa").innerText =
+    now.toLocaleTimeString('ms-MY');
+}
+
+setInterval(paparkanMasa, 1000);
+</script>
+
+<script>
+const sloganList = {
+  0: "Rehatkan minda, jaga emosi anda.",
+  1: "Mulakan minggu dengan semangat baru!",
+  2: "Anda lebih kuat daripada yang anda sangka.",
+  3: "Teruskan usaha, kejayaan semakin dekat.",
+  4: "Kawal emosi, bina kekuatan diri.",
+  5: "Ambil masa untuk refleksi dan ketenangan.",
+  6: "Hargai diri anda, anda berharga."
+};
+
+const el = document.getElementById("sloganHari");
+let currentText = "";
+let index = 0;
+
+function typeText(text) {
+  el.innerHTML = "";
+  index = 0;
+
+  function typing() {
+    if (index < text.length) {
+      el.innerHTML += text.charAt(index);
+      index++;
+      setTimeout(typing, 40); // speed typing
+    }
+  }
+
+  typing();
+}
+
+function animateSlogan() {
+  const hari = new Date().getDay();
+  const text = `"${sloganList[hari]}"`;
+
+  // fade out dulu
+  el.style.opacity = 0;
+
+  setTimeout(() => {
+    typeText(text);
+    el.style.opacity = 1;
+  }, 500);
+}
+
+// first load
+animateSlogan();
+
+// ulang setiap 8 saat
+setInterval(animateSlogan, 8000);
+</script>
+
+
+<!-- ================= MODAL PERMAINAN ================= -->
+<div id="gameModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center z-50">
+
+  <div class="bg-white p-6 rounded-2xl w-[90%] max-w-5xl shadow-2xl relative max-h-[85vh] overflow-y-auto">
+
+    <!-- CLOSE -->
+    <button onclick="closeGame()" 
+      class="absolute top-4 right-4 text-gray-500 text-xl hover:text-black transition">
+      ✕
+    </button>
+
+    <!-- TITLE (PRO STYLE) -->
+    <div class="text-center mb-6">
+      <h2 class="text-2xl md:text-3xl font-bold text-gray-900 flex items-center justify-center gap-2">
+        🎮 Permainan Minda Sihat
+      </h2>
+      <p class="text-sm text-gray-500 mt-1">
+        Aktiviti Interaktif Kesejahteraan Mental
+      </p>
+    </div>
+
+    <!-- TAB -->
+    <div class="flex gap-4 mb-6 justify-center">
+
+      <button onclick="switchTab('rendah')" id="tabRendah"
+        class="px-5 py-2 rounded-full bg-purple-600 text-white font-semibold shadow">
+        Sekolah Rendah
+      </button>
+
+      <button onclick="switchTab('menengah')" id="tabMenengah"
+        class="px-5 py-2 rounded-full bg-gray-200 text-gray-800 font-semibold">
+        Sekolah Menengah
+      </button>
+
+    </div>
+
+    <!-- RENDAH -->
+    <div id="gameRendah" class="grid md:grid-cols-3 gap-4">
+
+      <div class="bg-purple-100 p-6 rounded-xl text-center hover:scale-105 transition cursor-pointer">
+        <div class="text-4xl mb-2">🎴</div>
+        <p class="font-semibold text-gray-800">Memory Card</p>
+      </div>
+
+      <div class="bg-blue-100 p-6 rounded-xl text-center hover:scale-105 transition cursor-pointer">
+        <div class="text-4xl mb-2">🔤</div>
+        <p class="font-semibold text-gray-800">Hangman</p>
+      </div>
+
+      <div class="bg-pink-100 p-6 rounded-xl text-center hover:scale-105 transition cursor-pointer">
+        <div class="text-4xl mb-2">🎭</div>
+        <p class="font-semibold text-gray-800">Teka Emosi</p>
+      </div>
+
+      <div class="bg-indigo-100 p-6 rounded-xl text-center hover:scale-105 transition cursor-pointer">
+        <div class="text-4xl mb-2">🔍</div>
+        <p class="font-semibold text-gray-800">Cari Perkataan</p>
+      </div>
+
+      <div class="bg-green-100 p-6 rounded-xl text-center hover:scale-105 transition cursor-pointer">
+        <div class="text-4xl mb-2">🧩</div>
+        <p class="font-semibold text-gray-800">Jigsaw Puzzle</p>
+      </div>
+
+    </div>
+
+    <!-- MENENGAH -->
+    <div id="gameMenengah" class="hidden grid md:grid-cols-3 gap-4">
+
+      <div class="bg-purple-200 p-6 rounded-xl text-center hover:scale-105 transition cursor-pointer">
+        <div class="text-4xl mb-2">🧠</div>
+        <p class="font-semibold text-gray-800">Situasi Emosi</p>
+      </div>
+
+      <div class="bg-blue-200 p-6 rounded-xl text-center hover:scale-105 transition cursor-pointer">
+        <div class="text-4xl mb-2">⚖️</div>
+        <p class="font-semibold text-gray-800">Decision Making</p>
+      </div>
+
+      <div class="bg-pink-200 p-6 rounded-xl text-center hover:scale-105 transition cursor-pointer">
+        <div class="text-4xl mb-2">🔥</div>
+        <p class="font-semibold text-gray-800">Stress Challenge</p>
+      </div>
+
+      <div class="bg-indigo-200 p-6 rounded-xl text-center hover:scale-105 transition cursor-pointer">
+        <div class="text-4xl mb-2">📊</div>
+        <p class="font-semibold text-gray-800">Self Reflection</p>
+      </div>
+
+      <div class="bg-green-200 p-6 rounded-xl text-center hover:scale-105 transition cursor-pointer">
+        <div class="text-4xl mb-2">🧩</div>
+        <p class="font-semibold text-gray-800">Problem Solving</p>
+      </div>
+
+      <div class="bg-yellow-200 p-6 rounded-xl text-center hover:scale-105 transition cursor-pointer">
+        <div class="text-4xl mb-2">🎯</div>
+        <p class="font-semibold text-gray-800">Mind Strategy</p>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function openGame() {
+  document.getElementById("gameModal").classList.remove("hidden");
+}
+
+function closeGame() {
+  document.getElementById("gameModal").classList.add("hidden");
+}
+
+function switchTab(tab) {
+
+  const rendah = document.getElementById("gameRendah");
+  const menengah = document.getElementById("gameMenengah");
+
+  const tabR = document.getElementById("tabRendah");
+  const tabM = document.getElementById("tabMenengah");
+
+  rendah.classList.add("hidden");
+  menengah.classList.add("hidden");
+
+  tabR.classList.remove("bg-purple-600","text-white");
+  tabM.classList.remove("bg-purple-600","text-white");
+
+  tabR.classList.add("bg-gray-200","text-gray-800");
+  tabM.classList.add("bg-gray-200","text-gray-800");
+
+  if(tab === "rendah"){
+    rendah.classList.remove("hidden");
+    tabR.classList.add("bg-purple-600","text-white");
+  } else {
+    menengah.classList.remove("hidden");
+    tabM.classList.add("bg-purple-600","text-white");
+  }
+}
+</script>
+
+</body>
+</html>

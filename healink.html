@@ -467,7 +467,7 @@ setInterval(animateSlogan, 8000);
     </div>
 
     <!-- RENDAH -->
-    <div id="gameRendah" class="grid md:grid-cols-3 gap-4">
+    <div id="gameRendah" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
 
       <div onclick="window.location.href='games/memory.html'"
       class="bg-purple-100 p-6 rounded-xl text-center hover:scale-105 transition cursor-pointer">
@@ -502,7 +502,7 @@ setInterval(animateSlogan, 8000);
     </div>
 
     <!-- MENENGAH -->
-    <div id="gameMenengah" class="hidden grid md:grid-cols-3 gap-4">
+    <div id="gameMenengah" class="hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
 
       <div onclick="window.location.href='games/situasi-emosi.html'"
       class="bg-purple-200 p-6 rounded-xl text-center hover:scale-105 transition cursor-pointer">
@@ -671,7 +671,7 @@ setInterval(animateSlogan, 8000);
     </p>
 
     <!-- GRID -->
-    <div class="grid md:grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
 
       <!-- STRESS -->
       <div class="p-4 rounded-2xl bg-red-50 border border-red-200">
@@ -700,19 +700,19 @@ setInterval(animateSlogan, 8000);
       <div class="p-4 rounded-2xl bg-yellow-50 border border-yellow-200">
         <h3 class="text-yellow-600 font-bold mb-3 text-center">😨 Anxiety</h3>
 
-        <div class="check-card" onclick="toggleCheck(this,'stress')">
+        <div class="check-card" onclick="toggleCheck(this,'anxiety')">
           <span>💓</span>
           <span class="check-text">Jantung berdebar</span>
         </div>
-        <div class="check-card" onclick="toggleCheck(this,'stress')">
+        <div class="check-card" onclick="toggleCheck(this,'anxiety')">
           <span>😟</span>
           <span class="check-text">Risau berlebihan</span>
         </div>
-        <div class="check-card" onclick="toggleCheck(this,'stress')">
+        <div class="check-card" onclick="toggleCheck(this,'anxiety')">
           <span>💦</span>
           <span class="check-text">Berpeluh</span>
         </div>
-        <div class="check-card" onclick="toggleCheck(this,'stress')">
+        <div class="check-card" onclick="toggleCheck(this,'anxiety')">
           <span>😵</span>
           <span class="check-text">Gelisah</span>
         </div>
@@ -723,19 +723,19 @@ setInterval(animateSlogan, 8000);
       <div class="p-4 rounded-2xl bg-blue-50 border border-blue-200">
         <h3 class="text-blue-600 font-bold mb-3 text-center">😔 Depression</h3>
 
-        <div class="check-card" onclick="toggleCheck(this,'stress')">
+        <div class="check-card" onclick="toggleCheck(this,'depression')">
           <span>💔</span>
           <span class="check-text">Hilang Minat</span>
         </div>
-        <div class="check-card" onclick="toggleCheck(this,'stress')">
+        <div class="check-card" onclick="toggleCheck(this,'depression')">
           <span>😢</span>
           <span class="check-text">Sedih lama</span>
         </div>
-        <div class="check-card" onclick="toggleCheck(this,'stress')">
+        <div class="check-card" onclick="toggleCheck(this,'depression')">
           <span>⚡</span>
           <span class="check-text">Tiada motivasi</span>
         </div>
-        <div class="check-card" onclick="toggleCheck(this,'stress')">
+        <div class="check-card" onclick="toggleCheck(this,'depression')">
           <span>❌</span>
           <span class="check-text">Rasa tidak berharga</span>
         </div>
@@ -1028,60 +1028,20 @@ function openIntervensi(){
 }
 
 function closeIntervensi(){
+  stopTherapy(); // stop AI
   document.getElementById("intervensiModal").classList.add("hidden");
-
-  // stop bila tutup
-  clearInterval(breathingInterval);
 }
 
 
 /* ================= SUARA ================= */
 function speak(text){
+  speechSynthesis.cancel(); // 🔥 elak suara bertindih
   const msg = new SpeechSynthesisUtterance(text);
   msg.lang = "ms-MY";
-  msg.rate = 0.9;   // slow sikit (lebih tenang)
-  speechSynthesis.cancel(); // elak overlap suara
+  msg.rate = 0.9; // lebih tenang & sesuai murid
   speechSynthesis.speak(msg);
 }
 
-
-/* ================= BREATHING ================= */
-let breathingInterval;
-
-function startBreathing(){
-
-  const text = document.getElementById("breathText");
-  const circle = document.getElementById("breathCircle");
-
-  if(!text || !circle){
-    alert("Element tak jumpa");
-    return;
-  }
-
-  clearInterval(breathingInterval);
-
-  const steps = [
-    {t:"Tarik Nafas", scale:1.4},
-    {t:"Tahan", scale:1},
-    {t:"Hembus Nafas", scale:0.8}
-  ];
-
-  let i = 0;
-
-  // start terus (tak tunggu 4s)
-  runStep();
-
-  breathingInterval = setInterval(runStep, 4000);
-
-  function runStep(){
-    text.innerText = steps[i].t;
-    circle.style.transform = `scale(${steps[i].scale})`;
-
-    speak(steps[i].t);
-
-    i = (i+1) % steps.length;
-  }
-}
 /* =========================================
    🤖 THERAPIST AI ENGINE
 ========================================= */
@@ -1098,15 +1058,6 @@ const steps = [
 
 let stepIndex = 0;
 let seconds = 4;
-
-/* ================= SUARA ================= */
-function speak(text){
-  speechSynthesis.cancel();
-  const msg = new SpeechSynthesisUtterance(text);
-  msg.lang = "ms-MY";
-  msg.rate = 0.9;
-  speechSynthesis.speak(msg);
-}
 
 /* ================= START ================= */
 function startTherapy(){
@@ -1192,11 +1143,6 @@ function toggleMusic(){
   }
 }
 
-/* ================= CLOSE ================= */
-function closeIntervensi(){
-  stopTherapy();
-  document.getElementById("intervensiModal").classList.add("hidden");
-}
 </script>
 
 </body>

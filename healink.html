@@ -50,6 +50,11 @@
 </div>
 
 <style>
+
+/* =========================================
+   🎬 ANIMATION (GLOBAL)
+========================================= */
+
 /* Gradient bergerak */
 @keyframes gradientMove {
   0% { background-position: 0% 50%; }
@@ -63,11 +68,22 @@
   50% { transform: translateY(-6px); }
 }
 
-/* Subtitle floating lembut */
+/* Subtitle floating */
 @keyframes subFloat {
   0%,100% { transform: translateY(0px); opacity: 0.9; }
   50% { transform: translateY(3px); opacity: 1; }
 }
+
+/* Slide modal */
+@keyframes slideUp {
+  0% { transform: translateY(40px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+
+/* =========================================
+   ✨ ANIMATION CLASS
+========================================= */
 
 .animate-gradientMove {
   animation: gradientMove 6s ease infinite;
@@ -81,24 +97,141 @@
   animation: subFloat 5s ease-in-out infinite;
 }
 
+.animate-slideUp {
+  animation: slideUp 0.4s ease;
+}
+
+
+/* =========================================
+   📝 TEXT & HEADER
+========================================= */
+
 #sloganHari {
   transition: opacity 0.5s ease;
   min-height: 30px;
 }
 
-@keyframes slideUp {
-  0% {
-    transform: translateY(40px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
+
+/* =========================================
+   😊 EMOJI COMPONENT (Heal Talk + Tracker)
+========================================= */
+
+.emoji-card{
+  width: 50px;
+  height: 50px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  border-radius:12px;
+  background:#f3f4f6;
+  cursor:pointer;
+  transition:0.3s;
 }
 
-.animate-slideUp {
-  animation: slideUp 0.4s ease;
+.emoji-card:hover{
+  transform:scale(1.1);
+  background:#e9d5ff;
+}
+
+.emoji-selected{
+  background: linear-gradient(to right, #a855f7, #3b82f6);
+  color:white;
+  transform:scale(1.15);
+  box-shadow:0 0 10px rgba(168,85,247,0.5);
+}
+
+
+/* =========================================
+   📊 STATUS ANALYZER (Ketahui Status)
+========================================= */
+
+.check-card{
+  padding:10px 12px;
+  margin-bottom:8px;
+  border-radius:12px;
+  background:white;
+  border:1px solid #e5e7eb;
+  cursor:pointer;
+  font-size:14px;
+  transition:0.2s;
+}
+
+.check-card:hover{
+  background:#f3f4f6;
+  transform:scale(1.03);
+}
+
+.check-active{
+  background: linear-gradient(to right, #a855f7, #3b82f6);
+  color:white;
+  font-weight:600;
+  box-shadow:0 4px 10px rgba(168,85,247,0.4);
+}
+
+
+/* =========================================
+   📦 CARD UI (GLOBAL DASHBOARD)
+========================================= */
+
+.card-hover{
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover{
+  transform: scale(1.05);
+}
+
+
+/* =========================================
+   📱 MODAL GLOBAL
+========================================= */
+
+.modal-box{
+  animation: slideUp 0.3s ease;
+}
+
+/* STATUS UI */
+.check-card{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px;
+  margin-bottom:8px;
+  border-radius:12px;
+  background:white;
+  border:1px solid #e5e7eb;
+  cursor:pointer;
+}
+
+/* INI PENTING */
+.check-text{
+  font-size:14px;
+  font-weight:600;
+  color:#1f2937 !important;   /* 🔥 paksa warna hitam */
+}
+
+/* bila select */
+.check-active{
+  background: linear-gradient(to right, #a855f7, #3b82f6);
+}
+
+.check-active .check-text{
+  color:white !important;
+}
+/* TEKNIK INTEVENSI */
+.circle{
+  width:160px;
+  height:160px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-weight:bold;
+  font-size:18px;
+  background: linear-gradient(to right,#a855f7,#ec4899);
+  transition: transform 1.5s ease-in-out;
 }
 </style>
 
@@ -137,14 +270,15 @@
 
 </div>
 
-  <div class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
-              hover:scale-105 hover:shadow-pink-400/40 transition duration-300 cursor-pointer">
+  <div onclick="openTracker()" 
+  class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
+         hover:scale-105 hover:shadow-purple-400/40 transition duration-300 cursor-pointer text-center">
 
-    <div class="text-3xl mb-3">🌡️</div>
-    <h3 class="text-lg font-semibold text-white">Emotion Tracker</h3>
-    <p class="text-sm text-white/70 mt-2">Pantauan emosi harian</p>
+  <div class="text-4xl mb-2">🌡️</div>
+  <h3 class="text-lg font-semibold text-white">Emotion Tracker</h3>
+  <p class="text-sm text-white/70 mt-2">Pantauan emosi harian</p>
 
-  </div>
+</div>
 
   <!-- GAME CARD (HIGHLIGHT) -->
   <div onclick="window.location.href='games/menu.html'"
@@ -157,32 +291,35 @@
 
   </div>
 
-  <div class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
-              hover:scale-105 hover:shadow-blue-400/40 transition duration-300 cursor-pointer">
+  <div onclick="openStatus()" 
+     class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
+            hover:scale-105 hover:shadow-blue-400/40 transition duration-300 cursor-pointer text-center">
 
-    <div class="text-3xl mb-3">📊</div>
-    <h3 class="text-lg font-semibold text-white">Ketahui Status Anda</h3>
-    <p class="text-sm text-white/70 mt-2">Data & trend pelajar</p>
+  <div class="text-3xl mb-3">📊</div>
+  <h3 class="text-lg font-semibold text-white">Ketahui Status Anda</h3>
+  <p class="text-sm text-white/70 mt-2">Data & trend pelajar</p>
 
-  </div>
+</div>
 
-  <div class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
-              hover:scale-105 hover:shadow-indigo-400/40 transition duration-300 cursor-pointer">
+<div onclick="openHealTalk()" 
+     class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
+            hover:scale-105 hover:shadow-pink-400/40 transition duration-300 cursor-pointer">
 
-    <div class="text-3xl mb-3">💬</div>
-    <h3 class="text-lg font-semibold text-white">HEAL TALK SPACE</h3>
-    <p class="text-sm text-white/70 mt-2">Berhubung dengan kaunselor</p>
+  <div class="text-3xl mb-3">💬</div>
+  <h3 class="text-lg font-semibold text-white">HEAL TALK SPACE</h3>
+  <p class="text-sm text-white/70 mt-2">Berhubung dengan kaunselor</p>
 
-  </div>
+</div>
 
-  <div class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
-              hover:scale-105 hover:shadow-green-400/40 transition duration-300 cursor-pointer">
+  <div onclick="openIntervensi()" 
+     class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
+            hover:scale-105 hover:shadow-green-400/40 transition duration-300 cursor-pointer">
 
-    <div class="text-3xl mb-3">🧘</div>
-    <h3 class="text-lg font-semibold text-white">Teknik Intervensi</h3>
-    <p class="text-sm text-white/70 mt-2">Teknik kawalan emosi</p>
+  <div class="text-3xl mb-3">🧘</div>
+  <h3 class="text-lg font-semibold text-white">Teknik Intervensi</h3>
+  <p class="text-sm text-white/70 mt-2">Teknik kawalan emosi</p>
 
-  </div>
+</div>
 
   <div class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
               hover:scale-105 hover:shadow-yellow-400/40 transition duration-300 cursor-pointer">
@@ -405,7 +542,287 @@ setInterval(animateSlogan, 8000);
 
 </div>
 
+<!-- ================= HEAL TALK MODAL ================= -->
+<div id="healModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+
+  <div class="bg-white p-8 rounded-3xl w-[90%] max-w-lg shadow-2xl relative">
+
+    <!-- CLOSE -->
+    <button onclick="closeHealTalk()" 
+      class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-xl">
+      ✕
+    </button>
+
+    <!-- TITLE -->
+    <h2 class="text-2xl font-bold text-gray-800 text-center mb-2">
+      💬 HEAL TALK SPACE
+    </h2>
+
+    <p class="text-center text-sm text-gray-500 mb-5">
+      Peti Luahan Perasaan • Selamat & Sulit
+    </p>
+
+    <!-- EMOJI -->
+    <div class="flex justify-between mb-5">
+      <div onclick="selectEmoji(this)" class="emoji-card">😊</div>
+      <div onclick="selectEmoji(this)" class="emoji-card">😢</div>
+      <div onclick="selectEmoji(this)" class="emoji-card">😡</div>
+      <div onclick="selectEmoji(this)" class="emoji-card">😰</div>
+      <div onclick="selectEmoji(this)" class="emoji-card">😴</div>
+      <div onclick="selectEmoji(this)" class="emoji-card">😌</div>
+    </div>
+
+    <!-- TEXT -->
+    <textarea id="luahan"
+  spellcheck="false"
+  class="w-full p-4 rounded-xl border-2 border-purple-200 
+         focus:ring-2 focus:ring-purple-500 
+         text-gray-800 bg-white 
+         placeholder-gray-400 
+         resize-none h-32">
+</textarea>
+
+    <!-- BUTTON -->
+    <button onclick="submitHealTalk()" 
+      class="w-full mt-5 bg-gradient-to-r from-purple-600 to-blue-500 text-white py-3 rounded-xl">
+      📩 Hantar
+    </button>
+
+    <!-- SUCCESS -->
+    <p id="msg" class="hidden text-center text-green-600 mt-4 font-semibold">
+      ✅ Luahan berjaya dihantar
+    </p>
+
+  </div>
+</div>
+
+<div id="trackerModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center z-50">
+
+  <div class="bg-white p-8 rounded-3xl w-[90%] max-w-lg shadow-2xl relative">
+
+    <!-- CLOSE -->
+    <button onclick="closeTracker()" 
+      class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-xl">
+      ✕
+    </button>
+
+    <!-- TITLE -->
+    <h2 class="text-2xl font-bold text-gray-800 mb-2 text-center">
+      🌡️ Emotion Tracker
+    </h2>
+
+    <p class="text-center text-sm text-gray-500 mb-5">
+      Pilih emosi anda hari ini
+    </p>
+
+    <!-- EMOJI -->
+    <div class="flex justify-between mb-5">
+      <div onclick="selectMood(this,'😊')" class="emoji-card">😊</div>
+      <div onclick="selectMood(this,'😢')" class="emoji-card">😢</div>
+      <div onclick="selectMood(this,'😡')" class="emoji-card">😡</div>
+      <div onclick="selectMood(this,'😰')" class="emoji-card">😰</div>
+      <div onclick="selectMood(this,'😴')" class="emoji-card">😴</div>
+      <div onclick="selectMood(this,'😌')" class="emoji-card">😌</div>
+    </div>
+
+    <!-- NOTE -->
+    <textarea id="note"
+      placeholder="Nota ringkas (optional)..."
+      class="w-full p-3 border rounded-xl text-gray-700"></textarea>
+
+    <!-- BUTTON -->
+    <button onclick="saveMood()" 
+      class="w-full mt-5 bg-gradient-to-r from-purple-600 to-blue-500 text-white py-3 rounded-xl">
+      💾 Simpan
+    </button>
+
+    <!-- RESULT -->
+    <p id="trackerMsg" class="hidden text-center text-green-600 mt-3">
+      ✅ Data disimpan
+    </p>
+
+    <!-- HISTORY -->
+    <div class="mt-6">
+      <h3 class="font-semibold text-gray-700 mb-2">Sejarah:</h3>
+      <div id="history" class="text-sm text-gray-600 space-y-1"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= KETAHUI STATUS ANDA ================= -->
+<div id="statusModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center z-50">
+
+  <div class="bg-white p-8 rounded-3xl w-[90%] max-w-3xl shadow-2xl relative modal-box">
+
+    <!-- CLOSE -->
+    <button onclick="closeStatus()" 
+      class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-xl">
+      ✕
+    </button>
+
+    <!-- TITLE -->
+    <h2 class="text-2xl font-bold text-gray-800 text-center mb-2">
+      📊 Analisis Status Emosi
+    </h2>
+
+    <p class="text-center text-gray-500 text-sm mb-6">
+      Pilih simptom yang anda alami hari ini
+    </p>
+
+    <!-- GRID -->
+    <div class="grid md:grid-cols-3 gap-4">
+
+      <!-- STRESS -->
+      <div class="p-4 rounded-2xl bg-red-50 border border-red-200">
+        <h3 class="text-red-600 font-bold mb-3 text-center">😰 Stress</h3>
+
+        <div class="check-card" onclick="toggleCheck(this,'stress')">
+        <span>🔥</span>
+        <span class="check-text">Mudah marah</span>
+      </div>
+      <div class="check-card" onclick="toggleCheck(this,'stress')">
+        <span>😴</span>
+        <span class="check-text">Sukar tidur</span>
+      </div>
+      <div class="check-card" onclick="toggleCheck(this,'stress')">
+        <span>😓</span>
+        <span class="check-text">Letih</span>
+      </div>
+      <div class="check-card" onclick="toggleCheck(this,'stress')">
+        <span>🎯</span>
+        <span class="check-text">Sukar fokus</span>
+      </div>
+      
+      </div>
+
+      <!-- ANXIETY -->
+      <div class="p-4 rounded-2xl bg-yellow-50 border border-yellow-200">
+        <h3 class="text-yellow-600 font-bold mb-3 text-center">😨 Anxiety</h3>
+
+        <div class="check-card" onclick="toggleCheck(this,'stress')">
+          <span>💓</span>
+          <span class="check-text">Jantung berdebar</span>
+        </div>
+        <div class="check-card" onclick="toggleCheck(this,'stress')">
+          <span>😟</span>
+          <span class="check-text">Risau berlebihan</span>
+        </div>
+        <div class="check-card" onclick="toggleCheck(this,'stress')">
+          <span>💦</span>
+          <span class="check-text">Berpeluh</span>
+        </div>
+        <div class="check-card" onclick="toggleCheck(this,'stress')">
+          <span>😵</span>
+          <span class="check-text">Gelisah</span>
+        </div>
+        
+      </div>
+
+      <!-- DEPRESSION -->
+      <div class="p-4 rounded-2xl bg-blue-50 border border-blue-200">
+        <h3 class="text-blue-600 font-bold mb-3 text-center">😔 Depression</h3>
+
+        <div class="check-card" onclick="toggleCheck(this,'stress')">
+          <span>💔</span>
+          <span class="check-text">Hilang Minat</span>
+        </div>
+        <div class="check-card" onclick="toggleCheck(this,'stress')">
+          <span>😢</span>
+          <span class="check-text">Sedih lama</span>
+        </div>
+        <div class="check-card" onclick="toggleCheck(this,'stress')">
+          <span>⚡</span>
+          <span class="check-text">Tiada motivasi</span>
+        </div>
+        <div class="check-card" onclick="toggleCheck(this,'stress')">
+          <span>❌</span>
+          <span class="check-text">Rasa tidak berharga</span>
+        </div>
+        
+      </div>
+
+    </div>
+
+    <!-- BUTTON -->
+    <button onclick="analyzeStatus()" 
+      class="w-full mt-6 bg-gradient-to-r from-purple-600 to-blue-500 text-white py-3 rounded-xl font-semibold hover:scale-105 transition">
+      🔍 Analisis Sekarang
+    </button>
+
+    <!-- RESULT -->
+    <div id="resultBox" 
+      class="hidden mt-6 p-5 rounded-2xl text-center shadow-lg bg-gradient-to-r from-purple-100 to-blue-100">
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= TEKNIK INTEVENSI ================= -->
+<div id="intervensiModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center z-50">
+
+  <div class="bg-white p-8 rounded-3xl w-[90%] max-w-3xl shadow-2xl relative overflow-y-auto max-h-[90vh]">
+
+    <!-- CLOSE -->
+    <button onclick="closeIntervensi()" 
+      class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-xl">✕</button>
+
+    <h2 class="text-xl font-bold text-purple-700 mb-6 text-center">
+      🧘 Therapist AI – Latihan Pernafasan
+    </h2>
+
+    <!-- CONTROL BAR -->
+    <div class="flex flex-wrap items-center justify-center gap-3 mb-6">
+      <button onclick="startTherapy()" 
+        class="px-4 py-2 rounded-lg text-white bg-gradient-to-r from-purple-600 to-pink-500 shadow hover:scale-105 transition">
+        ▶ Mula
+      </button>
+
+      <button onclick="pauseTherapy()" 
+        class="px-4 py-2 rounded-lg text-white bg-gray-500 shadow hover:scale-105 transition">
+        ⏸ Pause
+      </button>
+
+      <button onclick="stopTherapy()" 
+        class="px-4 py-2 rounded-lg text-white bg-red-500 shadow hover:scale-105 transition">
+        ⏹ Stop
+      </button>
+
+      <button onclick="toggleMusic()" 
+        class="px-4 py-2 rounded-lg text-white bg-blue-500 shadow hover:scale-105 transition">
+        🎵 Muzik
+      </button>
+    </div>
+
+    <!-- VISUAL -->
+    <div class="flex flex-col items-center gap-4">
+      <div id="breathCircle" class="circle">
+        <span id="breathText">Start</span>
+      </div>
+
+      <div id="countdown" class="text-lg font-semibold text-gray-600">
+        4
+      </div>
+    </div>
+
+    <!-- STATUS -->
+    <div class="text-center mt-4 text-sm text-gray-500" id="statusText">
+      Tekan "Mula" untuk memulakan latihan
+    </div>
+
+    <!-- AUDIO (OPTIONAL) -->
+    <audio id="bgMusic" loop>
+      <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_8b3c7e7f8b.mp3?filename=calm-ambient-11086.mp3" type="audio/mpeg">
+    </audio>
+
+  </div>
+</div>
+
 <script>
+
+/* =========================================
+   🎮 GAME MODAL
+========================================= */
 function openGame() {
   document.getElementById("gameModal").classList.remove("hidden");
 }
@@ -438,6 +855,347 @@ function switchTab(tab) {
     menengah.classList.remove("hidden");
     tabM.classList.add("bg-purple-600","text-white");
   }
+}
+
+
+/* =========================================
+   💬 HEAL TALK
+========================================= */
+function openHealTalk(){
+  document.getElementById("healModal").classList.remove("hidden");
+}
+
+function closeHealTalk(){
+  document.getElementById("healModal").classList.add("hidden");
+}
+
+function submitHealTalk(){
+
+  const text = document.getElementById("luahan").value;
+
+  if(!text){
+    alert("Sila isi luahan dahulu");
+    return;
+  }
+
+  let data = JSON.parse(localStorage.getItem("healTalkData")) || [];
+
+  data.push({
+    message: text,
+    time: new Date().toLocaleString()
+  });
+
+  localStorage.setItem("healTalkData", JSON.stringify(data));
+
+  document.getElementById("msg").classList.remove("hidden");
+
+  document.getElementById("luahan").value="";
+}
+
+
+/* =========================================
+   🌡️ EMOTION TRACKER
+========================================= */
+
+let selectedMood = "";
+
+/* OPEN / CLOSE */
+function openTracker(){
+  document.getElementById("trackerModal").classList.remove("hidden");
+  loadHistory();
+}
+
+function closeTracker(){
+  document.getElementById("trackerModal").classList.add("hidden");
+}
+
+/* PILIH EMOSI */
+function selectMood(el, mood){
+
+  document.querySelectorAll("#trackerModal .emoji-card")
+    .forEach(e => e.classList.remove("emoji-selected"));
+
+  el.classList.add("emoji-selected");
+  selectedMood = mood;
+}
+
+/* SIMPAN DATA */
+function saveMood(){
+
+  if(!selectedMood){
+    alert("Sila pilih emosi dahulu");
+    return;
+  }
+
+  const note = document.getElementById("note").value;
+
+  let data = JSON.parse(localStorage.getItem("emotionData")) || [];
+
+  data.push({
+    mood: selectedMood,
+    note: note,
+    time: new Date().toLocaleString()
+  });
+
+  localStorage.setItem("emotionData", JSON.stringify(data));
+
+  document.getElementById("trackerMsg").classList.remove("hidden");
+
+  document.getElementById("note").value = "";
+
+  loadHistory();
+}
+
+/* HISTORY */
+function loadHistory(){
+
+  const list = document.getElementById("history");
+  const data = JSON.parse(localStorage.getItem("emotionData")) || [];
+
+  list.innerHTML = "";
+
+  data.slice(-5).reverse().forEach(d => {
+    list.innerHTML += `
+      <div class="bg-gray-100 p-2 rounded flex justify-between">
+        <span>${d.mood} ${d.note || ''}</span>
+        <span class="text-xs text-gray-500">${d.time}</span>
+      </div>
+    `;
+  });
+}
+
+/* =========================================
+   📊 STATUS ANALYZER
+========================================= */
+
+let stress=0, anxiety=0, depression=0;
+
+function openStatus(){
+  document.getElementById("statusModal").classList.remove("hidden");
+}
+
+function closeStatus(){
+  document.getElementById("statusModal").classList.add("hidden");
+}
+
+function toggleCheck(el,type){
+
+  el.classList.toggle("check-active");
+
+  if(type==="stress"){
+    stress += el.classList.contains("check-active") ? 1 : -1;
+  }
+
+  if(type==="anxiety"){
+    anxiety += el.classList.contains("check-active") ? 1 : -1;
+  }
+
+  if(type==="depression"){
+    depression += el.classList.contains("check-active") ? 1 : -1;
+  }
+}
+
+function analyzeStatus(){
+
+  let result = "";
+
+  if(stress >= 2){
+    result += "😰 Anda menunjukkan tanda tekanan (stress)<br><br>";
+  }
+
+  if(anxiety >= 2){
+    result += "😨 Anda mengalami kebimbangan<br><br>";
+  }
+
+  if(depression >= 2){
+    result += "😔 Anda mungkin mengalami kemurungan ringan<br><br>";
+  }
+
+  if(result === ""){
+    result = "😊 Emosi anda stabil hari ini";
+  }
+
+  document.getElementById("resultBox").innerHTML = result;
+  document.getElementById("resultBox").classList.remove("hidden");
+}
+
+/* =========================================
+   🧘 TEKNIK INTERVENSI (FINAL)
+========================================= */
+
+function openIntervensi(){
+  document.getElementById("intervensiModal").classList.remove("hidden");
+}
+
+function closeIntervensi(){
+  document.getElementById("intervensiModal").classList.add("hidden");
+
+  // stop bila tutup
+  clearInterval(breathingInterval);
+}
+
+
+/* ================= SUARA ================= */
+function speak(text){
+  const msg = new SpeechSynthesisUtterance(text);
+  msg.lang = "ms-MY";
+  msg.rate = 0.9;   // slow sikit (lebih tenang)
+  speechSynthesis.cancel(); // elak overlap suara
+  speechSynthesis.speak(msg);
+}
+
+
+/* ================= BREATHING ================= */
+let breathingInterval;
+
+function startBreathing(){
+
+  const text = document.getElementById("breathText");
+  const circle = document.getElementById("breathCircle");
+
+  if(!text || !circle){
+    alert("Element tak jumpa");
+    return;
+  }
+
+  clearInterval(breathingInterval);
+
+  const steps = [
+    {t:"Tarik Nafas", scale:1.4},
+    {t:"Tahan", scale:1},
+    {t:"Hembus Nafas", scale:0.8}
+  ];
+
+  let i = 0;
+
+  // start terus (tak tunggu 4s)
+  runStep();
+
+  breathingInterval = setInterval(runStep, 4000);
+
+  function runStep(){
+    text.innerText = steps[i].t;
+    circle.style.transform = `scale(${steps[i].scale})`;
+
+    speak(steps[i].t);
+
+    i = (i+1) % steps.length;
+  }
+}
+/* =========================================
+   🤖 THERAPIST AI ENGINE
+========================================= */
+
+let therapyInterval;
+let countdownInterval;
+let isRunning = false;
+
+const steps = [
+  {text:"Tarik Nafas", scale:1.4},
+  {text:"Tahan", scale:1},
+  {text:"Hembus Nafas", scale:0.8}
+];
+
+let stepIndex = 0;
+let seconds = 4;
+
+/* ================= SUARA ================= */
+function speak(text){
+  speechSynthesis.cancel();
+  const msg = new SpeechSynthesisUtterance(text);
+  msg.lang = "ms-MY";
+  msg.rate = 0.9;
+  speechSynthesis.speak(msg);
+}
+
+/* ================= START ================= */
+function startTherapy(){
+
+  if(isRunning) return;
+
+  isRunning = true;
+  runStep();
+
+  therapyInterval = setInterval(runStep, 4000);
+  startCountdown();
+
+  document.getElementById("statusText").innerText = "Latihan sedang berjalan...";
+}
+
+/* ================= STEP ================= */
+function runStep(){
+
+  const text = document.getElementById("breathText");
+  const circle = document.getElementById("breathCircle");
+
+  const step = steps[stepIndex];
+
+  text.innerText = step.text;
+  circle.style.transform = `scale(${step.scale})`;
+
+  speak(step.text);
+
+  stepIndex = (stepIndex + 1) % steps.length;
+}
+
+/* ================= COUNTDOWN ================= */
+function startCountdown(){
+
+  clearInterval(countdownInterval);
+  seconds = 4;
+
+  countdownInterval = setInterval(()=>{
+    document.getElementById("countdown").innerText = seconds;
+    seconds--;
+
+    if(seconds < 0){
+      seconds = 4;
+    }
+
+  },1000);
+}
+
+/* ================= PAUSE ================= */
+function pauseTherapy(){
+  clearInterval(therapyInterval);
+  clearInterval(countdownInterval);
+  isRunning = false;
+
+  document.getElementById("statusText").innerText = "Latihan dijeda";
+}
+
+/* ================= STOP ================= */
+function stopTherapy(){
+
+  clearInterval(therapyInterval);
+  clearInterval(countdownInterval);
+  speechSynthesis.cancel();
+
+  isRunning = false;
+  stepIndex = 0;
+
+  document.getElementById("breathText").innerText = "Start";
+  document.getElementById("countdown").innerText = "4";
+  document.getElementById("statusText").innerText = "Latihan dihentikan";
+
+  document.getElementById("breathCircle").style.transform = "scale(1)";
+}
+
+/* ================= MUSIC ================= */
+function toggleMusic(){
+  const music = document.getElementById("bgMusic");
+
+  if(music.paused){
+    music.play();
+  } else {
+    music.pause();
+  }
+}
+
+/* ================= CLOSE ================= */
+function closeIntervensi(){
+  stopTherapy();
+  document.getElementById("intervensiModal").classList.add("hidden");
 }
 </script>
 

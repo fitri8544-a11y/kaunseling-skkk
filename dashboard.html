@@ -1,36 +1,266 @@
-<div class="p-6">
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8" />
+<title>Dashboard Aktiviti Pelajar</title>
 
-  <h2 class="text-xl font-bold mb-4">
-    📊 Dashboard Guru
-  </h2>
+<script src="https://cdn.tailwindcss.com"></script>
 
-  <div id="listData" class="space-y-2"></div>
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-</div>
+<!-- Firebase (compat) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<style>
+  .card { @apply bg-white/20 border border-white/20 backdrop-blur-lg rounded-2xl p-5 shadow-lg; }
+</style>
+<style>
+  body {
+    color: #ffffff;
+  }
+</style>
+</head>
+
+<body class="bg-gradient-to-r from-purple-700 to-blue-700 text-white min-h-screen p-6">
+
+  <!-- HEADER -->
+  <div class="max-w-6xl mx-auto mb-6">
+    <h1 class="text-3xl font-bold text-center">📊 Dashboard Aktiviti Pelajar</h1>
+    <p class="text-center text-white/70 mt-1">Analisis penggunaan modul (Real-time)</p>
+  </div>
+
+  <!-- FILTER -->
+  <div class="max-w-6xl mx-auto mb-6 grid md:grid-cols-3 gap-4">
+    <div class="card">
+      <label class="text-sm opacity-80">Dari</label>
+      <input id="fromDate" type="date" class="w-full mt-1 p-2 rounded text-black">
+    </div>
+    <div class="card">
+      <label class="text-sm opacity-80">Hingga</label>
+      <input id="toDate" type="date" class="w-full mt-1 p-2 rounded text-black">
+    </div>
+    <div class="card flex items-end">
+      <button onclick="applyFilter()" class="w-full bg-white/20 hover:bg-white/30 rounded-xl p-2">
+        Tapis Data
+      </button>
+    </div>
+  </div>
+
+  <!-- KPI -->
+  <div class="max-w-6xl mx-auto grid md:grid-cols-4 gap-4 mb-6">
+    <div class="card text-center">
+      <div class="text-sm text-white/90">Jumlah Interaksi</div>
+      <div id="kpiTotal" class="text-3xl font-bold text-white drop-shadow-lg mt-1">0</div>
+    </div>
+    <div class="card text-center">
+      <div class="text-sm text-white/90">Modul Aktif</div>
+      <div id="kpiModules" class="text-3xl font-bold text-white drop-shadow-lg mt-1">0</div>
+    </div>
+    <div class="card text-center">
+      <div class="text-sm text-white/90">Top Modul</div>
+      <div id="kpiTop" class="text-3xl font-bold text-white drop-shadow-lg mt-1">-</div>
+    </div>
+    <div class="card text-center">
+      <div class="text-sm text-white/90">Purata / Modul</div>
+      <div id="kpiAvg" class="text-3xl font-bold text-white drop-shadow-lg mt-1">0</div>
+    </div>
+  </div>
+
+  <!-- CHART -->
+  <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-6 mb-6">
+    <div class="card">
+      <canvas id="barChart"></canvas>
+    </div>
+    <div class="card">
+      <canvas id="pieChart"></canvas>
+    </div>
+  </div>
+
+  <!-- RANKING -->
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-xl font-bold mb-3">🏆 Ranking Modul</h2>
+    <div id="ranking" class="grid md:grid-cols-3 gap-4"></div>
+  </div>
 
 <script>
+// 🔥 CONFIG (guna config cikgu)
+const firebaseConfig = {
+  apiKey: "AIzaSyA9R5jKqeJNvBHD-SIOuseAqyb_x909R3Q",
+  authDomain: "bimbingankaunselingskkk.firebaseapp.com",
+  projectId: "bimbingankaunselingskkk"
+};
+
+firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-db.collection("aktivitiPelajar")
-  .orderBy("masa", "desc")
-  .limit(20)
-  .onSnapshot(snapshot => {
+// STATE
+let rawData = [];
+let stats = {};
+let barChart, pieChart;
 
-    let html = "";
+// 📡 REALTIME LISTENER
+db.collection("aktivitiPelajar").onSnapshot(snapshot => {
+  rawData = [];
+  snapshot.forEach(doc => rawData.push(doc.data()));
+  computeAndRender();
+});
 
-    snapshot.forEach(doc => {
+// 🔎 FILTER TARIKH
+function applyFilter(){
+  computeAndRender();
+}
 
-      const d = doc.data();
+function inRange(date){
+  const from = document.getElementById('fromDate').value;
+  const to   = document.getElementById('toDate').value;
 
-      html += `
-        <div class="bg-white p-3 rounded shadow">
-          📌 ${d.module} <br>
-          🕒 ${new Date(d.masa.seconds * 1000).toLocaleString()}
-        </div>
-      `;
-    });
+  if(!from && !to) return true;
 
-    document.getElementById("listData").innerHTML = html;
+  const d = new Date(date?.seconds ? date.seconds*1000 : date);
+  if(from){
+    const f = new Date(from + "T00:00:00");
+    if(d < f) return false;
+  }
+  if(to){
+    const t = new Date(to + "T23:59:59");
+    if(d > t) return false;
+  }
+  return true;
+}
 
+// 🧠 COMPUTE
+function computeAndRender(){
+  stats = {};
+  let total = 0;
+
+  rawData.forEach(d => {
+    if(!inRange(d.masa)) return;
+
+    const m = d.module || "Lain";
+    if(!stats[m]) stats[m] = 0;
+    stats[m]++;
+    total++;
   });
+
+  renderKPI(stats, total);
+  renderCharts(stats);
+  renderRanking(stats);
+}
+
+// 📊 KPI
+function renderKPI(stats, total){
+  const modules = Object.keys(stats).length;
+  const sorted = Object.entries(stats).sort((a,b)=>b[1]-a[1]);
+  const top = sorted[0]?.[0] || "-";
+  const avg = modules ? Math.round(total/modules) : 0;
+
+  document.getElementById("kpiTotal").innerText = total;
+  document.getElementById("kpiModules").innerText = modules;
+  document.getElementById("kpiTop").innerText = top;
+  document.getElementById("kpiAvg").innerText = avg;
+}
+
+// 📈 CHART
+function renderCharts(stats){
+  const labels = Object.keys(stats);
+  const data = Object.values(stats);
+
+  // destroy lama
+  if(barChart) barChart.destroy();
+  if(pieChart) pieChart.destroy();
+
+  // BAR
+  barChart = new Chart(document.getElementById('barChart'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Jumlah Klik',
+        data
+      }]
+    },
+   options: {
+  plugins: {
+    legend: {
+      labels: {
+        color: "#ffffff"
+      }
+    }
+  },
+  scales: {
+    x: {
+      ticks: { color: "#ffffff" }
+    },
+    y: {
+      ticks: { color: "#ffffff" }
+    }
+  }
+}
+  });
+
+  // PIE
+  pieChart = new Chart(document.getElementById('pieChart'), {
+    type: 'pie',
+    data: {
+      labels,
+      datasets: [{ data }]
+    }
+  });
+}
+
+// 🏆 RANKING
+function renderRanking(stats){
+  const container = document.getElementById("ranking");
+  container.innerHTML = "";
+
+  const sorted = Object.entries(stats).sort((a,b)=>b[1]-a[1]);
+  const max = sorted[0]?.[1] || 1;
+
+  sorted.forEach(([module, count], i)=>{
+    const percent = Math.round((count/max)*100);
+
+    container.innerHTML += `
+      <div class="card">
+        <div class="flex justify-between">
+          <div>#${i+1}</div>
+          <div class="text-xs">${percent}%</div>
+        </div>
+        <div class="font-bold mt-2">${module}</div>
+        <div class="text-3xl mt-1">${count}</div>
+        <div class="w-full bg-white/20 h-2 rounded mt-3">
+          <div class="h-2 rounded bg-gradient-to-r from-yellow-400 to-pink-500" style="width:${percent}%"></div>
+        </div>
+      </div>
+    `;
+  });
+}
 </script>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+<script>
+const ADMIN_EMAILS = [
+  "fitrieusop@moe.gov.my"
+];
+
+firebase.auth().onAuthStateChanged(user => {
+
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  // 🔐 CHECK GURU SAHAJA
+  if (!ADMIN_EMAILS.includes(user.email)) {
+    alert("Akses terhad untuk guru sahaja");
+    firebase.auth().signOut();
+    window.location.href = "login.html";
+  }
+
+});
+</script>
+
+</body>
+</html>

@@ -25,6 +25,16 @@
 
 <body class="bg-gradient-to-r from-purple-700 to-blue-700 text-white min-h-screen p-6">
 
+<!-- 🔐 LOGOUT BUTTON -->
+<button onclick="logout()" 
+class="fixed top-5 right-5 bg-red-500 hover:bg-red-600 
+text-white px-4 py-2 rounded-lg shadow-lg 
+hover:scale-105 transition duration-300 z-[9999]">
+
+  🚪 Logout
+
+</button>
+
   <!-- HEADER -->
   <div class="max-w-6xl mx-auto mb-6">
     <h1 class="text-3xl font-bold text-center">📊 Dashboard Aktiviti Pelajar</h1>
@@ -260,6 +270,14 @@ firebase.auth().onAuthStateChanged(user => {
   }
 
 });
+</script>
+
+<script>
+function logout(){
+  firebase.auth().signOut().then(()=>{
+    window.location.href = "healink.html"; // 🔥 balik ke homepage
+  });
+}
 </script>
 
 </body>

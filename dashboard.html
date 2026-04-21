@@ -1,0 +1,36 @@
+<div class="p-6">
+
+  <h2 class="text-xl font-bold mb-4">
+    📊 Dashboard Guru
+  </h2>
+
+  <div id="listData" class="space-y-2"></div>
+
+</div>
+
+<script>
+const db = firebase.firestore();
+
+db.collection("aktivitiPelajar")
+  .orderBy("masa", "desc")
+  .limit(20)
+  .onSnapshot(snapshot => {
+
+    let html = "";
+
+    snapshot.forEach(doc => {
+
+      const d = doc.data();
+
+      html += `
+        <div class="bg-white p-3 rounded shadow">
+          📌 ${d.module} <br>
+          🕒 ${new Date(d.masa.seconds * 1000).toLocaleString()}
+        </div>
+      `;
+    });
+
+    document.getElementById("listData").innerHTML = html;
+
+  });
+</script>

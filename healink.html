@@ -370,9 +370,8 @@
 <!-- ================= KAD TAMBAHAN ================= -->
 
   <!-- KAWAL -->
-  <div onclick="openKawal()" 
-    class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
-           hover:scale-105 hover:shadow-yellow-400/40 transition cursor-pointer text-center">
+  <div onclick="openKawal(); trackActivity('Kawal')" 
+     class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg hover:scale-105 transition cursor-pointer text-center">
 
     <div class="text-3xl mb-3">⚖️</div>
     <h3 class="text-lg font-semibold text-white">Kawal & Tidak Boleh Kawal</h3>
@@ -1685,6 +1684,21 @@ function closeNota(e){
 function closeMinda(e){
   if(e && e.target !== e.currentTarget) return;
   document.getElementById("mindaModal").classList.add("hidden");
+}
+</script>
+
+<script>
+// ================= TRACK AKTIVITI =================
+function trackActivity(module){
+
+  const db = firebase.firestore();
+
+  db.collection("aktivitiPelajar").add({
+    module: module,
+    masa: new Date(),
+    user: "pelajar" // nanti boleh upgrade login
+  });
+
 }
 </script>
 

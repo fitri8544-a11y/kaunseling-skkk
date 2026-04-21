@@ -233,6 +233,33 @@
   background: linear-gradient(to right,#a855f7,#ec4899);
   transition: transform 1.5s ease-in-out;
 }
+
+/* COPING SKILLS */
+.btn-coping{
+  background: linear-gradient(to right, #9333ea, #3b82f6);
+  color: white;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.btn-coping:hover{
+  transform: scale(1.05);
+}
+
+.loader {
+  width: 30px;
+  height: 30px;
+  border: 4px solid white;
+  border-top: 4px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
 </style>
 
 <!-- AI STATUS BAR -->
@@ -321,23 +348,72 @@
 
 </div>
 
-  <div class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
-              hover:scale-105 hover:shadow-yellow-400/40 transition duration-300 cursor-pointer">
+  <div onclick="openCoping()" 
+  class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
+         hover:scale-105 hover:shadow-yellow-400/40 transition duration-300 cursor-pointer">
 
-    <div class="text-3xl mb-3">💪</div>
-    <h3 class="text-lg font-semibold text-white">Coping Skills</h3>
-    <p class="text-sm text-white/70 mt-2">Kemahiran daya tindak</p>
+  <div class="text-3xl mb-3">💪</div>
+  <h3 class="text-lg font-semibold text-white">Coping Skills</h3>
+  <p class="text-sm text-white/70 mt-2">Kemahiran kawal emosi</p>
 
+</div>
+
+  <div onclick="openEmotion()" 
+  class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
+         hover:scale-105 transition cursor-pointer text-center">
+
+  <div class="text-3xl mb-3">❤️</div>
+  <h3 class="text-lg font-semibold text-white">Emotion Regulation</h3>
+  <p class="text-sm text-white/70 mt-2">Pengurusan emosi</p>
+
+</div>
+<!-- ================= KAD TAMBAHAN ================= -->
+
+  <!-- KAWAL -->
+  <div onclick="openKawal()" 
+    class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
+           hover:scale-105 hover:shadow-yellow-400/40 transition cursor-pointer text-center">
+
+    <div class="text-3xl mb-3">⚖️</div>
+    <h3 class="text-lg font-semibold text-white">Kawal & Tidak Boleh Kawal</h3>
   </div>
 
-  <div class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
-              hover:scale-105 hover:shadow-red-400/40 transition duration-300 cursor-pointer">
+  <!-- PSIKOEDUKASI -->
+  <div onclick="openNota()" 
+    class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
+           hover:scale-105 hover:shadow-green-400/40 transition cursor-pointer text-center">
 
-    <div class="text-3xl mb-3">❤️</div>
-    <h3 class="text-lg font-semibold text-white">Emotion Regulation</h3>
-    <p class="text-sm text-white/70 mt-2">Pengurusan emosi</p>
-
+    <div class="text-3xl mb-3">📘</div>
+    <h3 class="text-lg font-semibold text-white">Nota Psikoedukasi</h3>
   </div>
+
+  <!-- MINDA SIHAT -->
+  <div onclick="openMinda()" 
+    class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
+           hover:scale-105 hover:shadow-blue-400/40 transition cursor-pointer text-center">
+
+    <div class="text-3xl mb-3">🌈</div>
+    <h3 class="text-lg font-semibold text-white">Ciri Minda Sejahtera</h3>
+  </div>
+
+  <!-- 🚀 AKAN DATANG -->
+  <div 
+    class="bg-white/5 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
+           border border-dashed border-white/30 
+           flex flex-col items-center justify-center text-center
+           hover:scale-105 transition cursor-not-allowed opacity-80">
+
+    <div class="text-3xl mb-2 animate-pulse">🚀</div>
+
+    <p class="text-white text-sm font-semibold">
+      Akan Datang
+    </p>
+
+    <p class="text-white/60 text-xs mt-1">
+      Modul baharu sedang dibangunkan
+    </p>
+
+</div>
 
 </div>
 
@@ -863,8 +939,220 @@ setInterval(animateSlogan, 8000);
   </div>
 </div>
 
-<script>
+<!-- ================= KAWAL MODAL ================= -->
+<div id="kawalModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[9999]">
 
+  <div class="bg-white p-6 rounded-2xl w-[90%] max-w-lg text-center relative shadow-xl">
+
+    <!-- CLOSE BUTTON -->
+    <button onclick="closeKawal()" 
+      class="absolute top-3 right-3 bg-red-500 text-white w-9 h-9 rounded-full flex items-center justify-center shadow hover:scale-110 transition">
+      ✕
+    </button>
+
+    <h2 class="font-bold text-lg text-gray-800 mb-4">
+      ⚖️ Kawal vs Tidak Boleh Kawal
+    </h2>
+
+    <div class="grid grid-cols-2 gap-4 text-sm">
+
+      <div class="bg-green-100 text-green-900 font-semibold p-4 rounded-xl shadow">
+        ✔ Sikap saya<br>
+        ✔ Usaha saya<br>
+        ✔ Cara saya berfikir
+      </div>
+
+      <div class="bg-red-100 text-red-900 font-semibold p-4 rounded-xl shadow">
+        ❌ Cuaca<br>
+        ❌ Perasaan orang lain<br>
+        ❌ Masa lalu
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ================= NOTA MODAL ================= -->
+<div id="notaModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[9999]">
+
+  <div class="bg-white p-6 rounded-2xl w-[90%] max-w-lg relative shadow-xl">
+
+    <!-- CLOSE BUTTON -->
+    <button onclick="closeNota()" 
+      class="absolute top-3 right-3 bg-red-500 text-white w-9 h-9 rounded-full flex items-center justify-center shadow hover:scale-110 transition">
+      ✕
+    </button>
+
+    <h2 class="font-bold text-lg text-gray-800 mb-4">
+      📘 Nota Psikoedukasi
+    </h2>
+
+    <div class="space-y-3 text-sm font-medium">
+
+      <div class="p-3 bg-yellow-100 text-yellow-900 rounded-lg shadow">
+        😰 Stress = tekanan sementara
+      </div>
+
+      <div class="p-3 bg-orange-100 text-orange-900 rounded-lg shadow">
+        😨 Anxiety = rasa risau berlebihan
+      </div>
+
+      <div class="p-3 bg-blue-100 text-blue-900 rounded-lg shadow">
+        😔 Depression = sedih berpanjangan
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ================= MINDA MODAL ================= -->
+<div id="mindaModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[9999]">
+
+  <div class="bg-white p-6 rounded-2xl w-[90%] max-w-lg text-center relative shadow-xl">
+
+    <!-- CLOSE BUTTON -->
+    <button onclick="closeMinda()" 
+      class="absolute top-3 right-3 bg-red-500 text-white w-9 h-9 rounded-full flex items-center justify-center shadow hover:scale-110 transition">
+      ✕
+    </button>
+
+    <h2 class="font-bold text-lg text-gray-800 mb-4">
+      🌈 Ciri Minda Sejahtera
+    </h2>
+
+    <div class="grid grid-cols-2 gap-3 text-sm font-semibold">
+
+      <div class="bg-green-100 text-green-900 p-3 rounded-lg shadow">
+        😊 Positif
+      </div>
+
+      <div class="bg-blue-100 text-blue-900 p-3 rounded-lg shadow">
+        💬 Komunikasi baik
+      </div>
+
+      <div class="bg-purple-100 text-purple-900 p-3 rounded-lg shadow">
+        💪 Yakin diri
+      </div>
+
+      <div class="bg-pink-100 text-pink-900 p-3 rounded-lg shadow">
+        ❤️ Empati
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= EMOTION REGULATION ================= -->
+<div id="emotionModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center z-50">
+
+  <div class="bg-white p-8 rounded-3xl w-[90%] max-w-2xl shadow-2xl relative text-center">
+
+    <button onclick="closeEmotion()" 
+      class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-xl">✕</button>
+
+    <h2 class="text-xl font-bold text-purple-700 mb-4">
+      ❤️ Emotion Regulation AI
+    </h2>
+
+    <p class="text-sm text-gray-500 mb-6">
+      Laraskan tahap emosi anda sekarang
+    </p>
+
+    <!-- VISUAL -->
+    <div id="emotionCircle" 
+      class="w-32 h-32 mx-auto rounded-full flex items-center justify-center text-white text-lg font-bold mb-4 transition-all duration-500">
+      😐
+    </div>
+
+    <!-- SLIDER -->
+    <input type="range" min="1" max="5" value="3"
+      class="w-full mb-6"
+      oninput="updateEmotion(this.value)">
+
+    <!-- AI RESULT -->
+    <div id="emotionResult" 
+      class="hidden p-4 rounded-xl bg-gradient-to-r from-purple-600 to-blue-500 text-white text-sm">
+    </div>
+
+    <!-- BUTTON -->
+    <button onclick="analyzeEmotion()" 
+      class="mt-4 px-6 py-2 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-xl shadow hover:scale-105 transition">
+      🤖 Analisis Emosi
+    </button>
+
+  </div>
+</div>
+
+<!-- ================= COPING SKILLS ================= -->
+<div id="copingModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center z-50">
+
+  <div class="bg-white p-8 rounded-3xl w-[90%] max-w-3xl shadow-2xl relative overflow-y-auto max-h-[90vh]">
+
+    <!-- CLOSE -->
+    <button onclick="closeCoping()" 
+      class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-xl">✕</button>
+
+    <h2 class="text-xl font-bold text-purple-700 mb-4 text-center">
+      💪 Coping Skills AI
+    </h2>
+
+    <p class="text-center text-sm text-gray-500 mb-6">
+      Pilih teknik untuk bantu emosi anda
+    </p>
+
+    <!-- GRID -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+
+      <!-- MENTAL -->
+      <div class="bg-blue-50 p-4 rounded-2xl shadow text-center">
+        <h3 class="font-semibold text-blue-600 mb-2">🧠 Mental Reset</h3>
+        <p class="text-sm text-gray-600 mb-3">Ubah cara fikir</p>
+        <button onclick="runCoping('mental')" class="btn-coping">Cuba</button>
+      </div>
+
+      <!-- ACTION -->
+      <div class="bg-green-50 p-4 rounded-2xl shadow text-center">
+        <h3 class="font-semibold text-green-600 mb-2">💪 Action Boost</h3>
+        <p class="text-sm text-gray-600 mb-3">Gerakkan badan</p>
+        <button onclick="runCoping('action')" class="btn-coping">Cuba</button>
+      </div>
+
+      <!-- EMOTION -->
+      <div class="bg-pink-50 p-4 rounded-2xl shadow text-center">
+        <h3 class="font-semibold text-pink-600 mb-2">💬 Emotional Release</h3>
+        <p class="text-sm text-gray-600 mb-3">Luahkan perasaan</p>
+        <button onclick="runCoping('emotion')" class="btn-coping">Cuba</button>
+      </div>
+
+    </div>
+
+    <!-- RESULT BOX -->
+<div id="copingResult" 
+  class="hidden mt-6 p-5 rounded-2xl text-white text-center shadow-lg 
+         bg-gradient-to-r from-purple-600 to-blue-500">
+
+  <!-- LOADING -->
+  <div id="aiLoading" class="flex flex-col items-center gap-2">
+    <div class="loader"></div>
+    <p class="text-sm opacity-90 animate-pulse">
+      🤖 AI sedang menganalisis emosi anda...
+    </p>
+  </div>
+
+  <!-- RESULT -->
+  <div id="aiResult" class="hidden">
+    <div class="text-lg font-semibold mb-2">🤖 AI Cadangan</div>
+    <div id="copingText" class="text-sm leading-relaxed"></div>
+  </div>
+
+</div>
+
+<script>
 /* =========================================
    🎮 GAME MODAL
 ========================================= */
@@ -1190,6 +1478,214 @@ function toggleMusic(){
   }
 }
 
+/* =========================================
+    COPING SKILLS
+========================================= */
+function runCoping(type){
+
+  const box = document.getElementById("copingResult");
+  const loading = document.getElementById("aiLoading");
+  const result = document.getElementById("aiResult");
+  const textBox = document.getElementById("copingText");
+
+  // safety check
+  if(!box || !loading || !result || !textBox){
+    console.log("Element coping tak jumpa ❌");
+    return;
+  }
+
+  box.classList.remove("hidden");
+  loading.classList.remove("hidden");
+  result.classList.add("hidden");
+
+  let text = "";
+
+  if(type === "mental"){
+    text = "🧠 Cuba tukar pemikiran negatif kepada lebih positif. Anda kuat dan mampu mengawal emosi.";
+  } 
+  else if(type === "action"){
+    text = "💪 Bangun dan lakukan pergerakan ringan seperti berjalan atau regangan selama 2 minit.";
+  } 
+  else if(type === "emotion"){
+    text = "💬 Luahkan perasaan anda kepada seseorang atau tulis dalam jurnal untuk melegakan emosi.";
+  } 
+  else {
+    text = "✨ Sila pilih teknik terlebih dahulu.";
+  }
+
+  setTimeout(()=>{
+
+    loading.classList.add("hidden");
+    result.classList.remove("hidden");
+
+    textBox.innerText = text;
+
+    if(typeof speak === "function"){
+      speak(text);
+    }
+
+  }, 1800);
+}
+
+/* OPEN CLOSE */
+function openCoping(){
+  document.getElementById("copingModal").classList.remove("hidden");
+
+  // tutup emotion elak clash
+  const emo = document.getElementById("emotionModal");
+  if(emo) emo.style.display = "none";
+}
+
+function closeCoping(){
+  document.getElementById("copingModal").classList.add("hidden");
+}
+</script>
+
+<script>
+/* ================= EMOTION MODAL ================= */
+function closeAllModals(){
+  document.getElementById("copingModal")?.classList.add("hidden");
+  document.getElementById("healModal")?.classList.add("hidden");
+  document.getElementById("gameModal")?.classList.add("hidden");
+  document.getElementById("trackerModal")?.classList.add("hidden");
+  document.getElementById("statusModal")?.classList.add("hidden");
+
+  // untuk emotion (style version)
+  const emo = document.getElementById("emotionModal");
+  if(emo) emo.style.display = "none";
+}
+
+function openEmotion(){
+
+  closeAllModals(); // 🔥 penting
+
+  const modal = document.getElementById("emotionModal");
+
+  // support dua jenis (class hidden / style)
+  modal.classList.remove("hidden");
+  modal.style.display = "flex";
+}
+
+function closeEmotion(){
+  const modal = document.getElementById("emotionModal");
+  modal.classList.add("hidden");
+  modal.style.display = "none";
+}
+
+function updateEmotion(val){
+
+  const circle = document.getElementById("emotionCircle");
+
+  if(val == 1){
+    circle.innerText = "😡";
+    circle.style.background = "#ef4444";
+  }
+
+  if(val == 2){
+    circle.innerText = "😟";
+    circle.style.background = "#f97316";
+  }
+
+  if(val == 3){
+    circle.innerText = "😐";
+    circle.style.background = "#6b7280";
+  }
+
+  if(val == 4){
+    circle.innerText = "🙂";
+    circle.style.background = "#22c55e";
+  }
+
+  if(val == 5){
+    circle.innerText = "😄";
+    circle.style.background = "#3b82f6";
+  }
+}
+
+function analyzeEmotion(){
+
+  const val = document.querySelector('input[type="range"]').value;
+  const box = document.getElementById("emotionResult");
+
+  let text = "";
+
+  if(val == 1){
+    text = "😡 Anda dalam tekanan tinggi. Cuba teknik pernafasan dan rehat seketika.";
+  }
+
+  if(val == 2){
+    text = "😟 Anda sedikit risau. Cuba teknik grounding untuk menenangkan diri.";
+  }
+
+  if(val == 3){
+    text = "😐 Emosi stabil. Teruskan aktiviti positif.";
+  }
+
+  if(val == 4){
+    text = "🙂 Anda dalam keadaan baik. Kekalkan rutin sihat.";
+  }
+
+  if(val == 5){
+    text = "😄 Emosi sangat baik! Teruskan berkongsi energi positif.";
+  }
+
+  box.innerText = text;
+  box.classList.remove("hidden");
+
+  speak(text); // 🔥 guna AI voice cikgu
+}
+</script>
+
+<script>
+/* ================= GLOBAL CLOSE ================= */
+function closeAllModals(){
+
+  const modals = [
+    "kawalModal",
+    "notaModal",
+    "mindaModal"
+  ];
+
+  modals.forEach(id => {
+    const el = document.getElementById(id);
+    if(el){
+      el.classList.add("hidden");
+    }
+  });
+
+}
+
+/* ================= OPEN ================= */
+function openKawal(){
+  closeAllModals();
+  document.getElementById("kawalModal").classList.remove("hidden");
+}
+
+function openNota(){
+  closeAllModals();
+  document.getElementById("notaModal").classList.remove("hidden");
+}
+
+function openMinda(){
+  closeAllModals();
+  document.getElementById("mindaModal").classList.remove("hidden");
+}
+
+/* ================= CLOSE ================= */
+function closeKawal(e){
+  if(e && e.target !== e.currentTarget) return;
+  document.getElementById("kawalModal").classList.add("hidden");
+}
+
+function closeNota(e){
+  if(e && e.target !== e.currentTarget) return;
+  document.getElementById("notaModal").classList.add("hidden");
+}
+
+function closeMinda(e){
+  if(e && e.target !== e.currentTarget) return;
+  document.getElementById("mindaModal").classList.add("hidden");
+}
 </script>
 
 </body>

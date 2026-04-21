@@ -810,10 +810,55 @@ setInterval(animateSlogan, 8000);
       Tekan "Mula" untuk memulakan latihan
     </div>
 
+    <!-- ================= TEKNIK TAMBAHAN ================= -->
+
+    <div class="mt-6 space-y-5">
+
+  <!-- AI MOOD RESET -->
+  <div class="bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-2xl p-4 shadow">
+    <h3 class="font-semibold mb-2">🤖 AI Mood Reset</h3>
+    <p class="text-sm opacity-90">
+      Tekan “Mula” untuk terapi pernafasan automatik
+    </p>
+  </div>
+
+  <!-- BUTTERFLY HUG -->
+  <div class="bg-pink-50 rounded-2xl p-4 shadow">
+    <h3 class="font-semibold text-pink-600 mb-2">🦋 Butterfly Hug</h3>
+    <p class="text-sm text-gray-700">
+      Silangkan tangan dan tepuk bahu kiri kanan secara bergilir
+    </p>
+  </div>
+
+  <!-- GROUNDING -->
+  <div class="bg-indigo-50 rounded-2xl p-4 shadow">
+    <h3 class="font-semibold text-indigo-600 mb-2">👁️ Teknik 5-4-3-2-1</h3>
+    <p class="text-sm text-gray-700">
+      Fokus kepada persekitaran untuk tenangkan diri
+    </p>
+  </div>
+
+  <!-- FOCUS BOOST -->
+  <div class="bg-blue-50 rounded-2xl p-4 shadow">
+    <h3 class="font-semibold text-blue-600 mb-2">🎯 Focus Booster</h3>
+    <p class="text-sm text-gray-700">
+      Fokus pada satu objek selama 10 saat
+    </p>
+  </div>
+
+  <!-- VISUAL CALM -->
+  <div class="bg-green-50 rounded-2xl p-4 shadow">
+    <h3 class="font-semibold text-green-600 mb-2">🌿 Visual Calm</h3>
+    <p class="text-sm text-gray-700">
+      Bayangkan tempat tenang seperti pantai atau hutan
+    </p>
+  </div>
+
+</div>
     <!-- AUDIO (OPTIONAL) -->
     <audio id="bgMusic" loop>
-      <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_8b3c7e7f8b.mp3?filename=calm-ambient-11086.mp3" type="audio/mpeg">
-    </audio>
+  <source src="music/calm.mp3" type="audio/mpeg">
+</audio>
 
   </div>
 </div>
@@ -1137,7 +1182,9 @@ function toggleMusic(){
   const music = document.getElementById("bgMusic");
 
   if(music.paused){
-    music.play();
+    music.play().catch(err=>{
+      console.log("Audio blocked:", err);
+    });
   } else {
     music.pause();
   }

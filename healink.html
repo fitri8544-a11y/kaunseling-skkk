@@ -371,25 +371,26 @@
 
   <!-- KAWAL -->
   <div onclick="openKawal(); trackActivity('Kawal')" 
-     class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg hover:scale-105 transition cursor-pointer text-center">
+     class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
+            hover:scale-105 transition cursor-pointer text-center">
 
     <div class="text-3xl mb-3">⚖️</div>
     <h3 class="text-lg font-semibold text-white">Kawal & Tidak Boleh Kawal</h3>
   </div>
 
   <!-- PSIKOEDUKASI -->
-  <div onclick="openNota()" 
-    class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
-           hover:scale-105 hover:shadow-green-400/40 transition cursor-pointer text-center">
+  <div onclick="openKawal(); trackActivity('Nota')" 
+     class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
+            hover:scale-105 transition cursor-pointer text-center">
 
     <div class="text-3xl mb-3">📘</div>
     <h3 class="text-lg font-semibold text-white">Nota Psikoedukasi</h3>
   </div>
 
   <!-- MINDA SIHAT -->
-  <div onclick="openMinda()" 
-    class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
-           hover:scale-105 hover:shadow-blue-400/40 transition cursor-pointer text-center">
+  <div onclick="openKawal(); trackActivity('Minda')" 
+     class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
+            hover:scale-105 transition cursor-pointer text-center">
 
     <div class="text-3xl mb-3">🌈</div>
     <h3 class="text-lg font-semibold text-white">Ciri Minda Sejahtera</h3>
@@ -1687,20 +1688,47 @@ function closeMinda(e){
 }
 </script>
 
+<!-- 🔥 STEP 1: LOAD FIREBASE DULU -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<!-- 🔥 STEP 2: CONFIG & INIT -->
 <script>
-// ================= TRACK AKTIVITI =================
+const firebaseConfig = {
+  apiKey: "AIzaSyA9R5jKqeJNvBHD-SIOuseAqyb_x909R3Q",
+  authDomain: "bimbingankaunselingskkk.firebaseapp.com",
+  projectId: "bimbingankaunselingskkk",
+  storageBucket: "bimbingankaunselingskkk.firebasestorage.app",
+  messagingSenderId: "847162891153",
+  appId: "1:847162891153:web:0ff6aa5a6c7276133f1830"
+};
+
+// INIT FIREBASE
+firebase.initializeApp(firebaseConfig);
+
+// GLOBAL DB
+const db = firebase.firestore();
+</script>
+
+<!-- 🔥 STEP 3: FUNCTION -->
+<script>
 function trackActivity(module){
 
-  const db = firebase.firestore();
+  console.log("🔥 TRACK FUNCTION DIPANGGIL:", module);
 
   db.collection("aktivitiPelajar").add({
     module: module,
-    masa: new Date(),
-    user: "pelajar" // nanti boleh upgrade login
+    masa: new Date()
+  })
+  .then(() => {
+    console.log("✅ DATA MASUK FIRESTORE");
+  })
+  .catch((error) => {
+    console.error("❌ ERROR:", error);
   });
 
 }
-</script>
+</script> 
 
 </body>
 </html>

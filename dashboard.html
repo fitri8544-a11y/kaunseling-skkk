@@ -102,13 +102,20 @@ hover:scale-105 transition duration-300 z-[9999]">
 
   <!-- CHART -->
   <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-6 mb-6">
-    <div class="card">
+
+  <div class="card">
+    <div class="h-56">
       <canvas id="barChart"></canvas>
     </div>
-    <div class="card">
+  </div>
+
+  <div class="card">
+    <div class="h-56">
       <canvas id="pieChart"></canvas>
     </div>
   </div>
+
+</div>
 
   <!-- RANKING -->
   <div class="max-w-6xl mx-auto">
@@ -116,9 +123,11 @@ hover:scale-105 transition duration-300 z-[9999]">
     <div id="ranking" class="grid md:grid-cols-3 gap-4"></div>
   </div>
 
-  <div class="max-w-6xl mx-auto mb-6">
+  <div class="max-w-md mx-auto mb-6">
   <div class="card">
-    <canvas id="visitorChart"></canvas>
+    <div class="h-56">
+      <canvas id="visitorChart"></canvas>
+    </div>
   </div>
 </div>
 
@@ -126,7 +135,7 @@ hover:scale-105 transition duration-300 z-[9999]">
 <div class="grid md:grid-cols-2 gap-6 mt-8">
 
   <!-- RANKING SEKOLAH -->
-  <div class="bg-white/10 p-5 rounded-2xl backdrop-blur-xl shadow-xl border border-white/10"
+  <div class="bg-white/10 p-5 rounded-2xl backdrop-blur-xl shadow-xl border border-white/10">
     <h3 class="text-base font-semibold mb-3 text-white/90 tracking-wide">🏫 Ranking Sekolah</h3>
     <div class="h-64"><canvas id="chartSekolah"></canvas>
 </div>

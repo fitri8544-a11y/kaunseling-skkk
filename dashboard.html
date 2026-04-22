@@ -23,15 +23,13 @@
 </style>
 <style>
 .section-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: rgba(255,255,255,0.85);
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  color: rgba(255,255,255,0.95);
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
 }
-
 .section-box {
   background: rgba(255,255,255,0.08);
   border: 1px solid rgba(255,255,255,0.15);
@@ -269,14 +267,19 @@ function renderCharts(stats){
         data
       }]
     },
-   options: {
-  plugins: {
-    legend: {
-      labels: {
-        color: "#ffffff"
-      }
-    }
-  },
+   legend: {
+  position: 'top',   // letak atas
+  align: 'center',
+  labels: {
+    color: '#ffffff',
+    font: {
+      size: 13,
+      weight: '600'
+    },
+    padding: 15,
+    boxWidth: 18
+  }
+}
   scales: {
     x: {
       ticks: { color: "#ffffff" }

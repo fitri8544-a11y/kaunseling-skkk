@@ -66,6 +66,26 @@
   font-size:12px;
   opacity:0.7;
 }
+
+.sidebar-btn{
+  width:100%;
+  text-align:left;
+  padding:10px;
+  border-radius:10px;
+  background:rgba(255,255,255,0.08);
+  transition:0.3s;
+}
+
+.sidebar-btn:hover{
+  background:rgba(255,255,255,0.2);
+}
+
+/* 🔥 ACTIVE BUTTON */
+.sidebar-btn.active{
+  background:linear-gradient(to right, #9333ea, #3b82f6);
+  color:white;
+  font-weight:bold;
+}
 </style>
 </head>
 
@@ -546,16 +566,30 @@ function loadData(){
       const d = doc.data();
 
       // 🔥 FILTER SEKOLAH
-      if(
-  currentSekolah !== "all" &&
-  d.organisasi?.toLowerCase().trim() !== currentSekolah.toLowerCase().trim()
-) return;
+function filterSekolah(el, s){
+
+  currentSekolah = s;
+
+  document.querySelectorAll("#listSekolah .sidebar-btn")
+    .forEach(btn => btn.classList.remove("active"));
+
+  el.classList.add("active");
+
+  loadData();
+}
 
       // 🔥 FILTER KELAS
-      if(
-  currentKelas !== "all" &&
-  d.kelas?.toLowerCase().trim() !== currentKelas.toLowerCase().trim()
-) return;
+function filterKelas(el, k){
+
+  currentKelas = k;
+
+  document.querySelectorAll("#listKelas .sidebar-btn")
+    .forEach(btn => btn.classList.remove("active"));
+
+  el.classList.add("active");
+
+  loadData();
+}
 
       if(d.jenis === "Murid") murid++;
       else if(d.jenis === "Guru") guru++;

@@ -21,6 +21,7 @@
     color: #ffffff;
   }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body class="bg-gradient-to-r from-purple-700 to-blue-700 text-white min-h-screen p-6">
@@ -119,6 +120,23 @@ hover:scale-105 transition duration-300 z-[9999]">
   <div class="card">
     <canvas id="visitorChart"></canvas>
   </div>
+</div>
+
+<!-- ================= ANALYTICS ================= -->
+<div class="grid md:grid-cols-2 gap-8 mt-10">
+
+  <!-- RANKING SEKOLAH -->
+  <div class="bg-white/10 p-6 rounded-xl backdrop-blur-lg shadow-lg">
+    <h3 class="text-lg font-bold mb-4 text-white">🏫 Ranking Sekolah</h3>
+    <canvas id="chartSekolah"></canvas>
+  </div>
+
+  <!-- GRAF HARIAN -->
+  <div class="bg-white/10 p-6 rounded-xl backdrop-blur-lg shadow-lg">
+    <h3 class="text-lg font-bold mb-4 text-white">📅 Aktiviti Harian</h3>
+    <canvas id="chartHarian"></canvas>
+  </div>
+
 </div>
 
 <script>
@@ -364,5 +382,59 @@ function renderVisitorChart(murid, guru, pelawat){
 }
 </script>
 
+<script>
+db.collection("pengunjung").onSnapshot(snapshot => {
+
+  let sekolahCount = {};
+  let harianCount = {};
+
+  snapshot.forEach(doc => {
+    const data = doc.data();
+
+    // ================= SEKOLAH =================
+    const org = data.organisasi || "Tiada";
+
+    if(!sekolahCount[org]){
+      sekolahCount[org] = 0;
+    }
+    sekolahCount[org]++;
+
+    // ================= HARIAN =================
+    const tarikh = new Date(data.masa.seconds * 1000)
+      .toLocaleDateString("ms-MY");
+
+    if(!harianCount[tarikh]){
+      harianCount[tarikh] = 0;
+    }
+    harianCount[tarikh]++;
+  });
+
+  // ===== CHART SEKOLAH =====
+  new Chart(document.getElementById("chartSekolah"), {
+    type: 'bar',
+    data: {
+      labels: Object.keys(sekolahCount),
+      datasets: [{
+        data: Object.values(sekolahCount),
+        backgroundColor: '#60a5fa'
+      }]
+    }
+  });
+
+  // ===== CHART HARIAN =====
+  new Chart(document.getElementById("chartHarian"), {
+    type: 'line',
+    data: {
+      labels: Object.keys(harianCount),
+      datasets: [{
+        data: Object.values(harianCount),
+        borderColor: '#34d399',
+        fill: false
+      }]
+    }
+  });
+
+});
+</script>
 </body>
 </html>

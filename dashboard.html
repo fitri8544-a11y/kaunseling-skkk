@@ -143,8 +143,8 @@ hover:scale-105 transition duration-300 z-[9999]">
 
 </div>
 
-  <!-- CHART -->
-  <div class="max-w-6xl mx-auto section-box">
+<!-- CHART -->
+<div class="max-w-6xl mx-auto mt-6 section-box">
 
   <div class="section-title">📈 Analisis Modul</div>
 
@@ -162,7 +162,21 @@ hover:scale-105 transition duration-300 z-[9999]">
 
 </div>
 
-<div class="max-w-6xl mx-auto section-box">
+
+<!-- ================= AKTIVITI LIVE ================= -->
+<div class="max-w-6xl mx-auto mt-6 section-box">
+
+  <div class="section-title">📋 Aktiviti Pengguna (Live)</div>
+
+  <div id="activityList" 
+       class="space-y-3 max-h-[300px] overflow-y-auto pr-2">
+  </div>
+
+</div>
+
+
+<!-- ================= RANKING ================= -->
+<div class="max-w-6xl mx-auto mt-6 section-box">
 
   <div class="section-title">🏆 Ranking Modul</div>
 
@@ -409,6 +423,49 @@ db.collection("pengunjung").onSnapshot(snapshot => {
   });
 
 });
+
+db.collection("aktivitiPelajar")
+  .orderBy("masa", "desc")
+  .limit(20)
+  .onSnapshot(snapshot => {
+
+    const container = document.getElementById("activityList");
+    if(!container) return;
+
+    container.innerHTML = "";
+
+    snapshot.forEach(doc => {
+
+      const d = doc.data();
+
+      const time = d.masa?.toDate().toLocaleTimeString() || "-";
+
+      container.innerHTML += `
+        <div class="bg-white/10 p-3 rounded-lg flex justify-between items-center text-sm">
+
+          <div>
+            <div class="font-semibold text-white">
+              ${d.nama || "User"}
+            </div>
+            <div class="text-white/70 text-xs">
+              ${d.jenis || "-"} • ${d.kelas || d.organisasi || "-"}
+            </div>
+          </div>
+
+          <div class="text-right">
+            <div class="font-bold text-yellow-300">
+              ${d.module || "-"}
+            </div>
+            <div class="text-xs text-white/60">
+              ${time}
+            </div>
+          </div>
+
+        </div>
+      `;
+    });
+
+  });
 </script>
 
 </body>

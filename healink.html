@@ -1765,6 +1765,10 @@ function trackActivity(module){
   db.collection("aktivitiPelajar").add({
     module: module,
     masa: new Date()
+    nama: localStorage.getItem("nama") || "Unknown",
+    jenis: localStorage.getItem("jenis") || "Pelawat",
+    kelas: localStorage.getItem("kelas") || "-",
+    organisasi: localStorage.getItem("organisasi") || "-"
   })
   .then(() => {
     console.log("✅ DATA MASUK FIRESTORE");

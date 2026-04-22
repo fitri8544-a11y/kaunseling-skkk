@@ -74,27 +74,27 @@
 <div class="flex min-h-screen">
 
   <!-- ================= SIDEBAR ================= -->
-  <div class="w-64 bg-white/10 backdrop-blur-lg p-5 border-r border-white/10">
+<div class="w-64 bg-white/10 backdrop-blur-lg p-5 border-r border-white/10">
 
-    <h2 class="text-xl font-bold mb-6">📊 Dashboard</h2>
+  <h2 class="text-xl font-bold mb-6">📊 Dashboard</h2>
 
-    <!-- FILTER SEKOLAH -->
-    <div class="mb-6">
-      <div class="text-sm text-white/70 mb-2">🏫 Sekolah</div>
+  <!-- ================= SEKOLAH ================= -->
+  <div class="mb-6">
+    <div class="text-sm text-white/70 mb-2">🏫 Sekolah</div>
 
-      <button onclick="filterSekolah('all')" class="sidebar-btn">Semua</button>
-      <button onclick="filterSekolah('PPD Baling')" class="sidebar-btn">PPD Baling</button>
-    </div>
-
-    <!-- FILTER KELAS -->
-    <div>
-      <div class="text-sm text-white/70 mb-2">🎓 Kelas</div>
-
-      <button onclick="filterKelas('all')" class="sidebar-btn">Semua</button>
-      <button onclick="filterKelas('Tingkatan 1')" class="sidebar-btn">Tingkatan 1</button>
-    </div>
-
+    <!-- 🔥 AUTO LOAD -->
+    <div id="listSekolah" class="space-y-2"></div>
   </div>
+
+  <!-- ================= KELAS ================= -->
+  <div>
+    <div class="text-sm text-white/70 mb-2">🎓 Kelas</div>
+
+    <!-- 🔥 AUTO LOAD -->
+    <div id="listKelas" class="space-y-2"></div>
+  </div>
+
+</div>
 
   <!-- ================= CONTENT ================= -->
   <div class="flex-1 p-6 space-y-6 overflow-y-auto">
@@ -632,8 +632,97 @@ db.collection("aktivitiPelajar")
 
 
 // ================= AUTO LOAD =================
-loadData();
+window.onload = function(){
 
+  loadData();
+  loadSekolah();
+  loadKelas();
+
+};
+
+// ================= SEKOLAH =================
+function loadSekolah(){
+
+  const container = document.getElementById("listSekolah");
+  if(!container) return;
+
+  db.collection("aktivitiPelajar")
+  .onSnapshot(snapshot => {
+
+    let sekolahSet = new Set();
+
+    snapshot.forEach(doc => {
+      const d = doc.data();
+      if(d.organisasi){
+        sekolahSet.add(d.organisasi);
+      }
+    });
+
+    container.innerHTML = "";
+
+    container.innerHTML += `
+      <button onclick="filterSekolah('all')" class="sidebar-btn">
+        Semua
+      </button>
+    `;
+
+    [...sekolahSet]
+      .map(s => s.trim())
+      .sort()
+      .forEach(sekolah => {
+
+        container.innerHTML += `
+          <button onclick="filterSekolah('${sekolah}')" class="sidebar-btn">
+            ${sekolah}
+          </button>
+        `;
+      });
+
+  });
+
+}
+
+// ================= KELAS =================
+function loadKelas(){
+
+  const container = document.getElementById("listKelas");
+  if(!container) return;
+
+  db.collection("aktivitiPelajar")
+  .onSnapshot(snapshot => {
+
+    let kelasSet = new Set();
+
+    snapshot.forEach(doc => {
+      const d = doc.data();
+      if(d.kelas){
+        kelasSet.add(d.kelas);
+      }
+    });
+
+    container.innerHTML = "";
+
+    container.innerHTML += `
+      <button onclick="filterKelas('all')" class="sidebar-btn">
+        Semua
+      </button>
+    `;
+
+    [...kelasSet]
+      .map(k => k.trim())
+      .sort()
+      .forEach(kelas => {
+
+        container.innerHTML += `
+          <button onclick="filterKelas('${kelas}')" class="sidebar-btn">
+            ${kelas}
+          </button>
+        `;
+      });
+
+  });
+
+}
 </script>
 
 </body>

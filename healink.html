@@ -1820,11 +1820,10 @@ function submitDaftar(){
 // ================= CHECK DAFTAR =================
 window.onload = function(){
 
-  const sudahDaftar = sessionStorage.getItem("sudahDaftar");
+  // 🔥 RESET SETIAP REFRESH
+  sessionStorage.clear();
 
-  if(!sudahDaftar){
-    document.getElementById("modalDaftar").classList.remove("hidden");
-  }
+  document.getElementById("modalDaftar").classList.remove("hidden");
 
 }
 

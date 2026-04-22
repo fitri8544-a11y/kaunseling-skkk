@@ -170,14 +170,18 @@
     <div class="grid md:grid-cols-2 gap-6">
 
       <div class="card">
-        <div class="title">📊 Bar Chart</div>
-        <canvas id="barChart"></canvas>
-      </div>
+  <div class="title text-center">📊 Bar Chart</div>
+  <div class="h-64 md:h-72">
+    <canvas id="barChart"></canvas>
+  </div>
+</div>
 
       <div class="card">
-        <div class="title">📊 Pie Chart</div>
-        <canvas id="pieChart"></canvas>
-      </div>
+  <div class="title text-center">📊 Pie Chart</div>
+  <div class="h-64 md:h-72 flex justify-center items-center">
+    <canvas id="pieChart"></canvas>
+  </div>
+</div>>
 
     </div>
 
@@ -277,6 +281,7 @@ function renderKPI(stats, total){
 
 // 📈 CHART
 function renderCharts(stats){
+
   const labels = Object.keys(stats);
   const data = Object.values(stats);
 
@@ -284,43 +289,77 @@ function renderCharts(stats){
   if(barChart) barChart.destroy();
   if(pieChart) pieChart.destroy();
 
-  // BAR
+  // ================= BAR =================
   barChart = new Chart(document.getElementById('barChart'), {
     type: 'bar',
     data: {
       labels,
       datasets: [{
         label: 'Jumlah Klik',
-        data
+        data,
+        backgroundColor: "rgba(255,255,255,0.3)",
+        borderRadius: 6
       }]
     },
-   options: {
-  plugins: {
-    legend: {
-      labels: {
-        color: "#ffffff"
+    options: {
+      responsive: true,
+      maintainAspectRatio: false, // 🔥 WAJIB
+
+      plugins: {
+        legend: {
+          labels: {
+            color: "#ffffff",
+            font: { size: 12 } // kecilkan legend
+          }
+        }
+      },
+
+      scales: {
+        x: {
+          ticks: { 
+            color: "#ffffff",
+            font: { size: 10 } // kecilkan label bawah
+          }
+        },
+        y: {
+          ticks: { 
+            color: "#ffffff",
+            font: { size: 10 }
+          }
+        }
       }
     }
-  },
-  scales: {
-    x: {
-      ticks: { color: "#ffffff" }
-    },
-    y: {
-      ticks: { color: "#ffffff" }
-    }
-  }
-}
   });
 
-  // PIE
+
+  // ================= PIE =================
   pieChart = new Chart(document.getElementById('pieChart'), {
     type: 'pie',
     data: {
       labels,
-      datasets: [{ data }]
+      datasets: [{
+        data,
+        backgroundColor: [
+          "#60a5fa","#f87171","#fbbf24","#34d399","#a78bfa",
+          "#f472b6","#22d3ee","#facc15","#fb923c","#4ade80"
+        ]
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false, // 🔥 WAJIB
+
+      plugins: {
+        legend: {
+          labels: {
+            color: "#ffffff",
+            font: { size: 11 } // kecilkan legend pie
+          }
+        }
+      }
     }
   });
+
 }
 
 // 🏆 RANKING

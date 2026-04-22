@@ -1740,5 +1740,83 @@ function trackActivity(module){
 }
 </script> 
 
+<!-- ================= MODAL DAFTAR ================= -->
+<div id="modalDaftar" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[9999]">
+
+  <div class="bg-white p-6 rounded-2xl w-[90%] max-w-md text-center">
+
+    <h2 class="text-xl font-bold mb-4 text-black">
+      📝 Daftar Pengunjung
+    </h2>
+
+    <!-- JENIS -->
+    <select id="jenis" class="w-full p-3 mb-3 rounded text-black">
+      <option value="">Pilih Jenis</option>
+      <option>Murid</option>
+      <option>Guru</option>
+      <option>Pelawat</option>
+    </select>
+
+    <!-- NAMA -->
+    <input id="nama" type="text" placeholder="Nama"
+      class="w-full p-3 mb-3 rounded text-black">
+
+    <!-- KELAS -->
+    <input id="kelas" type="text" placeholder="Kelas (jika murid)"
+      class="w-full p-3 mb-4 rounded text-black">
+
+    <button onclick="submitDaftar()"
+      class="w-full bg-purple-600 text-white p-3 rounded-lg font-semibold">
+      Daftar & Masuk
+    </button>
+
+  </div>
+
+</div>
+
+<script>
+
+// CHECK DAFTAR
+window.onload = function(){
+
+  const sudahDaftar = localStorage.getItem("sudahDaftar");
+
+  if(!sudahDaftar){
+    document.getElementById("modalDaftar").classList.remove("hidden");
+  }
+
+}
+
+// SUBMIT DAFTAR
+function submitDaftar(){
+
+  const jenis = document.getElementById("jenis").value;
+  const nama  = document.getElementById("nama").value;
+  const kelas = document.getElementById("kelas").value;
+
+  if(!jenis || !nama){
+    alert("Sila lengkapkan maklumat");
+    return;
+  }
+
+  db.collection("pengunjung").add({
+    jenis: jenis,
+    nama: nama,
+    kelas: kelas,
+    masa: new Date()
+  })
+  .then(()=>{
+
+    // SIMPAN LOCAL (elak popup ulang)
+    localStorage.setItem("sudahDaftar", "yes");
+
+    // TUTUP MODAL
+    document.getElementById("modalDaftar").classList.add("hidden");
+
+  });
+
+}
+</script>
+
 </body>
 </html>

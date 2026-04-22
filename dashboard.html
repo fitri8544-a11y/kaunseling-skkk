@@ -60,6 +60,27 @@ hover:scale-105 transition duration-300 z-[9999]">
 
   <!-- KPI -->
   <div class="max-w-6xl mx-auto grid md:grid-cols-4 gap-4 mb-6">
+  
+  <!-- PENGUNJUNG -->
+<div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-4 mb-6">
+
+  <div class="card text-center">
+    <div class="text-sm text-white/90">👨‍🎓 Murid</div>
+    <div id="kpiMurid" class="text-3xl font-bold mt-1">0</div>
+  </div>
+
+  <div class="card text-center">
+    <div class="text-sm text-white/90">👨‍🏫 Guru</div>
+    <div id="kpiGuru" class="text-3xl font-bold mt-1">0</div>
+  </div>
+
+  <div class="card text-center">
+    <div class="text-sm text-white/90">👤 Pelawat</div>
+    <div id="kpiPelawat" class="text-3xl font-bold mt-1">0</div>
+  </div>
+
+</div>
+
     <div class="card text-center">
       <div class="text-sm text-white/90">Jumlah Interaksi</div>
       <div id="kpiTotal" class="text-3xl font-bold text-white drop-shadow-lg mt-1">0</div>
@@ -93,6 +114,12 @@ hover:scale-105 transition duration-300 z-[9999]">
     <h2 class="text-xl font-bold mb-3">🏆 Ranking Modul</h2>
     <div id="ranking" class="grid md:grid-cols-3 gap-4"></div>
   </div>
+
+  <div class="max-w-6xl mx-auto mb-6">
+  <div class="card">
+    <canvas id="visitorChart"></canvas>
+  </div>
+</div>
 
 <script>
 // 🔥 CONFIG (guna config cikgu)
@@ -277,6 +304,63 @@ function logout(){
   firebase.auth().signOut().then(()=>{
     window.location.href = "healink.html"; // 🔥 balik ke homepage
   });
+}
+
+let visitorChart;
+
+// REALTIME PENGUNJUNG
+db.collection("pengunjung").onSnapshot(snapshot => {
+
+  let murid = 0;
+  let guru = 0;
+  let pelawat = 0;
+
+  snapshot.forEach(doc => {
+    const d = doc.data();
+
+    if(d.jenis === "Murid") murid++;
+    if(d.jenis === "Guru") guru++;
+    if(d.jenis === "Pelawat") pelawat++;
+  });
+
+  // UPDATE KPI
+  document.getElementById("kpiMurid").innerText = murid;
+  document.getElementById("kpiGuru").innerText = guru;
+  document.getElementById("kpiPelawat").innerText = pelawat;
+
+  renderVisitorChart(murid, guru, pelawat);
+
+});
+
+function renderVisitorChart(murid, guru, pelawat){
+
+  if(visitorChart) visitorChart.destroy();
+
+  visitorChart = new Chart(document.getElementById('visitorChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Murid', 'Guru', 'Pelawat'],
+      datasets: [{
+        data: [murid, guru, pelawat],
+        backgroundColor: [
+          '#22c55e', // green
+          '#3b82f6', // blue
+          '#f59e0b'  // orange
+        ]
+      }]
+    },
+    options: {
+      plugins: {
+        legend: {
+          labels: {
+            color: "#ffffff",
+            font: { weight: "bold" }
+          }
+        }
+      }
+    }
+  });
+
 }
 </script>
 

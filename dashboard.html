@@ -78,7 +78,45 @@ hover:scale-105 transition duration-300 z-[9999]">
     </div>
   </div>
 
-  
+  <!-- ================= PENGUNJUNG ================= -->
+<div class="max-w-6xl mx-auto mt-10">
+
+  <h2 class="text-lg font-semibold text-white/90 mb-4 border-b border-white/20 pb-2">
+    👥 Analisis Pengunjung
+  </h2>
+
+  <div class="grid md:grid-cols-2 gap-6 items-center">
+
+    <!-- KPI -->
+    <div class="grid grid-cols-3 gap-4 text-center">
+
+      <div class="card">
+        <div class="text-xs text-white/70">👨‍🎓 Murid</div>
+        <div id="kpiMurid" class="text-2xl font-bold">0</div>
+      </div>
+
+      <div class="card">
+        <div class="text-xs text-white/70">👨‍🏫 Guru</div>
+        <div id="kpiGuru" class="text-2xl font-bold">0</div>
+      </div>
+
+      <div class="card">
+        <div class="text-xs text-white/70">👤 Pelawat</div>
+        <div id="kpiPelawat" class="text-2xl font-bold">0</div>
+      </div>
+
+    </div>
+
+    <!-- CHART -->
+    <div class="card">
+      <div class="h-56">
+        <canvas id="visitorChart"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+</div>
 
   <!-- CHART -->
   <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-6 mb-6">

@@ -78,6 +78,8 @@ hover:scale-105 transition duration-300 z-[9999]">
     </div>
   </div>
 
+  
+
   <!-- CHART -->
   <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-6 mb-6">
     <div class="card">
@@ -278,6 +280,61 @@ function logout(){
     window.location.href = "healink.html"; // 🔥 balik ke homepage
   });
 }
+
+let visitorChart;
+
+db.collection("pengunjung").onSnapshot(snapshot => {
+
+  let murid = 0;
+  let guru = 0;
+  let pelawat = 0;
+
+  snapshot.forEach(doc => {
+    const data = doc.data();
+
+    if(data.jenis === "Murid") murid++;
+    else if(data.jenis === "Guru") guru++;
+    else pelawat++;
+  });
+
+  // UPDATE KPI
+  document.getElementById("kpiMurid").innerText = murid;
+  document.getElementById("kpiGuru").innerText = guru;
+  document.getElementById("kpiPelawat").innerText = pelawat;
+
+  // DESTROY CHART LAMA
+  if(visitorChart) visitorChart.destroy();
+
+  // CREATE CHART BARU
+  visitorChart = new Chart(document.getElementById("visitorChart"), {
+    type: 'doughnut',
+    data: {
+      labels: ["Murid", "Guru", "Pelawat"],
+      datasets: [{
+        data: [murid, guru, pelawat],
+        backgroundColor: [
+          "#34d399", // hijau
+          "#60a5fa", // biru
+          "#f59e0b"  // oren
+        ],
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          labels: {
+            color: "#fff",
+            font: { size: 12 }
+          }
+        }
+      }
+    }
+  });
+
+});
 </script>
 
 </body>

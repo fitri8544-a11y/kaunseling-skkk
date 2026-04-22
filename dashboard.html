@@ -479,7 +479,8 @@ db.collection("aktivitiPelajar")
       let icon = "👤";
       if (d.jenis === "Murid") icon = "🧑‍🎓";
       else if (d.jenis === "Guru") icon = "👨‍🏫";
-
+      else if (d.jenis === "Admin") icon = "🛠️";
+      
       html += `
         <div class="bg-white/10 p-4 rounded-xl flex justify-between items-center 
                     hover:bg-white/20 transition duration-300">

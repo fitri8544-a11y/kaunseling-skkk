@@ -1113,6 +1113,7 @@ setInterval(animateSlogan, 8000);
       <option>Murid</option>
       <option>Guru</option>
       <option>Pelawat</option>
+      <option>Admin</option>
     </select>
 
     <!-- NAMA -->
@@ -1803,6 +1804,15 @@ function submitDaftar(){
     alert("Sila lengkapkan maklumat");
     return;
   }
+
+  if(jenis === "Admin"){
+  const password = prompt("Masukkan kata laluan Admin:");
+
+  if(password !== "ptis123"){ // 👉 tukar password sendiri
+    alert("Akses Admin ditolak ❌");
+    return;
+  }
+}
 
   // 🔥 SIMPAN (guna sessionStorage untuk multi user)
   sessionStorage.setItem("nama", nama);

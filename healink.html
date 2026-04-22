@@ -1125,10 +1125,10 @@ setInterval(animateSlogan, 8000);
   <input id="kelas" type="text" placeholder="Kelas (jika murid)"
       class="w-full p-3 mb-4 rounded text-black">
 
-    <button onclick="submitDaftar()"
-      class="w-full bg-purple-600 text-white p-3 rounded-lg font-semibold">
+    <button onclick="submitDaftar()" 
+      class="w-full bg-gradient-to-r from-purple-500 to-blue-500 p-3 rounded-lg text-white font-semibold">
       Daftar & Masuk
-    </button>
+</button>
 
   </div>
 
@@ -1807,6 +1807,19 @@ function submitDaftar(){
     return;
   }
 
+  // 🔥 SIMPAN DULU (WAJIB)
+  localStorage.setItem("nama", nama);
+  localStorage.setItem("jenis", jenis);
+  localStorage.setItem("kelas", kelas);
+  localStorage.setItem("organisasi", organisasi);
+  localStorage.setItem("sudahDaftar","yes");
+
+  console.log("✅ LOCAL STORAGE SET:", nama);
+
+  // tutup modal terus
+  document.getElementById("modalDaftar").classList.add("hidden");
+
+  // 🔥 kemudian baru simpan Firestore
   db.collection("pengunjung").add({
     jenis: jenis,
     nama: nama,
@@ -1815,19 +1828,7 @@ function submitDaftar(){
     masa: new Date()
   })
   .then(()=>{
-
     console.log("✅ DATA MASUK FIRESTORE");
-
-    // 🔥 INI WAJIB TAMBAH
-    localStorage.setItem("nama", nama);
-    localStorage.setItem("jenis", jenis);
-    localStorage.setItem("kelas", kelas);
-    localStorage.setItem("organisasi", organisasi);
-
-    localStorage.setItem("sudahDaftar","yes");
-
-    document.getElementById("modalDaftar").classList.add("hidden");
-
   })
   .catch(err=>{
     console.error(err);

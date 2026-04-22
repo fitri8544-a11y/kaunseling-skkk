@@ -1792,9 +1792,10 @@ window.onload = function(){
 // SUBMIT DAFTAR
 function submitDaftar(){
 
-  const nama = document.getElementById("nama").value;
-  const organisasi = document.getElementById("organisasi").value;
-  const kelas = document.getElementById("kelas").value;
+  const jenis = document.getElementById("jenis").value;        // ✅
+  const nama  = document.getElementById("nama").value;         // ✅
+  const organisasi = document.getElementById("organisasi").value; // ✅
+  const kelas = document.getElementById("kelas").value;        // ✅
 
   if(!jenis || !nama){
     alert("Sila lengkapkan maklumat");
@@ -1802,20 +1803,20 @@ function submitDaftar(){
   }
 
   db.collection("pengunjung").add({
-  jenis: jenis,
-  nama: nama,
-  organisasi: organisasi,
-  kelas: kelas,
-  masa: new Date()
-})
+    jenis: jenis,
+    nama: nama,
+    organisasi: organisasi,
+    kelas: kelas,
+    masa: new Date()
+  })
   .then(()=>{
+    console.log("✅ DATA MASUK FIRESTORE");
 
-    // SIMPAN LOCAL (elak popup ulang)
-    localStorage.setItem("sudahDaftar", "yes");
-
-    // TUTUP MODAL
+    localStorage.setItem("sudahDaftar","yes");
     document.getElementById("modalDaftar").classList.add("hidden");
-
+  })
+  .catch(err=>{
+    console.error(err);
   });
 
 }

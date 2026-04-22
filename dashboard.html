@@ -38,149 +38,162 @@
   margin-bottom: 20px;
   backdrop-filter: blur(12px);
 }
+.sidebar-btn{
+  width:100%;
+  text-align:left;
+  padding:10px;
+  border-radius:10px;
+  margin-bottom:5px;
+  background:rgba(255,255,255,0.05);
+}
+.sidebar-btn:hover{
+  background:rgba(255,255,255,0.2);
+}
+
+.card{
+  background: rgba(255,255,255,0.1);
+  padding: 16px;
+  border-radius: 16px;
+}
+
+.title{
+  font-size:16px;
+  font-weight:600;
+  margin-bottom:10px;
+}
+
+.label{
+  font-size:12px;
+  opacity:0.7;
+}
 </style>
 </head>
 
-<body class="bg-gradient-to-r from-purple-700 to-blue-700 text-white min-h-screen p-6">
+<body class="bg-gradient-to-br from-[#1e1b4b] via-purple-700 to-blue-600 text-white">
 
-<!-- 🔐 LOGOUT BUTTON -->
-<button onclick="logout()" 
-class="fixed top-5 right-5 bg-red-500 hover:bg-red-600 
-text-white px-4 py-2 rounded-lg shadow-lg 
-hover:scale-105 transition duration-300 z-[9999]">
+<div class="flex min-h-screen">
 
-  🚪 Logout
+  <!-- ================= SIDEBAR ================= -->
+  <div class="w-64 bg-white/10 backdrop-blur-lg p-5 border-r border-white/10">
 
-</button>
+    <h2 class="text-xl font-bold mb-6">📊 Dashboard</h2>
 
-  <!-- HEADER -->
-  <div class="max-w-6xl mx-auto mb-6">
-    <h1 class="text-3xl font-bold text-center">📊 Dashboard Aktiviti Pelajar</h1>
-    <p class="text-center text-white/70 mt-1">Analisis penggunaan modul (Real-time)</p>
+    <!-- FILTER SEKOLAH -->
+    <div class="mb-6">
+      <div class="text-sm text-white/70 mb-2">🏫 Sekolah</div>
+
+      <button onclick="filterSekolah('all')" class="sidebar-btn">Semua</button>
+      <button onclick="filterSekolah('PPD Baling')" class="sidebar-btn">PPD Baling</button>
+    </div>
+
+    <!-- FILTER KELAS -->
+    <div>
+      <div class="text-sm text-white/70 mb-2">🎓 Kelas</div>
+
+      <button onclick="filterKelas('all')" class="sidebar-btn">Semua</button>
+      <button onclick="filterKelas('Tingkatan 1')" class="sidebar-btn">Tingkatan 1</button>
+    </div>
+
   </div>
 
-  <!-- FILTER -->
-  <div class="max-w-6xl mx-auto mb-6 grid md:grid-cols-3 gap-4">
-    <div class="card">
-      <label class="text-sm opacity-80">Dari</label>
-      <input id="fromDate" type="date" class="w-full mt-1 p-2 rounded text-black">
+  <!-- ================= CONTENT ================= -->
+  <div class="flex-1 p-6 space-y-6 overflow-y-auto">
+
+    <!-- HEADER -->
+    <div class="flex justify-between items-center">
+      <div>
+        <h1 class="text-2xl font-bold">📊 Dashboard Aktiviti Pelajar</h1>
+        <p class="text-white/70 text-sm">Analisis penggunaan modul (Real-time)</p>
+      </div>
+
+      <button onclick="logout()" 
+        class="bg-red-500 px-4 py-2 rounded-lg hover:bg-red-600">
+        🚪 Logout
+      </button>
     </div>
-    <div class="card">
-      <label class="text-sm opacity-80">Hingga</label>
-      <input id="toDate" type="date" class="w-full mt-1 p-2 rounded text-black">
-    </div>
-    <div class="card flex items-end">
-      <button onclick="applyFilter()" class="w-full bg-white/20 hover:bg-white/30 rounded-xl p-2">
+
+    <!-- FILTER TARIKH -->
+    <div class="grid md:grid-cols-3 gap-4">
+      <input id="fromDate" type="date" class="p-2 rounded text-black">
+      <input id="toDate" type="date" class="p-2 rounded text-black">
+      <button onclick="applyFilter()" 
+        class="bg-white/20 rounded-lg hover:bg-white/30">
         Tapis Data
       </button>
     </div>
-  </div>
 
-<!-- ================= PENGUNJUNG ================= -->
-<div class="max-w-6xl mx-auto mt-6 section-box">
+    <!-- ================= PENGUNJUNG ================= -->
+    <div class="card">
+      <div class="title">👥 Analisis Pengunjung</div>
 
-  <div class="section-title">👥 Analisis Pengunjung</div>
+      <div class="grid md:grid-cols-2 gap-6 items-center">
 
-  <div class="grid md:grid-cols-2 gap-6 items-center">
+        <div class="grid grid-cols-3 text-center">
+          <div>👨‍🎓 <br><b id="kpiMurid">0</b></div>
+          <div>👨‍🏫 <br><b id="kpiGuru">0</b></div>
+          <div>👤 <br><b id="kpiPelawat">0</b></div>
+        </div>
 
-    <!-- KPI -->
-    <div class="grid grid-cols-3 gap-4 text-center">
+        <div class="h-40">
+          <canvas id="visitorChart"></canvas>
+        </div>
 
-      <div>
-        <div class="text-sm text-white/70">👨‍🎓 Murid</div>
-        <div id="kpiMurid" class="text-3xl font-bold">0</div>
+      </div>
+    </div>
+
+    <!-- ================= KPI ================= -->
+    <div class="grid md:grid-cols-4 gap-4">
+
+      <div class="card text-center">
+        <div class="label">Interaksi</div>
+        <b id="kpiTotal">0</b>
       </div>
 
-      <div>
-        <div class="text-sm text-white/70">👨‍🏫 Guru</div>
-        <div id="kpiGuru" class="text-3xl font-bold">0</div>
+      <div class="card text-center">
+        <div class="label">Modul Aktif</div>
+        <b id="kpiModules">0</b>
       </div>
 
-      <div>
-        <div class="text-sm text-white/70">👤 Pelawat</div>
-        <div id="kpiPelawat" class="text-3xl font-bold">0</div>
+      <div class="card text-center">
+        <div class="label">Top Modul</div>
+        <b id="kpiTop">-</b>
+      </div>
+
+      <div class="card text-center">
+        <div class="label">Purata</div>
+        <b id="kpiAvg">0</b>
       </div>
 
     </div>
 
-    <!-- CHART -->
-    <div class="h-44">
-      <canvas id="visitorChart"></canvas>
+    <!-- ================= CHART ================= -->
+    <div class="grid md:grid-cols-2 gap-6">
+
+      <div class="card">
+        <div class="title">📊 Bar Chart</div>
+        <canvas id="barChart"></canvas>
+      </div>
+
+      <div class="card">
+        <div class="title">📊 Pie Chart</div>
+        <canvas id="pieChart"></canvas>
+      </div>
+
+    </div>
+
+    <!-- ================= LIVE ================= -->
+    <div class="card">
+      <div class="title">📋 Aktiviti Pengguna (Live)</div>
+      <div id="activityList" class="space-y-2 max-h-[300px] overflow-y-auto"></div>
+    </div>
+
+    <!-- ================= RANKING ================= -->
+    <div class="card">
+      <div class="title">🏆 Ranking Modul</div>
+      <div id="ranking" class="grid md:grid-cols-3 gap-4"></div>
     </div>
 
   </div>
-
-</div>
-
-  <!-- KPI -->
-  <div class="max-w-6xl mx-auto section-box">
-
-  <div class="section-title">📊 Ringkasan Sistem</div>
-
-  <div class="grid md:grid-cols-4 gap-4 text-center">
-
-    <div>
-      <div class="text-xs text-white/70">Jumlah Interaksi</div>
-      <div id="kpiTotal" class="text-2xl font-bold">0</div>
-    </div>
-
-    <div>
-      <div class="text-xs text-white/70">Modul Aktif</div>
-      <div id="kpiModules" class="text-2xl font-bold">0</div>
-    </div>
-
-    <div>
-      <div class="text-xs text-white/70">Top Modul</div>
-      <div id="kpiTop" class="text-2xl font-bold">-</div>
-    </div>
-
-    <div>
-      <div class="text-xs text-white/70">Purata / Modul</div>
-      <div id="kpiAvg" class="text-2xl font-bold">0</div>
-    </div>
-
-  </div>
-
-</div>
-
-<!-- CHART -->
-<div class="max-w-6xl mx-auto mt-6 section-box">
-
-  <div class="section-title">📈 Analisis Modul</div>
-
-  <div class="grid md:grid-cols-2 gap-6 items-center">
-
-    <div class="h-72 md:h-80">
-      <canvas id="barChart"></canvas>
-    </div>
-
-    <div class="h-72 md:h-80">
-      <canvas id="pieChart"></canvas>
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- ================= AKTIVITI LIVE ================= -->
-<div class="max-w-6xl mx-auto mt-6 section-box">
-
-  <div class="section-title">📋 Aktiviti Pengguna (Live)</div>
-
-  <div id="activityList" 
-       class="space-y-3 max-h-[300px] overflow-y-auto pr-2">
-  </div>
-
-</div>
-
-
-<!-- ================= RANKING ================= -->
-<div class="max-w-6xl mx-auto mt-6 section-box">
-
-  <div class="section-title">🏆 Ranking Modul</div>
-
-  <div id="ranking" class="grid md:grid-cols-3 gap-4"></div>
 
 </div>
 
@@ -500,6 +513,19 @@ db.collection("aktivitiPelajar")
     container.innerHTML = html; // ✅ render sekali sahaja
 
   });
+let currentSekolah = "all";
+let currentKelas = "all";
+
+function filterSekolah(s){
+  currentSekolah = s;
+  loadData();
+}
+
+function filterKelas(k){
+  currentKelas = k;
+  loadData();
+}
+
 </script>
 
 </body>

@@ -451,69 +451,6 @@ db.collection("pengunjung").onSnapshot(snapshot => {
   });
 
 });
-
-db.collection("aktivitiPelajar")
-  .orderBy("masa", "desc")
-  .limit(20)
-  .onSnapshot(snapshot => {
-
-    const container = document.getElementById("activityList");
-    if (!container) return;
-
-    let html = ""; // ✅ elak render berkali-kali
-
-    snapshot.forEach(doc => {
-
-      const d = doc.data();
-
-      // ✅ Format masa (cantik + lengkap)
-      const time = d.masa?.toDate().toLocaleString('ms-MY', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      }) || "-";
-
-      // ✅ Icon ikut jenis
-      let icon = "👤";
-      if (d.jenis === "Murid") icon = "🧑‍🎓";
-      else if (d.jenis === "Guru") icon = "👨‍🏫";
-      else if (d.jenis === "Admin") icon = "🛠️";
-      
-      html += `
-        <div class="bg-white/10 p-4 rounded-xl flex justify-between items-center 
-                    hover:bg-white/20 transition duration-300">
-
-          <!-- LEFT -->
-          <div>
-            <div class="font-semibold text-white text-base">
-              ${icon} ${d.nama || "Pengguna"}
-            </div>
-
-            <div class="text-xs text-white/70 mt-1">
-              ${d.jenis || "-"} • ${d.kelas || d.organisasi || "-"}
-            </div>
-          </div>
-
-          <!-- RIGHT -->
-          <div class="text-right">
-            <div class="text-yellow-300 font-semibold">
-              ${d.module || "-"}
-            </div>
-
-            <div class="text-xs text-white/60 mt-1">
-              ${time}
-            </div>
-          </div>
-
-        </div>
-      `;
-    });
-
-    container.innerHTML = html; // ✅ render sekali sahaja
-
-  });
 </script>
 
 <script>
@@ -596,29 +533,41 @@ db.collection("aktivitiPelajar")
       minute: '2-digit'
     }) || "-";
 
+    // 🔥 ICON FIX
     let icon = "👤";
-    if (d.jenis === "Murid") icon = "🧑‍🎓";
-    else if (d.jenis === "Guru") icon = "👨‍🏫";
+    const jenis = (d.jenis || "").toString().trim().toLowerCase();
+
+    if (jenis === "murid") icon = "🧑‍🎓";
+    else if (jenis === "guru") icon = "👨‍🏫";
+    else if (jenis === "admin") icon = "🛠️";
 
     html += `
-      <div class="bg-white/10 p-4 rounded-xl flex justify-between items-center">
+      <div class="bg-white/10 p-4 rounded-xl flex justify-between items-center 
+                  hover:bg-white/20 transition duration-300">
 
+        <!-- LEFT -->
         <div>
-          <div class="font-semibold text-white">
-            ${icon} ${d.nama || "Pengguna"}
+
+          <div class="flex items-center gap-2">
+            <span class="text-2xl">${icon}</span>
+            <span class="font-semibold text-white">
+              ${d.nama || "Pengguna"}
+            </span>
           </div>
 
-          <div class="text-xs text-white/70">
+          <div class="text-xs text-white/70 mt-1">
             ${d.jenis || "-"} • ${d.kelas || d.organisasi || "-"}
           </div>
+
         </div>
 
+        <!-- RIGHT -->
         <div class="text-right">
           <div class="text-yellow-300 font-semibold">
             ${d.module || "-"}
           </div>
 
-          <div class="text-xs text-white/60">
+          <div class="text-xs text-white/60 mt-1">
             ${time}
           </div>
         </div>

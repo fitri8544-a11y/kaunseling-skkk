@@ -546,10 +546,16 @@ function loadData(){
       const d = doc.data();
 
       // 🔥 FILTER SEKOLAH
-      if(currentSekolah !== "all" && d.organisasi !== currentSekolah) return;
+      if(
+  currentSekolah !== "all" &&
+  d.organisasi?.toLowerCase().trim() !== currentSekolah.toLowerCase().trim()
+) return;
 
       // 🔥 FILTER KELAS
-      if(currentKelas !== "all" && d.kelas !== currentKelas) return;
+      if(
+  currentKelas !== "all" &&
+  d.kelas?.toLowerCase().trim() !== currentKelas.toLowerCase().trim()
+) return;
 
       if(d.jenis === "Murid") murid++;
       else if(d.jenis === "Guru") guru++;

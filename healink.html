@@ -1762,14 +1762,22 @@ function trackActivity(module){
 
   console.log("🔥 TRACK FUNCTION DIPANGGIL:", module);
 
+  // 🔥 ambil data dari sessionStorage (bukan localStorage)
+  const nama = sessionStorage.getItem("nama");
+  const jenis = sessionStorage.getItem("jenis");
+  const kelas = sessionStorage.getItem("kelas");
+  const organisasi = sessionStorage.getItem("organisasi");
+
+  console.log("👤 USER:", nama);
+
   db.collection("aktivitiPelajar").add({
     module: module,
     masa: firebase.firestore.FieldValue.serverTimestamp(),
 
-    nama: localStorage.getItem("nama") || "Pengguna",
-    jenis: localStorage.getItem("jenis") || "Pelawat",
-    kelas: localStorage.getItem("kelas") || "-",
-    organisasi: localStorage.getItem("organisasi") || "-"
+    nama: nama || "Pengguna",
+    jenis: jenis || "Pelawat",
+    kelas: kelas || "-",
+    organisasi: organisasi || "-"
   })
   .then(() => {
     console.log("✅ DATA MASUK FIRESTORE");

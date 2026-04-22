@@ -378,12 +378,27 @@ db.collection("pengunjung").onSnapshot(snapshot => {
   let pelawat = 0;
 
   snapshot.forEach(doc => {
-    const data = doc.data();
 
-    if(data.jenis === "Murid") murid++;
-    else if(data.jenis === "Guru") guru++;
-    else pelawat++;
-  });
+  const d = doc.data();  // ✅ guna d (konsisten)
+
+  // kira jenis pengguna
+  if(d.jenis === "Murid") murid++;
+  else if(d.jenis === "Guru") guru++;
+  else pelawat++;
+
+  // format masa
+  const time = d.masa?.toDate().toLocaleString('ms-MY', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  }) || "-";
+
+  // contoh guna untuk display
+  console.log(d.nama, time);
+
+});
 
   // UPDATE KPI
   document.getElementById("kpiMurid").innerText = murid;

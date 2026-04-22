@@ -21,7 +21,6 @@
     color: #ffffff;
   }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body class="bg-gradient-to-r from-purple-700 to-blue-700 text-white min-h-screen p-6">
@@ -60,91 +59,40 @@ hover:scale-105 transition duration-300 z-[9999]">
   </div>
 
   <!-- KPI -->
-<div class="max-w-6xl mx-auto mt-6">
-
-  <div class="grid grid-cols-2 md:grid-cols-6 gap-6 text-center">
-
-    <div>
-      <div class="text-xs text-white/80">👨‍🎓 Murid</div>
-      <div id="kpiMurid" class="text-2xl font-bold text-white drop-shadow-lg">0</div>
+  <div class="max-w-6xl mx-auto grid md:grid-cols-4 gap-4 mb-6">
+    <div class="card text-center">
+      <div class="text-sm text-white/90">Jumlah Interaksi</div>
+      <div id="kpiTotal" class="text-3xl font-bold text-white drop-shadow-lg mt-1">0</div>
     </div>
-
-    <div>
-      <div class="text-xs text-white/80">👨‍🏫 Guru</div>
-      <div id="kpiGuru" class="text-2xl font-bold text-white drop-shadow-lg">0</div>
+    <div class="card text-center">
+      <div class="text-sm text-white/90">Modul Aktif</div>
+      <div id="kpiModules" class="text-3xl font-bold text-white drop-shadow-lg mt-1">0</div>
     </div>
-
-    <div>
-      <div class="text-xs text-white/80">👤 Pelawat</div>
-      <div id="kpiPelawat" class="text-2xl font-bold text-white drop-shadow-lg">0</div>
+    <div class="card text-center">
+      <div class="text-sm text-white/90">Top Modul</div>
+      <div id="kpiTop" class="text-3xl font-bold text-white drop-shadow-lg mt-1">-</div>
     </div>
-
-    <div>
-      <div class="text-xs text-white/80">Jumlah Interaksi</div>
-      <div id="kpiTotal" class="text-2xl font-bold text-white drop-shadow-lg">0</div>
+    <div class="card text-center">
+      <div class="text-sm text-white/90">Purata / Modul</div>
+      <div id="kpiAvg" class="text-3xl font-bold text-white drop-shadow-lg mt-1">0</div>
     </div>
-
-    <div>
-      <div class="text-xs text-white/80">Modul Aktif</div>
-      <div id="kpiModules" class="text-2xl font-bold text-white drop-shadow-lg">0</div>
-    </div>
-
-    <div>
-      <div class="text-xs text-white/80">Top Modul</div>
-      <div id="kpiTop" class="text-xl font-bold text-yellow-300 drop-shadow-lg">-</div>
-    </div>
-
   </div>
-
-</div>
 
   <!-- CHART -->
   <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-6 mb-6">
-
-  <div class="card">
-    <div class="h-56">
+    <div class="card">
       <canvas id="barChart"></canvas>
     </div>
-  </div>
-
-  <div class="card">
-    <div class="h-56">
+    <div class="card">
       <canvas id="pieChart"></canvas>
     </div>
   </div>
-
-</div>
 
   <!-- RANKING -->
   <div class="max-w-6xl mx-auto">
     <h2 class="text-xl font-bold mb-3">🏆 Ranking Modul</h2>
     <div id="ranking" class="grid md:grid-cols-3 gap-4"></div>
   </div>
-
-  <div class="max-w-md mx-auto mb-6">
-  <div class="card">
-    <div class="h-56">
-      <canvas id="visitorChart"></canvas>
-    </div>
-  </div>
-</div>
-
-<!-- ================= ANALYTICS ================= -->
-<div class="grid md:grid-cols-2 gap-6 mt-8">
-
-  <!-- RANKING SEKOLAH -->
-  <div class="bg-white/10 p-5 rounded-2xl backdrop-blur-xl shadow-xl border border-white/10">
-    <h3 class="text-base font-semibold mb-3 text-white/90 tracking-wide">🏫 Ranking Sekolah</h3>
-    <div class="h-64"><canvas id="chartSekolah"></canvas>
-</div>
-
-  <!-- GRAF HARIAN -->
-  <div class="bg-white/10 p-5 rounded-2xl backdrop-blur-xl shadow-xl border border-white/10">
-    <h3 class="text-base font-semibold mb-3 text-white/90 tracking-wide">📅 Aktiviti Harian</h3>
-    <div class="h-64"><canvas id="chartHarian"></canvas>
-</div>
-
-</div>
 
 <script>
 // 🔥 CONFIG (guna config cikgu)
@@ -330,118 +278,7 @@ function logout(){
     window.location.href = "healink.html"; // 🔥 balik ke homepage
   });
 }
-
-let visitorChart;
-
-// REALTIME PENGUNJUNG
-db.collection("pengunjung").onSnapshot(snapshot => {
-
-  let murid = 0;
-  let guru = 0;
-  let pelawat = 0;
-
-  snapshot.forEach(doc => {
-    const d = doc.data();
-
-    if(d.jenis === "Murid") murid++;
-    if(d.jenis === "Guru") guru++;
-    if(d.jenis === "Pelawat") pelawat++;
-  });
-
-  // UPDATE KPI
-  document.getElementById("kpiMurid").innerText = murid;
-  document.getElementById("kpiGuru").innerText = guru;
-  document.getElementById("kpiPelawat").innerText = pelawat;
-
-  renderVisitorChart(murid, guru, pelawat);
-
-});
-
-function renderVisitorChart(murid, guru, pelawat){
-
-  if(visitorChart) visitorChart.destroy();
-
-  visitorChart = new Chart(document.getElementById('visitorChart'), {
-    type: 'doughnut',
-    data: {
-      labels: ['Murid', 'Guru', 'Pelawat'],
-      datasets: [{
-        data: [murid, guru, pelawat],
-        backgroundColor: [
-          '#22c55e', // green
-          '#3b82f6', // blue
-          '#f59e0b'  // orange
-        ]
-      }]
-    },
-    options: {
-      plugins: {
-        legend: {
-          labels: {
-            color: "#ffffff",
-            font: { weight: "bold" }
-          }
-        }
-      }
-    }
-  });
-
-}
 </script>
 
-<script>
-db.collection("pengunjung").onSnapshot(snapshot => {
-
-  let sekolahCount = {};
-  let harianCount = {};
-
-  snapshot.forEach(doc => {
-    const data = doc.data();
-
-    // ================= SEKOLAH =================
-    const org = data.organisasi || "Tiada";
-
-    if(!sekolahCount[org]){
-      sekolahCount[org] = 0;
-    }
-    sekolahCount[org]++;
-
-    // ================= HARIAN =================
-    const tarikh = new Date(data.masa.seconds * 1000)
-      .toLocaleDateString("ms-MY");
-
-    if(!harianCount[tarikh]){
-      harianCount[tarikh] = 0;
-    }
-    harianCount[tarikh]++;
-  });
-
-  // ===== CHART SEKOLAH =====
-  new Chart(document.getElementById("chartSekolah"), {
-    type: 'bar',
-    data: {
-      labels: Object.keys(sekolahCount),
-      datasets: [{
-        data: Object.values(sekolahCount),
-        backgroundColor: '#60a5fa'
-      }]
-    }
-  });
-
-  // ===== CHART HARIAN =====
-  new Chart(document.getElementById("chartHarian"), {
-    type: 'line',
-    data: {
-      labels: Object.keys(harianCount),
-      datasets: [{
-        data: Object.values(harianCount),
-        borderColor: '#34d399',
-        fill: false
-      }]
-    }
-  });
-
-});
-</script>
 </body>
 </html>

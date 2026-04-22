@@ -267,19 +267,14 @@ function renderCharts(stats){
         data
       }]
     },
-   legend: {
-  position: 'top',   // letak atas
-  align: 'center',
-  labels: {
-    color: '#ffffff',
-    font: {
-      size: 13,
-      weight: '600'
-    },
-    padding: 15,
-    boxWidth: 18
-  }
-}
+   options: {
+  plugins: {
+    legend: {
+      labels: {
+        color: "#ffffff"
+      }
+    }
+  },
   scales: {
     x: {
       ticks: { color: "#ffffff" }

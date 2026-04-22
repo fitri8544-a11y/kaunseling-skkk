@@ -1783,18 +1783,7 @@ function trackActivity(module){
 
 <script>
 
-// CHECK DAFTAR
-window.onload = function(){
-
-  const sudahDaftar = localStorage.getItem("sudahDaftar");
-
-  if(!sudahDaftar){
-    document.getElementById("modalDaftar").classList.remove("hidden");
-  }
-
-}
-
-// SUBMIT DAFTAR
+// ================= SUBMIT DAFTAR =================
 function submitDaftar(){
 
   const jenis = document.getElementById("jenis").value;
@@ -1807,34 +1796,45 @@ function submitDaftar(){
     return;
   }
 
-  // 🔥 SIMPAN DULU (WAJIB)
-  localStorage.setItem("nama", nama);
-  localStorage.setItem("jenis", jenis);
-  localStorage.setItem("kelas", kelas);
-  localStorage.setItem("organisasi", organisasi);
-  localStorage.setItem("sudahDaftar","yes");
+  // 🔥 SIMPAN (guna sessionStorage untuk multi user)
+  sessionStorage.setItem("nama", nama);
+  sessionStorage.setItem("jenis", jenis);
+  sessionStorage.setItem("kelas", kelas);
+  sessionStorage.setItem("organisasi", organisasi);
+  sessionStorage.setItem("sudahDaftar","yes");
 
   console.log("✅ LOCAL STORAGE SET:", nama);
 
-  // tutup modal terus
+  // tutup modal
   document.getElementById("modalDaftar").classList.add("hidden");
 
-  // 🔥 kemudian baru simpan Firestore
+  // simpan Firestore
   db.collection("pengunjung").add({
-    jenis: jenis,
-    nama: nama,
-    organisasi: organisasi,
-    kelas: kelas,
+    jenis, nama, organisasi, kelas,
     masa: new Date()
-  })
-  .then(()=>{
-    console.log("✅ DATA MASUK FIRESTORE");
-  })
-  .catch(err=>{
-    console.error(err);
   });
 
 }
+
+
+// ================= CHECK DAFTAR =================
+window.onload = function(){
+
+  const sudahDaftar = sessionStorage.getItem("sudahDaftar");
+
+  if(!sudahDaftar){
+    document.getElementById("modalDaftar").classList.remove("hidden");
+  }
+
+}
+
+
+// ================= RESET (OPTIONAL BUTTON) =================
+function resetDaftar(){
+  sessionStorage.clear();
+  location.reload();
+}
+
 </script>
 
 </body>

@@ -1135,6 +1135,30 @@ setInterval(animateSlogan, 8000);
 
 </div>
 
+<!-- ================= MODAL LOGIN ADMIN ================= -->
+<div id="modalLoginAdmin" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[9999]">
+
+  <div class="bg-white p-6 rounded-2xl w-[90%] max-w-md text-center">
+
+    <h2 class="text-xl font-bold mb-4 text-black">
+      🔐 Login Admin
+    </h2>
+
+    <input id="adminEmail" type="email" placeholder="Email"
+      class="w-full p-3 mb-3 rounded text-black">
+
+    <input id="adminPassword" type="password" placeholder="Password"
+      class="w-full p-3 mb-4 rounded text-black">
+
+    <button onclick="loginAdmin()" 
+      class="w-full bg-gradient-to-r from-purple-500 to-blue-500 p-3 rounded-lg text-white font-semibold">
+      Login
+    </button>
+
+  </div>
+
+</div>
+
 <!-- ================= COPING SKILLS ================= -->
 <div id="copingModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center z-50">
 
@@ -1800,10 +1824,17 @@ function submitDaftar(){
   const organisasi = document.getElementById("organisasi").value;
   const kelas = document.getElementById("kelas").value;
 
-  if(!jenis || !nama){
-    alert("Sila lengkapkan maklumat");
-    return;
-  }
+  if(jenis === "Admin"){
+
+  // simpan sementara (optional)
+  sessionStorage.setItem("jenis", "Admin");
+
+  // buka modal login admin
+  document.getElementById("modalDaftar").classList.add("hidden");
+  document.getElementById("modalLoginAdmin").classList.remove("hidden");
+
+  return; // 🔥 STOP sini
+}
 
   if(jenis === "Admin"){
   const password = prompt("Masukkan kata laluan Admin:");
@@ -1852,6 +1883,29 @@ function resetDaftar(){
   location.reload();
 }
 
+function loginAdmin(){
+
+  const email = document.getElementById("adminEmail").value;
+  const password = document.getElementById("adminPassword").value;
+
+  firebase.auth().signInWithEmailAndPassword(email, password)
+  .then(user => {
+
+    console.log("✅ ADMIN LOGIN SUCCESS");
+
+    // simpan nama admin
+    sessionStorage.setItem("nama", email);
+    sessionStorage.setItem("jenis", "Admin");
+
+    // redirect terus ke dashboard
+    window.location.href = "dashboard.html";
+
+  })
+  .catch(error => {
+    alert("Login gagal: " + error.message);
+  });
+
+}
 </script>
 
 </body>

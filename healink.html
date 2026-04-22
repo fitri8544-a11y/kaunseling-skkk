@@ -1764,7 +1764,7 @@ function trackActivity(module){
 
   db.collection("aktivitiPelajar").add({
     module: module,
-    masa: new Date(),   // ✅ kena ada koma
+    masa: firebase.firestore.FieldValue.serverTimestamp(),
 
     nama: localStorage.getItem("nama") || "Pengguna",
     jenis: localStorage.getItem("jenis") || "Pelawat",

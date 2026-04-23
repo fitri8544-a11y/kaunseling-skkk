@@ -1119,10 +1119,10 @@ setInterval(animateSlogan, 8000);
   <input id="kelas" type="text" placeholder="Kelas (jika murid)"
       class="w-full p-3 mb-4 rounded text-black">
 
-    <button type="button" onclick="submitDaftar()"
-class="w-full bg-gradient-to-r from-purple-500 to-blue-500 p-3 rounded-xl font-semibold hover:scale-105 transition">
+    <a href="daftar.html"
+class="w-full block text-center bg-gradient-to-r from-purple-500 to-blue-500 p-3 rounded-xl font-semibold hover:scale-105 transition">
 ✨ Daftar Sekarang
-</button>
+</a>
 
   </div>
 
@@ -1955,6 +1955,10 @@ function loginAdmin(){
     window.location.href = "dashboard.html";
   })
   .catch(err => alert(err.message));
+}
+
+if(!sessionStorage.getItem("nama")){
+  window.location.href = "daftar.html";
 }
 </script>
 

@@ -40,6 +40,12 @@
         class="p-3 rounded-xl bg-white/20 hover:bg-yellow-400/30 transition">
         👤 Pelawat
       </button>
+
+      <!-- 🔥 TAMBAH ADMIN -->
+  <button type="button" onclick="selectJenis('Admin')" id="btnAdmin"
+    class="p-3 rounded-xl bg-white/20 hover:bg-red-400/30 transition">
+    🛠️ Admin
+  </button>
     </div>
 
     <!-- NAMA -->
@@ -84,21 +90,30 @@ function selectJenis(jenis){
 
   jenisDipilih = jenis;
 
-  // reset warna
-  document.querySelectorAll("#btnMurid, #btnGuru, #btnPelawat")
-    .forEach(btn => btn.classList.remove("bg-green-400","bg-blue-400","bg-yellow-400"));
+  // reset semua
+  document.querySelectorAll("#btnMurid, #btnGuru, #btnPelawat, #btnAdmin")
+    .forEach(btn => btn.classList.remove(
+      "bg-green-400","bg-blue-400","bg-yellow-400","bg-red-400"
+    ));
 
-  // highlight
   if(jenis === "Murid"){
-    document.getElementById("btnMurid").classList.add("bg-green-400");
+    btnMurid.classList.add("bg-green-400");
   }
 
   if(jenis === "Guru"){
-    document.getElementById("btnGuru").classList.add("bg-blue-400");
+    btnGuru.classList.add("bg-blue-400");
   }
 
   if(jenis === "Pelawat"){
-    document.getElementById("btnPelawat").classList.add("bg-yellow-400");
+    btnPelawat.classList.add("bg-yellow-400");
+  }
+
+  if(jenis === "Admin"){
+    btnAdmin.classList.add("bg-red-400");
+
+    // 🔥 TERUS KE LOGIN ADMIN
+    window.location.href = "login.html";
+    return;
   }
 
   // hide/show kelas

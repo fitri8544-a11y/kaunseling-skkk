@@ -141,35 +141,36 @@
       </div>
     </div>
 
-    <!-- ================= KPI ================= -->
-    <div class="grid md:grid-cols-4 gap-4">
+<!-- ================= KPI ================= -->
+<div class="grid md:grid-cols-4 gap-4">
 
-      <div class="card text-center">
-        <div class="label">Interaksi</div>
-        <b id="kpiTotal">0</b>
-      </div>
+  <div class="card text-center">
+    <div class="label">Interaksi</div>
+    <b id="kpiTotal">0</b>
+  </div>
 
-      <div class="card text-center">
-        <div class="label">Modul Aktif</div>
-        <b id="kpiModules">0</b>
-      </div>
+  <div class="card text-center">
+    <div class="label">Modul Aktif</div>
+    <b id="kpiModules">0</b>
+  </div>
 
-      <div class="card text-center">
-        <div class="label">Top Modul</div>
-        <b id="kpiTop">-</b>
-      </div>
+  <div class="card text-center">
+    <div class="label">Top Modul</div>
+    <b id="kpiTop">-</b>
+  </div>
 
-      <div class="card text-center">
-        <div class="label">Purata</div>
-        <b id="kpiAvg">0</b>
-      </div>
+  <div class="card text-center">
+    <div class="label">Purata</div>
+    <b id="kpiAvg">0</b>
+  </div>
 
-    </div>
+</div>
 
-    <!-- ================= ALERT + LIVE (SEBELAH) ================= -->
+
+<!-- ================= ALERT + LIVE ================= -->
 <div class="grid md:grid-cols-2 gap-6 mt-6 items-stretch">
 
-  <!-- ⚠️ ALERT -->
+  <!-- ALERT -->
   <div class="section-box h-full">
     <div class="section-title text-red-400">
       ⚠️ Murid Perlu Perhatian
@@ -178,7 +179,7 @@
     <div id="alertList" class="space-y-3 mt-4"></div>
   </div>
 
-  <!-- 📋 LIVE -->
+  <!-- LIVE -->
   <div class="card h-full flex flex-col">
     <div class="title">📋 Aktiviti Pengguna (Live)</div>
 
@@ -189,35 +190,31 @@
 
 </div>
 
-</div>
 
-    <!-- ================= CHART ================= -->
-    <div class="grid md:grid-cols-2 gap-6">
+<!-- ================= CHART ================= -->
+<div class="grid md:grid-cols-2 gap-6 mt-6">
 
-      <div class="card">
-  <div class="title text-center">📊 Bar Chart</div>
-  <div class="h-64 md:h-72">
-    <canvas id="barChart"></canvas>
-  </div>
-</div>
-
-      <div class="card">
-  <div class="title text-center">📊 Pie Chart</div>
-  <div class="h-64 md:h-72 flex justify-center items-center">
-    <canvas id="pieChart"></canvas>
-  </div>
-</div>
-
+  <div class="card">
+    <div class="title text-center">📊 Bar Chart</div>
+    <div class="h-64 md:h-72">
+      <canvas id="barChart"></canvas>
     </div>
-
-    <!-- ================= RANKING ================= -->
-    <div class="card">
-      <div class="title">🏆 Ranking Modul</div>
-      <div id="ranking" class="grid md:grid-cols-3 gap-4"></div>
-    </div>
-
   </div>
 
+  <div class="card">
+    <div class="title text-center">📊 Pie Chart</div>
+    <div class="h-64 md:h-72 flex justify-center items-center">
+      <canvas id="pieChart"></canvas>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ================= RANKING ================= -->
+<div class="card mt-6">
+  <div class="title">🏆 Ranking Modul</div>
+  <div id="ranking" class="grid md:grid-cols-3 gap-4"></div>
 </div>
 
 <script>

@@ -100,29 +100,92 @@ function selectJenis(jenis){
 }
 
 // DAFTAR
-function daftar(){
+function submitDaftar(){
 
-  const nama = document.getElementById("nama").value;
-  const kelas = document.getElementById("kelas").value;
+  const jenis = document.getElementById("jenis").value;
+  const nama  = document.getElementById("nama").value.trim();
+  const organisasi = document.getElementById("organisasi").value.trim();
+  const kelas = document.getElementById("kelas").value.trim();
 
-  if(!jenisDipilih || !nama){
-    alert("Sila lengkapkan maklumat");
+  // 🔒 VALIDATION IKUT JENIS
+
+  if(!jenis){
+    alert("Sila pilih jenis pengguna");
     return;
   }
 
-  db.collection("pengunjung").add({
-    jenis: jenisDipilih,
-    nama: nama,
-    kelas: kelas,
-    masa: new Date()
-  })
-  .then(()=>{
-    document.getElementById("msg").innerText = "✅ Berjaya didaftarkan";
+  // 🧑‍🎓 MURID
+  if(jenis === "Murid"){
+    if(!nama || !organisasi || !kelas){
+      alert("Murid wajib isi Nama, Sekolah dan Kelas");
+      return;
+    }
+  }
 
-    // reset
-    document.getElementById("nama").value = "";
-    document.getElementById("kelas").value = "";
+  // 👨‍🏫 GURU
+  if(jenis === "Guru"){
+    if(!nama || !organisasi){
+      alert("Guru wajib isi Nama dan Sekolah");
+      return;
+    }
+  }
+
+  // 👤 PELAWAT
+  if(jenis === "Pelawat"){
+    if(!nama || !organisasi){
+      alert("Pelawat wajib isi Nama dan Organisasi");
+      return;
+    }
+  }
+
+  // 🛠️ ADMIN (skip form)
+  if(jenis === "Admin"){
+    document.getElementById("modalDaftar").classList.add("hidden");
+    document.getElementById("modalLoginAdmin").classList.remove("hidden");
+    return;
+  }
+
+  // 🔥 SIMPAN SESSION
+  sessionStorage.setItem("nama", nama);
+  sessionStorage.setItem("jenis", jenis);
+  sessionStorage.setItem("kelas", kelas);
+  sessionStorage.setItem("organisasi", organisasi);
+  sessionStorage.setItem("sudahDaftar","yes");
+
+  // tutup modal
+  document.getElementById("modalDaftar").classList.add("hidden");
+
+  // simpan Firestore
+  db.collection("pengunjung").add({
+    jenis, nama, organisasi, kelas,
+    masa: new Date()
   });
+
+}
+
+function handleJenis(){
+
+  const jenis = document.getElementById("jenis").value;
+
+  const kelasField = document.getElementById("kelas");
+  const organisasiField = document.getElementById("organisasi");
+
+  // reset semua
+  kelasField.parentElement.style.display = "block";
+  organisasiField.parentElement.style.display = "block";
+
+  if(jenis === "Guru"){
+    kelasField.parentElement.style.display = "none";
+  }
+
+  if(jenis === "Pelawat"){
+    kelasField.parentElement.style.display = "none";
+  }
+
+  if(jenis === "Admin"){
+    document.getElementById("modalDaftar").classList.add("hidden");
+    document.getElementById("modalLoginAdmin").classList.remove("hidden");
+  }
 
 }
 

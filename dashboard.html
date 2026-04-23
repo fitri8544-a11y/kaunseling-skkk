@@ -1,913 +1,142 @@
-<!DOCTYPE html>
-<html lang="ms">
-<head>
-<meta charset="UTF-8" />
-<title>Dashboard Aktiviti Pelajar</title>
+<body class="bg-gradient-to-r from-purple-700 to-blue-700 text-white min-h-screen p-6">
 
-<script src="https://cdn.tailwindcss.com"></script>
+<!-- 🔐 LOGOUT BUTTON -->
+<button onclick="logout()" 
+class="fixed top-5 right-5 bg-red-500 hover:bg-red-600 
+text-white px-4 py-2 rounded-lg shadow-lg 
+hover:scale-105 transition duration-300 z-[9999]">
 
-<!-- Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  🚪 Logout
 
-<!-- Firebase (compat) -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+</button>
 
-<style>
-  .card { @apply bg-white/20 border border-white/20 backdrop-blur-lg rounded-2xl p-5 shadow-lg; }
-</style>
-<style>
-  body {
-    color: #ffffff;
-  }
-</style>
-<style>
-.section-title {
-  font-size: 20px;
-  font-weight: 700;
-  text-align: center;
-  color: rgba(255,255,255,0.95);
-  margin-bottom: 20px;
-  letter-spacing: 0.5px;
-}
-.section-box {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 16px;
-  padding: 20px;
-  margin-bottom: 20px;
-  backdrop-filter: blur(12px);
-}
-.sidebar-btn{
-  width:100%;
-  text-align:left;
-  padding:10px;
-  border-radius:10px;
-  margin-bottom:5px;
-  background:rgba(255,255,255,0.05);
-}
-.sidebar-btn:hover{
-  background:rgba(255,255,255,0.2);
-}
-
-.card{
-  background: rgba(255,255,255,0.1);
-  padding: 16px;
-  border-radius: 16px;
-}
-
-.title{
-  font-size:16px;
-  font-weight:600;
-  margin-bottom:10px;
-}
-
-.label{
-  font-size:12px;
-  opacity:0.7;
-}
-</style>
-</head>
-
-<body class="bg-gradient-to-br from-[#1e1b4b] via-purple-700 to-blue-600 text-white">
-
-<div class="flex min-h-screen">
-
-  <!-- ================= SIDEBAR ================= -->
-<div class="w-64 bg-white/10 backdrop-blur-lg p-5 border-r border-white/10">
-
-  <h2 class="text-xl font-bold mb-6">📊 Dashboard</h2>
-
-  <!-- ================= SEKOLAH ================= -->
-  <div class="mb-6">
-    <div class="text-sm text-white/70 mb-2">🏫 Sekolah</div>
-
-    <!-- 🔥 AUTO LOAD -->
-    <div id="listSekolah" class="space-y-2"></div>
+  <!-- HEADER -->
+  <div class="max-w-6xl mx-auto mb-6">
+    <h1 class="text-3xl font-bold text-center">📊 Dashboard Aktiviti Pelajar</h1>
+    <p class="text-center text-white/70 mt-1">Analisis penggunaan modul (Real-time)</p>
   </div>
 
-  <!-- ================= KELAS ================= -->
-  <div>
-    <div class="text-sm text-white/70 mb-2">🎓 Kelas</div>
-
-    <!-- 🔥 AUTO LOAD -->
-    <div id="listKelas" class="space-y-2"></div>
-  </div>
-
-</div>
-
-  <!-- ================= CONTENT ================= -->
-  <div class="flex-1 p-6 space-y-6 overflow-y-auto">
-
-    <!-- HEADER -->
-    <div class="flex justify-between items-center">
-      <div>
-        <h1 class="text-2xl font-bold">📊 Dashboard Aktiviti Pelajar</h1>
-        <p class="text-white/70 text-sm">Analisis penggunaan modul (Real-time)</p>
-      </div>
-
-      <button onclick="logout()" 
-        class="bg-red-500 px-4 py-2 rounded-lg hover:bg-red-600">
-        🚪 Logout
-      </button>
+  <!-- FILTER -->
+  <div class="max-w-6xl mx-auto mb-6 grid md:grid-cols-3 gap-4">
+    <div class="card">
+      <label class="text-sm opacity-80">Dari</label>
+      <input id="fromDate" type="date" class="w-full mt-1 p-2 rounded text-black">
     </div>
-
-    <!-- FILTER TARIKH -->
-    <div class="grid md:grid-cols-3 gap-4">
-      <input id="fromDate" type="date" class="p-2 rounded text-black">
-      <input id="toDate" type="date" class="p-2 rounded text-black">
-      <button onclick="applyFilter()" 
-        class="bg-white/20 rounded-lg hover:bg-white/30">
+    <div class="card">
+      <label class="text-sm opacity-80">Hingga</label>
+      <input id="toDate" type="date" class="w-full mt-1 p-2 rounded text-black">
+    </div>
+    <div class="card flex items-end">
+      <button onclick="applyFilter()" class="w-full bg-white/20 hover:bg-white/30 rounded-xl p-2">
         Tapis Data
       </button>
     </div>
+  </div>
 
-    <!-- ================= PENGUNJUNG ================= -->
-    <div class="card">
-      <div class="title">👥 Analisis Pengunjung</div>
+<!-- ================= PENGUNJUNG ================= -->
+<div class="max-w-6xl mx-auto mt-6 section-box">
 
-      <div class="grid md:grid-cols-2 gap-6 items-center">
+  <div class="section-title">👥 Analisis Pengunjung</div>
 
-        <div class="grid grid-cols-3 text-center">
-          <div>👨‍🎓 <br><b id="kpiMurid">0</b></div>
-          <div>👨‍🏫 <br><b id="kpiGuru">0</b></div>
-          <div>👤 <br><b id="kpiPelawat">0</b></div>
-        </div>
+  <div class="grid md:grid-cols-2 gap-6 items-center">
 
-        <div class="h-40">
-          <canvas id="visitorChart"></canvas>
-        </div>
+    <!-- KPI -->
+    <div class="grid grid-cols-3 gap-4 text-center">
 
-      </div>
-    </div>
-
-    <!-- ================= KPI ================= -->
-    <div class="grid md:grid-cols-4 gap-4">
-
-      <div class="card text-center">
-        <div class="label">Interaksi</div>
-        <b id="kpiTotal">0</b>
+      <div>
+        <div class="text-sm text-white/70">👨‍🎓 Murid</div>
+        <div id="kpiMurid" class="text-3xl font-bold">0</div>
       </div>
 
-      <div class="card text-center">
-        <div class="label">Modul Aktif</div>
-        <b id="kpiModules">0</b>
+      <div>
+        <div class="text-sm text-white/70">👨‍🏫 Guru</div>
+        <div id="kpiGuru" class="text-3xl font-bold">0</div>
       </div>
 
-      <div class="card text-center">
-        <div class="label">Top Modul</div>
-        <b id="kpiTop">-</b>
-      </div>
-
-      <div class="card text-center">
-        <div class="label">Purata</div>
-        <b id="kpiAvg">0</b>
+      <div>
+        <div class="text-sm text-white/70">👤 Pelawat</div>
+        <div id="kpiPelawat" class="text-3xl font-bold">0</div>
       </div>
 
     </div>
 
-    <div class="grid md:grid-cols-2 gap-6">
-
-  <!-- ALERT -->
-<div class="section-box">
-  <div class="section-title text-red-400">
-    ⚠️ Murid Perlu Perhatian
-  </div>
-  <div id="alertList" class="space-y-3 mt-4"></div> <!-- ✅ BETUL -->
-</div>
-
-<!-- RISK -->
-<div class="section-box">
-  <div class="section-title text-yellow-400">
-    🚨 Top Murid Berisiko
-  </div>
-  <div id="riskList" class="space-y-3 mt-4"></div> <!-- ✅ KEKAL -->
-</div>
-
-</div>
-
-    <!-- ================= CHART ================= -->
-    <div class="grid md:grid-cols-2 gap-6">
-
-      <div class="card">
-  <div class="title text-center">📊 Bar Chart</div>
-  <div class="h-64 md:h-72">
-    <canvas id="barChart"></canvas>
-  </div>
-</div>
-
-      <div class="card">
-  <div class="title text-center">📊 Pie Chart</div>
-  <div class="h-64 md:h-72 flex justify-center items-center">
-    <canvas id="pieChart"></canvas>
-  </div>
-</div>
-
-    </div>
-
-    <!-- ================= LIVE ================= -->
-    <div class="card">
-      <div class="title">📋 Aktiviti Pengguna (Live)</div>
-      <div id="activityList" class="space-y-2 max-h-[300px] overflow-y-auto"></div>
-    </div>
-
-    <!-- ================= RANKING ================= -->
-    <div class="card">
-      <div class="title">🏆 Ranking Modul</div>
-      <div id="ranking" class="grid md:grid-cols-3 gap-4"></div>
+    <!-- CHART -->
+    <div class="h-44">
+      <canvas id="visitorChart"></canvas>
     </div>
 
   </div>
 
 </div>
 
-<script>
-// 🔥 CONFIG (guna config cikgu)
-const firebaseConfig = {
-  apiKey: "AIzaSyA9R5jKqeJNvBHD-SIOuseAqyb_x909R3Q",
-  authDomain: "bimbingankaunselingskkk.firebaseapp.com",
-  projectId: "bimbingankaunselingskkk"
-};
-
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
-// STATE
-let rawData = [];
-let stats = {};
-let barChart, pieChart;
-
-// 🔎 FILTER TARIKH
-function applyFilter(){
-  computeAndRender();
-}
-
-function inRange(date){
-  const from = document.getElementById('fromDate').value;
-  const to   = document.getElementById('toDate').value;
-
-  if(!from && !to) return true;
-
-  const d = new Date(date?.seconds ? date.seconds*1000 : date);
-  if(from){
-    const f = new Date(from + "T00:00:00");
-    if(d < f) return false;
-  }
-  if(to){
-    const t = new Date(to + "T23:59:59");
-    if(d > t) return false;
-  }
-  return true;
-}
-
-// 🧠 COMPUTE
-function computeAndRender(){
-  stats = {};
-  let total = 0;
-
-  rawData.forEach(d => {
-    if(!inRange(d.masa)) return;
-
-    const m = d.module || "Lain";
-    if(!stats[m]) stats[m] = 0;
-    stats[m]++;
-    total++;
-  });
-
-  renderKPI(stats, total);
-  renderCharts(stats);
-  renderRanking(stats);
-}
-
-// 📊 KPI
-function renderKPI(stats, total){
-  const modules = Object.keys(stats).length;
-  const sorted = Object.entries(stats).sort((a,b)=>b[1]-a[1]);
-  const top = sorted[0]?.[0] || "-";
-  const avg = modules ? Math.round(total/modules) : 0;
-
-  document.getElementById("kpiTotal").innerText = total;
-  document.getElementById("kpiModules").innerText = modules;
-  document.getElementById("kpiTop").innerText = top;
-  document.getElementById("kpiAvg").innerText = avg;
-}
-
-// 📈 CHART
-function renderCharts(stats){
-
-  const labels = Object.keys(stats);
-  const data = Object.values(stats);
-
-  // destroy lama
-  if(barChart) barChart.destroy();
-  if(pieChart) pieChart.destroy();
-
-  // ================= BAR =================
-  barChart = new Chart(document.getElementById('barChart'), {
-    type: 'bar',
-    data: {
-      labels,
-      datasets: [{
-        label: 'Jumlah Klik',
-        data,
-        backgroundColor: "rgba(255,255,255,0.3)",
-        borderRadius: 6
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false, // 🔥 WAJIB
-
-      plugins: {
-        legend: {
-          labels: {
-            color: "#ffffff",
-            font: { size: 12 } // kecilkan legend
-          }
-        }
-      },
-
-      scales: {
-        x: {
-          ticks: { 
-            color: "#ffffff",
-            font: { size: 10 } // kecilkan label bawah
-          }
-        },
-        y: {
-          ticks: { 
-            color: "#ffffff",
-            font: { size: 10 }
-          }
-        }
-      }
-    }
-  });
-
-
-  // ================= PIE =================
-  pieChart = new Chart(document.getElementById('pieChart'), {
-    type: 'pie',
-    data: {
-      labels,
-      datasets: [{
-        data,
-        backgroundColor: [
-          "#60a5fa","#f87171","#fbbf24","#34d399","#a78bfa",
-          "#f472b6","#22d3ee","#facc15","#fb923c","#4ade80"
-        ]
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false, // 🔥 WAJIB
-
-      plugins: {
-        legend: {
-          labels: {
-            color: "#ffffff",
-            font: { size: 11 } // kecilkan legend pie
-          }
-        }
-      }
-    }
-  });
-
-}
-
-// 🏆 RANKING
-function renderRanking(stats){
-  const container = document.getElementById("ranking");
-  container.innerHTML = "";
-
-  const sorted = Object.entries(stats).sort((a,b)=>b[1]-a[1]);
-  const max = sorted[0]?.[1] || 1;
-
-  sorted.forEach(([module, count], i)=>{
-    const percent = Math.round((count/max)*100);
-
-    container.innerHTML += `
-      <div class="card">
-        <div class="flex justify-between">
-          <div>#${i+1}</div>
-          <div class="text-xs">${percent}%</div>
-        </div>
-        <div class="font-bold mt-2">${module}</div>
-        <div class="text-3xl mt-1">${count}</div>
-        <div class="w-full bg-white/20 h-2 rounded mt-3">
-          <div class="h-2 rounded bg-gradient-to-r from-yellow-400 to-pink-500" style="width:${percent}%"></div>
-        </div>
-      </div>
-    `;
-  });
-}
-</script>
-
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-
-<script>
-const ADMIN_EMAILS = [
-  "fitrieusop@moe.gov.my",
-  "g-88050609@moe-dl.edu.my"
-];
-
-firebase.auth().onAuthStateChanged(user => {
-
-  if (!user) {
-    window.location.href = "login.html";
-    return;
-  }
-
-  if (!ADMIN_EMAILS.includes(user.email)) {
-    alert("Akses terhad untuk admin sahaja");
-    firebase.auth().signOut();
-    window.location.href = "login.html";
-  }
-
-});
-</script>
-
-<script>
-function logout(){
-  firebase.auth().signOut().then(()=>{
-    window.location.href = "healink.html"; // 🔥 balik ke homepage
-  });
-}
-
-let visitorChart;
-
-db.collection("pengunjung").onSnapshot(snapshot => {
-
-  let murid = 0;
-  let guru = 0;
-  let pelawat = 0;
-
-  snapshot.forEach(doc => {
-
-  const d = doc.data();  // ✅ guna d (konsisten)
-
-  // kira jenis pengguna
-  if(d.jenis === "Murid") murid++;
-  else if(d.jenis === "Guru") guru++;
-  else pelawat++;
-
-  // format masa
-  const time = d.masa?.toDate().toLocaleString('ms-MY', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
-  }) || "-";
-
-  // contoh guna untuk display
-  console.log(d.nama, time);
-
-});
-
-  // UPDATE KPI
-  document.getElementById("kpiMurid").innerText = murid;
-  document.getElementById("kpiGuru").innerText = guru;
-  document.getElementById("kpiPelawat").innerText = pelawat;
-
-  // DESTROY CHART LAMA
-  if(visitorChart) visitorChart.destroy();
-
-  // CREATE CHART BARU
-  visitorChart = new Chart(document.getElementById("visitorChart"), {
-    type: 'doughnut',
-    data: {
-      labels: ["Murid", "Guru", "Pelawat"],
-      datasets: [{
-        data: [murid, guru, pelawat],
-        backgroundColor: [
-          "#34d399", // hijau
-          "#60a5fa", // biru
-          "#f59e0b"  // oren
-        ],
-        borderWidth: 2
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          labels: {
-            color: "#fff",
-            font: { size: 12 }
-          }
-        }
-      }
-    }
-  });
-
-});
-</script>
-
-<script>
-
-// ================= FILTER =================
-let currentSekolah = "all";
-let currentKelas = "all";
-
-function filterSekolah(s){
-  currentSekolah = s;
-  loadData();
-}
-
-function filterKelas(k){
-  currentKelas = k;
-  loadData();
-}
-
-
-// ================= LOAD DATA (KPI + FILTER) =================
-function loadData(){
-
-  db.collection("aktivitiPelajar")
-  .orderBy("masa","desc")
-  .onSnapshot(snapshot => {
-
-    let murid = 0, guru = 0, pelawat = 0;
-
-    snapshot.forEach(doc => {
-
-      const d = doc.data();
-
-      // 🔥 FILTER SEKOLAH
-      if(
-  currentSekolah !== "all" &&
-  d.organisasi?.toLowerCase().trim() !== currentSekolah.toLowerCase().trim()
-) return;
-
-      // 🔥 FILTER KELAS
-      if(
-  currentKelas !== "all" &&
-  d.kelas?.toLowerCase().trim() !== currentKelas.toLowerCase().trim()
-) return;
-
-      if(d.jenis === "Murid") murid++;
-      else if(d.jenis === "Guru") guru++;
-      else pelawat++;
-
-    });
-
-    document.getElementById("kpiMurid").innerText = murid;
-    document.getElementById("kpiGuru").innerText = guru;
-    document.getElementById("kpiPelawat").innerText = pelawat;
-
-  });
-
-}
-
-
-// ================= LIVE ACTIVITY =================
-db.collection("aktivitiPelajar")
-.orderBy("masa", "desc")
-.limit(20)
-.onSnapshot(snapshot => {
-
-  const container = document.getElementById("activityList");
-  if (!container) return;
-
-  let html = "";
-
-  snapshot.forEach(doc => {
-
-    const d = doc.data();
-
-    const time = d.masa?.toDate().toLocaleString('ms-MY', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    }) || "-";
-
-    // 🔥 ICON FIX
-    let icon = "👤";
-    const jenis = (d.jenis || "").toString().trim().toLowerCase();
-
-    if (jenis === "murid") icon = "🧑‍🎓";
-    else if (jenis === "guru") icon = "👨‍🏫";
-    else if (jenis === "admin") icon = "🛠️";
-
-    html += `
-      <div class="bg-white/10 p-4 rounded-xl flex justify-between items-center 
-                  hover:bg-white/20 transition duration-300">
-
-        <!-- LEFT -->
-        <div>
-
-          <div class="flex items-center gap-2">
-            <span class="text-2xl">${icon}</span>
-            <span class="font-semibold text-white">
-              ${d.nama || "Pengguna"}
-            </span>
-          </div>
-
-          <div class="text-xs text-white/70 mt-1">
-            ${d.jenis || "-"} • ${d.kelas || d.organisasi || "-"}
-          </div>
-
-        </div>
-
-        <!-- RIGHT -->
-        <div class="text-right">
-          <div class="text-yellow-300 font-semibold">
-            ${d.module || "-"}
-          </div>
-
-          <div class="text-xs text-white/60 mt-1">
-            ${time}
-          </div>
-        </div>
-
-      </div>
-    `;
-  });
-
-  container.innerHTML = html;
-
-});
-
-// ================= SEKOLAH =================
-function loadSekolah(){
-
-  const container = document.getElementById("listSekolah");
-  if(!container) return;
-
-  db.collection("aktivitiPelajar")
-  .onSnapshot(snapshot => {
-
-    let sekolahSet = new Set();
-
-    snapshot.forEach(doc => {
-      const d = doc.data();
-      if(d.organisasi){
-        sekolahSet.add(d.organisasi);
-      }
-    });
-
-    container.innerHTML = "";
-
-    container.innerHTML += `
-      <button onclick="filterSekolah('all')" class="sidebar-btn">
-        Semua
-      </button>
-    `;
-
-    [...sekolahSet]
-      .map(s => s.trim())
-      .sort()
-      .forEach(sekolah => {
-
-        container.innerHTML += `
-          <button onclick="filterSekolah('${sekolah}')" class="sidebar-btn">
-            ${sekolah}
-          </button>
-        `;
-      });
-
-  });
-
-}
-
-// ================= KELAS =================
-function loadKelas(){
-
-  const container = document.getElementById("listKelas");
-  if(!container) return;
-
-  db.collection("aktivitiPelajar")
-  .onSnapshot(snapshot => {
-
-    let kelasSet = new Set();
-
-    snapshot.forEach(doc => {
-      const d = doc.data();
-      if(d.kelas){
-        kelasSet.add(d.kelas);
-      }
-    });
-
-    container.innerHTML = "";
-
-    container.innerHTML += `
-      <button onclick="filterKelas('all')" class="sidebar-btn">
-        Semua
-      </button>
-    `;
-
-    [...kelasSet]
-      .map(k => k.trim())
-      .sort()
-      .forEach(kelas => {
-
-        container.innerHTML += `
-          <button onclick="filterKelas('${kelas}')" class="sidebar-btn">
-            ${kelas}
-          </button>
-        `;
-      });
-
-  });
-
-}
-
-firebase.auth().onAuthStateChanged(user => {
-
-  if(!user){
-    window.location.href = "index.html"; // block access
-  }
-
-});
-
-function loadAlert(){
-
-  const container = document.getElementById("alertList");
-
-  if(!container){
-    console.error("❌ alertList tak jumpa");
-    return;
-  }
-
-  db.collection("aktivitiPelajar")
-  .where("perluPerhatian", "==", true)
-  .limit(10)
-  .onSnapshot(snapshot => {
-
-    let html = "";
-
-    snapshot.forEach(doc => {
-
-      const d = doc.data();
-
-      // 🔥 SAFE TEXT (elak error tanda ')
-      const nama = (d.nama || "").replace(/'/g,"");
-      const kelas = (d.kelas || d.organisasi || "").replace(/'/g,"");
-      const module = (d.module || "").replace(/'/g,"");
-      const komen = (d.komen || "").replace(/'/g,"");
-
-      html += `
-        <div onclick="openDetail('${nama}','${kelas}','${module}','${komen}')"
-             class="cursor-pointer bg-red-500/20 border border-red-400 p-4 rounded-xl hover:bg-red-500/30 transition">
-
-          <div class="font-bold text-white">
-            ⚠️ ${d.nama || "Tanpa Nama"}
-          </div>
-
-          <div class="text-sm text-white/80">
-            ${d.kelas || d.organisasi || "-"}
-          </div>
-
-          <div class="text-xs text-red-300 mt-1">
-            Modul: ${d.module || "-"}
-          </div>
-
-        </div>
-      `;
-    });
-
-    if(!html){
-      html = `<div class="text-white/50 text-sm">Tiada data</div>`;
-    }
-
-    container.innerHTML = html;
-
-  }, err => {
-    console.error("❌ FIRESTORE ERROR:", err);
-  });
-
-}
-
-console.log("🔥 ALERT LOADED");
-
-function openDetail(nama, kelas, module, komen){
-
-  console.log("CLICK DETECTED:", nama);
-
-  const modal = document.getElementById("detailModal");
-  const content = document.getElementById("detailContent");
-
-  if(!modal || !content){
-    console.error("❌ MODAL TAK JUMPA");
-    return;
-  }
-
-  content.innerHTML = `
-  <b>Nama:</b> ${nama}<br>
-  <b>Kelas:</b> ${kelas}<br>
-  <b>Modul:</b> ${module}<br><br>
-
-  <b>📝 Luahan Murid:</b>
-  <div class="bg-gray-100 text-black p-3 rounded mt-2 text-left">
-    ${komen || "Tiada maklumat"}
-  </div>
-
-  <br>
-  <span class="text-red-500 font-semibold">
-    ⚠️ Murid ini memerlukan perhatian
-  </span>
-`;
-
-  modal.classList.remove("hidden");
-
-}
-
-function closeDetail(){
-  document.getElementById("detailModal").classList.add("hidden");
-}
-
-
-
-  const container = document.getElementById("riskList");
-  if(!container) return;
-
-function loadRisk(){
-
-  const container = document.getElementById("riskList");
-
-  if(!container){
-    console.error("❌ riskList tak jumpa");
-    return;
-  }
-
-  db.collection("aktivitiPelajar")
-  .orderBy("riskScore","desc")
-  .limit(10)
-  .onSnapshot(snapshot => {
-
-    let html = "";
-
-    snapshot.forEach(doc => {
-
-      const d = doc.data();
-
-      const color =
-        d.tahap === "TINGGI" ? "bg-red-500/20 border-red-400" :
-        d.tahap === "SEDERHANA" ? "bg-yellow-500/20 border-yellow-400" :
-        "bg-green-500/20 border-green-400";
-
-      html += `
-        <div class="${color} border p-4 rounded-xl">
-
-          <div class="font-bold text-white">
-            🚨 ${d.nama || "-"}
-          </div>
-
-          <div class="text-sm text-white/80">
-            ${d.kelas || d.organisasi || "-"}
-          </div>
-
-          <div class="text-xs mt-2 text-white/70">
-            Skor: ${d.riskScore || 0} (${d.tahap || "RENDAH"})
-          </div>
-
-        </div>
-      `;
-    });
-
-    container.innerHTML = html || "Tiada data";
-
-  });
-
-}
-// ================= INIT =================
-window.onload = function(){
-  loadRisk();
-}
-  console.log("🚀 DASHBOARD READY");
-
-  loadData();
-  loadSekolah();
-  loadKelas();
-  loadAlert();
-  loadRisk(); // 🔥 kekalkan
-;
-
-</script>
-
-<!-- LETAK SEBELUM </body> -->
-<div id="detailModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[9999]">
-
-  <div class="bg-white p-6 rounded-2xl w-[90%] max-w-md text-center">
-
-    <h2 class="text-xl font-bold mb-4 text-black">
-      📋 Maklumat Murid
-    </h2>
-
-    <div id="detailContent" class="text-black text-sm"></div>
-
-    <button onclick="closeDetail()" 
-      class="mt-4 px-6 py-2 bg-purple-600 text-white rounded-lg">
-      Tutup
-    </button>
+  <!-- KPI -->
+  <div class="max-w-6xl mx-auto section-box">
+
+  <div class="section-title">📊 Ringkasan Sistem</div>
+
+  <div class="grid md:grid-cols-4 gap-4 text-center">
+
+    <div>
+      <div class="text-xs text-white/70">Jumlah Interaksi</div>
+      <div id="kpiTotal" class="text-2xl font-bold">0</div>
+    </div>
+
+    <div>
+      <div class="text-xs text-white/70">Modul Aktif</div>
+      <div id="kpiModules" class="text-2xl font-bold">0</div>
+    </div>
+
+    <div>
+      <div class="text-xs text-white/70">Top Modul</div>
+      <div id="kpiTop" class="text-2xl font-bold">-</div>
+    </div>
+
+    <div>
+      <div class="text-xs text-white/70">Purata / Modul</div>
+      <div id="kpiAvg" class="text-2xl font-bold">0</div>
+    </div>
 
   </div>
 
 </div>
 
-</body>
-</html>
+<!-- CHART -->
+<div class="max-w-6xl mx-auto mt-6 section-box">
+
+  <div class="section-title">📈 Analisis Modul</div>
+
+  <div class="grid md:grid-cols-2 gap-6 items-center">
+
+    <div class="h-72 md:h-80">
+      <canvas id="barChart"></canvas>
+    </div>
+
+    <div class="h-72 md:h-80">
+      <canvas id="pieChart"></canvas>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= AKTIVITI LIVE ================= -->
+<div class="max-w-6xl mx-auto mt-6 section-box">
+
+  <div class="section-title">📋 Aktiviti Pengguna (Live)</div>
+
+  <div id="activityList" 
+       class="space-y-3 max-h-[300px] overflow-y-auto pr-2">
+  </div>
+
+</div>
+
+
+<!-- ================= RANKING ================= -->
+<div class="max-w-6xl mx-auto mt-6 section-box">
+
+  <div class="section-title">🏆 Ranking Modul</div>
+
+  <div id="ranking" class="grid md:grid-cols-3 gap-4"></div>
+
+</div>

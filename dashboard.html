@@ -736,7 +736,6 @@ function loadAlert(){
 
   db.collection("aktivitiPelajar")
   .where("perluPerhatian", "==", true)
-  .orderBy("masa","desc")
   .limit(10)
   .onSnapshot(snapshot => {
 
@@ -768,13 +767,27 @@ function loadAlert(){
 
     container.innerHTML = html;
 
+  }, err => {
+    console.error("❌ FIRESTORE ERROR:", err);
   });
 
 }
 
+console.log("🔥 ALERT LOADED");
+
 function openDetail(nama, kelas, module){
 
-  document.getElementById("detailContent").innerHTML = `
+  console.log("CLICK DETECTED:", nama);
+
+  const modal = document.getElementById("detailModal");
+  const content = document.getElementById("detailContent");
+
+  if(!modal || !content){
+    console.error("❌ MODAL TAK JUMPA");
+    return;
+  }
+
+  content.innerHTML = `
     <b>Nama:</b> ${nama}<br>
     <b>Kelas:</b> ${kelas}<br>
     <b>Modul:</b> ${module}<br><br>
@@ -784,10 +797,9 @@ function openDetail(nama, kelas, module){
     </span>
   `;
 
-  document.getElementById("detailModal").classList.remove("hidden");
+  modal.classList.remove("hidden");
 
 }
-
 function closeDetail(){
   document.getElementById("detailModal").classList.add("hidden");
 }

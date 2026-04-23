@@ -166,13 +166,28 @@
 
     </div>
 
-    <div class="section-box mt-6">
+    <!-- ================= ALERT + LIVE (SEBELAH) ================= -->
+<div class="grid md:grid-cols-2 gap-6 mt-6 items-stretch">
 
-  <div class="section-title text-red-400">
-    ⚠️ Murid Perlu Perhatian
+  <!-- ⚠️ ALERT -->
+  <div class="section-box h-full">
+    <div class="section-title text-red-400">
+      ⚠️ Murid Perlu Perhatian
+    </div>
+
+    <div id="alertList" class="space-y-3 mt-4"></div>
   </div>
 
-  <div id="alertList" class="space-y-3 mt-4"></div>
+  <!-- 📋 LIVE -->
+  <div class="card h-full flex flex-col">
+    <div class="title">📋 Aktiviti Pengguna (Live)</div>
+
+    <div id="activityList"
+         class="space-y-2 mt-3 max-h-[400px] overflow-y-auto flex-1">
+    </div>
+  </div>
+
+</div>
 
 </div>
 
@@ -193,12 +208,6 @@
   </div>
 </div>
 
-    </div>
-
-    <!-- ================= LIVE ================= -->
-    <div class="card">
-      <div class="title">📋 Aktiviti Pengguna (Live)</div>
-      <div id="activityList" class="space-y-2 max-h-[300px] overflow-y-auto"></div>
     </div>
 
     <!-- ================= RANKING ================= -->

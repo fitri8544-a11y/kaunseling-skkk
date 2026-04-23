@@ -104,8 +104,10 @@ function submitDaftar(){
 
   const jenis = jenisDipilih;
   const nama  = document.getElementById("nama").value.trim();
-  const organisasi = document.getElementById("organisasi").value.trim();
   const kelas = document.getElementById("kelas").value.trim();
+
+  const orgInput = document.getElementById("organisasi");
+  const organisasi = orgInput ? orgInput.value.trim() : "";
 
   // ❌ TAK PILIH JENIS
   if(!jenis){
@@ -113,26 +115,32 @@ function submitDaftar(){
     return;
   }
 
+  // ❌ SEMUA WAJIB ADA NAMA
+  if(!nama){
+    alert("Sila isi nama");
+    return;
+  }
+
   // 🧑‍🎓 MURID
   if(jenis === "Murid"){
-    if(!nama || !organisasi || !kelas){
-      alert("Murid wajib isi Nama, Sekolah dan Kelas");
+    if(!organisasi || !kelas){
+      alert("Murid wajib isi Sekolah dan Kelas");
       return;
     }
   }
 
   // 👨‍🏫 GURU
   if(jenis === "Guru"){
-    if(!nama || !organisasi){
-      alert("Guru wajib isi Nama dan Sekolah");
+    if(!organisasi){
+      alert("Guru wajib isi Sekolah");
       return;
     }
   }
 
   // 👤 PELAWAT
   if(jenis === "Pelawat"){
-    if(!nama || !organisasi){
-      alert("Pelawat wajib isi Nama dan Organisasi");
+    if(!organisasi){
+      alert("Pelawat wajib isi Organisasi");
       return;
     }
   }
@@ -152,8 +160,8 @@ function submitDaftar(){
 
   // redirect
   window.location.href = "healink.html";
-
 }
+
 function selectJenis(jenis){
 
   jenisDipilih = jenis;

@@ -1726,13 +1726,23 @@ function trackActivity(module){
 
   console.log("🔥 TRACK FUNCTION DIPANGGIL:", module);
 
-  // 🔥 ambil data dari sessionStorage (bukan localStorage)
   const nama = sessionStorage.getItem("nama");
   const jenis = sessionStorage.getItem("jenis");
   const kelas = sessionStorage.getItem("kelas");
   const organisasi = sessionStorage.getItem("organisasi");
 
   console.log("👤 USER:", nama);
+
+  // 🔥 DETECT MODULE RISIKO
+  let perluPerhatian = false;
+
+  if(
+    module === "HealTalk" || 
+    module === "Emotion" || 
+    module === "Coping"
+  ){
+    perluPerhatian = true;
+  }
 
   db.collection("aktivitiPelajar").add({
     module: module,
@@ -1741,10 +1751,13 @@ function trackActivity(module){
     nama: nama || "Pengguna",
     jenis: jenis || "Pelawat",
     kelas: kelas || "-",
-    organisasi: organisasi || "-"
+    organisasi: organisasi || "-",
+
+    // 🔥 TAMBAH INI
+    perluPerhatian: perluPerhatian
   })
   .then(() => {
-    console.log("✅ DATA MASUK FIRESTORE");
+    console.log("✅ DATA MASUK FIRESTORE", perluPerhatian);
   })
   .catch((error) => {
     console.error("❌ ERROR:", error);

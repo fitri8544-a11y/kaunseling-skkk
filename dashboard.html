@@ -201,6 +201,16 @@
 
 </div>
 
+<div class="section-box mt-6">
+
+  <div class="section-title text-red-400">
+    ⚠️ Murid Perlu Perhatian
+  </div>
+
+  <div id="alertList" class="space-y-3 mt-4"></div>
+
+</div>
+
 <script>
 // 🔥 CONFIG (guna config cikgu)
 const firebaseConfig = {
@@ -719,6 +729,47 @@ firebase.auth().onAuthStateChanged(user => {
   }
 
 });
+
+function loadAlert(){
+
+  const container = document.getElementById("alertList");
+
+  db.collection("aktivitiPelajar")
+  .where("perluPerhatian", "==", true)
+  .orderBy("masa","desc")
+  .limit(10)
+  .onSnapshot(snapshot => {
+
+    let html = "";
+
+    snapshot.forEach(doc => {
+
+      const d = doc.data();
+
+      html += `
+        <div class="bg-red-500/20 border border-red-400 p-4 rounded-xl">
+
+          <div class="font-bold text-white">
+            ⚠️ ${d.nama}
+          </div>
+
+          <div class="text-sm text-white/80">
+            ${d.kelas || d.organisasi}
+          </div>
+
+          <div class="text-xs text-red-300 mt-1">
+            Modul: ${d.module}
+          </div>
+
+        </div>
+      `;
+    });
+
+    container.innerHTML = html;
+
+  });
+
+}
 </script>
 
 </body>

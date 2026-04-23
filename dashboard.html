@@ -735,7 +735,6 @@ function loadAlert(){
   const container = document.getElementById("alertList");
 
   db.collection("aktivitiPelajar")
-  .where("perluPerhatian", "==", true)
   .orderBy("masa","desc") // 🔥 TAMBAH INI
   .limit(10)
   .onSnapshot(snapshot => {
@@ -745,6 +744,8 @@ function loadAlert(){
     snapshot.forEach(doc => {
 
       const d = doc.data();
+
+      if(d.perluPerhatian !== true) return; // 🔥 filter sini
 
       html += `
         <div onclick="openDetail('${(d.nama||'').replace(/'/g,"")}', '${(d.kelas||d.organisasi||'')}', '${(d.module||'')}')"

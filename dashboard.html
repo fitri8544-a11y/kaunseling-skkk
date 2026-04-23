@@ -748,7 +748,12 @@ function loadAlert(){
       if(d.perluPerhatian !== true) return; // 🔥 filter sini
 
       html += `
-        <div onclick="openDetail('${(d.nama||'').replace(/'/g,"")}', '${(d.kelas||d.organisasi||'')}', '${(d.module||'')}')"
+        onclick="openDetail(
+          '${(d.nama||'').replace(/'/g,"")}',
+          '${(d.kelas||d.organisasi||'')}',
+          '${(d.module||'')}',
+          '${(d.komen||'').replace(/'/g,"")}'
+        )"
              class="cursor-pointer bg-red-500/20 border border-red-400 p-4 rounded-xl hover:bg-red-500/30 transition">
 
           <div class="font-bold text-white">
@@ -777,7 +782,7 @@ function loadAlert(){
 
 console.log("🔥 ALERT LOADED");
 
-function openDetail(nama, kelas, module){
+function openDetail(nama, kelas, module, komen){
 
   console.log("CLICK DETECTED:", nama);
 
@@ -790,14 +795,20 @@ function openDetail(nama, kelas, module){
   }
 
   content.innerHTML = `
-    <b>Nama:</b> ${nama}<br>
-    <b>Kelas:</b> ${kelas}<br>
-    <b>Modul:</b> ${module}<br><br>
+  <b>Nama:</b> ${nama}<br>
+  <b>Kelas:</b> ${kelas}<br>
+  <b>Modul:</b> ${module}<br><br>
 
-    <span class="text-red-500 font-semibold">
-      ⚠️ Murid ini memerlukan perhatian
-    </span>
-  `;
+  <b>📝 Luahan Murid:</b>
+  <div class="bg-gray-100 text-black p-3 rounded mt-2 text-left">
+    ${komen || "Tiada maklumat"}
+  </div>
+
+  <br>
+  <span class="text-red-500 font-semibold">
+    ⚠️ Murid ini memerlukan perhatian
+  </span>
+`;
 
   modal.classList.remove("hidden");
 

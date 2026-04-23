@@ -1723,6 +1723,8 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 </script>
 
+<!-- 🔥 STEP 3: FUNCTION -->
+<script>
 function trackActivity(module){
 
   console.log("🔥 TRACK FUNCTION DIPANGGIL:", module);
@@ -1734,67 +1736,41 @@ function trackActivity(module){
 
   console.log("👤 USER:", nama);
 
-  // 🔥 SAFE LOWERCASE
-  const m = (module || "").toLowerCase();
-
-  console.log("🧠 CHECK MODULE:", m);
-
-  // =============================
-  // 🔥 PERLU PERHATIAN
-  // =============================
+  // 🔥 DETECT MODULE RISIKO
   let perluPerhatian = false;
 
-  if(
-    m.includes("heal") ||
-    m.includes("coping") ||
-    m.includes("emotion") ||
-    m.includes("tracker")
-  ){
-    perluPerhatian = true;
-  }
+const m = module.toLowerCase();
 
+if(
+  m.includes("heal") ||
+  m.includes("coping") ||
+  m.includes("emotion") ||
+  m.includes("tracker") // 🔥 WAJIB TAMBAH
+){
+  perluPerhatian = true;
+}
+
+  console.log("🔥 TRACK FUNCTION DIPANGGIL:", module);
+  console.log("🧠 CHECK MODULE:", module.toLowerCase());
   console.log("🚨 PERLU PERHATIAN:", perluPerhatian);
-
-  // =============================
-  // 🔥 RISK SCORING
-  // =============================
-  let riskScore = 0;
-  let tahap = "RENDAH";
-
-  if(m.includes("heal")) riskScore += 5;
-  if(m.includes("coping")) riskScore += 2;
-  if(m.includes("emotion")) riskScore += 3;
-  if(m.includes("tracker")) riskScore += 1;
-
-  // 🔥 EMOTION LEVEL (optional)
-  if(typeof emotionLevel !== "undefined"){
-    if(emotionLevel <= 2) riskScore += 4;
-    else if(emotionLevel == 3) riskScore += 2;
-  }
-
-  // 🔥 TAHAP RISIKO
-  if(riskScore >= 7) tahap = "TINGGI";
-  else if(riskScore >= 4) tahap = "SEDERHANA";
-
-  console.log("📊 SCORE:", riskScore, "| TAHAP:", tahap);
-
-  // =============================
-  // 🔥 SIMPAN FIRESTORE (1 KALI SAHAJA)
-  // =============================
+  
   db.collection("aktivitiPelajar").add({
     module: module,
+    masa: firebase.firestore.FieldValue.serverTimestamp(),
+
     nama: nama || "Pengguna",
     jenis: jenis || "Pelawat",
     kelas: kelas || "-",
     organisasi: organisasi || "-",
-    perluPerhatian: perluPerhatian,
-    riskScore: riskScore,
-    tahap: tahap,
-    masa: firebase.firestore.FieldValue.serverTimestamp()
+
+    // 🔥 TAMBAH INI
+    perluPerhatian: perluPerhatian
   })
   .then(() => {
-    console.log("✅ DATA MASUK FIRESTORE");
-  })
+  console.log("✅ DATA MASUK FIRESTORE");
+  console.log("👉 MODULE:", module);
+  console.log("👉 PERLU PERHATIAN:", perluPerhatian);
+})
   .catch((error) => {
     console.error("❌ ERROR:", error);
   });
@@ -1953,11 +1929,6 @@ function tukarUser(){
   window.location.href = "daftar.html";
 
 }
-
-const warna =
-  tahap === "TINGGI" ? "text-red-400" :
-  tahap === "SEDERHANA" ? "text-yellow-300" :
-  "text-green-300";
 </script>
 
 </body>

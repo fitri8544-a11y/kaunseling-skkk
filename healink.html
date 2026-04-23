@@ -1741,8 +1741,6 @@ const db = firebase.firestore();
 <script>
 function trackActivity(module, komen = ""){
 
-  console.log("🔥 TRACK FUNCTION DIPANGGIL:", module);
-
   const nama = sessionStorage.getItem("nama");
   const jenis = sessionStorage.getItem("jenis");
   const kelas = sessionStorage.getItem("kelas");
@@ -1750,20 +1748,22 @@ function trackActivity(module, komen = ""){
 
   const m = (module || "").toLowerCase();
 
-  // =============================
+  // ================================
   // 🔥 PERLU PERHATIAN
-  // =============================
+  // ================================
   let perluPerhatian = false;
 
-  if(riskScore >= 4){
-  perluPerhatian = true;
-}
+  if(
+    m.includes("heal") ||
+    m.includes("coping") ||
+    m.includes("emotion")
+  ){
+    perluPerhatian = true;
+  }
 
-  console.log("🚨 PERLU PERHATIAN:", perluPerhatian);
-
-  // =============================
-  // 🔥 RISK SCORING
-  // =============================
+  // ================================
+  // 🔥 RISK SCORE (WAJIB ATAS)
+  // ================================
   let riskScore = 0;
   let tahap = "RENDAH";
 
@@ -1774,30 +1774,22 @@ function trackActivity(module, komen = ""){
   if(riskScore >= 7) tahap = "TINGGI";
   else if(riskScore >= 4) tahap = "SEDERHANA";
 
-  console.log("📊 SCORE:", riskScore, "| TAHAP:", tahap);
+  console.log("📊 SCORE:", riskScore, tahap);
 
-  // =============================
-  // 🔥 SIMPAN FIRESTORE
-  // =============================
+  // ================================
+  // 🔥 SIMPAN FIRESTORE (LAST)
+  // ================================
   db.collection("aktivitiPelajar").add({
-    module: module,
-    nama: nama || "Pengguna",
-    jenis: jenis || "Pelawat",
-    kelas: kelas || "-",
-    organisasi: organisasi || "-",
-
-    komen: komen || "",
-
-    perluPerhatian: perluPerhatian,
-    riskScore: riskScore,
-    tahap: tahap,
+    module,
+    nama,
+    jenis,
+    kelas,
+    organisasi,
+    komen,
+    perluPerhatian,
+    riskScore,
+    tahap,
     masa: firebase.firestore.FieldValue.serverTimestamp()
-  })
-  .then(() => {
-    console.log("✅ DATA MASUK FIRESTORE");
-  })
-  .catch((error) => {
-    console.error("❌ ERROR:", error);
   });
 
 }
@@ -1935,6 +1927,21 @@ function tukarUser(){
   // 🔥 redirect semula ke daftar
   window.location.href = "daftar.html";
 
+}
+
+function selectEmoji(el){
+
+  // remove highlight semua
+  document.querySelectorAll(".emoji-card")
+    .forEach(e => e.classList.remove("ring-2","ring-purple-500"));
+
+  // highlight yang dipilih
+  el.classList.add("ring-2","ring-purple-500");
+
+  // simpan pilihan (optional)
+  window.selectedEmoji = el.innerText;
+
+  console.log("😊 Emoji dipilih:", window.selectedEmoji);
 }
 </script>
 

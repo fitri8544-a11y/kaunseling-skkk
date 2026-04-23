@@ -1203,22 +1203,34 @@ function switchTab(tab) {
 /* =========================================
    💬 HEAL TALK
 ========================================= */
+
+// 🔥 BUKA MODAL
 function openHealTalk(){
+
+  trackActivity("HealTalk"); // ✅ TRACK BILA BUKA
+
   document.getElementById("healModal").classList.remove("hidden");
 }
 
+
+// ❌ TUTUP MODAL (TAK PERLU TRACK)
 function closeHealTalk(){
   document.getElementById("healModal").classList.add("hidden");
 }
 
+
+// 🔥 HANTAR LUAHAN
 function submitHealTalk(){
 
-  const text = document.getElementById("luahan").value;
+  const text = document.getElementById("luahan").value.trim();
 
   if(!text){
     alert("Sila isi luahan dahulu");
     return;
   }
+
+  // 🔥 TRACK (LEVEL LEBIH KUAT)
+  trackActivity("HealTalk Submit");
 
   let data = JSON.parse(localStorage.getItem("healTalkData")) || [];
 
@@ -1231,7 +1243,9 @@ function submitHealTalk(){
 
   document.getElementById("msg").classList.remove("hidden");
 
-  document.getElementById("luahan").value="";
+  document.getElementById("luahan").value = "";
+
+  console.log("💬 HealTalk berjaya dihantar");
 }
 
 

@@ -1229,6 +1229,13 @@ function submitHealTalk(){
     return;
   }
 
+  // 🔥 HANTAR KE FIRESTORE + TRACK
+  trackActivity("HealTalk Submit", text);
+
+  document.getElementById("msg").classList.remove("hidden");
+  document.getElementById("luahan").value="";
+}
+
   // 🔥 ambil user
   const nama = sessionStorage.getItem("nama");
   const kelas = sessionStorage.getItem("kelas");
@@ -1765,7 +1772,7 @@ const db = firebase.firestore();
 
 <!-- 🔥 STEP 3: FUNCTION -->
 <script>
-function trackActivity(module){
+function trackActivity(module, komen = ""){
 
   console.log("🔥 TRACK FUNCTION DIPANGGIL:", module);
 
@@ -1774,7 +1781,6 @@ function trackActivity(module){
   const kelas = sessionStorage.getItem("kelas");
   const organisasi = sessionStorage.getItem("organisasi");
 
-  // 🔥 FIX: DEFINE m
   const m = (module || "").toLowerCase();
 
   // =============================
@@ -1792,14 +1798,36 @@ function trackActivity(module){
 
   console.log("🚨 PERLU PERHATIAN:", perluPerhatian);
 
-  // 🔥 SIMPAN
+  // =============================
+  // 🔥 RISK SCORING
+  // =============================
+  let riskScore = 0;
+  let tahap = "RENDAH";
+
+  if(m.includes("heal")) riskScore += 5;
+  if(m.includes("coping")) riskScore += 2;
+  if(m.includes("emotion")) riskScore += 3;
+
+  if(riskScore >= 7) tahap = "TINGGI";
+  else if(riskScore >= 4) tahap = "SEDERHANA";
+
+  console.log("📊 SCORE:", riskScore, "| TAHAP:", tahap);
+
+  // =============================
+  // 🔥 SIMPAN FIRESTORE
+  // =============================
   db.collection("aktivitiPelajar").add({
     module: module,
     nama: nama || "Pengguna",
     jenis: jenis || "Pelawat",
     kelas: kelas || "-",
     organisasi: organisasi || "-",
+
+    komen: komen || "",
+
     perluPerhatian: perluPerhatian,
+    riskScore: riskScore,
+    tahap: tahap,
     masa: firebase.firestore.FieldValue.serverTimestamp()
   })
   .then(() => {

@@ -20,43 +20,47 @@
     📝 Daftar Pengunjung
   </h2>
 
-  <!-- JENIS -->
-  <p class="mb-3 text-white/90">Jenis Pengunjung:</p>
+  <form id="formDaftar">
 
-  <div class="grid grid-cols-3 gap-3 mb-6">
+    <!-- JENIS -->
+    <p class="mb-3 text-white/90">Jenis Pengunjung:</p>
 
-    <button onclick="selectJenis('Murid')" id="btnMurid"
-      class="p-3 rounded-xl bg-white/20 hover:bg-green-400/30 transition">
-      🎒 Murid
+    <div class="grid grid-cols-3 gap-3 mb-6">
+      <button type="button" onclick="selectJenis('Murid')" id="btnMurid"
+        class="p-3 rounded-xl bg-white/20 hover:bg-green-400/30 transition">
+        🎒 Murid
+      </button>
+
+      <button type="button" onclick="selectJenis('Guru')" id="btnGuru"
+        class="p-3 rounded-xl bg-white/20 hover:bg-blue-400/30 transition">
+        👨‍🏫 Guru
+      </button>
+
+      <button type="button" onclick="selectJenis('Pelawat')" id="btnPelawat"
+        class="p-3 rounded-xl bg-white/20 hover:bg-yellow-400/30 transition">
+        👤 Pelawat
+      </button>
+    </div>
+
+    <!-- NAMA -->
+    <input id="nama" type="text" placeholder="Nama"
+      class="w-full p-3 mb-4 rounded-lg text-black">
+
+    <!-- ORGANISASI -->
+    <input id="organisasi" type="text" placeholder="Sekolah / Organisasi"
+      class="w-full p-3 mb-4 rounded-lg text-black">
+
+    <!-- KELAS -->
+    <input id="kelas" type="text" placeholder="Kelas (contoh: 5 Bestari)"
+      class="w-full p-3 mb-6 rounded-lg text-black">
+
+    <!-- BUTTON -->
+    <button type="submit"
+      class="w-full bg-gradient-to-r from-purple-500 to-blue-500 p-3 rounded-xl font-semibold hover:scale-105 transition">
+      ✨ Daftar Sekarang
     </button>
 
-    <button onclick="selectJenis('Guru')" id="btnGuru"
-      class="p-3 rounded-xl bg-white/20 hover:bg-blue-400/30 transition">
-      👨‍🏫 Guru
-    </button>
-
-    <button onclick="selectJenis('Pelawat')" id="btnPelawat"
-      class="p-3 rounded-xl bg-white/20 hover:bg-yellow-400/30 transition">
-      👤 Pelawat
-    </button>
-
-  </div>
-
-  <!-- NAMA -->
-  <input id="nama" type="text" placeholder="Nama"
-    class="w-full p-3 mb-4 rounded-lg text-black">
-
-  <!-- KELAS -->
-  <input id="kelas" type="text" placeholder="Kelas (contoh: 5 Bestari)"
-    class="w-full p-3 mb-6 rounded-lg text-black">
-
-  <!-- BUTTON -->
-  <button onclick="submitDaftar()"
-  class="w-full bg-gradient-to-r from-purple-500 to-blue-500 p-3 rounded-xl font-semibold hover:scale-105 transition">
-  ✨ Daftar Sekarang
-</button>
-
-  <p id="msg" class="text-center mt-4 text-green-300"></p>
+  </form>
 
 </div>
 
@@ -81,10 +85,10 @@ function selectJenis(jenis){
   jenisDipilih = jenis;
 
   // reset warna
-  document.querySelectorAll("button").forEach(btn=>{
-    btn.classList.remove("bg-green-400","bg-blue-400","bg-yellow-400");
-  });
+  document.querySelectorAll("#btnMurid, #btnGuru, #btnPelawat")
+    .forEach(btn => btn.classList.remove("bg-green-400","bg-blue-400","bg-yellow-400"));
 
+  // highlight
   if(jenis === "Murid"){
     document.getElementById("btnMurid").classList.add("bg-green-400");
   }
@@ -97,94 +101,7 @@ function selectJenis(jenis){
     document.getElementById("btnPelawat").classList.add("bg-yellow-400");
   }
 
-}
-
-// DAFTAR
-function submitDaftar(){
-
-  const jenis = jenisDipilih;
-  const nama  = document.getElementById("nama").value.trim();
-  const kelas = document.getElementById("kelas").value.trim();
-
-  const orgInput = document.getElementById("organisasi");
-  const organisasi = orgInput ? orgInput.value.trim() : "";
-
-  // ❌ TAK PILIH JENIS
-  if(!jenis){
-    alert("Sila pilih jenis pengguna");
-    return;
-  }
-
-  // ❌ SEMUA WAJIB ADA NAMA
-  if(!nama){
-    alert("Sila isi nama");
-    return;
-  }
-
-  // 🧑‍🎓 MURID
-  if(jenis === "Murid"){
-    if(!organisasi || !kelas){
-      alert("Murid wajib isi Sekolah dan Kelas");
-      return;
-    }
-  }
-
-  // 👨‍🏫 GURU
-  if(jenis === "Guru"){
-    if(!organisasi){
-      alert("Guru wajib isi Sekolah");
-      return;
-    }
-  }
-
-  // 👤 PELAWAT
-  if(jenis === "Pelawat"){
-    if(!organisasi){
-      alert("Pelawat wajib isi Organisasi");
-      return;
-    }
-  }
-
-  // 🔥 SIMPAN SESSION
-  sessionStorage.setItem("nama", nama);
-  sessionStorage.setItem("jenis", jenis);
-  sessionStorage.setItem("kelas", kelas);
-  sessionStorage.setItem("organisasi", organisasi);
-  sessionStorage.setItem("sudahDaftar","yes");
-
-  // 🔥 SIMPAN FIRESTORE
-  db.collection("pengunjung").add({
-    jenis, nama, organisasi, kelas,
-    masa: new Date()
-  });
-
-  // redirect
-  window.location.href = "healink.html";
-}
-
-function selectJenis(jenis){
-
-  jenisDipilih = jenis;
-
-  // reset warna semua button
-  document.querySelectorAll("button").forEach(btn=>{
-    btn.classList.remove("bg-green-400","bg-blue-400","bg-yellow-400");
-  });
-
-  // highlight button
-  if(jenis === "Murid"){
-    document.getElementById("btnMurid").classList.add("bg-green-400");
-  }
-
-  if(jenis === "Guru"){
-    document.getElementById("btnGuru").classList.add("bg-blue-400");
-  }
-
-  if(jenis === "Pelawat"){
-    document.getElementById("btnPelawat").classList.add("bg-yellow-400");
-  }
-
-  // 🔥 SHOW / HIDE FIELD
+  // hide/show kelas
   const kelasField = document.getElementById("kelas");
 
   if(jenis === "Guru" || jenis === "Pelawat"){
@@ -195,8 +112,63 @@ function selectJenis(jenis){
 
 }
 
-console.log("TEST VALIDATION", jenisDipilih);
+// DAFTAR
+document.getElementById("formDaftar").addEventListener("submit", function(e){
 
+  e.preventDefault(); // 🔥 block submit
+
+  const jenis = jenisDipilih;
+  const nama = document.getElementById("nama").value.trim();
+  const organisasi = document.getElementById("organisasi").value.trim();
+  const kelas = document.getElementById("kelas").value.trim();
+
+  console.log("VALIDATION CHECK:", jenis, nama, organisasi, kelas);
+
+  if(!jenis){
+    alert("Sila pilih jenis pengguna");
+    return;
+  }
+
+  if(!nama){
+    alert("Sila isi nama");
+    return;
+  }
+
+  if(jenis === "Murid"){
+    if(!organisasi || !kelas){
+      alert("Murid wajib isi Sekolah dan Kelas");
+      return;
+    }
+  }
+
+  if(jenis === "Guru"){
+    if(!organisasi){
+      alert("Guru wajib isi Sekolah");
+      return;
+    }
+  }
+
+  if(jenis === "Pelawat"){
+    if(!organisasi){
+      alert("Pelawat wajib isi Organisasi");
+      return;
+    }
+  }
+
+  // ✅ LULUS
+  sessionStorage.setItem("nama", nama);
+  sessionStorage.setItem("jenis", jenis);
+  sessionStorage.setItem("kelas", kelas);
+  sessionStorage.setItem("organisasi", organisasi);
+
+  db.collection("pengunjung").add({
+    jenis, nama, organisasi, kelas,
+    masa: new Date()
+  });
+
+  window.location.href = "healink.html";
+
+});
 </script>
 
 </body>

@@ -154,7 +154,38 @@ function submitDaftar(){
   window.location.href = "healink.html";
 
 }
+function selectJenis(jenis){
 
+  jenisDipilih = jenis;
+
+  // reset warna semua button
+  document.querySelectorAll("button").forEach(btn=>{
+    btn.classList.remove("bg-green-400","bg-blue-400","bg-yellow-400");
+  });
+
+  // highlight button
+  if(jenis === "Murid"){
+    document.getElementById("btnMurid").classList.add("bg-green-400");
+  }
+
+  if(jenis === "Guru"){
+    document.getElementById("btnGuru").classList.add("bg-blue-400");
+  }
+
+  if(jenis === "Pelawat"){
+    document.getElementById("btnPelawat").classList.add("bg-yellow-400");
+  }
+
+  // 🔥 SHOW / HIDE FIELD
+  const kelasField = document.getElementById("kelas");
+
+  if(jenis === "Guru" || jenis === "Pelawat"){
+    kelasField.style.display = "none";
+  } else {
+    kelasField.style.display = "block";
+  }
+
+}
 </script>
 
 </body>

@@ -734,8 +734,14 @@ function loadAlert(){
 
   const container = document.getElementById("alertList");
 
+  if(!container){
+    console.error("❌ alertList tak jumpa");
+    return;
+  }
+
   db.collection("aktivitiPelajar")
   .where("perluPerhatian", "==", true)
+  .orderBy("masa","desc") // 🔥 SUSUN TERKINI
   .limit(10)
   .onSnapshot(snapshot => {
 
@@ -745,8 +751,14 @@ function loadAlert(){
 
       const d = doc.data();
 
+      // 🔥 SAFE TEXT (elak error tanda ')
+      const nama = (d.nama || "").replace(/'/g,"");
+      const kelas = (d.kelas || d.organisasi || "").replace(/'/g,"");
+      const module = (d.module || "").replace(/'/g,"");
+      const komen = (d.komen || "").replace(/'/g,"");
+
       html += `
-        <div onclick="openDetail('${(d.nama||'').replace(/'/g,"")}', '${(d.kelas||d.organisasi||'')}', '${(d.module||'')}')"
+        <div onclick="openDetail('${nama}','${kelas}','${module}','${komen}')"
              class="cursor-pointer bg-red-500/20 border border-red-400 p-4 rounded-xl hover:bg-red-500/30 transition">
 
           <div class="font-bold text-white">
@@ -765,6 +777,10 @@ function loadAlert(){
       `;
     });
 
+    if(!html){
+      html = `<div class="text-white/50 text-sm">Tiada data</div>`;
+    }
+
     container.innerHTML = html;
 
   }, err => {
@@ -775,7 +791,7 @@ function loadAlert(){
 
 console.log("🔥 ALERT LOADED");
 
-function openDetail(nama, kelas, module){
+function openDetail(nama, kelas, module, komen){
 
   console.log("CLICK DETECTED:", nama);
 
@@ -792,6 +808,12 @@ function openDetail(nama, kelas, module){
     <b>Kelas:</b> ${kelas}<br>
     <b>Modul:</b> ${module}<br><br>
 
+    <b>📝 Luahan Murid:</b>
+    <div class="bg-gray-100 text-black p-3 rounded mt-2 text-left">
+      ${komen || "Tiada maklumat"}
+    </div>
+
+    <br>
     <span class="text-red-500 font-semibold">
       ⚠️ Murid ini memerlukan perhatian
     </span>
@@ -800,6 +822,7 @@ function openDetail(nama, kelas, module){
   modal.classList.remove("hidden");
 
 }
+
 function closeDetail(){
   document.getElementById("detailModal").classList.add("hidden");
 }

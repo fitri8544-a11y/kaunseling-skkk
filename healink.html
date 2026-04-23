@@ -1229,25 +1229,25 @@ function submitHealTalk(){
     return;
   }
 
-  // 🔥 TRACK (LEVEL LEBIH KUAT)
-  trackActivity("HealTalk Submit");
+  // 🔥 ambil user
+  const nama = sessionStorage.getItem("nama");
+  const kelas = sessionStorage.getItem("kelas");
+  const organisasi = sessionStorage.getItem("organisasi");
 
-  let data = JSON.parse(localStorage.getItem("healTalkData")) || [];
-
-  data.push({
-    message: text,
-    time: new Date().toLocaleString()
+  // 🔥 SIMPAN KE FIRESTORE (BUKAN localStorage)
+  db.collection("aktivitiPelajar").add({
+    module: "HealTalk",
+    komen: text, // ✅ INI PENTING
+    nama: nama || "Pengguna",
+    kelas: kelas || "-",
+    organisasi: organisasi || "-",
+    perluPerhatian: true,
+    masa: firebase.firestore.FieldValue.serverTimestamp()
   });
 
-  localStorage.setItem("healTalkData", JSON.stringify(data));
-
   document.getElementById("msg").classList.remove("hidden");
-
   document.getElementById("luahan").value = "";
-
-  console.log("💬 HealTalk berjaya dihantar");
 }
-
 
 /* =========================================
    🌡️ EMOTION TRACKER
@@ -1285,21 +1285,47 @@ function saveMood(){
 
   const note = document.getElementById("note").value;
 
-  let data = JSON.parse(localStorage.getItem("emotionData")) || [];
+  const nama = sessionStorage.getItem("nama");
+  const kelas = sessionStorage.getItem("kelas");
+  const organisasi = sessionStorage.getItem("organisasi");
 
-  data.push({
-    mood: selectedMood,
-    note: note,
-    time: new Date().toLocaleString()
+  db.collection("aktivitiPelajar").add({
+    module: "Emotion Tracker",
+    komen: note || "-",
+    emotion: selectedMood, // 🔥 FIX
+    nama: nama || "Pengguna",
+    kelas: kelas || "-",
+    organisasi: organisasi || "-",
+    perluPerhatian: true,
+    masa: firebase.firestore.FieldValue.serverTimestamp()
   });
 
-  localStorage.setItem("emotionData", JSON.stringify(data));
-
   document.getElementById("trackerMsg").classList.remove("hidden");
+}
 
-  document.getElementById("note").value = "";
+/* OPEN DETAIL KOMEN */
+function openDetail(nama, kelas, module, komen){
 
-  loadHistory();
+  const modal = document.getElementById("detailModal");
+  const content = document.getElementById("detailContent");
+
+  content.innerHTML = `
+    <b>Nama:</b> ${nama}<br>
+    <b>Kelas:</b> ${kelas}<br>
+    <b>Modul:</b> ${module}<br><br>
+
+    <b>📝 Luahan:</b>
+    <div class="bg-gray-100 p-3 rounded mt-2 text-left text-black">
+      ${komen || "Tiada data"}
+    </div>
+
+    <br>
+    <span class="text-red-500 font-semibold">
+      ⚠️ Murid ini memerlukan perhatian
+    </span>
+  `;
+
+  modal.classList.remove("hidden");
 }
 
 /* HISTORY */
@@ -1748,43 +1774,37 @@ function trackActivity(module){
   const kelas = sessionStorage.getItem("kelas");
   const organisasi = sessionStorage.getItem("organisasi");
 
-  console.log("👤 USER:", nama);
+  // 🔥 FIX: DEFINE m
+  const m = (module || "").toLowerCase();
 
-  // 🔥 DETECT MODULE RISIKO
+  // =============================
+  // 🔥 PERLU PERHATIAN
+  // =============================
   let perluPerhatian = false;
 
-const m = module.toLowerCase();
+  if(
+    m.includes("heal") ||
+    m.includes("coping") ||
+    m.includes("emotion")
+  ){
+    perluPerhatian = true;
+  }
 
-if(
-  m.includes("heal") ||
-  m.includes("coping") ||
-  m.includes("emotion") ||
-  m.includes("tracker") // 🔥 WAJIB TAMBAH
-){
-  perluPerhatian = true;
-}
-
-  console.log("🔥 TRACK FUNCTION DIPANGGIL:", module);
-  console.log("🧠 CHECK MODULE:", module.toLowerCase());
   console.log("🚨 PERLU PERHATIAN:", perluPerhatian);
-  
+
+  // 🔥 SIMPAN
   db.collection("aktivitiPelajar").add({
     module: module,
-    masa: firebase.firestore.FieldValue.serverTimestamp(),
-
     nama: nama || "Pengguna",
     jenis: jenis || "Pelawat",
     kelas: kelas || "-",
     organisasi: organisasi || "-",
-
-    // 🔥 TAMBAH INI
-    perluPerhatian: perluPerhatian
+    perluPerhatian: perluPerhatian,
+    masa: firebase.firestore.FieldValue.serverTimestamp()
   })
   .then(() => {
-  console.log("✅ DATA MASUK FIRESTORE");
-  console.log("👉 MODULE:", module);
-  console.log("👉 PERLU PERHATIAN:", perluPerhatian);
-})
+    console.log("✅ DATA MASUK FIRESTORE");
+  })
   .catch((error) => {
     console.error("❌ ERROR:", error);
   });

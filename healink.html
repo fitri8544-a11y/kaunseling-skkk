@@ -1747,6 +1747,21 @@ function trackActivity(module){
 </script> 
 
 <script>
+// 🔥 BLOCK AWAL (sebelum Firebase)
+if(!sessionStorage.getItem("sudahDaftar")){
+  window.location.href = "daftar.html";
+}
+firebase.auth().onAuthStateChanged(user => {
+
+  if(user){
+    return; // admin
+  }
+
+  if(!sessionStorage.getItem("sudahDaftar")){
+    window.location.href = "daftar.html";
+  }
+
+});
 
 // ================= CHECK LOGIN =================
 firebase.auth().onAuthStateChanged(user => {

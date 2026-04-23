@@ -166,13 +166,26 @@
 
     </div>
 
-    <div class="section-box mt-6">
+    <!-- 🔥 ALERT + RISK SIDE BY SIDE -->
+<div class="grid md:grid-cols-2 gap-6 mt-6">
 
-  <div class="section-title text-red-400">
-    ⚠️ Murid Perlu Perhatian
+  <!-- ⚠️ LEFT: MURID PERLU PERHATIAN -->
+  <div class="section-box">
+    <div class="section-title text-red-400">
+      ⚠️ Murid Perlu Perhatian
+    </div>
+
+    <div id="alertList" class="space-y-3 mt-4"></div>
   </div>
 
-  <div id="alertList" class="space-y-3 mt-4"></div>
+  <!-- 🚨 RIGHT: TOP MURID BERISIKO -->
+  <div class="section-box">
+    <div class="section-title text-yellow-300">
+      🚨 Top Murid Berisiko
+    </div>
+
+    <div id="riskList" class="space-y-3 mt-4"></div>
+  </div>
 
 </div>
 
@@ -730,9 +743,19 @@ firebase.auth().onAuthStateChanged(user => {
 
 });
 
+/* ================================
+   🔴 LOAD ALERT - MURID PERLU PERHATIAN
+   ================================ */
 function loadAlert(){
 
+  console.log("🚨 LOAD ALERT START");
+
   const container = document.getElementById("alertList");
+
+  if(!container){
+    console.error("❌ alertList tak jumpa");
+    return;
+  }
 
   db.collection("aktivitiPelajar")
   .where("perluPerhatian", "==", true)
@@ -740,6 +763,14 @@ function loadAlert(){
   .onSnapshot(snapshot => {
 
     let html = "";
+
+    if(snapshot.empty){
+      html = `
+        <div class="text-white/50 text-sm text-center">
+          Tiada murid memerlukan perhatian
+        </div>
+      `;
+    }
 
     snapshot.forEach(doc => {
 
@@ -768,12 +799,85 @@ function loadAlert(){
     container.innerHTML = html;
 
   }, err => {
-    console.error("❌ FIRESTORE ERROR:", err);
+    console.error("❌ FIRESTORE ERROR (ALERT):", err);
   });
 
 }
 
-console.log("🔥 ALERT LOADED");
+/* ================================
+   🟡 LOAD RISK - TOP MURID BERISIKO
+   ================================ */
+function loadRisk(){
+
+  console.log("📊 LOAD RISK START");
+
+  const container = document.getElementById("riskList");
+
+  if(!container){
+    console.error("❌ riskList tak jumpa");
+    return;
+  }
+
+  db.collection("aktivitiPelajar")
+  .orderBy("riskScore", "desc")
+  .limit(10)
+  .onSnapshot(snapshot => {
+
+    let html = "";
+
+    if(snapshot.empty){
+      html = `
+        <div class="text-white/50 text-sm text-center">
+          Tiada data risiko
+        </div>
+      `;
+    }
+
+    snapshot.forEach(doc => {
+
+      const d = doc.data();
+
+      // 🎨 warna ikut tahap
+      const color =
+        d.tahap === "TINGGI" ? "border-red-400 bg-red-500/20" :
+        d.tahap === "SEDERHANA" ? "border-yellow-400 bg-yellow-500/20" :
+        "border-green-400 bg-green-500/20";
+
+      html += `
+        <div class="${color} border p-4 rounded-xl">
+
+          <div class="font-bold text-white">
+            🚨 ${d.nama || "Tanpa Nama"}
+          </div>
+
+          <div class="text-sm text-white/80">
+            ${d.kelas || d.organisasi || "-"}
+          </div>
+
+          <div class="text-xs mt-2 text-white/70">
+            Skor: ${d.riskScore || 0} (${d.tahap || "RENDAH"})
+          </div>
+
+        </div>
+      `;
+    });
+
+    container.innerHTML = html;
+
+  }, err => {
+    console.error("❌ FIRESTORE ERROR (RISK):", err);
+  });
+
+}
+/* ================================
+   🚀 INIT DASHBOARD
+   ================================ */
+window.onload = function(){
+
+  loadAlert();
+  loadRisk();
+
+};
 
 function openDetail(nama, kelas, module){
 

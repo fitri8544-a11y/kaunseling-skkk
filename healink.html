@@ -290,6 +290,7 @@
   class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
          hover:scale-105 hover:shadow-blue-400/40 transition duration-300 cursor-pointer text-center">
 
+         
   <div class="text-3xl mb-3">📊</div>
   <h3 class="text-lg font-semibold text-white">Dashboard Guru</h3>
   <p class="text-sm text-white/70 mt-2">Analisis aktiviti pelajar</p>
@@ -1108,7 +1109,8 @@ setInterval(animateSlogan, 8000);
     </h2>
 
     <!-- JENIS -->
-    <select id="jenis" class="w-full p-3 mb-3 rounded text-black">
+    <select id="jenis" onchange="handleJenis()" 
+    class="w-full p-3 mb-3 rounded text-black">
       <option value="">Pilih Jenis</option>
       <option>Murid</option>
       <option>Guru</option>
@@ -1906,6 +1908,35 @@ function loginAdmin(){
   });
 
 }
+
+function handleJenis(){
+
+  const jenis = document.getElementById("jenis").value;
+
+  if(jenis === "Admin"){
+
+    // tutup modal daftar
+    document.getElementById("modalDaftar").classList.add("hidden");
+
+    // buka modal login admin
+    document.getElementById("modalLoginAdmin").classList.remove("hidden");
+
+  }
+
+}
+
+if(jenis === "Admin"){
+
+  document.getElementById("modalDaftar").classList.add("hidden");
+  document.getElementById("modalLoginAdmin").classList.remove("hidden");
+
+  // reset dropdown supaya tak kekal Admin
+  document.getElementById("jenis").value = "";
+
+}
+
+// 🔒 HIDE DASHBOARD UNTUK SEMUA USER
+document.getElementById("menuDashboard").style.display = "none";
 </script>
 
 </body>

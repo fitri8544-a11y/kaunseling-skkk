@@ -1763,6 +1763,7 @@ function closeMinda(e){
 
 <!-- 🔥 STEP 1: LOAD FIREBASE DULU -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
 <!-- 🔥 STEP 2: CONFIG & INIT -->
@@ -1934,9 +1935,17 @@ if(jenis === "Admin"){
   document.getElementById("jenis").value = "";
 
 }
+function loginAdmin(){
+  const email = document.getElementById("adminEmail").value;
+  const password = document.getElementById("adminPassword").value;
 
-// 🔒 HIDE DASHBOARD UNTUK SEMUA USER
-document.getElementById("menuDashboard").style.display = "none";
+  firebase.auth().signInWithEmailAndPassword(email, password)
+  .then(() => {
+    sessionStorage.setItem("jenis","Admin");
+    window.location.href = "dashboard.html";
+  })
+  .catch(err => alert(err.message));
+}
 </script>
 
 </body>

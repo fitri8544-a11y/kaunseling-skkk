@@ -521,7 +521,36 @@ function filterKelas(k){
   loadData();
 }
 
+function loadData(){
+  console.log("🚀 loadData jalan");
 
+  db.collection("aktivitiPelajar")
+  .orderBy("masa","desc")
+  .onSnapshot(snapshot => {
+
+    console.log("📡 snapshot size:", snapshot.size);
+
+    let murid = 0, guru = 0, pelawat = 0;
+    rawData = [];
+
+    snapshot.forEach(doc => {
+      const d = doc.data();
+      rawData.push(d);
+
+      if(d.jenis === "Murid") murid++;
+      else if(d.jenis === "Guru") guru++;
+      else pelawat++;
+    });
+
+    document.getElementById("kpiMurid").innerText = murid;
+    document.getElementById("kpiGuru").innerText = guru;
+    document.getElementById("kpiPelawat").innerText = pelawat;
+
+    console.log("📊 rawData:", rawData.length);
+
+    computeAndRender();
+  });
+}
 // ================= LOAD DATA (KPI + FILTER) =================
 function loadData(){
 
@@ -565,8 +594,10 @@ function loadData(){
     document.getElementById("kpiPelawat").innerText = pelawat;
 
     // 🔥 UPDATE CHART & KPI LAIN
-    computeAndRender();
-
+    function computeAndRender(){
+  console.log("⚙️ compute jalan", rawData.length);
+}
+    
     console.log("📊 DATA FILTERED:", rawData.length);
 
   });

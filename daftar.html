@@ -102,13 +102,12 @@ function selectJenis(jenis){
 // DAFTAR
 function submitDaftar(){
 
-  const jenis = document.getElementById("jenis").value;
+  const jenis = jenisDipilih;
   const nama  = document.getElementById("nama").value.trim();
   const organisasi = document.getElementById("organisasi").value.trim();
   const kelas = document.getElementById("kelas").value.trim();
 
-  // 🔒 VALIDATION IKUT JENIS
-
+  // ❌ TAK PILIH JENIS
   if(!jenis){
     alert("Sila pilih jenis pengguna");
     return;
@@ -138,13 +137,6 @@ function submitDaftar(){
     }
   }
 
-  // 🛠️ ADMIN (skip form)
-  if(jenis === "Admin"){
-    document.getElementById("modalDaftar").classList.add("hidden");
-    document.getElementById("modalLoginAdmin").classList.remove("hidden");
-    return;
-  }
-
   // 🔥 SIMPAN SESSION
   sessionStorage.setItem("nama", nama);
   sessionStorage.setItem("jenis", jenis);
@@ -152,40 +144,14 @@ function submitDaftar(){
   sessionStorage.setItem("organisasi", organisasi);
   sessionStorage.setItem("sudahDaftar","yes");
 
-  // tutup modal
-  document.getElementById("modalDaftar").classList.add("hidden");
-
-  // simpan Firestore
+  // 🔥 SIMPAN FIRESTORE
   db.collection("pengunjung").add({
     jenis, nama, organisasi, kelas,
     masa: new Date()
   });
 
-}
-
-function handleJenis(){
-
-  const jenis = document.getElementById("jenis").value;
-
-  const kelasField = document.getElementById("kelas");
-  const organisasiField = document.getElementById("organisasi");
-
-  // reset semua
-  kelasField.parentElement.style.display = "block";
-  organisasiField.parentElement.style.display = "block";
-
-  if(jenis === "Guru"){
-    kelasField.parentElement.style.display = "none";
-  }
-
-  if(jenis === "Pelawat"){
-    kelasField.parentElement.style.display = "none";
-  }
-
-  if(jenis === "Admin"){
-    document.getElementById("modalDaftar").classList.add("hidden");
-    document.getElementById("modalLoginAdmin").classList.remove("hidden");
-  }
+  // redirect
+  window.location.href = "healink.html";
 
 }
 

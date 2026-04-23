@@ -405,9 +405,8 @@ firebase.auth().onAuthStateChanged(user => {
     return;
   }
 
-  // 🔐 CHECK GURU SAHAJA
   if (!ADMIN_EMAILS.includes(user.email)) {
-    alert("Akses terhad untuk guru sahaja");
+    alert("Akses terhad untuk admin sahaja");
     firebase.auth().signOut();
     window.location.href = "login.html";
   }

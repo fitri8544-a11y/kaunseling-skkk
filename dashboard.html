@@ -166,13 +166,23 @@
 
     </div>
 
-    <div class="section-box mt-6">
+    <div class="grid md:grid-cols-2 gap-6">
 
-  <div class="section-title text-red-400">
-    ⚠️ Murid Perlu Perhatian
+  <!-- ALERT -->
+  <div class="section-box">
+    <div class="section-title text-red-400">
+      ⚠️ Murid Perlu Perhatian
+    </div>
+    <div id="riskList" class="space-y-3 mt-4"></div>
   </div>
 
-  <div id="alertList" class="space-y-3 mt-4"></div>
+  <!-- RISK -->
+  <div class="section-box">
+    <div class="section-title text-yellow-400">
+      🚨 Top Murid Berisiko
+    </div>
+    <div id="riskList"></div>
+  </div>
 
 </div>
 
@@ -191,7 +201,7 @@
   <div class="h-64 md:h-72 flex justify-center items-center">
     <canvas id="pieChart"></canvas>
   </div>
-</div>>
+</div>
 
     </div>
 
@@ -226,13 +236,6 @@ const db = firebase.firestore();
 let rawData = [];
 let stats = {};
 let barChart, pieChart;
-
-// 📡 REALTIME LISTENER
-db.collection("aktivitiPelajar").onSnapshot(snapshot => {
-  rawData = [];
-  snapshot.forEach(doc => rawData.push(doc.data()));
-  computeAndRender();
-});
 
 // 🔎 FILTER TARIKH
 function applyFilter(){
@@ -629,15 +632,6 @@ db.collection("aktivitiPelajar")
 
 });
 
-// ================= AUTO LOAD =================
-window.onload = function(){
-
-  loadData();
-  loadSekolah();
-  loadKelas();
-  loadAlert(); // 🔥 TAMBAH INI
-};
-
 // ================= SEKOLAH =================
 function loadSekolah(){
 
@@ -803,20 +797,20 @@ function openDetail(nama, kelas, module, komen){
   }
 
   content.innerHTML = `
-    <b>Nama:</b> ${nama}<br>
-    <b>Kelas:</b> ${kelas}<br>
-    <b>Modul:</b> ${module}<br><br>
+  <b>Nama:</b> ${nama}<br>
+  <b>Kelas:</b> ${kelas}<br>
+  <b>Modul:</b> ${module}<br><br>
 
-    <b>📝 Luahan Murid:</b>
-    <div class="bg-gray-100 text-black p-3 rounded mt-2 text-left">
-      ${komen || "Tiada maklumat"}
-    </div>
+  <b>📝 Luahan Murid:</b>
+  <div class="bg-gray-100 text-black p-3 rounded mt-2 text-left">
+    ${komen || "Tiada maklumat"}
+  </div>
 
-    <br>
-    <span class="text-red-500 font-semibold">
-      ⚠️ Murid ini memerlukan perhatian
-    </span>
-  `;
+  <br>
+  <span class="text-red-500 font-semibold">
+    ⚠️ Murid ini memerlukan perhatian
+  </span>
+`;
 
   modal.classList.remove("hidden");
 
@@ -826,10 +820,19 @@ function closeDetail(){
   document.getElementById("detailModal").classList.add("hidden");
 }
 
-function loadRisk(){
+
 
   const container = document.getElementById("riskList");
   if(!container) return;
+
+function loadRisk(){
+
+  const container = document.getElementById("riskList");
+
+  if(!container){
+    console.error("❌ riskList tak jumpa");
+    return;
+  }
 
   db.collection("aktivitiPelajar")
   .orderBy("riskScore","desc")
@@ -839,6 +842,7 @@ function loadRisk(){
     let html = "";
 
     snapshot.forEach(doc => {
+
       const d = doc.data();
 
       const color =
@@ -848,15 +852,19 @@ function loadRisk(){
 
       html += `
         <div class="${color} border p-4 rounded-xl">
+
           <div class="font-bold text-white">
             🚨 ${d.nama || "-"}
           </div>
+
           <div class="text-sm text-white/80">
             ${d.kelas || d.organisasi || "-"}
           </div>
-          <div class="text-xs mt-2">
+
+          <div class="text-xs mt-2 text-white/70">
             Skor: ${d.riskScore || 0} (${d.tahap || "RENDAH"})
           </div>
+
         </div>
       `;
     });
@@ -868,16 +876,16 @@ function loadRisk(){
 }
 // ================= INIT =================
 window.onload = function(){
-
+  loadRisk();
+}
   console.log("🚀 DASHBOARD READY");
 
   loadData();
   loadSekolah();
   loadKelas();
   loadAlert();
-  loadRisk(); // optional
-
-};
+  loadRisk(); // 🔥 kekalkan
+;
 
 </script>
 

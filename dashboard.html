@@ -736,6 +736,7 @@ function loadAlert(){
 
   db.collection("aktivitiPelajar")
   .where("perluPerhatian", "==", true)
+  .orderBy("masa","desc") // 🔥 TAMBAH INI
   .limit(10)
   .onSnapshot(snapshot => {
 

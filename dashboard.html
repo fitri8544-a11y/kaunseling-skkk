@@ -748,28 +748,28 @@ function loadAlert(){
       if(d.perluPerhatian !== true) return; // 🔥 filter sini
 
       html += `
-        onclick="openDetail(
-          '${(d.nama||'').replace(/'/g,"")}',
-          '${(d.kelas||d.organisasi||'')}',
-          '${(d.module||'')}',
-          '${(d.komen||'').replace(/'/g,"")}'
-        )"
-             class="cursor-pointer bg-red-500/20 border border-red-400 p-4 rounded-xl hover:bg-red-500/30 transition">
+  <div onclick="openDetail(
+    '${(d.nama||'').replace(/'/g,"")}',
+    '${(d.kelas||d.organisasi||'')}',
+    '${(d.module||'')}',
+    '${(d.komen||'').replace(/'/g,"")}'
+  )"
+  class="cursor-pointer bg-red-500/20 border border-red-400 p-4 rounded-xl hover:bg-red-500/30 transition">
 
-          <div class="font-bold text-white">
-            ⚠️ ${d.nama || "Tanpa Nama"}
-          </div>
+    <div class="font-bold text-white">
+      ⚠️ ${d.nama || "Tanpa Nama"}
+    </div>
 
-          <div class="text-sm text-white/80">
-            ${d.kelas || d.organisasi || "-"}
-          </div>
+    <div class="text-sm text-white/80">
+      ${d.kelas || d.organisasi || "-"}
+    </div>
 
-          <div class="text-xs text-red-300 mt-1">
-            Modul: ${d.module || "-"}
-          </div>
+    <div class="text-xs text-red-300 mt-1">
+      Modul: ${d.module || "-"}
+    </div>
 
-        </div>
-      `;
+  </div>
+`;
     });
 
     container.innerHTML = html;

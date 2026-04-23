@@ -166,23 +166,13 @@
 
     </div>
 
-    <div class="grid md:grid-cols-2 gap-6">
+    <div class="section-box mt-6">
 
-  <!-- ALERT -->
-<div class="section-box">
   <div class="section-title text-red-400">
     ⚠️ Murid Perlu Perhatian
   </div>
-  <div id="alertList" class="space-y-3 mt-4"></div> <!-- ✅ BETUL -->
-</div>
 
-<!-- RISK -->
-<div class="section-box">
-  <div class="section-title text-yellow-400">
-    🚨 Top Murid Berisiko
-  </div>
-  <div id="riskList" class="space-y-3 mt-4"></div> <!-- ✅ KEKAL -->
-</div>
+  <div id="alertList" class="space-y-3 mt-4"></div>
 
 </div>
 
@@ -201,7 +191,7 @@
   <div class="h-64 md:h-72 flex justify-center items-center">
     <canvas id="pieChart"></canvas>
   </div>
-</div>
+</div>>
 
     </div>
 
@@ -236,6 +226,13 @@ const db = firebase.firestore();
 let rawData = [];
 let stats = {};
 let barChart, pieChart;
+
+// 📡 REALTIME LISTENER
+db.collection("aktivitiPelajar").onSnapshot(snapshot => {
+  rawData = [];
+  snapshot.forEach(doc => rawData.push(doc.data()));
+  computeAndRender();
+});
 
 // 🔎 FILTER TARIKH
 function applyFilter(){
@@ -521,36 +518,7 @@ function filterKelas(k){
   loadData();
 }
 
-function loadData(){
-  console.log("🚀 loadData jalan");
 
-  db.collection("aktivitiPelajar")
-  .orderBy("masa","desc")
-  .onSnapshot(snapshot => {
-
-    console.log("📡 snapshot size:", snapshot.size);
-
-    let murid = 0, guru = 0, pelawat = 0;
-    rawData = [];
-
-    snapshot.forEach(doc => {
-      const d = doc.data();
-      rawData.push(d);
-
-      if(d.jenis === "Murid") murid++;
-      else if(d.jenis === "Guru") guru++;
-      else pelawat++;
-    });
-
-    document.getElementById("kpiMurid").innerText = murid;
-    document.getElementById("kpiGuru").innerText = guru;
-    document.getElementById("kpiPelawat").innerText = pelawat;
-
-    console.log("📊 rawData:", rawData.length);
-
-    computeAndRender();
-  });
-}
 // ================= LOAD DATA (KPI + FILTER) =================
 function loadData(){
 
@@ -560,45 +528,31 @@ function loadData(){
 
     let murid = 0, guru = 0, pelawat = 0;
 
-    rawData = []; // 🔥 PENTING
-
     snapshot.forEach(doc => {
 
       const d = doc.data();
 
       // 🔥 FILTER SEKOLAH
       if(
-        currentSekolah !== "all" &&
-        d.organisasi?.toLowerCase().trim() !== currentSekolah.toLowerCase().trim()
-      ) return;
+  currentSekolah !== "all" &&
+  d.organisasi?.toLowerCase().trim() !== currentSekolah.toLowerCase().trim()
+) return;
 
       // 🔥 FILTER KELAS
       if(
-        currentKelas !== "all" &&
-        d.kelas?.toLowerCase().trim() !== currentKelas.toLowerCase().trim()
-      ) return;
+  currentKelas !== "all" &&
+  d.kelas?.toLowerCase().trim() !== currentKelas.toLowerCase().trim()
+) return;
 
-      // 🔥 SIMPAN UNTUK CHART & KPI
-      rawData.push(d);
-
-      // 🔥 KIRA PENGGUNA
       if(d.jenis === "Murid") murid++;
       else if(d.jenis === "Guru") guru++;
       else pelawat++;
 
     });
 
-    // 🔥 UPDATE KPI PENGGUNA
     document.getElementById("kpiMurid").innerText = murid;
     document.getElementById("kpiGuru").innerText = guru;
     document.getElementById("kpiPelawat").innerText = pelawat;
-
-    // 🔥 UPDATE CHART & KPI LAIN
-    function computeAndRender(){
-  console.log("⚙️ compute jalan", rawData.length);
-}
-    
-    console.log("📊 DATA FILTERED:", rawData.length);
 
   });
 
@@ -674,6 +628,15 @@ db.collection("aktivitiPelajar")
   container.innerHTML = html;
 
 });
+
+// ================= AUTO LOAD =================
+window.onload = function(){
+
+  loadData();
+  loadSekolah();
+  loadKelas();
+  loadAlert(); // 🔥 TAMBAH INI
+};
 
 // ================= SEKOLAH =================
 function loadSekolah(){
@@ -771,11 +734,6 @@ function loadAlert(){
 
   const container = document.getElementById("alertList");
 
-  if(!container){
-    console.error("❌ alertList tak jumpa");
-    return;
-  }
-
   db.collection("aktivitiPelajar")
   .where("perluPerhatian", "==", true)
   .limit(10)
@@ -787,14 +745,8 @@ function loadAlert(){
 
       const d = doc.data();
 
-      // 🔥 SAFE TEXT (elak error tanda ')
-      const nama = (d.nama || "").replace(/'/g,"");
-      const kelas = (d.kelas || d.organisasi || "").replace(/'/g,"");
-      const module = (d.module || "").replace(/'/g,"");
-      const komen = (d.komen || "").replace(/'/g,"");
-
       html += `
-        <div onclick="openDetail('${nama}','${kelas}','${module}','${komen}')"
+        <div onclick="openDetail('${(d.nama||'').replace(/'/g,"")}', '${(d.kelas||d.organisasi||'')}', '${(d.module||'')}')"
              class="cursor-pointer bg-red-500/20 border border-red-400 p-4 rounded-xl hover:bg-red-500/30 transition">
 
           <div class="font-bold text-white">
@@ -813,10 +765,6 @@ function loadAlert(){
       `;
     });
 
-    if(!html){
-      html = `<div class="text-white/50 text-sm">Tiada data</div>`;
-    }
-
     container.innerHTML = html;
 
   }, err => {
@@ -827,7 +775,7 @@ function loadAlert(){
 
 console.log("🔥 ALERT LOADED");
 
-function openDetail(nama, kelas, module, komen){
+function openDetail(nama, kelas, module){
 
   console.log("CLICK DETECTED:", nama);
 
@@ -840,96 +788,21 @@ function openDetail(nama, kelas, module, komen){
   }
 
   content.innerHTML = `
-  <b>Nama:</b> ${nama}<br>
-  <b>Kelas:</b> ${kelas}<br>
-  <b>Modul:</b> ${module}<br><br>
+    <b>Nama:</b> ${nama}<br>
+    <b>Kelas:</b> ${kelas}<br>
+    <b>Modul:</b> ${module}<br><br>
 
-  <b>📝 Luahan Murid:</b>
-  <div class="bg-gray-100 text-black p-3 rounded mt-2 text-left">
-    ${komen || "Tiada maklumat"}
-  </div>
-
-  <br>
-  <span class="text-red-500 font-semibold">
-    ⚠️ Murid ini memerlukan perhatian
-  </span>
-`;
+    <span class="text-red-500 font-semibold">
+      ⚠️ Murid ini memerlukan perhatian
+    </span>
+  `;
 
   modal.classList.remove("hidden");
 
 }
-
 function closeDetail(){
   document.getElementById("detailModal").classList.add("hidden");
 }
-
-
-
-  const container = document.getElementById("riskList");
-  if(!container) return;
-
-function loadRisk(){
-
-  const container = document.getElementById("riskList");
-
-  if(!container){
-    console.error("❌ riskList tak jumpa");
-    return;
-  }
-
-  db.collection("aktivitiPelajar")
-  .orderBy("riskScore","desc")
-  .limit(10)
-  .onSnapshot(snapshot => {
-
-    let html = "";
-
-    snapshot.forEach(doc => {
-
-      const d = doc.data();
-
-      const color =
-        d.tahap === "TINGGI" ? "bg-red-500/20 border-red-400" :
-        d.tahap === "SEDERHANA" ? "bg-yellow-500/20 border-yellow-400" :
-        "bg-green-500/20 border-green-400";
-
-      html += `
-        <div class="${color} border p-4 rounded-xl">
-
-          <div class="font-bold text-white">
-            🚨 ${d.nama || "-"}
-          </div>
-
-          <div class="text-sm text-white/80">
-            ${d.kelas || d.organisasi || "-"}
-          </div>
-
-          <div class="text-xs mt-2 text-white/70">
-            Skor: ${d.riskScore || 0} (${d.tahap || "RENDAH"})
-          </div>
-
-        </div>
-      `;
-    });
-
-    container.innerHTML = html || "Tiada data";
-
-  });
-
-}
-// ================= INIT =================
-window.onload = function(){
-  loadRisk();
-}
-  console.log("🚀 DASHBOARD READY");
-
-  loadData();
-  loadSekolah();
-  loadKelas();
-  loadAlert();
-  loadRisk(); // 🔥 kekalkan
-;
-
 </script>
 
 <!-- LETAK SEBELUM </body> -->

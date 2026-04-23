@@ -1609,6 +1609,9 @@ function updateEmotion(val){
     circle.innerText = "😄";
     circle.style.background = "#3b82f6";
   }
+
+  // 🔥 TAMBAH INI (PENTING)
+  trackActivity("Emotion Tracker");
 }
 
 function analyzeEmotion(){
@@ -1736,13 +1739,14 @@ function trackActivity(module){
   // 🔥 DETECT MODULE RISIKO
   let perluPerhatian = false;
 
-  if(
-    module === "HealTalk" || 
-    module === "Emotion" || 
-    module === "Coping"
-  ){
-    perluPerhatian = true;
-  }
+  // 🔥 DETECT MODULE RISIKO (AUTO MATCH)
+if(
+  module.toLowerCase().includes("heal") ||
+  module.toLowerCase().includes("emotion") ||
+  module.toLowerCase().includes("coping")
+){
+  perluPerhatian = true;
+}
 
   db.collection("aktivitiPelajar").add({
     module: module,

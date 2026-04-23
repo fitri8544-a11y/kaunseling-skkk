@@ -283,6 +283,13 @@
 
 </div>
 
+<!-- 🔄 TUKAR PENGGUNA -->
+<button onclick="tukarUser()" 
+class="fixed top-5 right-5 bg-yellow-500 hover:bg-yellow-600 
+text-white px-4 py-2 rounded-lg shadow-lg z-[9999]">
+🔄 Tukar Pengguna
+</button>
+
 <!-- MAIN DASHBOARD -->
 <div class="max-w-6xl mx-auto mt-10 grid md:grid-cols-4 gap-6 px-6">
 
@@ -1884,6 +1891,19 @@ firebase.auth().onAuthStateChanged(user => {
   }
 
 });
+// ================= USER RESET =================
+function tukarUser(){
+
+  // 🔥 buang semua data user
+  sessionStorage.clear();
+
+  // 🔥 logout firebase (kalau admin)
+  firebase.auth().signOut();
+
+  // 🔥 redirect semula ke daftar
+  window.location.href = "daftar.html";
+
+}
 </script>
 
 </body>

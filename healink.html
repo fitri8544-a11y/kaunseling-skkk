@@ -306,7 +306,7 @@ text-white px-4 py-2 rounded-lg shadow-lg z-[9999]">
 
 </div>
 
-  <div onclick="openTracker(); trackActivity('Tracker')"  
+  <div onclick="openTracker(); trackActivity('Emotion Tracker')"  
   class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
          hover:scale-105 hover:shadow-purple-400/40 transition duration-300 cursor-pointer text-center">
 
@@ -1736,36 +1736,46 @@ function trackActivity(module){
 
   console.log("👤 USER:", nama);
 
-  // 🔥 DETECT MODULE RISIKO
-  let perluPerhatian = false;
+ // 🔥 DEBUG SEBELUM SIMPAN
+const m = (module || "").toLowerCase();
 
-  // 🔥 DETECT MODULE RISIKO (AUTO MATCH)
+console.log("🔥 TRACK FUNCTION DIPANGGIL:", module);
+console.log("🧠 CHECK MODULE:", m);
+
+// 🔥 LOGIC PERLU PERHATIAN
+let perluPerhatian = false;
+
 if(
-  module.toLowerCase().includes("heal") ||
-  module.toLowerCase().includes("emotion") ||
-  module.toLowerCase().includes("coping")
+  m.includes("heal") ||
+  m.includes("coping") ||
+  m.includes("emotion") ||
+  m.includes("tracker") // backup
 ){
   perluPerhatian = true;
 }
 
-  db.collection("aktivitiPelajar").add({
-    module: module,
-    masa: firebase.firestore.FieldValue.serverTimestamp(),
+console.log("🚨 PERLU PERHATIAN:", perluPerhatian);
 
-    nama: nama || "Pengguna",
-    jenis: jenis || "Pelawat",
-    kelas: kelas || "-",
-    organisasi: organisasi || "-",
+// 🔥 SIMPAN FIRESTORE
+db.collection("aktivitiPelajar").add({
+  module: module,
+  masa: firebase.firestore.FieldValue.serverTimestamp(),
 
-    // 🔥 TAMBAH INI
-    perluPerhatian: perluPerhatian
-  })
-  .then(() => {
-    console.log("✅ DATA MASUK FIRESTORE", perluPerhatian);
-  })
-  .catch((error) => {
-    console.error("❌ ERROR:", error);
-  });
+  nama: nama || "Pengguna",
+  jenis: jenis || "Pelawat",
+  kelas: kelas || "-",
+  organisasi: organisasi || "-",
+
+  perluPerhatian: perluPerhatian
+})
+.then(() => {
+  console.log("✅ DATA MASUK FIRESTORE");
+  console.log("👉 MODULE:", module);
+  console.log("👉 PERLU PERHATIAN:", perluPerhatian);
+})
+.catch((error) => {
+  console.error("❌ ERROR:", error);
+});
 
 }
 </script> 

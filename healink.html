@@ -1138,22 +1138,26 @@ setInterval(animateSlogan, 8000);
 </div>
 
 <!-- ================= MODAL LOGIN ADMIN ================= -->
-<div id="modalLoginAdmin" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[9999]">
+<div id="modalLoginAdmin" 
+class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[9999]">
 
-  <div class="bg-white p-6 rounded-2xl w-[90%] max-w-md text-center">
+  <div class="bg-white p-6 rounded-2xl w-[90%] max-w-md text-center shadow-xl">
 
     <h2 class="text-xl font-bold mb-4 text-black">
       🔐 Login Admin
     </h2>
 
+    <!-- EMAIL -->
     <input id="adminEmail" type="email" placeholder="Email"
-      class="w-full p-3 mb-3 rounded text-black">
+      class="w-full p-3 mb-3 rounded text-black border focus:outline-none focus:ring-2 focus:ring-purple-500">
 
+    <!-- PASSWORD -->
     <input id="adminPassword" type="password" placeholder="Password"
-      class="w-full p-3 mb-4 rounded text-black">
+      class="w-full p-3 mb-4 rounded text-black border focus:outline-none focus:ring-2 focus:ring-purple-500">
 
+    <!-- BUTTON -->
     <button onclick="loginAdmin()" 
-      class="w-full bg-gradient-to-r from-purple-500 to-blue-500 p-3 rounded-lg text-white font-semibold">
+      class="w-full bg-gradient-to-r from-purple-500 to-blue-500 p-3 rounded-lg text-white font-semibold hover:scale-105 transition">
       Login
     </button>
 
@@ -1888,24 +1892,39 @@ function resetDaftar(){
 
 function loginAdmin(){
 
-  const email = document.getElementById("adminEmail").value;
-  const password = document.getElementById("adminPassword").value;
+  console.log("🔥 LOGIN BUTTON CLICK");
+
+  const email = document.getElementById("adminEmail").value.trim();
+  const password = document.getElementById("adminPassword").value.trim();
+
+  // 🔒 VALIDATION
+  if(!email || !password){
+    alert("Sila isi email & password");
+    return;
+  }
 
   firebase.auth().signInWithEmailAndPassword(email, password)
-  .then(user => {
+  .then(() => {
 
     console.log("✅ ADMIN LOGIN SUCCESS");
 
-    // simpan nama admin
     sessionStorage.setItem("nama", email);
     sessionStorage.setItem("jenis", "Admin");
 
-    // redirect terus ke dashboard
+    // tutup modal (optional)
+    const modal = document.getElementById("modalLoginAdmin");
+    if(modal) modal.classList.add("hidden");
+
+    // redirect
     window.location.href = "dashboard.html";
 
   })
   .catch(error => {
+
+    console.error("❌ LOGIN ERROR:", error);
+
     alert("Login gagal: " + error.message);
+
   });
 
 }

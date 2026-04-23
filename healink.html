@@ -337,7 +337,7 @@ text-white px-4 py-2 rounded-lg shadow-lg z-[9999]">
 
 </div>
 
-<div onclick="openHealTalk(); trackActivity('Talk')" 
+<div onclick="openHealTalk()"
      class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
             hover:scale-105 hover:shadow-pink-400/40 transition duration-300 cursor-pointer">
 
@@ -633,7 +633,7 @@ setInterval(animateSlogan, 8000);
   <div class="bg-white p-8 rounded-3xl w-[90%] max-w-lg shadow-2xl relative">
 
     <!-- CLOSE -->
-    <button onclick="closeHealTalk(); trackActivity('HealTalk')"  
+    <button onclick="closeHealTalk()">  
       class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-xl">
       ✕
     </button>
@@ -1206,9 +1206,6 @@ function switchTab(tab) {
 
 // 🔥 BUKA MODAL
 function openHealTalk(){
-
-  trackActivity("HealTalk"); // ✅ TRACK BILA BUKA
-
   document.getElementById("healModal").classList.remove("hidden");
 }
 
@@ -1229,31 +1226,12 @@ function submitHealTalk(){
     return;
   }
 
-  // 🔥 HANTAR KE FIRESTORE + TRACK
-  trackActivity("HealTalk Submit", text);
+  // 🔥 SATU SAHAJA (STANDARD SYSTEM)
+  trackActivity("HealTalk", text);
 
   document.getElementById("msg").classList.remove("hidden");
   document.getElementById("luahan").value="";
 }
-
-  // 🔥 ambil user
-  const nama = sessionStorage.getItem("nama");
-  const kelas = sessionStorage.getItem("kelas");
-  const organisasi = sessionStorage.getItem("organisasi");
-
-  // 🔥 SIMPAN KE FIRESTORE (BUKAN localStorage)
-  db.collection("aktivitiPelajar").add({
-    module: "HealTalk",
-    komen: text, // ✅ INI PENTING
-    nama: nama || "Pengguna",
-    kelas: kelas || "-",
-    organisasi: organisasi || "-",
-    perluPerhatian: true,
-    masa: firebase.firestore.FieldValue.serverTimestamp()
-  });
-
-  document.getElementById("msg").classList.remove("hidden");
-  document.getElementById("luahan").value = "";
 
 
 /* =========================================
@@ -1295,17 +1273,6 @@ function saveMood(){
   const nama = sessionStorage.getItem("nama");
   const kelas = sessionStorage.getItem("kelas");
   const organisasi = sessionStorage.getItem("organisasi");
-
-  db.collection("aktivitiPelajar").add({
-    module: "Emotion Tracker",
-    komen: note || "-",
-    emotion: selectedMood, // 🔥 FIX
-    nama: nama || "Pengguna",
-    kelas: kelas || "-",
-    organisasi: organisasi || "-",
-    perluPerhatian: true,
-    masa: firebase.firestore.FieldValue.serverTimestamp()
-  });
 
   document.getElementById("trackerMsg").classList.remove("hidden");
 }
@@ -1788,13 +1755,9 @@ function trackActivity(module, komen = ""){
   // =============================
   let perluPerhatian = false;
 
-  if(
-    m.includes("heal") ||
-    m.includes("coping") ||
-    m.includes("emotion")
-  ){
-    perluPerhatian = true;
-  }
+  if(riskScore >= 4){
+  perluPerhatian = true;
+}
 
   console.log("🚨 PERLU PERHATIAN:", perluPerhatian);
 
@@ -1854,24 +1817,6 @@ firebase.auth().onAuthStateChanged(user => {
   if(!sessionStorage.getItem("sudahDaftar")){
     window.location.href = "daftar.html";
   }
-
-});
-
-// ================= CHECK LOGIN =================
-firebase.auth().onAuthStateChanged(user => {
-
-  // ✅ ADMIN → skip semua popup
-  if(user){
-    return;
-  }
-
-  // ✅ USER SUDAH DAFTAR → skip
-  if(sessionStorage.getItem("sudahDaftar")){
-    return;
-  }
-
-  // ❌ baru keluar modal
-  document.getElementById("modalDaftar").classList.remove("hidden");
 
 });
 

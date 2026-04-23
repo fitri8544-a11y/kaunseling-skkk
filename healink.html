@@ -1090,72 +1090,6 @@ setInterval(animateSlogan, 8000);
   </div>
 </div>
 
-<!-- ================= MODAL DAFTAR ================= -->
-<div id="modalDaftar" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[9999]">
-
-  <div class="bg-white p-6 rounded-2xl w-[90%] max-w-md text-center">
-
-    <h2 class="text-xl font-bold mb-4 text-black">
-      📝 Daftar Pengunjung
-    </h2>
-
-    <!-- JENIS -->
-    <select id="jenis" onchange="handleJenis()" 
-    class="w-full p-3 mb-3 rounded text-black">
-      <option value="">Pilih Jenis</option>
-      <option>Murid</option>
-      <option>Guru</option>
-      <option>Pelawat</option>
-      <option>Admin</option>
-    </select>
-
-    <!-- NAMA -->
-    <input id="nama" type="text" placeholder="Nama (atau Nama Sekolah jika pelawat)"
-      class="w-full p-3 mb-3 rounded text-black">
-
-  <input id="organisasi" type="text" placeholder="Sekolah / Organisasi"
-      class="w-full p-3 mb-3 rounded text-black">
-
-  <input id="kelas" type="text" placeholder="Kelas (jika murid)"
-      class="w-full p-3 mb-4 rounded text-black">
-
-    <a href="daftar.html"
-class="w-full block text-center bg-gradient-to-r from-purple-500 to-blue-500 p-3 rounded-xl font-semibold hover:scale-105 transition">
-✨ Daftar Sekarang
-</a>
-
-  </div>
-
-</div>
-
-<!-- ================= MODAL LOGIN ADMIN ================= -->
-<div id="modalLoginAdmin" 
-class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[9999]">
-
-  <div class="bg-white p-6 rounded-2xl w-[90%] max-w-md text-center shadow-xl">
-
-    <h2 class="text-xl font-bold mb-4 text-black">
-      🔐 Login Admin
-    </h2>
-
-    <!-- EMAIL -->
-    <input id="adminEmail" type="email" placeholder="Email"
-      class="w-full p-3 mb-3 rounded text-black border focus:outline-none focus:ring-2 focus:ring-purple-500">
-
-    <!-- PASSWORD -->
-    <input id="adminPassword" type="password" placeholder="Password"
-      class="w-full p-3 mb-4 rounded text-black border focus:outline-none focus:ring-2 focus:ring-purple-500">
-
-    <!-- BUTTON -->
-    <button onclick="loginAdmin()" 
-      class="w-full bg-gradient-to-r from-purple-500 to-blue-500 p-3 rounded-lg text-white font-semibold hover:scale-105 transition">
-      Login
-    </button>
-
-  </div>
-
-</div>
-
 <!-- ================= COPING SKILLS ================= -->
 <div id="copingModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center z-50">
 
@@ -1814,81 +1748,73 @@ function trackActivity(module){
 
 <script>
 
+// ================= CHECK LOGIN =================
+firebase.auth().onAuthStateChanged(user => {
+
+  // ✅ ADMIN → skip semua popup
+  if(user){
+    return;
+  }
+
+  // ✅ USER SUDAH DAFTAR → skip
+  if(sessionStorage.getItem("sudahDaftar")){
+    return;
+  }
+
+  // ❌ baru keluar modal
+  document.getElementById("modalDaftar").classList.remove("hidden");
+
+});
+
+
 // ================= SUBMIT DAFTAR =================
 function submitDaftar(){
 
   const jenis = document.getElementById("jenis").value;
-  const nama  = document.getElementById("nama").value;
-  const organisasi = document.getElementById("organisasi").value;
-  const kelas = document.getElementById("kelas").value;
+  const nama  = document.getElementById("nama").value.trim();
+  const organisasi = document.getElementById("organisasi").value.trim();
+  const kelas = document.getElementById("kelas").value.trim();
 
+  // 🔥 ADMIN → terus login modal
   if(jenis === "Admin"){
 
-  // simpan sementara (optional)
-  sessionStorage.setItem("jenis", "Admin");
+    document.getElementById("modalDaftar").classList.add("hidden");
+    document.getElementById("modalLoginAdmin").classList.remove("hidden");
 
-  // buka modal login admin
-  document.getElementById("modalDaftar").classList.add("hidden");
-  document.getElementById("modalLoginAdmin").classList.remove("hidden");
-
-  return; // 🔥 STOP sini
-}
-
-  if(jenis === "Admin"){
-  const password = prompt("Masukkan kata laluan Admin:");
-
-  if(password !== "ptis123"){ // 👉 tukar password sendiri
-    alert("Akses Admin ditolak ❌");
     return;
   }
-}
 
-  // 🔥 SIMPAN (guna sessionStorage untuk multi user)
+  // VALIDATION
+  if(!jenis || !nama){
+    alert("Sila lengkapkan maklumat");
+    return;
+  }
+
+  // SIMPAN SESSION
   sessionStorage.setItem("nama", nama);
   sessionStorage.setItem("jenis", jenis);
   sessionStorage.setItem("kelas", kelas);
   sessionStorage.setItem("organisasi", organisasi);
   sessionStorage.setItem("sudahDaftar","yes");
 
-  console.log("✅ LOCAL STORAGE SET:", nama);
-
-  // tutup modal
-  document.getElementById("modalDaftar").classList.add("hidden");
-
-  // simpan Firestore
+  // SIMPAN FIRESTORE
   db.collection("pengunjung").add({
     jenis, nama, organisasi, kelas,
     masa: new Date()
   });
 
-}
-
-
-// ================= CHECK DAFTAR =================
-window.onload = function(){
-
-  // 🔥 RESET SETIAP REFRESH
-  sessionStorage.clear();
-
-  document.getElementById("modalDaftar").classList.remove("hidden");
+  // tutup modal
+  document.getElementById("modalDaftar").classList.add("hidden");
 
 }
 
 
-// ================= RESET (OPTIONAL BUTTON) =================
-function resetDaftar(){
-  sessionStorage.clear();
-  location.reload();
-}
-
+// ================= LOGIN ADMIN =================
 function loginAdmin(){
-
-  console.log("🔥 LOGIN BUTTON CLICK");
 
   const email = document.getElementById("adminEmail").value.trim();
   const password = document.getElementById("adminPassword").value.trim();
 
-  // 🔒 VALIDATION
   if(!email || !password){
     alert("Sila isi email & password");
     return;
@@ -1899,67 +1825,50 @@ function loginAdmin(){
 
     console.log("✅ ADMIN LOGIN SUCCESS");
 
+    // 🔥 WAJIB (ini yang elak popup kedua)
     sessionStorage.setItem("nama", email);
     sessionStorage.setItem("jenis", "Admin");
+    sessionStorage.setItem("sudahDaftar","yes");
 
-    // tutup modal (optional)
-    const modal = document.getElementById("modalLoginAdmin");
-    if(modal) modal.classList.add("hidden");
-
-    // redirect
     window.location.href = "dashboard.html";
 
   })
-  .catch(error => {
-
-    console.error("❌ LOGIN ERROR:", error);
-
-    alert("Login gagal: " + error.message);
-
+  .catch(err => {
+    alert("Login gagal: " + err.message);
   });
 
 }
 
+
+// ================= HANDLE JENIS =================
 function handleJenis(){
 
   const jenis = document.getElementById("jenis").value;
 
   if(jenis === "Admin"){
 
-    // tutup modal daftar
     document.getElementById("modalDaftar").classList.add("hidden");
-
-    // buka modal login admin
     document.getElementById("modalLoginAdmin").classList.remove("hidden");
 
   }
 
 }
 
-if(jenis === "Admin"){
+// ================= CHECK USER =================
 
-  document.getElementById("modalDaftar").classList.add("hidden");
-  document.getElementById("modalLoginAdmin").classList.remove("hidden");
+// 🔥 ADMIN LOGIN CHECK
+firebase.auth().onAuthStateChanged(user => {
 
-  // reset dropdown supaya tak kekal Admin
-  document.getElementById("jenis").value = "";
+  if(user){
+    return; // admin terus masuk
+  }
 
-}
-function loginAdmin(){
-  const email = document.getElementById("adminEmail").value;
-  const password = document.getElementById("adminPassword").value;
+  // 🔥 USER BELUM DAFTAR → redirect
+  if(!sessionStorage.getItem("sudahDaftar")){
+    window.location.href = "daftar.html";
+  }
 
-  firebase.auth().signInWithEmailAndPassword(email, password)
-  .then(() => {
-    sessionStorage.setItem("jenis","Admin");
-    window.location.href = "dashboard.html";
-  })
-  .catch(err => alert(err.message));
-}
-
-if(!sessionStorage.getItem("nama")){
-  window.location.href = "daftar.html";
-}
+});
 </script>
 
 </body>

@@ -176,6 +176,9 @@ document.getElementById("formDaftar").addEventListener("submit", function(e){
   sessionStorage.setItem("kelas", kelas);
   sessionStorage.setItem("organisasi", organisasi);
 
+  // 🔥 TAMBAH INI (WAJIB)
+  sessionStorage.setItem("sudahDaftar","yes");
+
   db.collection("pengunjung").add({
     jenis, nama, organisasi, kelas,
     masa: new Date()

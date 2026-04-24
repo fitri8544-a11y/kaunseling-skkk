@@ -288,23 +288,34 @@
 
 function generateGreeting(){
 
-  const nama = sessionStorage.getItem("nama") || "Pengguna";
-  const hour = new Date().getHours();
+  firebase.auth().onAuthStateChanged(user => {
 
-  let greeting = "";
+    let nama = "Pengguna";
 
-  if(hour >= 5 && hour < 12){
-    greeting = "🌅 Selamat Pagi";
-  }
-  else if(hour >= 12 && hour < 18){
-    greeting = "🌤 Selamat Petang";
-  }
-  else{
-    greeting = "🌙 Selamat Malam";
-  }
+    if(user && user.email){
+      const raw = user.email.split("@")[0];
+      nama = raw.charAt(0).toUpperCase() + raw.slice(1);
+    }
 
-  document.getElementById("greetingText").innerText =
-    `${greeting}, ${nama}`;
+    const hour = new Date().getHours();
+
+    let greeting = "";
+
+    if(hour >= 5 && hour < 12){
+      greeting = "🌅 Selamat Pagi";
+    }
+    else if(hour >= 12 && hour < 18){
+      greeting = "🌤 Selamat Petang";
+    }
+    else{
+      greeting = "🌙 Selamat Malam";
+    }
+
+    document.getElementById("greetingText").innerText =
+      `${greeting}, ${nama}`;
+
+  });
+
 }
 
 // 🔥 CONFIG (guna config cikgu)

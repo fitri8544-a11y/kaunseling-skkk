@@ -286,17 +286,46 @@
 
 <script>
 
+const SUPER_ADMIN = "fitrieusop@moe.gov.my";
+
 function generateGreeting(){
 
   firebase.auth().onAuthStateChanged(user => {
 
-    let nama = "Pengguna";
+    let namaPaparan = "Pengguna";
+    let roleText = "";
 
     if(user && user.email){
-      const raw = user.email.split("@")[0];
-      nama = raw.charAt(0).toUpperCase() + raw.slice(1);
+
+      const email = user.email.toLowerCase();
+      const raw = email.split("@")[0];
+
+      const nama = raw.charAt(0).toUpperCase() + raw.slice(1);
+
+      // ================= ROLE LOGIC =================
+      if(email === SUPER_ADMIN){
+        roleText = "Admin";
+        namaPaparan = "Fitri";
+      }
+      else if(ADMIN_EMAILS.includes(email)){
+        roleText = "Admin";
+        namaPaparan = "";
+      }
+      else{
+        const jenis = sessionStorage.getItem("jenis");
+
+        if(jenis === "Guru"){
+          roleText = "Cikgu";
+          namaPaparan = sessionStorage.getItem("nama") || nama;
+        }
+        else if(jenis === "Murid"){
+          roleText = "";
+          namaPaparan = sessionStorage.getItem("nama") || nama;
+        }
+      }
     }
 
+    // ================= MASA =================
     const hour = new Date().getHours();
 
     let greeting = "";
@@ -311,8 +340,33 @@ function generateGreeting(){
       greeting = "🌙 Selamat Malam";
     }
 
-    document.getElementById("greetingText").innerText =
-      `${greeting}, ${nama}`;
+    // ================= OUTPUT =================
+    let fullText = greeting;
+
+    if(roleText && namaPaparan){
+      fullText += `, ${roleText} ${namaPaparan}`;
+    }
+    else if(roleText){
+      fullText += `, ${roleText}`;
+    }
+    else{
+      fullText += `, ${namaPaparan}`;
+    }
+
+    const el = document.getElementById("greetingText");
+
+    el.innerText = fullText;
+
+    // ================= WARNA ROLE =================
+    if(roleText === "Admin"){
+      el.className = "text-lg font-semibold text-yellow-300";
+    }
+    else if(roleText === "Cikgu"){
+      el.className = "text-lg font-semibold text-blue-300";
+    }
+    else{
+      el.className = "text-lg font-semibold text-green-300";
+    }
 
   });
 

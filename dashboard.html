@@ -66,6 +66,26 @@
   font-size:12px;
   opacity:0.7;
 }
+
+.sidebar-item {
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.sidebar-item:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+.badge {
+  font-size: 12px;
+  color: #fde047;
+  font-weight: bold;
+}
 </style>
 </head>
 
@@ -79,21 +99,35 @@
   <h2 class="text-xl font-bold mb-6">📊 Dashboard</h2>
 
   <!-- ================= SEKOLAH ================= -->
-  <div class="mb-6">
-    <div class="text-sm text-white/70 mb-2">🏫 Sekolah</div>
+  <div class="text-xs text-white/60 mt-4 mb-2 uppercase">🏫 Sekolah</div>
 
-    <!-- 🔥 AUTO LOAD -->
-    <div id="listSekolah" class="space-y-2"></div>
+<div class="space-y-2">
+
+  <div class="sidebar-item">
+    <span>Semua</span>
+    <span class="badge">125</span>
   </div>
+
+  <div class="sidebar-item">
+    <span>SK BALING</span>
+    <span class="badge">12</span>
+  </div>
+
+  <div class="sidebar-item">
+    <span>SK BINJUL</span>
+    <span class="badge">8</span>
+  </div>
+
+</div>
 
   <!-- ================= KELAS ================= -->
-  <div>
-    <div class="text-sm text-white/70 mb-2">🎓 Kelas</div>
+  <div class="text-xs text-white/60 mt-6 mb-2 uppercase">🎓 Kelas</div>
 
-    <!-- 🔥 AUTO LOAD -->
-    <div id="listKelas" class="space-y-2"></div>
+<div class="space-y-2">
+  <div class="sidebar-item">
+    <span>6 BIJAK</span>
+    <span class="badge">10</span>
   </div>
-
 </div>
 
   <!-- ================= CONTENT ================= -->

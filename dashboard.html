@@ -672,11 +672,10 @@ db.collection("aktivitiPelajar")
 // ================= AUTO LOAD =================
 window.onload = function(){
 
-  loadData();
-  loadSekolah();
-  loadKelas();
-  loadAlert(); // 🔥 TAMBAH INI
-  loadSidebar();   // 🔥 WAJIB TAMBAH
+  loadData();      // dashboard utama
+  loadSidebar();   // sidebar dynamic 🔥
+  loadAlert();     // murid perhatian
+
 };
 
 // ================= SEKOLAH =================
@@ -870,24 +869,56 @@ function loadSidebar(){
     snapshot.forEach(doc => {
       const d = doc.data();
 
-      const sekolah = d.organisasi ? d.organisasi.toUpperCase() : "TIADA SEKOLAH";
+      const orgRaw = (d.organisasi || "").toUpperCase().trim();
       const kelas = (d.kelas || "-").toUpperCase();
-      const org = d.organisasi ? d.organisasi.toUpperCase() : "LAIN-LAIN"; // 🔥 ORGANISASI USER
 
-      sekolahCount[sekolah] = (sekolahCount[sekolah] || 0) + 1;
+      // ================= CLASSIFY =================
+      let kategori = "LAIN";
+
+      if(
+        orgRaw.includes("SK") ||
+        orgRaw.includes("SMK") ||
+        orgRaw.includes("SJKC") ||
+        orgRaw.includes("SJKT")
+      ){
+        kategori = "SEKOLAH";
+      }
+      else if(
+        orgRaw.includes("PPD") ||
+        orgRaw.includes("JPN")
+      ){
+        kategori = "ORGANISASI";
+      }
+
+      // ================= COUNT =================
+      if(kategori === "SEKOLAH"){
+        sekolahCount[orgRaw] = (sekolahCount[orgRaw] || 0) + 1;
+      }
+
+      if(kategori === "ORGANISASI"){
+        organisasiCount[orgRaw] = (organisasiCount[orgRaw] || 0) + 1;
+      }
+
+      if(kategori === "LAIN"){
+        organisasiCount["LAIN-LAIN"] = (organisasiCount["LAIN-LAIN"] || 0) + 1;
+      }
+
+      // kelas semua
       kelasCount[kelas] = (kelasCount[kelas] || 0) + 1;
-      organisasiCount[org] = (organisasiCount[org] || 0) + 1;
     });
 
     // ================= SEKOLAH =================
     let htmlSekolah = `
-      <div onclick="filterSekolah('all')" class="sidebar-item flex justify-between cursor-pointer">
+      <div onclick="filterSekolah('all')" 
+           class="sidebar-item flex justify-between cursor-pointer">
         <span>Semua</span>
         <span class="badge">${snapshot.size}</span>
       </div>
     `;
 
-    Object.keys(sekolahCount).forEach(s => {
+    Object.keys(sekolahCount)
+    .sort((a,b) => sekolahCount[b] - sekolahCount[a])
+    .forEach(s => {
       htmlSekolah += `
         <div onclick="filterSekolah('${s}')" 
              class="sidebar-item flex justify-between cursor-pointer">
@@ -902,7 +933,9 @@ function loadSidebar(){
     // ================= KELAS =================
     let htmlKelas = "";
 
-    Object.keys(kelasCount).forEach(k => {
+    Object.keys(kelasCount)
+    .sort((a,b) => kelasCount[b] - kelasCount[a])
+    .forEach(k => {
       htmlKelas += `
         <div onclick="filterKelas('${k}')" 
              class="sidebar-item flex justify-between cursor-pointer">
@@ -918,17 +951,17 @@ function loadSidebar(){
     let htmlOrg = "";
 
     Object.keys(organisasiCount)
-    .sort((a,b) => organisasiCount[b] - organisasiCount[a]) // 🔥 sort besar ke kecil
+    .sort((a,b) => organisasiCount[b] - organisasiCount[a])
     .forEach(o => {
-  htmlOrg += `
-    <div class="sidebar-item flex justify-between cursor-pointer">
-      <span>${o}</span>
-      <span class="badge">${organisasiCount[o]}</span>
-    </div>
-  `;
-});
+      htmlOrg += `
+        <div class="sidebar-item flex justify-between cursor-pointer">
+          <span>${o}</span>
+          <span class="badge">${organisasiCount[o]}</span>
+        </div>
+      `;
+    });
 
-document.getElementById("organisasiList").innerHTML = htmlOrg;
+    document.getElementById("organisasiList").innerHTML = htmlOrg;
 
   });
 }

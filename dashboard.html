@@ -854,7 +854,9 @@ function loadSidebar(){
     snapshot.forEach(doc => {
       const d = doc.data();
 
-      const sekolah = (d.organisasi || "-").toUpperCase();
+      const sekolah = d.organisasi 
+  ? d.organisasi.toUpperCase() 
+  : "TIADA SEKOLAH";
       const kelas = (d.kelas || "-").toUpperCase();
 
       sekolahCount[sekolah] = (sekolahCount[sekolah] || 0) + 1;

@@ -90,19 +90,34 @@
 
 <body class="flex bg-gradient-to-br from-[#1e1b4b] via-purple-700 to-blue-600 text-white">
 
-  <!-- SIDEBAR -->
+  <!-- ================= SIDEBAR ================= -->
   <div class="w-64 min-h-screen bg-white/10 backdrop-blur-lg p-5 border-r border-white/10">
-    
+
     <h2 class="text-xl font-bold mb-6">📊 Dashboard</h2>
 
-    <!-- SEKOLAH -->
-    <div class="text-xs text-white/60 mt-4 mb-2 uppercase">🏫 Sekolah</div>
-    <div id="listSekolah" class="space-y-2"></div>
-    
+    <!-- ================= SEKOLAH ================= -->
+    <div onclick="toggleSection('sekolahList')" 
+         class="flex justify-between items-center cursor-pointer mt-4 mb-2 text-xs text-white/60 uppercase">
+      <span>🏫 Sekolah</span>
+      <span id="arrowSekolah">▼</span>
+    </div>
+    <div id="sekolahList" class="space-y-2 hidden"></div>
 
-    <!-- KELAS -->
-    <div class="text-xs text-white/60 mt-6 mb-2 uppercase">🎓 Kelas</div>
-    <div id="listKelas" class="space-y-2"></div>
+    <!-- ================= KELAS ================= -->
+    <div onclick="toggleSection('kelasList')" 
+         class="flex justify-between items-center cursor-pointer mt-6 mb-2 text-xs text-white/60 uppercase">
+      <span>🎓 Kelas</span>
+      <span id="arrowKelas">▼</span>
+    </div>
+    <div id="kelasList" class="space-y-2 hidden"></div>
+
+    <!-- ================= ORGANISASI ================= -->
+    <div onclick="toggleSection('organisasiList')" 
+         class="flex justify-between items-center cursor-pointer mt-6 mb-2 text-xs text-white/60 uppercase">
+      <span>🏢 Organisasi</span>
+      <span id="arrowOrg">▼</span>
+    </div>
+    <div id="organisasiList" class="space-y-2 hidden"></div>
 
   </div>
 
@@ -850,23 +865,23 @@ function loadSidebar(){
 
     const sekolahCount = {};
     const kelasCount = {};
+    const organisasiCount = {};
 
     snapshot.forEach(doc => {
       const d = doc.data();
 
-      const sekolah = d.organisasi 
-  ? d.organisasi.toUpperCase() 
-  : "TIADA SEKOLAH";
+      const sekolah = d.organisasi ? d.organisasi.toUpperCase() : "TIADA SEKOLAH";
       const kelas = (d.kelas || "-").toUpperCase();
+      const org = (d.jenis || "LAIN").toUpperCase(); // 🔥 ORGANISASI USER
 
       sekolahCount[sekolah] = (sekolahCount[sekolah] || 0) + 1;
       kelasCount[kelas] = (kelasCount[kelas] || 0) + 1;
+      organisasiCount[org] = (organisasiCount[org] || 0) + 1;
     });
 
-    // 🔥 SEKOLAH
+    // ================= SEKOLAH =================
     let htmlSekolah = `
-      <div onclick="filterSekolah('all')" 
-           class="sidebar-item flex justify-between cursor-pointer">
+      <div onclick="filterSekolah('all')" class="sidebar-item flex justify-between cursor-pointer">
         <span>Semua</span>
         <span class="badge">${snapshot.size}</span>
       </div>
@@ -882,9 +897,9 @@ function loadSidebar(){
       `;
     });
 
-    document.getElementById("listSekolah").innerHTML = htmlSekolah;
+    document.getElementById("sekolahList").innerHTML = htmlSekolah;
 
-    // 🔥 KELAS
+    // ================= KELAS =================
     let htmlKelas = "";
 
     Object.keys(kelasCount).forEach(k => {
@@ -897,9 +912,30 @@ function loadSidebar(){
       `;
     });
 
-    document.getElementById("listKelas").innerHTML = htmlKelas;
+    document.getElementById("kelasList").innerHTML = htmlKelas;
+
+    // ================= ORGANISASI =================
+    let htmlOrg = "";
+
+    Object.keys(organisasiCount).forEach(o => {
+      htmlOrg += `
+        <div class="sidebar-item flex justify-between">
+          <span>${o}</span>
+          <span class="badge">${organisasiCount[o]}</span>
+        </div>
+      `;
+    });
+
+    document.getElementById("organisasiList").innerHTML = htmlOrg;
 
   });
+}
+
+function toggleSection(id){
+
+  const el = document.getElementById(id);
+  el.classList.toggle("hidden");
+
 }
 </script>
 

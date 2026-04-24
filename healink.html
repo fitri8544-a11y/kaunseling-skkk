@@ -2100,7 +2100,43 @@ function generateAICadangan(emosi) {
   document.getElementById("aiSuggestion").innerHTML = suggestion;
   document.getElementById("aiActions").innerHTML = actions;
 }
+
+function showSection(id) {
+
+  console.log("Klik:", id); // debug
+
+  document.querySelectorAll('.section').forEach(sec => {
+    sec.style.display = 'none';
+  });
+
+  const target = document.getElementById(id);
+
+  if (target) {
+    target.style.display = 'block';
+  } else {
+    console.error("Section tak jumpa:", id);
+  }
+}
 </script>
+
+<!-- ================= SECTION AI CADANGAN ================= -->
+<div id="ai-cadangan" class="section" style="display:none;">
+
+  <div class="max-w-4xl mx-auto mt-10 bg-white/10 p-6 rounded-xl text-center">
+
+    <h2 class="text-2xl font-bold mb-4">🤖 Cadangan AI</h2>
+
+    <p id="aiMessage" class="text-lg mb-3">
+      Sila pilih emosi anda untuk melihat cadangan.
+    </p>
+
+    <div id="aiSuggestion" class="text-sm mb-4"></div>
+
+    <div id="aiActions" class="flex justify-center gap-3 flex-wrap"></div>
+
+  </div>
+
+</div>
 
 </body>
 </html>

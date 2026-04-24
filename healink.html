@@ -320,6 +320,18 @@ body::after{
 @keyframes spin {
   100% { transform: rotate(360deg); }
 }
+
+.btn {
+  background: linear-gradient(to right, #6366f1, #9333ea);
+  padding: 8px 14px;
+  border-radius: 999px;
+  color: white;
+  font-size: 12px;
+  transition: 0.3s;
+}
+.btn:hover {
+  transform: scale(1.05);
+}
 </style>
 
 <!-- AI STATUS BAR -->
@@ -373,6 +385,21 @@ text-white px-4 py-2 rounded-lg shadow-lg z-[9999]">
   <div class="text-4xl mb-2">🌡️</div>
   <h3 class="text-lg font-semibold text-white">Emotion Tracker</h3>
   <p class="text-sm text-white/70 mt-2">Pantauan emosi harian</p>
+
+</div>
+
+<!-- ================= AI CADANGAN ================= -->
+<div class="bg-white/10 p-6 rounded-xl mt-6 text-center">
+
+  <h2 class="text-xl font-bold mb-4">🤖 Cadangan AI</h2>
+
+  <p id="aiMessage" class="text-lg mb-3 text-white">
+    Sila pilih emosi anda untuk melihat cadangan.
+  </p>
+
+  <div id="aiSuggestion" class="text-sm text-gray-200 mb-4"></div>
+
+  <div id="aiActions" class="flex flex-wrap justify-center gap-3"></div>
 
 </div>
 
@@ -769,6 +796,11 @@ setInterval(animateSlogan, 8000);
       <div onclick="selectMood(this,'😰')" class="emoji-card">😰</div>
       <div onclick="selectMood(this,'😴')" class="emoji-card">😴</div>
       <div onclick="selectMood(this,'😌')" class="emoji-card">😌</div>
+      <button onclick="generateAICadangan('sedih')">😔 Sedih</button>
+      <button onclick="generateAICadangan('gembira')">😊 Gembira</button>
+      <button onclick="generateAICadangan('marah')">😡 Marah</button>
+      <button onclick="generateAICadangan('stress')">😣 Stress</button>
+      <button onclick="generateAICadangan('takut')">😟 Takut</button>
     </div>
 
     <!-- NOTE -->
@@ -2009,6 +2041,68 @@ function selectEmoji(el){
   window.selectedEmoji = el.innerText;
 
   console.log("😊 Emoji dipilih:", window.selectedEmoji);
+}
+
+function generateAICadangan(emosi) {
+
+  let message = "";
+  let suggestion = "";
+  let actions = "";
+
+  switch(emosi) {
+
+    case "gembira":
+      message = "😊 Hebat! Anda dalam keadaan emosi yang baik.";
+      suggestion = "Teruskan aktiviti positif dan kongsi kegembiraan dengan rakan.";
+      actions = `
+        <button class="btn">🎮 Main Permainan</button>
+        <button class="btn">🌈 Teruskan Aktiviti</button>
+      `;
+      break;
+
+    case "sedih":
+      message = "😔 Kami faham anda mungkin sedang sedih.";
+      suggestion = "Cuba teknik pernafasan atau bercakap dengan seseorang yang dipercayai.";
+      actions = `
+        <button class="btn">🧘 Teknik Pernafasan</button>
+        <button class="btn">💬 Heal Talk</button>
+      `;
+      break;
+
+    case "marah":
+      message = "😡 Rasa marah itu normal, tapi perlu dikawal.";
+      suggestion = "Ambil masa untuk bertenang dan cuba aktiviti relaksasi.";
+      actions = `
+        <button class="btn">🧘 Relax Mind</button>
+        <button class="btn">🎯 Coping Skills</button>
+      `;
+      break;
+
+    case "stress":
+      message = "😣 Anda mungkin sedang tertekan.";
+      suggestion = "Berehat sebentar dan cuba aktiviti ringan seperti permainan atau muzik.";
+      actions = `
+        <button class="btn">🎮 Permainan</button>
+        <button class="btn">🎵 Dengar Muzik</button>
+      `;
+      break;
+
+    case "takut":
+      message = "😟 Perasaan takut itu normal.";
+      suggestion = "Cuba bercakap dengan seseorang atau gunakan teknik menenangkan diri.";
+      actions = `
+        <button class="btn">💬 Heal Talk</button>
+        <button class="btn">🧘 Calm Exercise</button>
+      `;
+      break;
+
+    default:
+      message = "Pilih emosi untuk mendapatkan cadangan.";
+  }
+
+  document.getElementById("aiMessage").innerHTML = message;
+  document.getElementById("aiSuggestion").innerHTML = suggestion;
+  document.getElementById("aiActions").innerHTML = actions;
 }
 </script>
 

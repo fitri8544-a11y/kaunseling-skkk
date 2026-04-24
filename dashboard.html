@@ -861,60 +861,76 @@ function closeDetail(){
 function loadSidebar(){
 
   db.collection("aktivitiPelajar")
-.onSnapshot(snapshot => {
+  .onSnapshot(snapshot => {
 
-  let murid = 0, guru = 0, pelawat = 0;
+    const sekolahCount = {};
+    const kelasCount = {};
+    const organisasiCount = {};
 
-  const sekolahCount = {};
-  const organisasiCount = {};
-  const kelasCount = {};
+    snapshot.forEach(doc => {
+      const d = doc.data();
 
-  snapshot.forEach(doc => {
+      const sekolah = d.organisasi ? d.organisasi.toUpperCase() : "TIADA SEKOLAH";
+      const kelas = (d.kelas || "-").toUpperCase();
+      const org = d.organisasi ? d.organisasi.toUpperCase() : "LAIN-LAIN"; // 🔥 ORGANISASI USER
 
-    const d = doc.data();
+      sekolahCount[sekolah] = (sekolahCount[sekolah] || 0) + 1;
+      kelasCount[kelas] = (kelasCount[kelas] || 0) + 1;
+      organisasiCount[org] = (organisasiCount[org] || 0) + 1;
+    });
 
-    // ================= KPI =================
-    if(d.jenis === "Murid") murid++;
-    else if(d.jenis === "Guru") guru++;
-    else pelawat++;
+    // ================= SEKOLAH =================
+    let htmlSekolah = `
+      <div onclick="filterSekolah('all')" class="sidebar-item flex justify-between cursor-pointer">
+        <span>Semua</span>
+        <span class="badge">${snapshot.size}</span>
+      </div>
+    `;
 
-    // ================= ORGANISASI RAW =================
-    const orgRaw = (d.organisasi || "").toUpperCase().trim();
-    const kelas = (d.kelas || "-").toUpperCase();
+    Object.keys(sekolahCount).forEach(s => {
+      htmlSekolah += `
+        <div onclick="filterSekolah('${s}')" 
+             class="sidebar-item flex justify-between cursor-pointer">
+          <span>${s}</span>
+          <span class="badge">${sekolahCount[s]}</span>
+        </div>
+      `;
+    });
 
-    // ================= CLASSIFY =================
-    let kategori = "LAIN";
+    document.getElementById("sekolahList").innerHTML = htmlSekolah;
 
-    if(
-      orgRaw.includes("SK") ||
-      orgRaw.includes("SMK") ||
-      orgRaw.includes("SJKC") ||
-      orgRaw.includes("SJKT")
-    ){
-      kategori = "SEKOLAH";
-    }
-    else if(
-      orgRaw.includes("PPD") ||
-      orgRaw.includes("JPN")
-    ){
-      kategori = "ORGANISASI";
-    }
+    // ================= KELAS =================
+    let htmlKelas = "";
 
-    // ================= COUNT =================
-    if(kategori === "SEKOLAH"){
-      sekolahCount[orgRaw] = (sekolahCount[orgRaw] || 0) + 1;
-    }
+    Object.keys(kelasCount).forEach(k => {
+      htmlKelas += `
+        <div onclick="filterKelas('${k}')" 
+             class="sidebar-item flex justify-between cursor-pointer">
+          <span>${k}</span>
+          <span class="badge">${kelasCount[k]}</span>
+        </div>
+      `;
+    });
 
-    if(kategori === "ORGANISASI"){
-      organisasiCount[orgRaw] = (organisasiCount[orgRaw] || 0) + 1;
-    }
+    document.getElementById("kelasList").innerHTML = htmlKelas;
 
-    kelasCount[kelas] = (kelasCount[kelas] || 0) + 1;
+    // ================= ORGANISASI =================
+    let htmlOrg = "";
+
+    Object.keys(organisasiCount)
+    .sort((a,b) => organisasiCount[b] - organisasiCount[a]) // 🔥 sort besar ke kecil
+    .forEach(o => {
+  htmlOrg += `
+    <div class="sidebar-item flex justify-between cursor-pointer">
+      <span>${o}</span>
+      <span class="badge">${organisasiCount[o]}</span>
+    </div>
+  `;
+});
+
+document.getElementById("organisasiList").innerHTML = htmlOrg;
 
   });
-
-  // 👉 lepas ini baru render sidebar
-});
 }
 
 function toggleSection(id){

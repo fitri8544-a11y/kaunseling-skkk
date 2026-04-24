@@ -171,21 +171,31 @@
 <div class="grid md:grid-cols-2 gap-6 mt-6 items-stretch">
 
   <!-- ALERT -->
-  <div class="section-box h-full">
+  <div class="section-box flex flex-col h-[420px]">
+
     <div class="section-title text-red-400">
       ⚠️ Murid Perlu Perhatian
     </div>
 
-    <div id="alertList" class="space-y-3 mt-4"></div>
+    <!-- 🔥 SCROLL DALAM -->
+    <div id="alertList"
+         class="space-y-3 mt-4 overflow-y-auto flex-1 pr-2">
+    </div>
+
   </div>
 
   <!-- LIVE -->
-  <div class="card h-full flex flex-col">
-    <div class="title">📋 Aktiviti Pengguna (Live)</div>
+  <div class="card flex flex-col h-[420px]">
 
-    <div id="activityList"
-         class="space-y-2 mt-3 max-h-[400px] overflow-y-auto flex-1">
+    <div class="title">
+      📋 Aktiviti Pengguna (Live)
     </div>
+
+    <!-- 🔥 SCROLL DALAM -->
+    <div id="activityList"
+         class="space-y-2 mt-3 overflow-y-auto flex-1 pr-2">
+    </div>
+
   </div>
 
 </div>

@@ -872,7 +872,7 @@ function loadSidebar(){
 
       const sekolah = d.organisasi ? d.organisasi.toUpperCase() : "TIADA SEKOLAH";
       const kelas = (d.kelas || "-").toUpperCase();
-      const org = (d.jenis || "LAIN").toUpperCase(); // 🔥 ORGANISASI USER
+      const org = d.organisasi ? d.organisasi.toUpperCase() : "LAIN-LAIN"; // 🔥 ORGANISASI USER
 
       sekolahCount[sekolah] = (sekolahCount[sekolah] || 0) + 1;
       kelasCount[kelas] = (kelasCount[kelas] || 0) + 1;
@@ -917,16 +917,18 @@ function loadSidebar(){
     // ================= ORGANISASI =================
     let htmlOrg = "";
 
-    Object.keys(organisasiCount).forEach(o => {
-      htmlOrg += `
-        <div class="sidebar-item flex justify-between">
-          <span>${o}</span>
-          <span class="badge">${organisasiCount[o]}</span>
-        </div>
-      `;
-    });
+    Object.keys(organisasiCount)
+    .sort((a,b) => organisasiCount[b] - organisasiCount[a]) // 🔥 sort besar ke kecil
+    .forEach(o => {
+    htmlOrg += `
+    <div class="sidebar-item flex justify-between cursor-pointer">
+      <span>${o}</span>
+      <span class="badge">${organisasiCount[o]}</span>
+    </div>
+  `;
+});
 
-    document.getElementById("organisasiList").innerHTML = htmlOrg;
+document.getElementById("organisasiList").innerHTML = htmlOrg;
 
   });
 }

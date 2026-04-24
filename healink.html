@@ -825,6 +825,29 @@ setInterval(animateSlogan, 8000);
   </div>
 </div>
 
+<!-- ================= MODAL AI ================= -->
+<div id="ai-cadangan"
+     class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden 
+            items-center justify-center z-50">
+
+  <div class="bg-white/10 p-6 rounded-xl w-[90%] max-w-xl text-center relative">
+
+    <!-- BUTTON CLOSE -->
+    <button onclick="closeAI()"
+            class="absolute top-3 right-3 text-white text-xl">✖</button>
+
+    <h2 class="text-2xl font-bold mb-4">🤖 Cadangan AI</h2>
+
+    <p id="aiMessage" class="mb-3">
+      Sila pilih emosi anda untuk melihat cadangan.
+    </p>
+
+    <div id="aiSuggestion" class="mb-4"></div>
+    <div id="aiActions" class="flex gap-3 justify-center flex-wrap"></div>
+
+  </div>
+</div>
+
 <!-- ================= KETAHUI STATUS ANDA ================= -->
 <div id="statusModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center z-50">
 
@@ -2102,42 +2125,20 @@ function generateAICadangan(emosi) {
   document.getElementById("aiActions").innerHTML = actions;
 }
 
+
 function showSection(id) {
-
-  console.log("Klik:", id);
-
-  document.querySelectorAll('.section').forEach(sec => {
-    sec.style.display = 'none';
-  });
-
-  const target = document.getElementById(id);
-
-  if (target) {
-    target.style.display = 'block';
-  } else {
-    console.error("Section tak jumpa:", id);
-  }
+  const modal = document.getElementById(id);
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
 }
+
+function closeAI() {
+  const modal = document.getElementById("ai-cadangan");
+  modal.classList.remove("flex");
+  modal.classList.add("hidden");
+}
+
 </script>
-
-<!-- ================= SECTION AI CADANGAN ================= -->
-<div id="ai-cadangan" class="section" style="display:none;">
-
-  <div class="max-w-4xl mx-auto mt-10 bg-white/10 p-6 rounded-xl text-center">
-
-    <h2 class="text-2xl font-bold mb-4">🤖 Cadangan AI</h2>
-
-    <p id="aiMessage" class="text-lg mb-3">
-      Sila pilih emosi anda untuk melihat cadangan.
-    </p>
-
-    <div id="aiSuggestion" class="text-sm mb-4"></div>
-
-    <div id="aiActions" class="flex justify-center gap-3 flex-wrap"></div>
-
-  </div>
-
-</div>
 
 </body>
 </html>

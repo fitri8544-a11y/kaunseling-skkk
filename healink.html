@@ -388,10 +388,11 @@ text-white px-4 py-2 rounded-lg shadow-lg z-[9999]">
 
 </div>
 
-<!-- ================= AI CADANGAN ================= -->
+<!-- ================= AI CADANGAN CARD ================= -->
 <div onclick="showSection('ai-cadangan')"
 class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
-       hover:scale-105 hover:shadow-purple-400/40 transition duration-300 cursor-pointer text-center">
+       hover:scale-105 hover:shadow-purple-400/40 transition duration-300 
+       cursor-pointer text-center h-40 flex flex-col justify-center items-center">
 
   <div class="text-3xl mb-2">🤖</div>
   <h3 class="font-bold text-lg">Cadangan AI</h3>
@@ -2103,7 +2104,7 @@ function generateAICadangan(emosi) {
 
 function showSection(id) {
 
-  console.log("Klik:", id); // debug
+  console.log("Klik:", id);
 
   document.querySelectorAll('.section').forEach(sec => {
     sec.style.display = 'none';

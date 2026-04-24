@@ -633,9 +633,10 @@ setInterval(animateSlogan, 8000);
   <div class="bg-white p-8 rounded-3xl w-[90%] max-w-lg shadow-2xl relative">
 
     <!-- CLOSE -->
-    <button onclick="closeHealTalk()">  
-      class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-xl">
-      ✕
+    <!-- ❌ BUTTON TUTUP -->
+    <button onclick="closeHealTalk()"
+        class="absolute top-3 right-3 text-gray-400 hover:text-red-500 text-xl font-bold transition">
+    ✕
     </button>
 
     <!-- TITLE -->
@@ -1226,11 +1227,15 @@ function submitHealTalk(){
     return;
   }
 
-  // 🔥 SATU SAHAJA (STANDARD SYSTEM)
   trackActivity("HealTalk", text);
 
   document.getElementById("msg").classList.remove("hidden");
-  document.getElementById("luahan").value="";
+  document.getElementById("luahan").value = "";
+
+  // 🔥 AUTO TUTUP
+  setTimeout(() => {
+    closeHealTalk();
+  }, 2000);
 }
 
 

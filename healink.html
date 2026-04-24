@@ -389,17 +389,14 @@ text-white px-4 py-2 rounded-lg shadow-lg z-[9999]">
 </div>
 
 <!-- ================= AI CADANGAN ================= -->
-<div class="bg-white/10 p-6 rounded-xl mt-6 text-center">
+<div onclick="showSection('ai-cadangan')"
+     class="bg-white/10 p-6 rounded-xl text-center cursor-pointer 
+            h-40 flex flex-col justify-center items-center
+            hover:scale-105 transition duration-300">
 
-  <h2 class="text-xl font-bold mb-4">🤖 Cadangan AI</h2>
-
-  <p id="aiMessage" class="text-lg mb-3 text-white">
-    Sila pilih emosi anda untuk melihat cadangan.
-  </p>
-
-  <div id="aiSuggestion" class="text-sm text-gray-200 mb-4"></div>
-
-  <div id="aiActions" class="flex flex-wrap justify-center gap-3"></div>
+  <div class="text-3xl mb-2">🤖</div>
+  <h3 class="font-bold text-lg">Cadangan AI</h3>
+  <p class="text-sm opacity-80">Sila pilih emosi anda</p>
 
 </div>
 

@@ -849,6 +849,61 @@ setInterval(animateSlogan, 8000);
   </div>
 </div>
 
+<script>
+  function showSection(id) {
+  const modal = document.getElementById(id);
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+}
+
+function closeAI() {
+  const modal = document.getElementById("ai-cadangan");
+  modal.classList.remove("flex");
+  modal.classList.add("hidden");
+}
+function pilihEmosi(emosi) {
+
+  console.log("emosi:", emosi);
+
+  showSection('ai-cadangan');
+
+  let message = "";
+  let suggestion = "";
+  let actions = "";
+
+  switch(emosi) {
+
+    case "gembira":
+      message = "😊 Hebat! Anda dalam keadaan baik.";
+      suggestion = "Teruskan aktiviti positif dan kekalkan mood ini.";
+      break;
+
+    case "sedih":
+      message = "😔 Kami faham anda sedang sedih.";
+      suggestion = "Cuba tarik nafas perlahan atau bercakap dengan seseorang.";
+      break;
+
+    case "marah":
+      message = "😡 Rasa marah itu normal.";
+      suggestion = "Ambil masa untuk bertenang dahulu.";
+      break;
+
+    case "stress":
+      message = "😣 Anda mungkin sedang tertekan.";
+      suggestion = "Berehat sebentar dan lakukan aktiviti ringan.";
+      break;
+
+    case "takut":
+      message = "😟 Perasaan takut itu normal.";
+      suggestion = "Cuba bercakap dengan seseorang yang dipercayai.";
+      break;
+  }
+
+  document.getElementById("aiMessage").innerHTML = message;
+  document.getElementById("aiSuggestion").innerHTML = suggestion;
+}
+</script>
+
 <!-- ================= KETAHUI STATUS ANDA ================= -->
 <div id="statusModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center z-50">
 
@@ -2063,73 +2118,6 @@ function selectEmoji(el){
 
   console.log("😊 Emoji dipilih:", window.selectedEmoji);
 }
-
-function pilihEmosi(emosi) {
-
-  // buka popup
-  showSection('ai-cadangan');
-
-  let message = "";
-  let suggestion = "";
-  let actions = "";
-
-  switch(emosi) {
-
-    case "gembira":
-      message = "😊 Hebat! Anda dalam keadaan baik.";
-      suggestion = "Teruskan aktiviti positif dan kekalkan mood ini.";
-      actions = `
-        <button class="btn">🎮 Main Game</button>
-        <button class="btn">🌈 Aktiviti Seronok</button>
-      `;
-      break;
-
-    case "sedih":
-      message = "😔 Kami faham anda sedang sedih.";
-      suggestion = "Cuba tarik nafas perlahan atau bercakap dengan seseorang.";
-      actions = `
-        <button class="btn">🧘 Teknik Pernafasan</button>
-        <button class="btn">💬 Heal Talk</button>
-      `;
-      break;
-
-    case "marah":
-      message = "😡 Rasa marah itu normal.";
-      suggestion = "Ambil masa untuk bertenang dan elakkan bertindak secara terburu-buru.";
-      actions = `
-        <button class="btn">🧘 Relax Mind</button>
-        <button class="btn">🎯 Coping Skills</button>
-      `;
-      break;
-
-    case "stress":
-      message = "😣 Anda mungkin sedang tertekan.";
-      suggestion = "Berehat sebentar dan lakukan aktiviti ringan.";
-      actions = `
-        <button class="btn">🎮 Permainan</button>
-        <button class="btn">🎵 Dengar Muzik</button>
-      `;
-      break;
-
-  }
-
-  document.getElementById("aiMessage").innerHTML = message;
-  document.getElementById("aiSuggestion").innerHTML = suggestion;
-  document.getElementById("aiActions").innerHTML = actions;
-}
-
-function showSection(id) {
-  const modal = document.getElementById(id);
-  modal.classList.remove("hidden");
-  modal.classList.add("flex");
-}
-
-function closeAI() {
-  const modal = document.getElementById("ai-cadangan");
-  modal.classList.remove("flex");
-  modal.classList.add("hidden");
-}
-
 </script>
 
 </body>

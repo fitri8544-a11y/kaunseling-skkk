@@ -150,6 +150,12 @@
   <!-- ================= CONTENT ================= -->
   <div class="flex-1 p-6 space-y-6 overflow-y-auto">
 
+  <div class="mb-4">
+  <h2 id="greetingText"
+    class="text-lg font-semibold bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent">
+</h2>
+</div>
+
     <!-- HEADER -->
     <div class="flex justify-between items-center">
       <div>
@@ -279,6 +285,28 @@
 </div>
 
 <script>
+
+function generateGreeting(){
+
+  const nama = sessionStorage.getItem("nama") || "Pengguna";
+  const hour = new Date().getHours();
+
+  let greeting = "";
+
+  if(hour >= 5 && hour < 12){
+    greeting = "🌅 Selamat Pagi";
+  }
+  else if(hour >= 12 && hour < 18){
+    greeting = "🌤 Selamat Petang";
+  }
+  else{
+    greeting = "🌙 Selamat Malam";
+  }
+
+  document.getElementById("greetingText").innerText =
+    `${greeting}, ${nama}`;
+}
+
 // 🔥 CONFIG (guna config cikgu)
 const firebaseConfig = {
   apiKey: "AIzaSyA9R5jKqeJNvBHD-SIOuseAqyb_x909R3Q",
@@ -697,6 +725,8 @@ db.collection("aktivitiPelajar")
 
 // ================= AUTO LOAD (FINAL CLEAN VERSION) =================
 window.onload = function(){
+
+  generateGreeting(); // 👈 sini
 
   loadData();      // ✔ dashboard utama
   loadSidebar();   // ✔ sidebar dynamic (SEKOLAH + KELAS + ORGANISASI)

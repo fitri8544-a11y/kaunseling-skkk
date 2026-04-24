@@ -97,28 +97,12 @@
 
     <!-- SEKOLAH -->
     <div class="text-xs text-white/60 mt-4 mb-2 uppercase">🏫 Sekolah</div>
-
-    <div class="space-y-2">
-      <div class="sidebar-item flex justify-between">
-        <span>Semua</span>
-        <span class="badge">125</span>
-      </div>
-
-      <div class="sidebar-item flex justify-between">
-        <span>SK BALING</span>
-        <span class="badge">12</span>
-      </div>
-    </div>
+    <div id="listSekolah" class="space-y-2"></div>
+    
 
     <!-- KELAS -->
     <div class="text-xs text-white/60 mt-6 mb-2 uppercase">🎓 Kelas</div>
-
-    <div class="space-y-2">
-      <div class="sidebar-item flex justify-between">
-        <span>6 BIJAK</span>
-        <span class="badge">10</span>
-      </div>
-    </div>
+    <div id="listKelas" class="space-y-2"></div>
 
   </div>
 
@@ -560,7 +544,6 @@ function filterKelas(k){
   loadData();
 }
 
-
 // ================= LOAD DATA (KPI + FILTER) =================
 function loadData(){
 
@@ -678,6 +661,7 @@ window.onload = function(){
   loadSekolah();
   loadKelas();
   loadAlert(); // 🔥 TAMBAH INI
+  loadSidebar();   // 🔥 WAJIB TAMBAH
 };
 
 // ================= SEKOLAH =================
@@ -857,6 +841,63 @@ function openDetail(nama, kelas, module, komen){
 }
 function closeDetail(){
   document.getElementById("detailModal").classList.add("hidden");
+}
+
+function loadSidebar(){
+
+  db.collection("aktivitiPelajar")
+  .onSnapshot(snapshot => {
+
+    const sekolahCount = {};
+    const kelasCount = {};
+
+    snapshot.forEach(doc => {
+      const d = doc.data();
+
+      const sekolah = (d.organisasi || "-").toUpperCase();
+      const kelas = (d.kelas || "-").toUpperCase();
+
+      sekolahCount[sekolah] = (sekolahCount[sekolah] || 0) + 1;
+      kelasCount[kelas] = (kelasCount[kelas] || 0) + 1;
+    });
+
+    // 🔥 SEKOLAH
+    let htmlSekolah = `
+      <div onclick="filterSekolah('all')" 
+           class="sidebar-item flex justify-between cursor-pointer">
+        <span>Semua</span>
+        <span class="badge">${snapshot.size}</span>
+      </div>
+    `;
+
+    Object.keys(sekolahCount).forEach(s => {
+      htmlSekolah += `
+        <div onclick="filterSekolah('${s}')" 
+             class="sidebar-item flex justify-between cursor-pointer">
+          <span>${s}</span>
+          <span class="badge">${sekolahCount[s]}</span>
+        </div>
+      `;
+    });
+
+    document.getElementById("listSekolah").innerHTML = htmlSekolah;
+
+    // 🔥 KELAS
+    let htmlKelas = "";
+
+    Object.keys(kelasCount).forEach(k => {
+      htmlKelas += `
+        <div onclick="filterKelas('${k}')" 
+             class="sidebar-item flex justify-between cursor-pointer">
+          <span>${k}</span>
+          <span class="badge">${kelasCount[k]}</span>
+        </div>
+      `;
+    });
+
+    document.getElementById("listKelas").innerHTML = htmlKelas;
+
+  });
 }
 </script>
 

@@ -85,11 +85,42 @@
   color: #fde047;
   font-weight: bold;
 }
+.sidebar-item{
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.05);
+  transition: all 0.2s ease;
+}
+
+.sidebar-item:hover{
+  background: rgba(255,255,255,0.12);
+  transform: translateX(4px);
+}
+
+.sidebar-item.active{
+  background: linear-gradient(to right, #f59e0b, #f97316);
+  color: white;
+  font-weight: 600;
+}
+
+.badge{
+  background: #facc15;
+  color: black;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: bold;
+}
 </style>
 </head>
 
 <body class="flex bg-gradient-to-br from-[#1e1b4b] via-purple-700 to-blue-600 text-white">
-
+<div class="mb-6">
+  <div class="text-sm text-white/60">👤 Pengguna</div>
+  <div class="font-semibold text-white">
+    <span id="namaUser">-</span>
+  </div>
+</div>
   <!-- ================= SIDEBAR ================= -->
   <div class="w-64 min-h-screen bg-white/10 backdrop-blur-lg p-5 border-r border-white/10">
 
@@ -675,6 +706,7 @@ window.onload = function(){
   loadData();      // ✔ dashboard utama
   loadSidebar();   // ✔ sidebar dynamic (SEKOLAH + KELAS + ORGANISASI)
   loadAlert();     // ✔ murid perlu perhatian
+  document.getElementById("sekolahList").classList.remove("hidden");
 
 };;
 
@@ -969,8 +1001,15 @@ function loadSidebar(){
 function toggleSection(id){
 
   const el = document.getElementById(id);
+  const arrow = document.querySelector(`[onclick*="${id}"] span:last-child`);
+
   el.classList.toggle("hidden");
 
+  if(el.classList.contains("hidden")){
+    arrow.innerText = "▶";
+  } else {
+    arrow.innerText = "▼";
+  }
 }
 </script>
 

@@ -820,14 +820,24 @@ setInterval(animateSlogan, 8000);
   </div>
 </div>
 
-<!-- ================= MODAL AI ================= -->
-<div onclick="selectMood(this,'😊'); pilihEmosi('gembira')" class="emoji-card">😊</div>
-<div onclick="selectMood(this,'😢'); pilihEmosi('sedih')" class="emoji-card">😢</div>
-<div onclick="selectMood(this,'😡'); pilihEmosi('marah')" class="emoji-card">😡</div>
-<div onclick="selectMood(this,'😰'); pilihEmosi('stress')" class="emoji-card">😰</div>
-<div onclick="selectMood(this,'😴'); pilihEmosi('stress')" class="emoji-card">😴</div>
-<div onclick="selectMood(this,'😌'); pilihEmosi('gembira')" class="emoji-card">😌</div>
+<!-- ================= EMOTION TRACKER ================= -->
+<div class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg mt-6">
 
+  <h2 class="text-center text-lg font-bold mb-4">😊 Pilih Emosi Anda</h2>
+
+  <div class="flex justify-between gap-2 flex-wrap">
+
+    <div onclick="selectMood(this); pilihEmosi('gembira')" class="emoji-card">😊</div>
+    <div onclick="selectMood(this); pilihEmosi('sedih')" class="emoji-card">😢</div>
+    <div onclick="selectMood(this); pilihEmosi('marah')" class="emoji-card">😡</div>
+    <div onclick="selectMood(this); pilihEmosi('stress')" class="emoji-card">😰</div>
+    <div onclick="selectMood(this); pilihEmosi('stress')" class="emoji-card">😴</div>
+    <div onclick="selectMood(this); pilihEmosi('gembira')" class="emoji-card">😌</div>
+
+  </div>
+
+</div>
+<!-- ================= MODAL AI ================= -->
 <div id="ai-cadangan"
      class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden 
             items-center justify-center z-50">

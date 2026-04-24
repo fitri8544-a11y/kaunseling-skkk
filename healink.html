@@ -2063,7 +2063,10 @@ function selectEmoji(el){
   console.log("😊 Emoji dipilih:", window.selectedEmoji);
 }
 
-function generateAICadangan(emosi) {
+function pilihEmosi(emosi) {
+
+  // buka popup
+  showSection('ai-cadangan');
 
   let message = "";
   let suggestion = "";
@@ -2072,17 +2075,17 @@ function generateAICadangan(emosi) {
   switch(emosi) {
 
     case "gembira":
-      message = "😊 Hebat! Anda dalam keadaan emosi yang baik.";
-      suggestion = "Teruskan aktiviti positif dan kongsi kegembiraan dengan rakan.";
+      message = "😊 Hebat! Anda dalam keadaan baik.";
+      suggestion = "Teruskan aktiviti positif dan kekalkan mood ini.";
       actions = `
-        <button class="btn">🎮 Main Permainan</button>
-        <button class="btn">🌈 Teruskan Aktiviti</button>
+        <button class="btn">🎮 Main Game</button>
+        <button class="btn">🌈 Aktiviti Seronok</button>
       `;
       break;
 
     case "sedih":
-      message = "😔 Kami faham anda mungkin sedang sedih.";
-      suggestion = "Cuba teknik pernafasan atau bercakap dengan seseorang yang dipercayai.";
+      message = "😔 Kami faham anda sedang sedih.";
+      suggestion = "Cuba tarik nafas perlahan atau bercakap dengan seseorang.";
       actions = `
         <button class="btn">🧘 Teknik Pernafasan</button>
         <button class="btn">💬 Heal Talk</button>
@@ -2090,8 +2093,8 @@ function generateAICadangan(emosi) {
       break;
 
     case "marah":
-      message = "😡 Rasa marah itu normal, tapi perlu dikawal.";
-      suggestion = "Ambil masa untuk bertenang dan cuba aktiviti relaksasi.";
+      message = "😡 Rasa marah itu normal.";
+      suggestion = "Ambil masa untuk bertenang dan elakkan bertindak secara terburu-buru.";
       actions = `
         <button class="btn">🧘 Relax Mind</button>
         <button class="btn">🎯 Coping Skills</button>
@@ -2100,24 +2103,13 @@ function generateAICadangan(emosi) {
 
     case "stress":
       message = "😣 Anda mungkin sedang tertekan.";
-      suggestion = "Berehat sebentar dan cuba aktiviti ringan seperti permainan atau muzik.";
+      suggestion = "Berehat sebentar dan lakukan aktiviti ringan.";
       actions = `
         <button class="btn">🎮 Permainan</button>
         <button class="btn">🎵 Dengar Muzik</button>
       `;
       break;
 
-    case "takut":
-      message = "😟 Perasaan takut itu normal.";
-      suggestion = "Cuba bercakap dengan seseorang atau gunakan teknik menenangkan diri.";
-      actions = `
-        <button class="btn">💬 Heal Talk</button>
-        <button class="btn">🧘 Calm Exercise</button>
-      `;
-      break;
-
-    default:
-      message = "Pilih emosi untuk mendapatkan cadangan.";
   }
 
   document.getElementById("aiMessage").innerHTML = message;

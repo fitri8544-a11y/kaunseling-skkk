@@ -2138,6 +2138,59 @@ function closeAI() {
   modal.classList.add("hidden");
 }
 
+function pilihEmosi(emosi) {
+
+  // buka popup
+  showSection('ai-cadangan');
+
+  let message = "";
+  let suggestion = "";
+  let actions = "";
+
+  switch(emosi) {
+
+    case "gembira":
+      message = "😊 Hebat! Anda dalam keadaan baik.";
+      suggestion = "Teruskan aktiviti positif dan kekalkan mood ini.";
+      actions = `
+        <button class="btn">🎮 Main Game</button>
+        <button class="btn">🌈 Aktiviti Seronok</button>
+      `;
+      break;
+
+    case "sedih":
+      message = "😔 Kami faham anda sedang sedih.";
+      suggestion = "Cuba tarik nafas perlahan atau bercakap dengan seseorang.";
+      actions = `
+        <button class="btn">🧘 Teknik Pernafasan</button>
+        <button class="btn">💬 Heal Talk</button>
+      `;
+      break;
+
+    case "marah":
+      message = "😡 Rasa marah itu normal.";
+      suggestion = "Ambil masa untuk bertenang dan elakkan bertindak secara terburu-buru.";
+      actions = `
+        <button class="btn">🧘 Relax Mind</button>
+        <button class="btn">🎯 Coping Skills</button>
+      `;
+      break;
+
+    case "stress":
+      message = "😣 Anda mungkin sedang tertekan.";
+      suggestion = "Berehat sebentar dan lakukan aktiviti ringan.";
+      actions = `
+        <button class="btn">🎮 Permainan</button>
+        <button class="btn">🎵 Dengar Muzik</button>
+      `;
+      break;
+
+  }
+
+  document.getElementById("aiMessage").innerHTML = message;
+  document.getElementById("aiSuggestion").innerHTML = suggestion;
+  document.getElementById("aiActions").innerHTML = actions;
+}
 </script>
 
 </body>

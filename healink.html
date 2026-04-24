@@ -1837,7 +1837,7 @@ function submitDaftar(){
   }
 
   // SIMPAN SESSION
-  sessionStorage.setItem("nama", nama);
+  sessionStorage.setItem("nama", document.getElementById("nama").value);
   sessionStorage.setItem("jenis", jenis);
   sessionStorage.setItem("kelas", kelas);
   sessionStorage.setItem("organisasi", organisasi);

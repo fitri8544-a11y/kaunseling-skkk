@@ -1871,8 +1871,10 @@ function loginAdmin(){
 
     console.log("✅ ADMIN LOGIN SUCCESS");
 
-    // 🔥 WAJIB (ini yang elak popup kedua)
-    sessionStorage.setItem("nama", email);
+    // 🔥 AUTO NAMA DARI EMAIL
+    const nama = email.split("@")[0];
+
+    sessionStorage.setItem("nama", nama);
     sessionStorage.setItem("jenis", "Admin");
     sessionStorage.setItem("sudahDaftar","yes");
 

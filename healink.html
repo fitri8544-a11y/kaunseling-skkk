@@ -910,13 +910,10 @@ setInterval(animateSlogan, 8000);
 
     <!-- RESULT -->
     <div id="resultBox" 
-     class="hidden mt-6 p-5 rounded-2xl text-center 
-            text-white font-semibold text-lg shadow-xl 
-            transition-all duration-500">
+      class="hidden mt-6 p-5 rounded-2xl text-center shadow-lg bg-gradient-to-r from-purple-100 to-blue-100">
+    </div>
 
-  <div id="resultText"></div>
-
-</div>
+  </div>
 </div>
 
 <!-- ================= TEKNIK INTEVENSI ================= -->
@@ -1466,8 +1463,35 @@ function analyzeStatus(){
     result = "😊 Emosi anda stabil hari ini";
   }
 
-  document.getElementById("resultBox").innerHTML = result;
-  document.getElementById("resultBox").classList.remove("hidden");
+  const box = document.getElementById("resultBox");
+const text = document.getElementById("resultText");
+
+box.classList.remove("hidden");
+
+// reset style
+box.className = "mt-6 p-5 rounded-2xl text-center text-white font-semibold text-lg shadow-xl transition-all duration-500";
+
+// logic result
+if(stress >= 2){
+  box.classList.add("bg-gradient-to-r","from-red-500","to-pink-500");
+  text.innerHTML = "😡 Tahap Stress Tinggi<br><br>Sila rehat dan cuba teknik pernafasan.";
+}
+else if(anxiety >= 2){
+  box.classList.add("bg-gradient-to-r","from-yellow-400","to-orange-400");
+  text.innerHTML = "😰 Anxiety Dikesan<br><br>Cuba bertenang dan fokus pada pernafasan.";
+}
+else if(depression >= 2){
+  box.classList.add("bg-gradient-to-r","from-blue-500","to-indigo-500");
+  text.innerHTML = "😔 Simptom Kemurungan<br><br>Berbincang dengan guru atau kaunselor.";
+}
+else if(stress === 0 && anxiety === 0 && depression === 0){
+  box.classList.add("bg-gray-400");
+  text.innerHTML = "⚠️ Sila pilih sekurang-kurangnya satu simptom";
+}
+else{
+  box.classList.add("bg-gradient-to-r","from-green-400","to-emerald-500");
+  text.innerHTML = "😊 Emosi anda stabil hari ini";
+}
 }
 
 /* =========================================

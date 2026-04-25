@@ -909,11 +909,14 @@ setInterval(animateSlogan, 8000);
     </button>
 
     <!-- RESULT -->
-    <div id="resultBox" 
-      class="hidden mt-6 p-5 rounded-2xl text-center shadow-lg bg-gradient-to-r from-purple-100 to-blue-100">
-    </div>
+    <div id="resultBox"
+     class="hidden mt-6 p-5 rounded-2xl text-center 
+            font-semibold text-lg shadow-xl 
+            transition-all duration-500">
 
-  </div>
+  <div id="resultText" class="text-gray-800"></div>
+
+</div>
 </div>
 
 <!-- ================= TEKNIK INTEVENSI ================= -->
@@ -1463,33 +1466,38 @@ function analyzeStatus(){
     result = "😊 Emosi anda stabil hari ini";
   }
 
-  const box = document.getElementById("resultBox");
+const box = document.getElementById("resultBox");
 const text = document.getElementById("resultText");
 
 box.classList.remove("hidden");
 
-// reset style
-box.className = "mt-6 p-5 rounded-2xl text-center text-white font-semibold text-lg shadow-xl transition-all duration-500";
+// reset class
+box.className = "mt-6 p-5 rounded-2xl text-center font-semibold text-lg shadow-xl transition-all duration-500";
 
-// logic result
+// 🎯 LOGIC WARNA + TEXT
 if(stress >= 2){
-  box.classList.add("bg-gradient-to-r","from-red-500","to-pink-500");
+  box.classList.add("bg-red-100");
+  text.className = "text-red-700 text-lg font-bold";
   text.innerHTML = "😡 Tahap Stress Tinggi<br><br>Sila rehat dan cuba teknik pernafasan.";
 }
 else if(anxiety >= 2){
-  box.classList.add("bg-gradient-to-r","from-yellow-400","to-orange-400");
+  box.classList.add("bg-yellow-100");
+  text.className = "text-yellow-700 text-lg font-bold";
   text.innerHTML = "😰 Anxiety Dikesan<br><br>Cuba bertenang dan fokus pada pernafasan.";
 }
 else if(depression >= 2){
-  box.classList.add("bg-gradient-to-r","from-blue-500","to-indigo-500");
+  box.classList.add("bg-blue-100");
+  text.className = "text-blue-700 text-lg font-bold";
   text.innerHTML = "😔 Simptom Kemurungan<br><br>Berbincang dengan guru atau kaunselor.";
 }
 else if(stress === 0 && anxiety === 0 && depression === 0){
-  box.classList.add("bg-gray-400");
+  box.classList.add("bg-gray-200");
+  text.className = "text-gray-700 text-lg font-semibold";
   text.innerHTML = "⚠️ Sila pilih sekurang-kurangnya satu simptom";
 }
 else{
-  box.classList.add("bg-gradient-to-r","from-green-400","to-emerald-500");
+  box.classList.add("bg-green-100");
+  text.className = "text-green-700 text-lg font-bold";
   text.innerHTML = "😊 Emosi anda stabil hari ini";
 }
 }

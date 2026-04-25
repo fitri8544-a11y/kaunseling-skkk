@@ -914,7 +914,7 @@ setInterval(animateSlogan, 8000);
             font-semibold text-lg shadow-xl 
             transition-all duration-500">
 
-  <div id="resultText" class="text-gray-800"></div>
+  <div id="resultText"></div>
 
 </div>
 </div>
@@ -1404,24 +1404,18 @@ function loadHistory(){
    📊 STATUS ANALYZER
 ========================================= */
 
-let stress=0, anxiety=0, depression=0;
-
 function openStatus(){
 
-  // 🔥 RESET KIRAAN
   stress = 0;
   anxiety = 0;
   depression = 0;
 
-  // 🔥 RESET SEMUA PILIHAN UI
   document.querySelectorAll(".check-card").forEach(el=>{
     el.classList.remove("check-active");
   });
 
-  // 🔥 HIDE RESULT
   document.getElementById("resultBox").classList.add("hidden");
 
-  // buka modal
   document.getElementById("statusModal").classList.remove("hidden");
 }
 
@@ -1448,58 +1442,70 @@ function toggleCheck(el,type){
 
 function analyzeStatus(){
 
-  let result = "";
+  const box = document.getElementById("resultBox");
+  const text = document.getElementById("resultText");
 
-  if(stress >= 2){
-    result += "😰 Anda menunjukkan tanda tekanan (stress)<br><br>";
+  box.classList.remove("hidden");
+
+  // reset style
+  box.className = "mt-6 p-5 rounded-2xl text-center font-semibold text-lg shadow-xl transition-all duration-500";
+
+  const total = stress + anxiety + depression;
+
+  // ❗ tiada pilihan
+  if(total === 0){
+    box.classList.add("bg-gray-200");
+    text.className = "text-gray-700";
+    text.innerHTML = "⚠️ Sila pilih sekurang-kurangnya satu simptom";
+    return;
   }
 
-  if(anxiety >= 2){
-    result += "😨 Anda mengalami kebimbangan<br><br>";
+  // 🔴 STRESS dominan
+  if(stress >= anxiety && stress >= depression){
+    if(stress >= 2){
+      box.classList.add("bg-red-100");
+      text.className = "text-red-700 font-bold";
+      text.innerHTML = "😡 Tahap Stress Tinggi<br><br>Sila rehat dan cuba teknik pernafasan.";
+    } else {
+      box.classList.add("bg-red-50");
+      text.className = "text-red-600";
+      text.innerHTML = "🙂 Sedikit tekanan dikesan.";
+    }
+    return;
   }
 
-  if(depression >= 2){
-    result += "😔 Anda mungkin mengalami kemurungan ringan<br><br>";
+  // 🟡 ANXIETY dominan
+  if(anxiety >= stress && anxiety >= depression){
+    if(anxiety >= 2){
+      box.classList.add("bg-yellow-100");
+      text.className = "text-yellow-700 font-bold";
+      text.innerHTML = "😰 Anxiety Dikesan<br><br>Cuba bertenang dan fokus pernafasan.";
+    } else {
+      box.classList.add("bg-yellow-50");
+      text.className = "text-yellow-600";
+      text.innerHTML = "🙂 Sedikit keresahan dikesan.";
+    }
+    return;
   }
 
-  if(result === ""){
-    result = "😊 Emosi anda stabil hari ini";
+  // 🔵 DEPRESSION dominan
+  if(depression >= stress && depression >= anxiety){
+    if(depression >= 2){
+      box.classList.add("bg-blue-100");
+      text.className = "text-blue-700 font-bold";
+      text.innerHTML = "😔 Simptom Kemurungan<br><br>Berbincang dengan guru atau kaunselor.";
+    } else {
+      box.classList.add("bg-blue-50");
+      text.className = "text-blue-600";
+      text.innerHTML = "🙂 Emosi sedikit rendah.";
+    }
+    return;
   }
 
-const box = document.getElementById("resultBox");
-const text = document.getElementById("resultText");
-
-box.classList.remove("hidden");
-
-// reset class
-box.className = "mt-6 p-5 rounded-2xl text-center font-semibold text-lg shadow-xl transition-all duration-500";
-
-// 🎯 LOGIC WARNA + TEXT
-if(stress >= 2){
-  box.classList.add("bg-red-100");
-  text.className = "text-red-700 text-lg font-bold";
-  text.innerHTML = "😡 Tahap Stress Tinggi<br><br>Sila rehat dan cuba teknik pernafasan.";
-}
-else if(anxiety >= 2){
-  box.classList.add("bg-yellow-100");
-  text.className = "text-yellow-700 text-lg font-bold";
-  text.innerHTML = "😰 Anxiety Dikesan<br><br>Cuba bertenang dan fokus pada pernafasan.";
-}
-else if(depression >= 2){
-  box.classList.add("bg-blue-100");
-  text.className = "text-blue-700 text-lg font-bold";
-  text.innerHTML = "😔 Simptom Kemurungan<br><br>Berbincang dengan guru atau kaunselor.";
-}
-else if(stress === 0 && anxiety === 0 && depression === 0){
-  box.classList.add("bg-gray-200");
-  text.className = "text-gray-700 text-lg font-semibold";
-  text.innerHTML = "⚠️ Sila pilih sekurang-kurangnya satu simptom";
-}
-else{
+  // 🟢 fallback
   box.classList.add("bg-green-100");
-  text.className = "text-green-700 text-lg font-bold";
+  text.className = "text-green-700 font-bold";
   text.innerHTML = "😊 Emosi anda stabil hari ini";
-}
 }
 
 /* =========================================

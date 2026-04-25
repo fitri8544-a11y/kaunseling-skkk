@@ -1404,6 +1404,21 @@ function loadHistory(){
 let stress=0, anxiety=0, depression=0;
 
 function openStatus(){
+
+  // 🔥 RESET KIRAAN
+  stress = 0;
+  anxiety = 0;
+  depression = 0;
+
+  // 🔥 RESET SEMUA PILIHAN UI
+  document.querySelectorAll(".check-card").forEach(el=>{
+    el.classList.remove("check-active");
+  });
+
+  // 🔥 HIDE RESULT
+  document.getElementById("resultBox").classList.add("hidden");
+
+  // buka modal
   document.getElementById("statusModal").classList.remove("hidden");
 }
 
@@ -2021,6 +2036,10 @@ function selectEmoji(el){
   window.selectedEmoji = el.innerText;
 
   console.log("😊 Emoji dipilih:", window.selectedEmoji);
+}
+
+function openStatus(){
+  document.getElementById("statusModal").classList.remove("hidden");
 }
 </script>
 

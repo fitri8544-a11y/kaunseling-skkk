@@ -1445,8 +1445,15 @@ function analyzeStatus(){
   }
 
   if(result === ""){
-    result = "😊 Emosi anda stabil hari ini";
-  }
+
+    showResult("low"); // guna sistem baru
+
+} else {
+
+    // contoh kalau ada result lain nanti
+    showResult("high");
+
+}
 
   document.getElementById("resultBox").innerHTML = result;
   document.getElementById("resultBox").classList.remove("hidden");
@@ -2021,6 +2028,46 @@ function selectEmoji(el){
   window.selectedEmoji = el.innerText;
 
   console.log("😊 Emoji dipilih:", window.selectedEmoji);
+}
+
+function showResult(level) {
+
+  const box = document.getElementById("resultBox");
+  const title = document.getElementById("resultTitle");
+  const text = document.getElementById("resultText");
+  const action = document.getElementById("resultAction");
+
+  box.classList.remove("hidden");
+
+  if(level === "low") {
+    box.className = "mt-6 p-6 rounded-2xl text-center text-white bg-green-500 shadow-xl";
+
+    title.innerHTML = "😊 Emosi Stabil";
+    text.innerHTML = "Anda berada dalam keadaan baik hari ini.";
+
+    action.innerHTML = `<button class="btn">🎮 Teruskan Aktiviti</button>`;
+  }
+
+  if(level === "medium") {
+    box.className = "mt-6 p-6 rounded-2xl text-center text-white bg-yellow-500 shadow-xl";
+
+    title.innerHTML = "😐 Perlu Perhatian";
+    text.innerHTML = "Anda mungkin mengalami tekanan ringan.";
+
+    action.innerHTML = `<button class="btn">🧘 Teknik Relaksasi</button>`;
+  }
+
+  if(level === "high") {
+    box.className = "mt-6 p-6 rounded-2xl text-center text-white bg-red-500 shadow-xl";
+
+    title.innerHTML = "⚠️ Emosi Tidak Stabil";
+    text.innerHTML = "Anda mungkin memerlukan sokongan.";
+
+    action.innerHTML = `
+      <button class="btn">💬 Heal Talk</button>
+      <button class="btn">🤖 Cadangan AI</button>
+    `;
+  }
 }
 </script>
 

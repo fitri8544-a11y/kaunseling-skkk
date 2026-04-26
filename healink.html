@@ -23,14 +23,18 @@
   </h1>
 
   <!-- BAR -->
-  <div class="flex justify-between items-center px-6 mt-4">
+  <div class="flex justify-between items-center px-10 mt-6">
 
-    <div id="greetingHeader" class="text-white font-semibold text-sm"></div>
+    <!-- LEFT -->
+  <div id="greetingHeader" 
+       class="text-white text-sm md:text-base font-medium leading-tight">
+  </div>
 
-    <button onclick="tukarUser()" 
-      class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg shadow">
-      🔄 Tukar Pengguna
-    </button>
+    <!-- RIGHT -->
+  <button onclick="tukarUser()" 
+    class="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-lg shadow font-semibold">
+    🔄 Tukar Pengguna
+  </button>
 
   </div>
 

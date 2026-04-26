@@ -1886,12 +1886,57 @@ const db = firebase.firestore();
 <script>
 function trackActivity(module, komen = ""){
 
-  const nama = sessionStorage.getItem("nama");
-  const jenis = sessionStorage.getItem("jenis");
-  const kelas = sessionStorage.getItem("kelas");
-  const organisasi = sessionStorage.getItem("organisasi");
+  // 🔹 Ambil session
+  const nama = sessionStorage.getItem("nama") || "Pengguna";
+  const jenis = sessionStorage.getItem("jenis") || "pelawat";
+  const jantina = sessionStorage.getItem("jantina") || "L";
+  const kelas = sessionStorage.getItem("kelas") || "-";
+  const organisasi = sessionStorage.getItem("organisasi") || "-";
 
+  // 🔹 PREFIX (Cikgu / Encik / Puan)
+  let prefix = "";
+  if(jenis === "guru"){
+    prefix = "Cikgu";
+  } else {
+    prefix = jantina === "P" ? "Puan" : "Encik";
+  }
+
+  const namaDisplay = `${prefix} ${nama}`;
+
+  // 🔹 Masa sekarang
+  const now = new Date();
+  const tarikh = now.toLocaleDateString("ms-MY");
+  const masa = now.toLocaleTimeString("ms-MY");
+
+  // 🔹 Module (lowercase untuk consistency)
   const m = (module || "").toLowerCase();
+
+  // 🔹 Data nak simpan
+  const data = {
+    nama: namaDisplay,
+    namaAsal: nama,
+    jenis,
+    jantina,
+    kelas,
+    organisasi,
+    modul: m,
+    komen,
+    tarikh,
+    masa,
+    timestamp: now
+  };
+
+  // 🔥 LOG (debug)
+  console.log("Aktiviti direkod:", data);
+
+  // 🔥 SIMPAN KE FIRESTORE (jika guna)
+  if(typeof db !== "undefined"){
+    addDoc(collection(db, "aktivitiPelajar"), data)
+      .then(() => console.log("✅ Berjaya simpan"))
+      .catch(err => console.error("❌ Ralat:", err));
+  }
+
+}
 
   // ================================
   // 🔥 PERLU PERHATIAN

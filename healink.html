@@ -9,10 +9,8 @@
 
 <body class="bg-gradient-to-br from-[#1e1b4b] via-purple-700 to-blue-600 min-h-screen text-white">
 
-<!-- HEADER -->
+<!-- HEADER WRAPPER -->
 <div class="text-center mt-10">
-
-  <div class="text-center mt-10">
 
   <!-- TITLE -->
   <h1 class="text-4xl md:text-5xl font-extrabold 
@@ -23,6 +21,24 @@
     HEALINK
 
   </h1>
+
+  <!-- 🔥 BAR UCAPAN + BUTTON -->
+  <div class="max-w-6xl mx-auto flex justify-between items-center px-4 mt-4">
+
+    <!-- LEFT -->
+    <div id="greetingHeader" 
+         class="text-white text-sm md:text-base font-semibold">
+    </div>
+
+    <!-- RIGHT -->
+    <button onclick="tukarUser()" 
+      class="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-lg shadow font-semibold">
+      🔄 Tukar Pengguna
+    </button>
+
+  </div>
+
+</div>
 
   <!-- SUBTITLE -->
   <p class="mt-3 text-lg text-white/90 animate-subFloat drop-shadow-md">
@@ -1964,6 +1980,53 @@ function closeStatus(){
 function closeTracker(){
   document.getElementById("trackerModal").classList.add("hidden");
 }
+
+function showGreeting(){
+
+  const nama = sessionStorage.getItem("nama") || "Pengguna";
+  const jenis = sessionStorage.getItem("jenis") || "pelawat"; // guru / pelawat
+  const jantina = sessionStorage.getItem("jantina") || "L"; // L / P
+
+  const jam = new Date().getHours();
+
+  let ucapan = "";
+  let gelaran = "";
+  let avatar = "";
+
+  // 🎯 UCAPAN MASA
+  if(jam >= 5 && jam < 12){
+    ucapan = "🌤️ Selamat Pagi";
+  }
+  else if(jam >= 12 && jam < 18){
+    ucapan = "☀️ Selamat Petang";
+  }
+  else{
+    ucapan = "🌙 Selamat Malam";
+  }
+
+  // 🎯 GELARAN
+  if(jenis === "guru"){
+    gelaran = "Cikgu";
+    avatar = "👨‍🏫";
+  }
+  else{
+    if(jantina === "P"){
+      gelaran = "Puan";
+      avatar = "👩";
+    } else {
+      gelaran = "Encik";
+      avatar = "👨";
+    }
+  }
+
+  const html = `
+    ${avatar} ${ucapan}, ${gelaran} ${nama}
+  `;
+
+  document.getElementById("greetingHeader").innerHTML = html;
+}
+
+showGreeting();
 
 </script>
 

@@ -285,6 +285,18 @@
   <div id="ranking" class="grid md:grid-cols-3 gap-4"></div>
 </div>
 
+
+<!-- ================= MURID PERLU PERHATIAN ================= -->
+<div class="mt-8 bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg">
+
+  <div class="title mb-4 text-center">
+    🚨 Murid Perlu Perhatian
+  </div>
+
+  <div id="alertList" class="grid md:grid-cols-2 xl:grid-cols-3 gap-4"></div>
+
+</div>
+
 <script>
 
 const SUPER_ADMIN = "fitrieusop@moe.gov.my";
@@ -1102,6 +1114,70 @@ function toggleSection(id){
     arrow.innerText = "▼";
   }
 }
+
+function loadMuridPerhatian(){
+
+  firebase.firestore().collection("aktivitiPelajar")
+    .orderBy("masa","desc")
+    .limit(20)
+    .onSnapshot(snapshot => {
+
+      let html = "";
+
+      snapshot.forEach(doc => {
+
+        const data = doc.data();
+
+        if(!data.perluPerhatian) return;
+
+        // 🎯 WARNA IKUT TAHAP
+        let warna = "bg-green-500";
+        let label = "RENDAH";
+
+        if(data.tahap === "TINGGI"){
+          warna = "bg-red-500";
+          label = "TINGGI";
+        }
+        else if(data.tahap === "SEDERHANA"){
+          warna = "bg-yellow-400 text-black";
+          label = "SEDERHANA";
+        }
+
+        html += `
+          <div class="bg-white rounded-xl p-4 shadow border-l-4 ${warna}">
+
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="font-bold text-gray-800">
+                ${data.nama || "-"}
+              </h3>
+              <span class="text-xs font-semibold px-2 py-1 rounded ${warna}">
+                ${label}
+              </span>
+            </div>
+
+            <p class="text-sm text-gray-600">
+              😟 ${data.mood || "-"}
+            </p>
+
+            <p class="text-xs text-gray-400 mt-2">
+              ${data.kelas || "-"} | ${data.organisasi || "-"}
+            </p>
+
+          </div>
+        `;
+      });
+
+      document.getElementById("alertList").innerHTML = html || `
+        <div class="text-white/70">Tiada murid perlu perhatian</div>
+      `;
+
+    });
+
+}
+
+// 🔥 CALL DI DALAM SCRIPT
+loadMuridPerhatian();
+
 </script>
 
 <!-- LETAK SEBELUM </body> -->

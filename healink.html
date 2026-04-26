@@ -296,6 +296,29 @@
   color: white !important;
   font-weight: 600;
 }
+
+/* ================= FIX BUTTON TEXT ================= */
+
+.emoji-card {
+  background: #ffffff !important;
+  color: #1f2937 !important; /* text-gray-800 */
+  font-weight: 500;
+  border-radius: 12px;
+  padding: 12px;
+  transition: all 0.2s ease;
+}
+
+.emoji-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+/* ACTIVE */
+.emoji-selected {
+  background: linear-gradient(to right, #7c3aed, #3b82f6) !important;
+  color: white !important;
+  font-weight: 600;
+}
 </style>
 
 <!-- AI STATUS BAR -->
@@ -1282,6 +1305,7 @@ function selectMood(el, mood){
 }
 
 /* ================= SIMPAN DATA ================= */
+/* ================= SIMPAN DATA ================= */
 function saveMood(){
 
   if(!selectedMood){
@@ -1291,34 +1315,63 @@ function saveMood(){
 
   const note = document.getElementById("note").value;
 
-  // ambil data lama
+  const nama = sessionStorage.getItem("nama");
+  const kelas = sessionStorage.getItem("kelas");
+  const organisasi = sessionStorage.getItem("organisasi");
+
+  // ================= LOCAL STORAGE =================
   const data = JSON.parse(localStorage.getItem("emotionData")) || [];
 
-  // tambah data baru
   data.push({
     mood: selectedMood,
     note: note,
     time: new Date().toLocaleTimeString()
   });
 
-  // simpan semula
   localStorage.setItem("emotionData", JSON.stringify(data));
 
-  // paparkan mesej
+  // ================= 🔥 FIRESTORE (INI PENTING) =================
+  if(typeof firebase !== "undefined"){
+
+    firebase.firestore().collection("aktivitiPelajar").add({
+
+      nama: nama || "-",
+      kelas: kelas || "-",
+      organisasi: organisasi || "-",
+
+      mood: selectedMood,
+      module: "Emotion Tracker",
+      komen: note || "",
+
+      // 🔥 INI UNTUK DASHBOARD
+      perluPerhatian: ["😢","😡","😰"].includes(selectedMood),
+
+      tahap: (
+        ["😢","😡"].includes(selectedMood) ? "TINGGI" :
+        selectedMood === "😰" ? "SEDERHANA" :
+        "RENDAH"
+      ),
+
+      masa: firebase.firestore.FieldValue.serverTimestamp()
+
+    })
+    .then(()=> console.log("✅ Firestore saved"))
+    .catch(err => console.error("❌ Firestore error:", err));
+
+  }
+
+  // ================= UI =================
   document.getElementById("trackerMsg").classList.remove("hidden");
 
-  // reset UI
   selectedMood = "";
   document.getElementById("note").value = "";
 
   document.querySelectorAll("#trackerModal .emoji-card").forEach(e => {
-  e.classList.remove("emoji-selected");
-});
+    e.classList.remove("emoji-selected");
+  });
 
-  // refresh history
   loadHistory();
 
-  // auto close
   setTimeout(() => {
     closeTracker();
   }, 1200);

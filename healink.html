@@ -17,8 +17,8 @@
 
     <!-- LEFT -->
     <div id="greetingHeader" 
-      class="text-white text-sm md:text-base font-medium leading-tight">
-    </div>
+  class="flex items-center gap-3 text-white text-sm md:text-base font-medium">
+</div>
 
     <!-- RIGHT -->
     <button onclick="tukarUser()" 
@@ -1987,6 +1987,8 @@ function submitDaftar(){
   sessionStorage.setItem("kelas", kelas);
   sessionStorage.setItem("organisasi", organisasi);
   sessionStorage.setItem("sudahDaftar","yes");
+  sessionStorage.setItem("jantina", jantina);
+
 
   // SIMPAN FIRESTORE
   db.collection("pengunjung").add({
@@ -2116,6 +2118,9 @@ function showGreeting(){
     mesej = "Rehat secukupnya dan jaga diri 💙";
   }
 
+  // 🎯 AVATAR LOGIC
+  const avatar = jantina === "P" ? "👧" : "👦";
+  
   const html = `
     ${ucapan}, <b>${nama}</b><br>
     <span class="text-sm text-gray-500">${mesej}</span>

@@ -234,17 +234,15 @@
 
 
 <!-- ================= ALERT + LIVE ================= -->
-<div class="grid md:grid-cols-2 gap-6 mt-6 items-stretch">
+<!-- ================= ALERT ================= -->
+<div id="alertMurid"
+     class="bg-purple-700 text-white font-bold text-lg px-6 py-4 flex items-center gap-3 rounded-xl shadow">
+  
+  ⚠️ Murid Perlu Perhatian
 
-  <!-- ALERT -->
-  <div id="alertMurid"
-       class="bg-purple-700 text-white font-bold text-lg px-6 py-4 flex items-center gap-3 rounded-xl shadow">
-    ⚠️ Murid Perlu Perhatian
-  </div>
+</div>
 
-</div> <!-- ✅ tutup grid -->
-
-<!-- AUDIO (letak luar grid pun boleh, lebih kemas) -->
+<!-- AUDIO -->
 <audio id="alertSound" src="assets/notif.mp3" preload="auto"></audio>
 
     <!-- 🔥 SCROLL DALAM -->
@@ -1114,6 +1112,36 @@ function toggleSection(id){
     arrow.innerText = "▼";
   }
 }
+
+function triggerAlert() {
+  const box = document.getElementById("alertMurid");
+  const sound = document.getElementById("alertSound");
+
+  // BLINK EFFECT
+  box.classList.add("soft-blink");
+
+  // SOUND
+  sound.currentTime = 0;
+  sound.play().catch(() => {});
+
+  // STOP EFFECT
+  setTimeout(() => {
+    box.classList.remove("soft-blink");
+  }, 3000);
+}
+
+
+let firstLoad = true;
+
+onSnapshot(collection(db, "aktivitiPelajar"), (snapshot) => {
+
+  if (!firstLoad) {
+    triggerAlert(); // 🚨 trigger sini
+  }
+
+  firstLoad = false;
+});
+
 </script>
 
 <!-- LETAK SEBELUM </body> -->

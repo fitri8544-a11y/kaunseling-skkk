@@ -1130,7 +1130,7 @@ function loadMuridPerhatian(){
 
         const data = doc.data();
 
-        // if(!data.perluPerhatian) return;
+        if(data.tahap === "RENDAH" || !data.tahap) return;
 
         // 🎯 WARNA IKUT TAHAP
         let warna = "bg-green-500";

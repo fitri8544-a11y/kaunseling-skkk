@@ -448,7 +448,7 @@ text-white px-4 py-2 rounded-lg shadow-lg z-[9999]">
   </div>
 
   <!-- PSIKOEDUKASI -->
-  <div onclick="openKawal(); trackActivity('Nota')" 
+  <div onclick="openNota(); trackActivity('Nota')" 
      class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
             hover:scale-105 transition cursor-pointer text-center">
 
@@ -457,7 +457,7 @@ text-white px-4 py-2 rounded-lg shadow-lg z-[9999]">
   </div>
 
   <!-- MINDA SIHAT -->
-  <div onclick="openKawal(); trackActivity('Minda')" 
+  <div onclick="openMinda(); trackActivity('Minda')" 
      class="bg-white/10 backdrop-blur-lg p-6 rounded-2xl shadow-lg 
             hover:scale-105 transition cursor-pointer text-center">
 
@@ -1595,11 +1595,7 @@ function closeCoping(){
 
 <script>
 /* ================= EMOTION MODAL ================= */
-  document.getElementById("copingModal")?.classList.add("hidden");
-  document.getElementById("healModal")?.classList.add("hidden");
-  document.getElementById("gameModal")?.classList.add("hidden");
-  document.getElementById("trackerModal")?.classList.add("hidden");
-  document.getElementById("statusModal")?.classList.add("hidden");
+ 
 
   // untuk emotion (style version)
   const emo = document.getElementById("emotionModal");

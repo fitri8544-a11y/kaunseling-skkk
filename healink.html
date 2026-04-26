@@ -9,10 +9,8 @@
 
 <body class="bg-gradient-to-br from-[#1e1b4b] via-purple-700 to-blue-600 min-h-screen text-white">
 
-<!-- HEADER -->
+<!-- ================= HEADER HEALINK ================= -->
 <div class="text-center mt-10">
-
-  <div class="text-center mt-10">
 
   <!-- TITLE -->
   <h1 class="text-4xl md:text-5xl font-extrabold 
@@ -24,17 +22,17 @@
 
   </h1>
 
-  <!-- 🔥 LETAK DI SINI -->
-<div class="flex justify-between items-center px-6 mt-4">
+  <!-- BAR -->
+  <div class="flex justify-between items-center px-6 mt-4">
 
-  <!-- LEFT -->
-  <div id="greetingHeader" class="text-white font-semibold text-sm"></div>
+    <div id="greetingHeader" class="text-white font-semibold text-sm"></div>
 
-  <!-- RIGHT -->
-  <button onclick="tukarUser()" 
-    class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg shadow">
-    🔄 Tukar Pengguna
-  </button>
+    <button onclick="tukarUser()" 
+      class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg shadow">
+      🔄 Tukar Pengguna
+    </button>
+
+  </div>
 
 </div>
   
@@ -2116,10 +2114,17 @@ function showGreeting(){
     mesej = "Rehat secukupnya dan jaga diri 💙";
   }
 
-  document.getElementById("greetingBox").innerHTML = `
-    ${ucapan}, <span class="text-blue-600">${nama}</span><br>
-    <span class="text-sm text-gray-600">${mesej}</span>
+  const html = `
+    ${ucapan}, <b>${nama}</b><br>
+    <span class="text-sm text-gray-500">${mesej}</span>
   `;
+
+  // HEADER
+  const header = document.getElementById("greetingHeader");
+  if(header) header.innerHTML = html;
+
+  const modal = document.getElementById("greetingModal");
+  if(modal) modal.innerHTML = html;
 }
 
 showGreeting();

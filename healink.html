@@ -2100,6 +2100,7 @@ function openStatus(){
 function showGreeting(){
 
   const nama = sessionStorage.getItem("nama") || "Pengguna";
+  const jantina = sessionStorage.getItem("jantina") || "L";
   const jam = new Date().getHours();
 
   let ucapan = "";
@@ -2118,18 +2119,27 @@ function showGreeting(){
     mesej = "Rehat secukupnya dan jaga diri 💙";
   }
 
-  // 🎯 AVATAR LOGIC
+  // 🎯 AVATAR
   const avatar = jantina === "P" ? "👧" : "👦";
-  
+
   const html = `
-    ${ucapan}, <b>${nama}</b><br>
-    <span class="text-sm text-gray-500">${mesej}</span>
+    <div class="flex items-center gap-3">
+      
+      <div class="text-2xl">${avatar}</div>
+
+      <div>
+        ${ucapan}, <span class="font-bold text-yellow-300">${nama}</span><br>
+        <span class="text-xs text-gray-200">${mesej}</span>
+      </div>
+
+    </div>
   `;
 
   // HEADER
   const header = document.getElementById("greetingHeader");
   if(header) header.innerHTML = html;
 
+  // MODAL
   const modal = document.getElementById("greetingModal");
   if(modal) modal.innerHTML = html;
 }

@@ -1256,20 +1256,14 @@ function switchTab(tab) {
 /* =========================================
    💬 HEAL TALK
 ========================================= */
-
-// 🔥 BUKA MODAL
 function openHealTalk(){
   document.getElementById("healModal").classList.remove("hidden");
 }
 
-
-// ❌ TUTUP MODAL (TAK PERLU TRACK)
 function closeHealTalk(){
   document.getElementById("healModal").classList.add("hidden");
 }
 
-
-// 🔥 HANTAR LUAHAN
 function submitHealTalk(){
 
   const text = document.getElementById("luahan").value.trim();
@@ -1284,30 +1278,23 @@ function submitHealTalk(){
   document.getElementById("msg").classList.remove("hidden");
   document.getElementById("luahan").value = "";
 
-  // 🔥 AUTO TUTUP
-  setTimeout(() => {
-    closeHealTalk();
-  }, 2000);
+  setTimeout(() => closeHealTalk(), 2000);
 }
 
 
 /* =========================================
    🌡️ EMOTION TRACKER
 ========================================= */
-
 let selectedMood = "";
 
-/* OPEN / CLOSE */
 function openTracker(){
   document.getElementById("trackerModal").classList.remove("hidden");
-  loadHistory();
 }
 
 function closeTracker(){
   document.getElementById("trackerModal").classList.add("hidden");
 }
 
-/* PILIH EMOSI */
 function selectMood(el, mood){
 
   document.querySelectorAll("#trackerModal .emoji-card")
@@ -1317,10 +1304,7 @@ function selectMood(el, mood){
   selectedMood = mood;
 }
 
-/* SIMPAN DATA */
 function saveMood(){
-
-  console.log("CLICK SIMPAN"); // DEBUG
 
   if(!selectedMood){
     alert("Sila pilih emosi dahulu");
@@ -1329,126 +1313,63 @@ function saveMood(){
 
   const note = document.getElementById("note").value;
 
-  const data = {
-    mood: selectedMood,
-    note: note,
-    masa: new Date()
-  };
+  if(typeof firebase !== "undefined"){
 
-  console.log("Emotion:", data);
+    firebase.firestore().collection("aktivitiPelajar").add({
 
-  // 🔥 SIMPAN KE COLLECTION YANG SAMA DENGAN DASHBOARD
-if(typeof firebase !== "undefined"){
+      module: "Emotion Tracker",
+      nama: sessionStorage.getItem("nama") || "-",
+      jenis: sessionStorage.getItem("jenis") || "-",
+      kelas: sessionStorage.getItem("kelas") || "-",
+      organisasi: sessionStorage.getItem("organisasi") || "-",
 
-  firebase.firestore().collection("aktivitiPelajar").add({
-    module: "Emotion Tracker",
-    nama: sessionStorage.getItem("nama") || "-",
-    jenis: sessionStorage.getItem("jenis") || "-",
-    kelas: sessionStorage.getItem("kelas") || "-",
-    organisasi: sessionStorage.getItem("organisasi") || "-",
+      mood: selectedMood,
+      komen: note,
 
-    mood: selectedMood,
-    komen: note,
+      perluPerhatian: ["😢","😡","😰"].includes(selectedMood),
 
-    perluPerhatian: ["😢","😡","😰"].includes(selectedMood),
+      riskScore: (
+        selectedMood === "😢" ? 5 :
+        selectedMood === "😡" ? 6 :
+        selectedMood === "😰" ? 4 : 1
+      ),
 
-    riskScore: (
-      selectedMood === "😢" ? 5 :
-      selectedMood === "😡" ? 6 :
-      selectedMood === "😰" ? 4 : 1
-    ),
+      tahap: (
+        ["😢","😡"].includes(selectedMood) ? "TINGGI" :
+        selectedMood === "😰" ? "SEDERHANA" :
+        "RENDAH"
+      ),
 
-    tahap: (
-      ["😢","😡"].includes(selectedMood) ? "TINGGI" :
-      selectedMood === "😰" ? "SEDERHANA" :
-      "RENDAH"
-    ),
+      masa: firebase.firestore.FieldValue.serverTimestamp()
 
-    masa: firebase.firestore.FieldValue.serverTimestamp()
+    })
+    .then(() => {
 
-  })
-  .then(() => {
+      selectedMood = "";
+      document.getElementById("note").value = "";
 
-    // ✅ RESET UI
-    selectedMood = "";
-    document.getElementById("note").value = "";
-    document.querySelectorAll(".emoji-card").forEach(e => {
-      e.classList.remove("ring-4","ring-purple-500","scale-110");
+      document.querySelectorAll(".emoji-card").forEach(e => {
+        e.classList.remove("emoji-selected");
+      });
+
+      alert("✅ Emosi berjaya disimpan");
+
+      closeTracker();
+
+    })
+    .catch(err => {
+      console.error(err);
+      alert("❌ Gagal simpan");
     });
 
-    // ✅ ALERT SEKALI SAHAJA
-    alert("✅ Emosi berjaya disimpan");
-
-    closeTracker();
-
-  })
-  .catch(err => {
-    console.error(err);
-    alert("❌ Gagal simpan");
-  });
+  }
 
 }
 
-
-
-}
-
-  const note = document.getElementById("note").value;
-
-  const nama = sessionStorage.getItem("nama");
-  const kelas = sessionStorage.getItem("kelas");
-  const organisasi = sessionStorage.getItem("organisasi");
-
-  document.getElementById("trackerMsg").classList.remove("hidden");
-
-
-/* OPEN DETAIL KOMEN */
-function openDetail(nama, kelas, module, komen){
-
-  const modal = document.getElementById("detailModal");
-  const content = document.getElementById("detailContent");
-
-  content.innerHTML = `
-    <b>Nama:</b> ${nama}<br>
-    <b>Kelas:</b> ${kelas}<br>
-    <b>Modul:</b> ${module}<br><br>
-
-    <b>📝 Luahan:</b>
-    <div class="bg-gray-100 p-3 rounded mt-2 text-left text-black">
-      ${komen || "Tiada data"}
-    </div>
-
-    <br>
-    <span class="text-red-500 font-semibold">
-      ⚠️ Murid ini memerlukan perhatian
-    </span>
-  `;
-
-  modal.classList.remove("hidden");
-}
-
-/* HISTORY */
-function loadHistory(){
-
-  const list = document.getElementById("history");
-  const data = JSON.parse(localStorage.getItem("emotionData")) || [];
-
-  list.innerHTML = "";
-
-  data.slice(-5).reverse().forEach(d => {
-    list.innerHTML += `
-      <div class="bg-gray-100 p-2 rounded flex justify-between">
-        <span>${d.mood} ${d.note || ''}</span>
-        <span class="text-xs text-gray-500">${d.time}</span>
-      </div>
-    `;
-  });
-}
 
 /* =========================================
-   📊 STATUS ANALYZER
+   📊 STATUS
 ========================================= */
-
 let stress=0, anxiety=0, depression=0;
 
 function openStatus(){
@@ -1463,42 +1384,25 @@ function toggleCheck(el,type){
 
   el.classList.toggle("check-active");
 
-  if(type==="stress"){
-    stress += el.classList.contains("check-active") ? 1 : -1;
-  }
-
-  if(type==="anxiety"){
-    anxiety += el.classList.contains("check-active") ? 1 : -1;
-  }
-
-  if(type==="depression"){
-    depression += el.classList.contains("check-active") ? 1 : -1;
-  }
+  if(type==="stress") stress += el.classList.contains("check-active") ? 1 : -1;
+  if(type==="anxiety") anxiety += el.classList.contains("check-active") ? 1 : -1;
+  if(type==="depression") depression += el.classList.contains("check-active") ? 1 : -1;
 }
 
 function analyzeStatus(){
 
   let result = "";
 
-  if(stress >= 2){
-    result += "😰 Anda menunjukkan tanda tekanan (stress)<br><br>";
-  }
+  if(stress >= 2) result += "😰 Tekanan tinggi<br><br>";
+  if(anxiety >= 2) result += "😨 Kebimbangan<br><br>";
+  if(depression >= 2) result += "😔 Kemurungan ringan<br><br>";
 
-  if(anxiety >= 2){
-    result += "😨 Anda mengalami kebimbangan<br><br>";
-  }
-
-  if(depression >= 2){
-    result += "😔 Anda mungkin mengalami kemurungan ringan<br><br>";
-  }
-
-  if(result === ""){
-    result = "😊 Emosi anda stabil hari ini";
-  }
+  if(result === "") result = "😊 Emosi stabil";
 
   document.getElementById("resultBox").innerHTML = result;
   document.getElementById("resultBox").classList.remove("hidden");
 }
+
 
 /* =========================================
    🧘 TEKNIK INTERVENSI (FINAL)
@@ -1691,7 +1595,6 @@ function closeCoping(){
 
 <script>
 /* ================= EMOTION MODAL ================= */
-function closeAllModals(){
   document.getElementById("copingModal")?.classList.add("hidden");
   document.getElementById("healModal")?.classList.add("hidden");
   document.getElementById("gameModal")?.classList.add("hidden");
@@ -1701,7 +1604,7 @@ function closeAllModals(){
   // untuk emotion (style version)
   const emo = document.getElementById("emotionModal");
   if(emo) emo.style.display = "none";
-}
+
 
 function openEmotion(){
 
@@ -1788,22 +1691,29 @@ function analyzeEmotion(){
 </script>
 
 <script>
-/* ================= GLOBAL CLOSE ================= */
+/* =========================================
+   GLOBAL CLOSE MODAL
+========================================= */
 function closeAllModals(){
 
   const modals = [
     "kawalModal",
     "notaModal",
-    "mindaModal"
+    "mindaModal",
+    "copingModal",
+    "healModal",
+    "gameModal",
+    "trackerModal",
+    "statusModal"
   ];
 
   modals.forEach(id => {
     const el = document.getElementById(id);
-    if(el){
-      el.classList.add("hidden");
-    }
+    if(el) el.classList.add("hidden");
   });
 
+  const emo = document.getElementById("emotionModal");
+  if(emo) emo.style.display = "none";
 }
 
 /* ================= OPEN ================= */

@@ -1929,13 +1929,14 @@ function trackActivity(module, komen = ""){
   // 🔥 LOG (debug)
   console.log("Aktiviti direkod:", data);
 
-  // 🔥 SIMPAN KE FIRESTORE (jika guna)
-  if(typeof db !== "undefined"){
-    addDoc(collection(db, "aktivitiPelajar"), data)
-      .then(() => console.log("✅ Berjaya simpan"))
-      .catch(err => console.error("❌ Ralat:", err));
-  }
-
+  // 🔥 SIMPAN KE FIRESTORE (COMPAT VERSION)
+firebase.firestore().collection("aktivitiPelajar").add(data)
+  .then(() => {
+    console.log("✅ Berjaya simpan");
+    alert("Data berjaya direkodkan");
+  })
+  .catch(err => console.error("❌ Ralat:", err));
+  
 }
 
   // ================================

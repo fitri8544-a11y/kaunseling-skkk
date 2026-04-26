@@ -1848,6 +1848,7 @@ function submitDaftar(){
   sessionStorage.setItem("kelas", kelas);
   sessionStorage.setItem("organisasi", organisasi);
   sessionStorage.setItem("sudahDaftar","yes");
+  sessionStorage.setItem("jantina", jantina);
 
   // SIMPAN FIRESTORE
   db.collection("pengunjung").add({
@@ -1985,23 +1986,26 @@ function showGreeting(){
   let gelaran = "";
   let avatar = "";
 
-  // 🎯 UCAPAN MASA
+  // 🌤️ UCAPAN MASA
   if(jam >= 5 && jam < 12){
-    ucapan = "🌤️ Selamat Pagi";
+    ucapan = "Selamat Pagi";
   }
   else if(jam >= 12 && jam < 18){
-    ucapan = "☀️ Selamat Petang";
+    ucapan = "Selamat Petang";
   }
   else{
-    ucapan = "🌙 Selamat Malam";
+    ucapan = "Selamat Malam";
   }
 
-  // 🎯 GELARAN
+  // 🎯 GELARAN + AVATAR
   if(jenis === "guru"){
+
     gelaran = "Cikgu";
-    avatar = "👨‍🏫";
-  }
-  else{
+
+    avatar = (jantina === "P") ? "👩‍🏫" : "👨‍🏫";
+
+  } else {
+
     if(jantina === "P"){
       gelaran = "Puan";
       avatar = "👩";
@@ -2009,10 +2013,11 @@ function showGreeting(){
       gelaran = "Encik";
       avatar = "👨";
     }
+
   }
 
   const html = `
-    ${avatar} ${ucapan}, ${gelaran} ${nama}
+    ${avatar} 🌙 ${ucapan}, ${gelaran} ${nama}
   `;
 
   document.getElementById("greetingHeader").innerHTML = html;

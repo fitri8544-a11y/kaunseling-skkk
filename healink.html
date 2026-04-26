@@ -1305,7 +1305,6 @@ function selectMood(el, mood){
 }
 
 /* ================= SIMPAN DATA ================= */
-/* ================= SIMPAN DATA ================= */
 function saveMood(){
 
   if(!selectedMood){
@@ -1318,6 +1317,54 @@ function saveMood(){
   const nama = sessionStorage.getItem("nama");
   const kelas = sessionStorage.getItem("kelas");
   const organisasi = sessionStorage.getItem("organisasi");
+
+  firebase.firestore().collection("aktivitiPelajar").add({
+
+    nama: nama || "-",
+    kelas: kelas || "-",
+    organisasi: organisasi || "-",
+
+    mood: selectedMood,
+    module: "Emotion Tracker",
+    komen: note || "",
+
+    // 🔥 LOGIC ALERT
+    perluPerhatian: ["😢","😡"].includes(selectedMood),
+
+    tahap: (
+      ["😢","😡"].includes(selectedMood) ? "TINGGI" :
+      selectedMood === "😰" ? "SEDERHANA" :
+      "RENDAH"
+    ),
+
+    masa: firebase.firestore.FieldValue.serverTimestamp()
+
+  })
+  .then(()=>{
+
+    // ✅ RESET UI
+    selectedMood = "";
+    document.getElementById("note").value = "";
+
+    document.querySelectorAll("#trackerModal .emoji-card").forEach(e => {
+      e.classList.remove("emoji-selected");
+    });
+
+    // ✅ SUCCESS
+    alert("✅ Emosi berjaya disimpan");
+
+    // auto close
+    setTimeout(() => {
+      closeTracker();
+    }, 800);
+
+  })
+  .catch(err => {
+    console.error(err);
+    alert("❌ Gagal simpan data");
+  });
+
+}
 
   // ================= LOCAL STORAGE =================
   const data = JSON.parse(localStorage.getItem("emotionData")) || [];
@@ -1344,7 +1391,7 @@ function saveMood(){
       komen: note || "",
 
       // 🔥 INI UNTUK DASHBOARD
-      perluPerhatian: ["😢","😡","😰"].includes(selectedMood),
+      perluPerhatian: ["😢","😡"].includes(selectedMood),
 
       tahap: (
         ["😢","😡"].includes(selectedMood) ? "TINGGI" :

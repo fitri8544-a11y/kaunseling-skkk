@@ -614,7 +614,9 @@ db.collection("pengunjung").onSnapshot(snapshot => {
 
   snapshot.forEach(doc => {
 
-  const d = doc.data();  // ✅ guna d (konsisten)
+  const data = doc.data();
+  console.log("DATA:", data); // 👈 TAMBAH INI
+
 
   // kira jenis pengguna
   if(d.jenis === "Murid") murid++;
@@ -1128,7 +1130,7 @@ function loadMuridPerhatian(){
 
         const data = doc.data();
 
-        if(!data.perluPerhatian) return;
+        // if(!data.perluPerhatian) return;
 
         // 🎯 WARNA IKUT TAHAP
         let warna = "bg-green-500";

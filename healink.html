@@ -52,65 +52,6 @@
 
 <style>
 
-/* ================= AI GRID ================= */
-body::before{
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* ================= AI GLOW ================= */
-body::after{
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at 20% 30%, rgba(0,255,255,0.15), transparent 40%),
-              radial-gradient(circle at 80% 70%, rgba(255,0,255,0.15), transparent 40%);
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* ================= PARTICLE ================= */
-.particles{
-  position: fixed;
-  inset: 0;
-  background: url('https://www.transparenttextures.com/patterns/cubes.png');
-  opacity: 0.08;
-  animation: moveBg 20s linear infinite;
-  z-index: 0;
-  pointer-events: none;
-}
-
-@keyframes moveBg{
-  from{ background-position: 0 0; }
-  to{ background-position: 200px 200px; }
-}
-
-/* ================= FIX CONTENT ATAS ================= */
-.main-content{
-  position: relative;
-  z-index: 10;
-}
-
-.particles{
-  position: fixed;
-  inset: 0;
-  background: url('https://www.transparenttextures.com/patterns/cubes.png');
-  opacity: 0.08;
-  animation: moveBg 20s linear infinite;
-}
-
-@keyframes moveBg{
-  from{ background-position: 0 0; }
-  to{ background-position: 200px 200px; }
-}
-
 /* =========================================
    🎬 ANIMATION (GLOBAL)
 ========================================= */
@@ -782,6 +723,17 @@ setInterval(animateSlogan, 8000);
       💾 Simpan
     </button>
 
+    <!-- RESULT -->
+    <p id="trackerMsg" class="hidden text-center text-green-600 mt-3">
+      ✅ Data disimpan
+    </p>
+
+    <!-- HISTORY -->
+    <div class="mt-6">
+      <h3 class="font-semibold text-gray-700 mb-2">Sejarah:</h3>
+      <div id="history" class="text-sm text-gray-600 space-y-1"></div>
+    </div>
+
   </div>
 </div>
 
@@ -886,14 +838,11 @@ setInterval(animateSlogan, 8000);
     </button>
 
     <!-- RESULT -->
-    <div id="resultBox"
-     class="hidden mt-6 p-5 rounded-2xl text-center 
-            font-semibold text-lg shadow-xl 
-            transition-all duration-500">
+    <div id="resultBox" 
+      class="hidden mt-6 p-5 rounded-2xl text-center shadow-lg bg-gradient-to-r from-purple-100 to-blue-100">
+    </div>
 
-  <div id="resultText"></div>
-
-</div>
+  </div>
 </div>
 
 <!-- ================= TEKNIK INTEVENSI ================= -->
@@ -1256,14 +1205,15 @@ function switchTab(tab) {
 /* =========================================
    💬 HEAL TALK
 ========================================= */
+
+// 🔥 BUKA MODAL
 function openHealTalk(){
+  closeAllModals(); // 🔥 tambah
   document.getElementById("healModal").classList.remove("hidden");
 }
 
-function closeHealTalk(){
-  document.getElementById("healModal").classList.add("hidden");
-}
 
+// 🔥 HANTAR LUAHAN
 function submitHealTalk(){
 
   const text = document.getElementById("luahan").value.trim();
@@ -1278,23 +1228,27 @@ function submitHealTalk(){
   document.getElementById("msg").classList.remove("hidden");
   document.getElementById("luahan").value = "";
 
-  setTimeout(() => closeHealTalk(), 2000);
+  // 🔥 AUTO TUTUP
+  setTimeout(() => {
+    closeHealTalk();
+  }, 2000);
 }
 
 
 /* =========================================
    🌡️ EMOTION TRACKER
 ========================================= */
+
 let selectedMood = "";
 
+/* OPEN / CLOSE */
 function openTracker(){
+  closeAllModals(); // 🔥 tambah
   document.getElementById("trackerModal").classList.remove("hidden");
+  loadHistory();
 }
 
-function closeTracker(){
-  document.getElementById("trackerModal").classList.add("hidden");
-}
-
+/* PILIH EMOSI */
 function selectMood(el, mood){
 
   document.querySelectorAll("#trackerModal .emoji-card")
@@ -1304,6 +1258,7 @@ function selectMood(el, mood){
   selectedMood = mood;
 }
 
+/* ================= SIMPAN DATA ================= */
 function saveMood(){
 
   if(!selectedMood){
@@ -1313,67 +1268,90 @@ function saveMood(){
 
   const note = document.getElementById("note").value;
 
-  if(typeof firebase !== "undefined"){
+  // ambil data lama
+  const data = JSON.parse(localStorage.getItem("emotionData")) || [];
 
-    firebase.firestore().collection("aktivitiPelajar").add({
+  // tambah data baru
+  data.push({
+    mood: selectedMood,
+    note: note,
+    time: new Date().toLocaleTimeString()
+  });
 
-      module: "Emotion Tracker",
-      nama: sessionStorage.getItem("nama") || "-",
-      jenis: sessionStorage.getItem("jenis") || "-",
-      kelas: sessionStorage.getItem("kelas") || "-",
-      organisasi: sessionStorage.getItem("organisasi") || "-",
+  // simpan semula
+  localStorage.setItem("emotionData", JSON.stringify(data));
 
-      mood: selectedMood,
-      komen: note,
+  // paparkan mesej
+  document.getElementById("trackerMsg").classList.remove("hidden");
 
-      perluPerhatian: ["😢","😡","😰"].includes(selectedMood),
+  // reset UI
+  selectedMood = "";
+  document.getElementById("note").value = "";
 
-      riskScore: (
-        selectedMood === "😢" ? 5 :
-        selectedMood === "😡" ? 6 :
-        selectedMood === "😰" ? 4 : 1
-      ),
+  document.querySelectorAll("#trackerModal .emoji-card").forEach(e => {
+  e.classList.remove("emoji-selected");
+});
 
-      tahap: (
-        ["😢","😡"].includes(selectedMood) ? "TINGGI" :
-        selectedMood === "😰" ? "SEDERHANA" :
-        "RENDAH"
-      ),
+  // refresh history
+  loadHistory();
 
-      masa: firebase.firestore.FieldValue.serverTimestamp()
-
-    })
-    .then(() => {
-
-      selectedMood = "";
-      document.getElementById("note").value = "";
-
-      document.querySelectorAll(".emoji-card").forEach(e => {
-        e.classList.remove("emoji-selected");
-      });
-
-      alert("✅ Emosi berjaya disimpan");
-
-      closeTracker();
-
-    })
-    .catch(err => {
-      console.error(err);
-      alert("❌ Gagal simpan");
-    });
-
-  }
-
+  // auto close
+  setTimeout(() => {
+    closeTracker();
+  }, 1200);
 }
 
+/* OPEN DETAIL KOMEN */
+function openDetail(nama, kelas, module, komen){
+
+  const modal = document.getElementById("detailModal");
+  const content = document.getElementById("detailContent");
+
+  content.innerHTML = `
+    <b>Nama:</b> ${nama}<br>
+    <b>Kelas:</b> ${kelas}<br>
+    <b>Modul:</b> ${module}<br><br>
+
+    <b>📝 Luahan:</b>
+    <div class="bg-gray-100 p-3 rounded mt-2 text-left text-black">
+      ${komen || "Tiada data"}
+    </div>
+
+    <br>
+    <span class="text-red-500 font-semibold">
+      ⚠️ Murid ini memerlukan perhatian
+    </span>
+  `;
+
+  modal.classList.remove("hidden");
+}
+
+/* HISTORY */
+function loadHistory(){
+
+  const list = document.getElementById("history");
+  const data = JSON.parse(localStorage.getItem("emotionData")) || [];
+
+  list.innerHTML = "";
+
+  data.slice(-5).reverse().forEach(d => {
+    list.innerHTML += `
+      <div class="bg-gray-100 p-2 rounded flex justify-between">
+        <span>${d.mood} ${d.note || ''}</span>
+        <span class="text-xs text-gray-500">${d.time}</span>
+      </div>
+    `;
+  });
+}
 
 /* =========================================
-   📊 STATUS
+   📊 STATUS ANALYZER
 ========================================= */
+
 let stress=0, anxiety=0, depression=0;
 
 function openStatus(){
-  closeAllModals(); // 🔥 penting
+  closeAllModals(); // 🔥 WAJIB TAMBAH
   document.getElementById("statusModal").classList.remove("hidden");
 }
 
@@ -1381,37 +1359,50 @@ function toggleCheck(el,type){
 
   el.classList.toggle("check-active");
 
-  if(type==="stress") stress += el.classList.contains("check-active") ? 1 : -1;
-  if(type==="anxiety") anxiety += el.classList.contains("check-active") ? 1 : -1;
-  if(type==="depression") depression += el.classList.contains("check-active") ? 1 : -1;
+  if(type==="stress"){
+    stress += el.classList.contains("check-active") ? 1 : -1;
+  }
+
+  if(type==="anxiety"){
+    anxiety += el.classList.contains("check-active") ? 1 : -1;
+  }
+
+  if(type==="depression"){
+    depression += el.classList.contains("check-active") ? 1 : -1;
+  }
 }
 
 function analyzeStatus(){
 
   let result = "";
 
-  if(stress >= 2) result += "😰 Tekanan tinggi<br><br>";
-  if(anxiety >= 2) result += "😨 Kebimbangan<br><br>";
-  if(depression >= 2) result += "😔 Kemurungan ringan<br><br>";
+  if(stress >= 2){
+    result += "😰 Anda menunjukkan tanda tekanan (stress)<br><br>";
+  }
 
-  if(result === "") result = "😊 Emosi stabil";
+  if(anxiety >= 2){
+    result += "😨 Anda mengalami kebimbangan<br><br>";
+  }
+
+  if(depression >= 2){
+    result += "😔 Anda mungkin mengalami kemurungan ringan<br><br>";
+  }
+
+  if(result === ""){
+    result = "😊 Emosi anda stabil hari ini";
+  }
 
   document.getElementById("resultBox").innerHTML = result;
   document.getElementById("resultBox").classList.remove("hidden");
 }
-
 
 /* =========================================
    🧘 TEKNIK INTERVENSI (FINAL)
 ========================================= */
 
 function openIntervensi(){
+  closeAllModals(); // 🔥 tambah
   document.getElementById("intervensiModal").classList.remove("hidden");
-}
-
-function closeIntervensi(){
-  stopTherapy(); // stop AI
-  document.getElementById("intervensiModal").classList.add("hidden");
 }
 
 
@@ -1578,25 +1569,35 @@ function runCoping(type){
 
 /* OPEN CLOSE */
 function openCoping(){
-  closeAllModals(); // 🔥 penting
+  closeAllModals(); // 🔥 tambah
   document.getElementById("copingModal").classList.remove("hidden");
 }
-
-  // tutup emotion elak clash
-  const emo = document.getElementById("emotionModal");
-  if(emo) emo.style.display = "none";
-
-
 </script>
 
 <script>
 /* ================= EMOTION MODAL ================= */
- 
+function closeAllModals(){
 
-  // untuk emotion (style version)
-  const emo = document.getElementById("emotionModal");
-  if(emo) emo.style.display = "none";
+  const modals = [
+    "kawalModal",
+    "notaModal",
+    "mindaModal",
+    "copingModal",
+    "intervensiModal",
+    "healModal",
+    "gameModal",
+    "trackerModal",
+    "statusModal",
+    "emotionModal",
+    "detailModal" // 🔥 tambah ini
+  ];
 
+  modals.forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.classList.add("hidden");
+  });
+
+}
 
 function openEmotion(){
 
@@ -1683,47 +1684,38 @@ function analyzeEmotion(){
 </script>
 
 <script>
-/* =========================================
-   GLOBAL CLOSE MODAL
-========================================= */
-function closeAllModals(){
-
-  const modals = [
-    "kawalModal",
-    "notaModal",
-    "mindaModal",
-    "copingModal",
-    "healModal",
-    "gameModal",
-    "trackerModal",
-    "statusModal"
-  ];
-
-  modals.forEach(id => {
-    const el = document.getElementById(id);
-    if(el) el.classList.add("hidden");
-  });
-
-  const emo = document.getElementById("emotionModal");
-  if(emo) emo.style.display = "none";
-}
 
 /* ================= OPEN ================= */
 function openKawal(){
-  closeAllModals(); // 🔥 penting
+  closeAllModals();
   document.getElementById("kawalModal").classList.remove("hidden");
 }
 
 function openNota(){
-  closeAllModals(); // 🔥 penting
+  closeAllModals();
   document.getElementById("notaModal").classList.remove("hidden");
 }
 
 function openMinda(){
-  closeAllModals(); // 🔥 penting
+  closeAllModals();
   document.getElementById("mindaModal").classList.remove("hidden");
 }
 
+/* ================= CLOSE ================= */
+function closeKawal(e){
+  if(e && e.target !== e.currentTarget) return;
+  document.getElementById("kawalModal").classList.add("hidden");
+}
+
+function closeNota(e){
+  if(e && e.target !== e.currentTarget) return;
+  document.getElementById("notaModal").classList.add("hidden");
+}
+
+function closeMinda(e){
+  if(e && e.target !== e.currentTarget) return;
+  document.getElementById("mindaModal").classList.add("hidden");
+}
 </script>
 
 <!-- 🔥 STEP 1: LOAD FIREBASE DULU -->
@@ -1957,6 +1949,24 @@ function selectEmoji(el){
 
   console.log("😊 Emoji dipilih:", window.selectedEmoji);
 }
+
+function closeIntervensi(){
+  stopTherapy();
+  document.getElementById("intervensiModal").classList.add("hidden");
+}
+
+function closeCoping(){
+  document.getElementById("copingModal").classList.add("hidden");
+}
+
+function closeHealTalk(){
+  document.getElementById("healModal").classList.add("hidden");
+}
+
+function closeStatus(){
+  document.getElementById("statusModal").classList.add("hidden");
+}
+
 </script>
 
 </body>

@@ -275,6 +275,27 @@
 @keyframes spin {
   100% { transform: rotate(360deg); }
 }
+
+/* ================= FIX TEXT CLARITY ================= */
+
+/* item pilihan (emoji card) */
+.emoji-card {
+  color: #1f2937 !important; /* text-gray-800 */
+  font-weight: 500;
+}
+
+/* hover effect */
+.emoji-card:hover {
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* state aktif */
+.emoji-selected {
+  background: linear-gradient(to right, #7c3aed, #3b82f6);
+  color: white !important;
+  font-weight: 600;
+}
 </style>
 
 <!-- AI STATUS BAR -->

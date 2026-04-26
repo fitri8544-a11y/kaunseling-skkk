@@ -234,6 +234,9 @@
       ⚠️ Murid Perlu Perhatian
     </div>
 
+    <!-- AUDIO (letak sini) -->
+  <audio id="alertSound" src="assets/notif.mp3" preload="auto"></audio>
+
     <!-- 🔥 SCROLL DALAM -->
     <div id="alertList"
          class="space-y-3 mt-4 overflow-y-auto flex-1 pr-2">
@@ -1101,6 +1104,34 @@ function toggleSection(id){
     arrow.innerText = "▼";
   }
 }
+
+function triggerAlert() {
+  const box = document.getElementById("alertMurid");
+  const sound = document.getElementById("alertSound");
+
+  // BLINK
+  box.classList.add("alert-blink");
+
+  // SOUND
+  sound.currentTime = 0;
+  sound.play().catch(()=>{});
+
+  // STOP selepas 6 saat
+  setTimeout(() => {
+    box.classList.remove("alert-blink");
+  }, 6000);
+}
+
+let firstLoad = true;
+
+onSnapshot(collection(db, "aktivitiPelajar"), (snapshot) => {
+
+  if (!firstLoad) {
+    triggerAlert(); // 🚨 trigger sini
+  }
+
+  firstLoad = false;
+});
 </script>
 
 <!-- LETAK SEBELUM </body> -->

@@ -111,6 +111,15 @@
   font-size: 12px;
   font-weight: bold;
 }
+.alert-blink {
+  animation: blinkAlert 1s infinite;
+}
+
+@keyframes blinkAlert {
+  0% { background-color: #7c3aed; }
+  50% { background-color: #ef4444; }
+  100% { background-color: #7c3aed; }
+}
 </style>
 </head>
 
@@ -228,11 +237,15 @@
 <div class="grid md:grid-cols-2 gap-6 mt-6 items-stretch">
 
   <!-- ALERT -->
-  <div class="section-box flex flex-col h-[420px]">
+  <div id="alertMurid"
+       class="bg-purple-700 text-white font-bold text-lg px-6 py-4 flex items-center gap-3 rounded-xl shadow">
+    ⚠️ Murid Perlu Perhatian
+  </div>
 
-    <div class="section-title text-red-400">
-      ⚠️ Murid Perlu Perhatian
-    </div>
+</div> <!-- ✅ tutup grid -->
+
+<!-- AUDIO (letak luar grid pun boleh, lebih kemas) -->
+<audio id="alertSound" src="assets/notif.mp3" preload="auto"></audio>
 
     <!-- 🔥 SCROLL DALAM -->
     <div id="alertList"

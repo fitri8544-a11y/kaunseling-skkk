@@ -1341,7 +1341,6 @@ function saveMood(){
 if(typeof firebase !== "undefined"){
 
   firebase.firestore().collection("aktivitiPelajar").add({
-
     module: "Emotion Tracker",
     nama: sessionStorage.getItem("nama") || "-",
     jenis: sessionStorage.getItem("jenis") || "-",
@@ -1351,7 +1350,6 @@ if(typeof firebase !== "undefined"){
     mood: selectedMood,
     komen: note,
 
-    // 🎯 LOGIK DASHBOARD
     perluPerhatian: ["😢","😡","😰"].includes(selectedMood),
 
     riskScore: (
@@ -1370,15 +1368,23 @@ if(typeof firebase !== "undefined"){
 
   })
   .then(() => {
-    console.log("✅ Saved");
 
+    // ✅ RESET UI
+    selectedMood = "";
+    document.getElementById("note").value = "";
+    document.querySelectorAll(".emoji-card").forEach(e => {
+      e.classList.remove("ring-4","ring-purple-500","scale-110");
+    });
+
+    // ✅ ALERT SEKALI SAHAJA
     alert("✅ Emosi berjaya disimpan");
+
     closeTracker();
 
   })
   .catch(err => {
-    console.error("❌ Error:", err);
-    alert("❌ Gagal simpan data");
+    console.error(err);
+    alert("❌ Gagal simpan");
   });
 
 }

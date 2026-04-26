@@ -9,24 +9,10 @@
 
 <body class="bg-gradient-to-br from-[#1e1b4b] via-purple-700 to-blue-600 min-h-screen text-white">
 
-<!-- ================= HEADER HEALINK ================= -->
-<div class="relative text-center pt-10 pb-6">
+<!-- HEADER -->
+<div class="text-center mt-10">
 
-  <!-- 🔥 ROW ATAS (SEBARIS DENGAN HEALINK) -->
-  <div class="absolute top-6 left-6 right-6 flex justify-between items-center">
-
-    <!-- LEFT -->
-    <div id="greetingHeader" 
-  class="flex items-center gap-3 text-white text-sm md:text-base font-medium">
-</div>
-
-    <!-- RIGHT -->
-    <button onclick="tukarUser()" 
-      class="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-lg shadow font-semibold">
-      🔄 Tukar Pengguna
-    </button>
-
-  </div>
+  <div class="text-center mt-10">
 
   <!-- TITLE -->
   <h1 class="text-4xl md:text-5xl font-extrabold 
@@ -37,30 +23,30 @@
     HEALINK
 
   </h1>
+  
+  <!-- SUBTITLE -->
+  <p class="mt-3 text-lg text-white/90 animate-subFloat drop-shadow-md">
+    Smart Student Wellness System
+  </p>
 
-  <!-- SUBTITLE (RAPATKAN) -->
-  <div class="mt-2 text-white">
+  <!-- TAGLINE TAMBAHAN (LETak SINI) -->
+  <p class="text-xs text-white/70 mt-2">
+    Digital Guidance & Counseling Platform
+  </p>
 
-    <p class="text-lg md:text-xl font-semibold">
-      Smart Student Wellness System
-    </p>
+  <!-- TARIKH & SLOGAN -->
+<div class="mt-6 text-sm text-white/80">
 
-    <!-- TAGLINE -->
-    <p class="text-xs text-white/70 mt-1">
-      Digital Guidance & Counseling Platform
-    </p>
-
-    <!-- TARIKH -->
-    <div class="mt-3 text-sm text-white/80 flex items-center justify-center gap-2">
-      📅 <span id="tarikhHari"></span> | 🕒 <span id="masa"></span>
-    </div>
-
-    <!-- SLOGAN -->
-    <p id="sloganHari" 
-      class="italic text-lg md:text-xl text-purple-200 mt-2 tracking-wide drop-shadow-lg">
-    </p>
-
+  <div class="flex items-center justify-center gap-2">
+    <span>📅</span>
+    <span id="tarikhHari"></span> | 🕒 <span id="masa"></span>
   </div>
+
+  <p id="sloganHari" 
+   class="italic text-lg md:text-xl text-purple-200 mt-3 tracking-wide drop-shadow-lg">
+</p>
+
+</div>
 
 </div>
 
@@ -370,6 +356,12 @@ body::after{
 
 </div>
 
+<!-- 🔄 TUKAR PENGGUNA -->
+<button onclick="tukarUser()" 
+class="fixed top-5 right-5 bg-yellow-500 hover:bg-yellow-600 
+text-white px-4 py-2 rounded-lg shadow-lg z-[9999]">
+🔄 Tukar Pengguna
+</button>
 
 <!-- MAIN DASHBOARD -->
 <div class="max-w-6xl mx-auto mt-10 grid md:grid-cols-4 gap-6 px-6">
@@ -615,11 +607,6 @@ setInterval(animateSlogan, 8000);
       <p class="text-sm text-gray-500 mt-1">
         Aktiviti Interaktif Kesejahteraan Mental
       </p>
-    </div>
-
-    <!-- ✅ GREETING LETAK SINI -->
-    <div id="greetingBox" 
-         class="text-center text-base font-semibold text-gray-700 mb-4">
     </div>
 
     <!-- TAB -->
@@ -1357,16 +1344,7 @@ function saveMood(){
   const kelas = sessionStorage.getItem("kelas");
   const organisasi = sessionStorage.getItem("organisasi");
 
-  // 👉 SHOW MESSAGE
-  const msg = document.createElement("div");
-  msg.innerHTML = "✅ Emosi berjaya direkodkan";
-  msg.className = "text-green-600 text-center mt-3 font-semibold";
-
-  document.getElementById("note").after(msg);
-
-  // auto hilang
-  setTimeout(() => msg.remove(), 3000);
-
+  document.getElementById("trackerMsg").classList.remove("hidden");
 }
 
 /* OPEN DETAIL KOMEN */
@@ -1886,64 +1864,16 @@ const db = firebase.firestore();
 <script>
 function trackActivity(module, komen = ""){
 
-  // 🔹 Ambil session
-  const nama = sessionStorage.getItem("nama") || "Pengguna";
-  const jenis = sessionStorage.getItem("jenis") || "pelawat";
-  const jantina = sessionStorage.getItem("jantina") || "L";
-  const kelas = sessionStorage.getItem("kelas") || "-";
-  const organisasi = sessionStorage.getItem("organisasi") || "-";
+  const nama = sessionStorage.getItem("nama");
+  const jenis = sessionStorage.getItem("jenis");
+  const kelas = sessionStorage.getItem("kelas");
+  const organisasi = sessionStorage.getItem("organisasi");
 
-  // 🔹 PREFIX (Cikgu / Encik / Puan)
-  let prefix = "";
-  if(jenis === "guru"){
-    prefix = "Cikgu";
-  } else {
-    prefix = jantina === "P" ? "Puan" : "Encik";
-  }
-
-  const namaDisplay = `${prefix} ${nama}`;
-
-  // 🔹 Masa sekarang
-  const now = new Date();
-  const tarikh = now.toLocaleDateString("ms-MY");
-  const masa = now.toLocaleTimeString("ms-MY");
-
-  // 🔹 Module (lowercase untuk consistency)
   const m = (module || "").toLowerCase();
-
-  // 🔹 Data nak simpan
-  const data = {
-    nama: namaDisplay,
-    namaAsal: nama,
-    jenis,
-    jantina,
-    kelas,
-    organisasi,
-    modul: m,
-    komen,
-    tarikh,
-    masa,
-    timestamp: now
-  };
-
-  // 🔥 LOG (debug)
-  console.log("Aktiviti direkod:", data);
-
-  // 🔥 SIMPAN KE FIRESTORE (COMPAT VERSION)
-firebase.firestore().collection("aktivitiPelajar").add(data)
-  .then(() => {
-    console.log("✅ Berjaya simpan");
-    alert("Data berjaya direkodkan");
-  })
-  .catch(err => console.error("❌ Ralat:", err));
-  
-}
 
   // ================================
   // 🔥 PERLU PERHATIAN
   // ================================
-  const m = (module || "").toLowerCase(); // WAJIB ADA
-
   let perluPerhatian = false;
 
   if(
@@ -1985,6 +1915,7 @@ firebase.firestore().collection("aktivitiPelajar").add(data)
     masa: firebase.firestore.FieldValue.serverTimestamp()
   });
 
+}
 </script> 
 
 <script>
@@ -2034,8 +1965,6 @@ function submitDaftar(){
   sessionStorage.setItem("kelas", kelas);
   sessionStorage.setItem("organisasi", organisasi);
   sessionStorage.setItem("sudahDaftar","yes");
-  sessionStorage.setItem("jantina", jantina);
-
 
   // SIMPAN FIRESTORE
   db.collection("pengunjung").add({
@@ -2142,65 +2071,6 @@ function selectEmoji(el){
 
 function openStatus(){
   document.getElementById("statusModal").classList.remove("hidden");
-}
-
-function showGreeting(){
-
-  const nama = sessionStorage.getItem("nama") || "Pengguna";
-  const jantina = sessionStorage.getItem("jantina") || "L";
-  const jam = new Date().getHours();
-
-  let ucapan = "";
-  let mesej = "";
-
-  if(jam >= 5 && jam < 12){
-    ucapan = "🌤️ Selamat Pagi";
-    mesej = "Semoga hari anda penuh semangat 😊";
-  }
-  else if(jam >= 12 && jam < 18){
-    ucapan = "☀️ Selamat Petang";
-    mesej = "Teruskan usaha, anda hebat 💪";
-  }
-  else{
-    ucapan = "🌙 Selamat Malam";
-    mesej = "Rehat secukupnya dan jaga diri 💙";
-  }
-
-  // 🎯 AVATAR
-  const avatar = jantina === "P" ? "👧" : "👦";
-
-  const html = `
-    <div class="flex items-center gap-3">
-      
-      <div class="text-2xl">${avatar}</div>
-
-      <div>
-        ${ucapan}, <span class="font-bold text-yellow-300">${nama}</span><br>
-        <span class="text-xs text-gray-200">${mesej}</span>
-      </div>
-
-    </div>
-  `;
-
-  // HEADER
-  const header = document.getElementById("greetingHeader");
-  if(header) header.innerHTML = html;
-
-  // MODAL
-  const modal = document.getElementById("greetingModal");
-  if(modal) modal.innerHTML = html;
-}
-
-showGreeting();
-
-function tukarUser(){
-
-  // buang semua session
-  sessionStorage.clear();
-
-  // reload page (kembali ke form)
-  window.location.reload();
-
 }
 </script>
 

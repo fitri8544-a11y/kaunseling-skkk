@@ -1320,10 +1320,43 @@ function selectMood(el, mood){
 /* SIMPAN DATA */
 function saveMood(){
 
+  console.log("CLICK SIMPAN"); // DEBUG
+
   if(!selectedMood){
     alert("Sila pilih emosi dahulu");
     return;
   }
+
+  const note = document.getElementById("note").value;
+
+  const data = {
+    mood: selectedMood,
+    note: note,
+    masa: new Date()
+  };
+
+  console.log("Emotion:", data);
+
+  // simpan firestore (optional)
+  if(typeof firebase !== "undefined"){
+    firebase.firestore().collection("emotionTracker").add(data)
+    .then(()=> console.log("✅ Saved"))
+    .catch(err => console.error(err));
+  }
+
+  // reset UI
+  selectedMood = "";
+  document.getElementById("note").value = "";
+
+  document.querySelectorAll(".emoji-card").forEach(e => {
+    e.classList.remove("ring-4","ring-purple-500","scale-110");
+  });
+
+  alert("✅ Emosi berjaya disimpan");
+
+  closeTracker();
+
+}
 
   const note = document.getElementById("note").value;
 
@@ -1332,7 +1365,7 @@ function saveMood(){
   const organisasi = sessionStorage.getItem("organisasi");
 
   document.getElementById("trackerMsg").classList.remove("hidden");
-}
+
 
 /* OPEN DETAIL KOMEN */
 function openDetail(nama, kelas, module, komen){

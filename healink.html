@@ -1337,12 +1337,51 @@ function saveMood(){
 
   console.log("Emotion:", data);
 
-  // simpan firestore (optional)
-  if(typeof firebase !== "undefined"){
-    firebase.firestore().collection("emotionTracker").add(data)
-    .then(()=> console.log("✅ Saved"))
-    .catch(err => console.error(err));
-  }
+  // 🔥 SIMPAN KE COLLECTION YANG SAMA DENGAN DASHBOARD
+if(typeof firebase !== "undefined"){
+
+  firebase.firestore().collection("aktivitiPelajar").add({
+
+    module: "Emotion Tracker",
+    nama: sessionStorage.getItem("nama") || "-",
+    jenis: sessionStorage.getItem("jenis") || "-",
+    kelas: sessionStorage.getItem("kelas") || "-",
+    organisasi: sessionStorage.getItem("organisasi") || "-",
+
+    mood: selectedMood,
+    komen: note,
+
+    // 🎯 LOGIK DASHBOARD
+    perluPerhatian: ["😢","😡","😰"].includes(selectedMood),
+
+    riskScore: (
+      selectedMood === "😢" ? 5 :
+      selectedMood === "😡" ? 6 :
+      selectedMood === "😰" ? 4 : 1
+    ),
+
+    tahap: (
+      ["😢","😡"].includes(selectedMood) ? "TINGGI" :
+      selectedMood === "😰" ? "SEDERHANA" :
+      "RENDAH"
+    ),
+
+    masa: firebase.firestore.FieldValue.serverTimestamp()
+
+  })
+  .then(() => {
+    console.log("✅ Saved");
+
+    alert("✅ Emosi berjaya disimpan");
+    closeTracker();
+
+  })
+  .catch(err => {
+    console.error("❌ Error:", err);
+    alert("❌ Gagal simpan data");
+  });
+
+}
 
   // reset UI
   selectedMood = "";

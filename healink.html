@@ -587,7 +587,11 @@ animateSlogan();
 setInterval(animateSlogan, 8000);
 </script>
 
-
+<!-- ✅ GREETING LETAK SINI -->
+    <div id="greetingBox" 
+         class="text-center text-base font-semibold text-gray-700 mb-4">
+    </div>
+    
 <!-- ================= MODAL PERMAINAN ================= -->
 <div id="gameModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center z-50">
 
@@ -2081,6 +2085,35 @@ function selectEmoji(el){
 function openStatus(){
   document.getElementById("statusModal").classList.remove("hidden");
 }
+
+function showGreeting(){
+
+  const nama = sessionStorage.getItem("nama") || "Pengguna";
+  const jam = new Date().getHours();
+
+  let ucapan = "";
+  let mesej = "";
+
+  if(jam >= 5 && jam < 12){
+    ucapan = "🌤️ Selamat Pagi";
+    mesej = "Semoga hari anda penuh semangat 😊";
+  }
+  else if(jam >= 12 && jam < 18){
+    ucapan = "☀️ Selamat Petang";
+    mesej = "Teruskan usaha, anda hebat 💪";
+  }
+  else{
+    ucapan = "🌙 Selamat Malam";
+    mesej = "Rehat secukupnya dan jaga diri 💙";
+  }
+
+  document.getElementById("greetingBox").innerHTML = `
+    ${ucapan}, <span class="text-blue-600">${nama}</span><br>
+    <span class="text-sm text-gray-600">${mesej}</span>
+  `;
+}
+
+showGreeting();
 </script>
 
 </body>

@@ -10,7 +10,23 @@
 <body class="bg-gradient-to-br from-[#1e1b4b] via-purple-700 to-blue-600 min-h-screen text-white">
 
 <!-- ================= HEADER HEALINK ================= -->
-<div class="text-center mt-10">
+<div class="relative text-center pt-10 pb-6">
+
+  <!-- 🔥 ROW ATAS (SEBARIS DENGAN HEALINK) -->
+  <div class="absolute top-6 left-6 right-6 flex justify-between items-center">
+
+    <!-- LEFT -->
+    <div id="greetingHeader" 
+      class="text-white text-sm md:text-base font-medium leading-tight">
+    </div>
+
+    <!-- RIGHT -->
+    <button onclick="tukarUser()" 
+      class="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-lg shadow font-semibold">
+      🔄 Tukar Pengguna
+    </button>
+
+  </div>
 
   <!-- TITLE -->
   <h1 class="text-4xl md:text-5xl font-extrabold 
@@ -22,49 +38,29 @@
 
   </h1>
 
-  <!-- BAR -->
-  <div class="flex justify-between items-center px-10 mt-6">
+  <!-- SUBTITLE (RAPATKAN) -->
+  <div class="mt-2 text-white">
 
-    <!-- LEFT -->
-  <div id="greetingHeader" 
-       class="text-white text-sm md:text-base font-medium leading-tight">
+    <p class="text-lg md:text-xl font-semibold">
+      Smart Student Wellness System
+    </p>
+
+    <!-- TAGLINE -->
+    <p class="text-xs text-white/70 mt-1">
+      Digital Guidance & Counseling Platform
+    </p>
+
+    <!-- TARIKH -->
+    <div class="mt-3 text-sm text-white/80 flex items-center justify-center gap-2">
+      📅 <span id="tarikhHari"></span> | 🕒 <span id="masa"></span>
+    </div>
+
+    <!-- SLOGAN -->
+    <p id="sloganHari" 
+      class="italic text-lg md:text-xl text-purple-200 mt-2 tracking-wide drop-shadow-lg">
+    </p>
+
   </div>
-
-    <!-- RIGHT -->
-  <button onclick="tukarUser()" 
-    class="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-lg shadow font-semibold">
-    🔄 Tukar Pengguna
-  </button>
-
-  </div>
-
-</div>
-  
-  <!-- SUBTITLE -->
-  <div class="text-center mt-4 text-white">
-
-  <p class="text-lg md:text-xl font-semibold">
-    Smart Student Wellness System
-  </p>
-
-  <!-- TAGLINE TAMBAHAN (LETak SINI) -->
-  <p class="text-xs text-white/70 mt-2">
-    Digital Guidance & Counseling Platform
-  </p>
-
-  <!-- TARIKH & SLOGAN -->
-<div class="mt-6 text-sm text-white/80">
-
-  <div class="flex items-center justify-center gap-2">
-    <span>📅</span>
-    <span id="tarikhHari"></span> | 🕒 <span id="masa"></span>
-  </div>
-
-  <p id="sloganHari" 
-   class="italic text-lg md:text-xl text-purple-200 mt-3 tracking-wide drop-shadow-lg">
-</p>
-
-</div>
 
 </div>
 

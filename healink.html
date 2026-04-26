@@ -1373,11 +1373,8 @@ function saveMood(){
 let stress=0, anxiety=0, depression=0;
 
 function openStatus(){
+  closeAllModals(); // 🔥 penting
   document.getElementById("statusModal").classList.remove("hidden");
-}
-
-function closeStatus(){
-  document.getElementById("statusModal").classList.add("hidden");
 }
 
 function toggleCheck(el,type){
@@ -1581,16 +1578,15 @@ function runCoping(type){
 
 /* OPEN CLOSE */
 function openCoping(){
+  closeAllModals(); // 🔥 penting
   document.getElementById("copingModal").classList.remove("hidden");
+}
 
   // tutup emotion elak clash
   const emo = document.getElementById("emotionModal");
   if(emo) emo.style.display = "none";
-}
 
-function closeCoping(){
-  document.getElementById("copingModal").classList.add("hidden");
-}
+
 </script>
 
 <script>
@@ -1714,35 +1710,20 @@ function closeAllModals(){
 
 /* ================= OPEN ================= */
 function openKawal(){
-  closeAllModals();
+  closeAllModals(); // 🔥 penting
   document.getElementById("kawalModal").classList.remove("hidden");
 }
 
 function openNota(){
-  closeAllModals();
+  closeAllModals(); // 🔥 penting
   document.getElementById("notaModal").classList.remove("hidden");
 }
 
 function openMinda(){
-  closeAllModals();
+  closeAllModals(); // 🔥 penting
   document.getElementById("mindaModal").classList.remove("hidden");
 }
 
-/* ================= CLOSE ================= */
-function closeKawal(e){
-  if(e && e.target !== e.currentTarget) return;
-  document.getElementById("kawalModal").classList.add("hidden");
-}
-
-function closeNota(e){
-  if(e && e.target !== e.currentTarget) return;
-  document.getElementById("notaModal").classList.add("hidden");
-}
-
-function closeMinda(e){
-  if(e && e.target !== e.currentTarget) return;
-  document.getElementById("mindaModal").classList.add("hidden");
-}
 </script>
 
 <!-- 🔥 STEP 1: LOAD FIREBASE DULU -->

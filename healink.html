@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>HEALINK System</title>
+  <link rel="icon" type="image/png" href="assets/logo-sekolah.png">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -50,6 +51,65 @@
 </div>
 
 <style>
+
+/* ================= AI GRID ================= */
+body::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ================= AI GLOW ================= */
+body::after{
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 20% 30%, rgba(0,255,255,0.15), transparent 40%),
+              radial-gradient(circle at 80% 70%, rgba(255,0,255,0.15), transparent 40%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ================= PARTICLE ================= */
+.particles{
+  position: fixed;
+  inset: 0;
+  background: url('https://www.transparenttextures.com/patterns/cubes.png');
+  opacity: 0.08;
+  animation: moveBg 20s linear infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes moveBg{
+  from{ background-position: 0 0; }
+  to{ background-position: 200px 200px; }
+}
+
+/* ================= FIX CONTENT ATAS ================= */
+.main-content{
+  position: relative;
+  z-index: 10;
+}
+
+.particles{
+  position: fixed;
+  inset: 0;
+  background: url('https://www.transparenttextures.com/patterns/cubes.png');
+  opacity: 0.08;
+  animation: moveBg 20s linear infinite;
+}
+
+@keyframes moveBg{
+  from{ background-position: 0 0; }
+  to{ background-position: 200px 200px; }
+}
 
 /* =========================================
    🎬 ANIMATION (GLOBAL)

@@ -1982,7 +1982,6 @@ function trackActivity(module, komen = ""){
     masa: firebase.firestore.FieldValue.serverTimestamp()
   });
 
-}
 </script> 
 
 <script>
@@ -2190,6 +2189,16 @@ function showGreeting(){
 }
 
 showGreeting();
+
+function tukarUser(){
+
+  // buang semua session
+  sessionStorage.clear();
+
+  // reload page (kembali ke form)
+  window.location.reload();
+
+}
 </script>
 
 </body>

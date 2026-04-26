@@ -9,11 +9,27 @@
 
 <body class="bg-gradient-to-br from-[#1e1b4b] via-purple-700 to-blue-600 min-h-screen text-white">
 
-<!-- HEADER WRAPPER -->
-<div class="text-center mt-10">
+<!-- ================= HEADER HEALINK ================= -->
+<div class="max-w-6xl mx-auto mt-10 px-4">
+
+  <!-- TOP BAR -->
+  <div class="flex justify-between items-center mb-4">
+
+    <!-- LEFT: UCAPAN -->
+    <div id="greetingHeader" 
+         class="text-white text-sm md:text-base font-semibold">
+    </div>
+
+    <!-- RIGHT: BUTTON -->
+    <button onclick="tukarUser()" 
+      class="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-lg shadow font-semibold">
+      🔄 Tukar Pengguna
+    </button>
+
+  </div>
 
   <!-- TITLE -->
-  <h1 class="text-4xl md:text-5xl font-extrabold 
+  <h1 class="text-center text-4xl md:text-5xl font-extrabold 
     bg-gradient-to-r from-purple-400 via-pink-300 to-blue-300 
     bg-[length:200%_200%] bg-clip-text text-transparent 
     animate-gradientMove animate-float">
@@ -22,47 +38,29 @@
 
   </h1>
 
-  <!-- 🔥 BAR UCAPAN + BUTTON -->
-  <div class="max-w-6xl mx-auto flex justify-between items-center px-4 mt-4">
-
-    <!-- LEFT -->
-    <div id="greetingHeader" 
-         class="text-white text-sm md:text-base font-semibold">
-    </div>
-
-    <!-- RIGHT -->
-    <button onclick="tukarUser()" 
-      class="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-lg shadow font-semibold">
-      🔄 Tukar Pengguna
-    </button>
-
-  </div>
-
-</div>
-
   <!-- SUBTITLE -->
-  <p class="mt-3 text-lg text-white/90 animate-subFloat drop-shadow-md">
+  <p class="mt-3 text-lg text-white/90 text-center animate-subFloat drop-shadow-md">
     Smart Student Wellness System
   </p>
 
-  <!-- TAGLINE TAMBAHAN (LETak SINI) -->
-  <p class="text-xs text-white/70 mt-2">
+  <!-- TAGLINE -->
+  <p class="text-xs text-white/70 mt-2 text-center">
     Digital Guidance & Counseling Platform
   </p>
 
   <!-- TARIKH & SLOGAN -->
-<div class="mt-6 text-sm text-white/80">
+  <div class="mt-6 text-sm text-white/80 text-center">
 
-  <div class="flex items-center justify-center gap-2">
-    <span>📅</span>
-    <span id="tarikhHari"></span> | 🕒 <span id="masa"></span>
+    <div class="flex items-center justify-center gap-2">
+      <span>📅</span>
+      <span id="tarikhHari"></span> | 🕒 <span id="masa"></span>
+    </div>
+
+    <p id="sloganHari" 
+       class="italic text-lg md:text-xl text-purple-200 mt-3 tracking-wide drop-shadow-lg">
+    </p>
+
   </div>
-
-  <p id="sloganHari" 
-   class="italic text-lg md:text-xl text-purple-200 mt-3 tracking-wide drop-shadow-lg">
-</p>
-
-</div>
 
 </div>
 
@@ -2027,7 +2025,6 @@ function showGreeting(){
 }
 
 showGreeting();
-
 </script>
 
 </body>

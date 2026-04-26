@@ -795,17 +795,6 @@ setInterval(animateSlogan, 8000);
       💾 Simpan
     </button>
 
-    <!-- RESULT -->
-    <p id="trackerMsg" class="hidden text-center text-green-600 mt-3">
-      ✅ Data disimpan
-    </p>
-
-    <!-- HISTORY -->
-    <div class="mt-6">
-      <h3 class="font-semibold text-gray-700 mb-2">Sejarah:</h3>
-      <div id="history" class="text-sm text-gray-600 space-y-1"></div>
-    </div>
-
   </div>
 </div>
 
@@ -1355,7 +1344,16 @@ function saveMood(){
   const kelas = sessionStorage.getItem("kelas");
   const organisasi = sessionStorage.getItem("organisasi");
 
-  document.getElementById("trackerMsg").classList.remove("hidden");
+  // 👉 SHOW MESSAGE
+  const msg = document.createElement("div");
+  msg.innerHTML = "✅ Emosi berjaya direkodkan";
+  msg.className = "text-green-600 text-center mt-3 font-semibold";
+
+  document.getElementById("note").after(msg);
+
+  // auto hilang
+  setTimeout(() => msg.remove(), 3000);
+
 }
 
 /* OPEN DETAIL KOMEN */

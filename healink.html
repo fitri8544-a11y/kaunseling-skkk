@@ -1977,47 +1977,42 @@ function closeTracker(){
 function showGreeting(){
 
   const nama = sessionStorage.getItem("nama") || "Pengguna";
-  const jenis = sessionStorage.getItem("jenis") || "pelawat"; // guru / pelawat
-  const jantina = sessionStorage.getItem("jantina") || "L"; // L / P
-
   const jam = new Date().getHours();
+  const hari = new Date().getDay(); // 0=Ahad, 1=Isnin...
 
   let ucapan = "";
-  let gelaran = "";
-  let avatar = "";
+  let icon = "👋";
 
   // 🌤️ UCAPAN MASA
   if(jam >= 5 && jam < 12){
     ucapan = "Selamat Pagi";
+    icon = "🌤️";
   }
   else if(jam >= 12 && jam < 18){
     ucapan = "Selamat Petang";
+    icon = "☀️";
   }
   else{
     ucapan = "Selamat Malam";
+    icon = "🌙";
   }
 
-  // 🎯 GELARAN + AVATAR
-  if(jenis === "guru"){
+  // 🔥 MESEJ IKUT HARI
+  const mesejList = [
+    "Rehatkan minda, jaga emosi anda 💙",          // Ahad
+    "Mulakan minggu dengan semangat baru 💪",      // Isnin
+    "Teruskan usaha, anda di landasan betul 🚀",   // Selasa
+    "Sedikit lagi, kejayaan menanti ✨",           // Rabu
+    "Fokus pada matlamat anda 🎯",                // Khamis
+    "Hebat! Anda berjaya sampai ke sini 🔥",      // Jumaat
+    "Luangkan masa untuk diri sendiri 😊"         // Sabtu
+  ];
 
-    gelaran = "Cikgu";
-
-    avatar = (jantina === "P") ? "👩‍🏫" : "👨‍🏫";
-
-  } else {
-
-    if(jantina === "P"){
-      gelaran = "Puan";
-      avatar = "👩";
-    } else {
-      gelaran = "Encik";
-      avatar = "👨";
-    }
-
-  }
+  const mesej = mesejList[hari];
 
   const html = `
-    ${avatar} 🌙 ${ucapan}, ${gelaran} ${nama}
+    ${icon} ${ucapan}, <b>${nama}</b><br>
+    <span class="text-xs text-white/70">${mesej}</span>
   `;
 
   document.getElementById("greetingHeader").innerHTML = html;

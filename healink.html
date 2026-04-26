@@ -23,6 +23,20 @@
     HEALINK
 
   </h1>
+
+  <!-- 🔥 LETAK DI SINI -->
+<div class="flex justify-between items-center px-6 mt-4">
+
+  <!-- LEFT -->
+  <div id="greetingHeader" class="text-white font-semibold text-sm"></div>
+
+  <!-- RIGHT -->
+  <button onclick="tukarUser()" 
+    class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg shadow">
+    🔄 Tukar Pengguna
+  </button>
+
+</div>
   
   <!-- SUBTITLE -->
   <p class="mt-3 text-lg text-white/90 animate-subFloat drop-shadow-md">
@@ -356,12 +370,6 @@ body::after{
 
 </div>
 
-<!-- 🔄 TUKAR PENGGUNA -->
-<button onclick="tukarUser()" 
-class="fixed top-5 right-5 bg-yellow-500 hover:bg-yellow-600 
-text-white px-4 py-2 rounded-lg shadow-lg z-[9999]">
-🔄 Tukar Pengguna
-</button>
 
 <!-- MAIN DASHBOARD -->
 <div class="max-w-6xl mx-auto mt-10 grid md:grid-cols-4 gap-6 px-6">
@@ -587,11 +595,7 @@ animateSlogan();
 setInterval(animateSlogan, 8000);
 </script>
 
-<!-- ✅ GREETING LETAK SINI -->
-    <div id="greetingBox" 
-         class="text-center text-base font-semibold text-gray-700 mb-4">
-    </div>
-    
+
 <!-- ================= MODAL PERMAINAN ================= -->
 <div id="gameModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur flex items-center justify-center z-50">
 
@@ -611,6 +615,11 @@ setInterval(animateSlogan, 8000);
       <p class="text-sm text-gray-500 mt-1">
         Aktiviti Interaktif Kesejahteraan Mental
       </p>
+    </div>
+
+    <!-- ✅ GREETING LETAK SINI -->
+    <div id="greetingBox" 
+         class="text-center text-base font-semibold text-gray-700 mb-4">
     </div>
 
     <!-- TAB -->

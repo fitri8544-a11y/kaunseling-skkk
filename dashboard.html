@@ -1105,33 +1105,51 @@ function toggleSection(id){
   }
 }
 
+type="module"
+
+import { getFirestore, collection, onSnapshot } 
+from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+import { initializeApp } 
+from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+
+// CONFIG CIKGU
+const firebaseConfig = {
+  // isi config cikgu
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
+// ================= ALERT FUNCTION =================
 function triggerAlert() {
   const box = document.getElementById("alertMurid");
   const sound = document.getElementById("alertSound");
 
-  // BLINK
   box.classList.add("alert-blink");
 
-  // SOUND
   sound.currentTime = 0;
   sound.play().catch(()=>{});
 
-  // STOP selepas 6 saat
   setTimeout(() => {
     box.classList.remove("alert-blink");
   }, 6000);
 }
 
+
+// ================= REALTIME LISTENER =================
 let firstLoad = true;
 
 onSnapshot(collection(db, "aktivitiPelajar"), (snapshot) => {
 
   if (!firstLoad) {
-    triggerAlert(); // 🚨 trigger sini
+    triggerAlert();
   }
 
   firstLoad = false;
 });
+
 </script>
 
 <!-- LETAK SEBELUM </body> -->

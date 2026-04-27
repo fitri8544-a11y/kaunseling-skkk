@@ -9,6 +9,9 @@
 
 <body class="bg-gradient-to-br from-[#1e1b4b] via-purple-700 to-blue-600 min-h-screen text-white">
 
+<!-- ================= AI PARTICLES ================= -->
+<div id="particles"></div>
+
 <!-- ================= HEADER HEALINK ================= -->
 <div class="w-full mt-6 px-6">
 
@@ -318,6 +321,127 @@
   background: linear-gradient(to right, #7c3aed, #3b82f6) !important;
   color: white !important;
   font-weight: 600;
+}
+
+/* ============ ANALISIS STATUS EMOSI ============== */
+.check-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  background: #f3f4f6;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.check-card:hover {
+  transform: scale(1.02);
+  background: #e5e7eb;
+}
+
+.check-active {
+  background: linear-gradient(to right, #7c3aed, #3b82f6);
+  color: white;
+  font-weight: 600;
+}
+
+/* =============== BACKGROUND =============== */
+body {
+  background: linear-gradient(135deg, #2e1065, #6d28d9, #9333ea);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+
+  /* animation */
+  background-size: 200% 200%;
+  animation: gradientMove 10s ease infinite;
+}
+
+/* glow effect kiri atas */
+body::before {
+  content: "";
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(139,92,246,0.4), transparent);
+  top: -100px;
+  left: -100px;
+  filter: blur(120px);
+  z-index: 0;
+}
+
+/* glow effect kanan bawah */
+body::after {
+  content: "";
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(59,130,246,0.4), transparent);
+  bottom: -100px;
+  right: -100px;
+  filter: blur(120px);
+  z-index: 0;
+}
+
+/* animation */
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.modal-box {
+  position: relative;
+  z-index: 10;
+}
+
+/* =============== PARTICLES =============== */
+#particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: rgba(255,255,255,0.6);
+  border-radius: 50%;
+  animation: floatParticle linear infinite;
+}
+
+@keyframes floatParticle {
+  0% {
+    transform: translateY(0px);
+    opacity: 0;
+  }
+  50% { opacity: 1; }
+  100% {
+    transform: translateY(-800px);
+    opacity: 0;
+  }
+}
+
+/* floating light besar */
+.light {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(255,255,255,0.15), transparent);
+  border-radius: 50%;
+  animation: floatLight 20s linear infinite;
+}
+
+@keyframes floatLight {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-1000px); }
 }
 </style>
 
@@ -805,48 +929,54 @@ setInterval(animateSlogan, 8000);
     </p>
 
     <!-- GRID -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+    <<div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
 
       <!-- STRESS -->
       <div class="p-4 rounded-2xl bg-red-50 border border-red-200">
         <h3 class="text-red-600 font-bold mb-3 text-center">😰 Stress</h3>
 
-        <div class="check-card" onclick="toggleCheck(this,'stress')">
+        <div class="check-card" onclick="toggleCheck(this,'stress')" data-type="stress">
         <span>🔥</span>
-        <span class="check-text">Mudah marah</span>
-      </div>
-      <div class="check-card" onclick="toggleCheck(this,'stress')">
-        <span>😴</span>
-        <span class="check-text">Sukar tidur</span>
-      </div>
-      <div class="check-card" onclick="toggleCheck(this,'stress')">
-        <span>😓</span>
-        <span class="check-text">Letih</span>
-      </div>
-      <div class="check-card" onclick="toggleCheck(this,'stress')">
-        <span>🎯</span>
-        <span class="check-text">Sukar fokus</span>
-      </div>
-      
+          <span class="check-text">Mudah marah</span>
+        </div>
+
+        <div class="check-card" onclick="toggleCheck(this,'stress')" data-type="stress">
+          <span>😴</span>
+          <span class="check-text">Sukar tidur</span>
+        </div>
+
+        <div class="check-card" onclick="toggleCheck(this,'stress')" data-type="stress">
+          <span>😓</span>
+          <span class="check-text">Letih</span>
+        </div>
+
+        <div class="check-card" onclick="toggleCheck(this,'stress')" data-type="stress">
+          <span>🎯</span>
+          <span class="check-text">Sukar fokus</span>
+        </div>
+
       </div>
 
       <!-- ANXIETY -->
       <div class="p-4 rounded-2xl bg-yellow-50 border border-yellow-200">
         <h3 class="text-yellow-600 font-bold mb-3 text-center">😨 Anxiety</h3>
 
-        <div class="check-card" onclick="toggleCheck(this,'anxiety')">
+        <div class="check-card" onclick="toggleCheck(this,'anxiety')" data-type="anxiety">
           <span>💓</span>
           <span class="check-text">Jantung berdebar</span>
         </div>
-        <div class="check-card" onclick="toggleCheck(this,'anxiety')">
+
+        <div class="check-card" onclick="toggleCheck(this,'anxiety')" data-type="anxiety">
           <span>😟</span>
           <span class="check-text">Risau berlebihan</span>
-        </div>
-        <div class="check-card" onclick="toggleCheck(this,'anxiety')">
+      </div>
+
+        <div class="check-card" onclick="toggleCheck(this,'anxiety')" data-type="anxiety">
           <span>💦</span>
           <span class="check-text">Berpeluh</span>
-        </div>
-        <div class="check-card" onclick="toggleCheck(this,'anxiety')">
+      </div>
+
+        <div class="check-card" onclick="toggleCheck(this,'anxiety')" data-type="anxiety">
           <span>😵</span>
           <span class="check-text">Gelisah</span>
         </div>
@@ -857,19 +987,22 @@ setInterval(animateSlogan, 8000);
       <div class="p-4 rounded-2xl bg-blue-50 border border-blue-200">
         <h3 class="text-blue-600 font-bold mb-3 text-center">😔 Depression</h3>
 
-        <div class="check-card" onclick="toggleCheck(this,'depression')">
+        <div class="check-card" onclick="toggleCheck(this,'depression')" data-type="depression">
           <span>💔</span>
           <span class="check-text">Hilang Minat</span>
         </div>
-        <div class="check-card" onclick="toggleCheck(this,'depression')">
+
+        <div class="check-card" onclick="toggleCheck(this,'depression')" data-type="depression">
           <span>😢</span>
           <span class="check-text">Sedih lama</span>
         </div>
-        <div class="check-card" onclick="toggleCheck(this,'depression')">
+
+        <div class="check-card" onclick="toggleCheck(this,'depression')" data-type="depression">
           <span>⚡</span>
           <span class="check-text">Tiada motivasi</span>
         </div>
-        <div class="check-card" onclick="toggleCheck(this,'depression')">
+
+        <div class="check-card" onclick="toggleCheck(this,'depression')" data-type="depression">
           <span>❌</span>
           <span class="check-text">Rasa tidak berharga</span>
         </div>
@@ -886,7 +1019,9 @@ setInterval(animateSlogan, 8000);
 
     <!-- RESULT -->
     <div id="resultBox" 
-      class="hidden mt-6 p-5 rounded-2xl text-center shadow-lg bg-gradient-to-r from-purple-100 to-blue-100">
+      class="hidden mt-6 p-5 rounded-2xl shadow-lg 
+         bg-gradient-to-r from-purple-600 to-blue-500 
+         text-white text-center flex flex-col items-center justify-center gap-2">
     </div>
 
   </div>
@@ -1472,55 +1607,74 @@ function loadHistory(){
 }
 
 /* =========================================
-   📊 STATUS ANALYZER
+   📊 STATUS ANALYZER (FINAL CLEAN)
 ========================================= */
 
-let stress=0, anxiety=0, depression=0;
-
 function openStatus(){
-  closeAllModals(); // 🔥 WAJIB TAMBAH
+  closeAllModals();
   document.getElementById("statusModal").classList.remove("hidden");
+
+  // reset pilihan bila buka
+  document.querySelectorAll(".check-active").forEach(el=>{
+    el.classList.remove("check-active");
+  });
 }
 
 function toggleCheck(el,type){
-
   el.classList.toggle("check-active");
-
-  if(type==="stress"){
-    stress += el.classList.contains("check-active") ? 1 : -1;
-  }
-
-  if(type==="anxiety"){
-    anxiety += el.classList.contains("check-active") ? 1 : -1;
-  }
-
-  if(type==="depression"){
-    depression += el.classList.contains("check-active") ? 1 : -1;
-  }
 }
 
 function analyzeStatus(){
 
+  let stress = 0;
+  let anxiety = 0;
+  let depression = 0;
+
+  document.querySelectorAll(".check-active").forEach(el=>{
+
+    const type = el.getAttribute("data-type");
+
+    if(type === "stress") stress++;
+    if(type === "anxiety") anxiety++;
+    if(type === "depression") depression++;
+
+  });
+
   let result = "";
 
-  if(stress >= 2){
-    result += "😰 Anda menunjukkan tanda tekanan (stress)<br><br>";
-  }
+// STRESS
+if(stress >= 2){
+  result += "🔴 <b>Stress Tinggi</b><br>";
+} 
+else if(stress === 1){
+  result += "🟡 Stress Ringan<br>";
+}
 
-  if(anxiety >= 2){
-    result += "😨 Anda mengalami kebimbangan<br><br>";
-  }
+// ANXIETY
+if(anxiety >= 2){
+  result += "🟠 <b>Anxiety Tinggi</b><br>";
+}
+else if(anxiety === 1){
+  result += "🟡 Anxiety Ringan<br>";
+}
 
-  if(depression >= 2){
-    result += "😔 Anda mungkin mengalami kemurungan ringan<br><br>";
-  }
+// DEPRESSION
+if(depression >= 2){
+  result += "🔵 <b>Depression Tinggi</b><br>";
+}
+else if(depression === 1){
+  result += "🔵 Depression Ringan<br>";
+}
 
-  if(result === ""){
-    result = "😊 Emosi anda stabil hari ini";
-  }
+// STABIL
+if(result === ""){
+  result = "😊 <b>Emosi anda stabil hari ini</b>";
+}
 
-  document.getElementById("resultBox").innerHTML = result;
-  document.getElementById("resultBox").classList.remove("hidden");
+const box = document.getElementById("resultBox");
+
+box.innerHTML = result;
+box.classList.remove("hidden");
 }
 
 /* =========================================
@@ -2145,6 +2299,36 @@ function showGreeting(){
 }
 
 showGreeting();
+</script>
+
+<script>
+const particlesContainer = document.getElementById("particles");
+
+// small particles
+for(let i=0; i<30; i++){
+  const p = document.createElement("div");
+  p.classList.add("particle");
+
+  p.style.left = Math.random()*100 + "%";
+  p.style.top = Math.random()*100 + "%";
+
+  p.style.animationDuration = (6 + Math.random()*6) + "s";
+
+  particlesContainer.appendChild(p);
+}
+
+// floating light
+for(let i=0; i<5; i++){
+  const l = document.createElement("div");
+  l.classList.add("light");
+
+  l.style.left = Math.random()*100 + "%";
+  l.style.top = Math.random()*100 + "%";
+
+  l.style.animationDuration = (15 + Math.random()*10) + "s";
+
+  particlesContainer.appendChild(l);
+}
 </script>
 
 </body>

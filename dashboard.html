@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <title>Dashboard Aktiviti Pelajar</title>
-<link rel="icon" type="image/png" href="assets/logo-sekolah.png">
+
 <script src="https://cdn.tailwindcss.com"></script>
 
 <!-- Chart.js -->
@@ -222,6 +222,17 @@
   </div>
 
 </div>
+
+
+<!-- ================= ALERT + LIVE ================= -->
+<div class="grid md:grid-cols-2 gap-6 mt-6 items-stretch">
+
+  <!-- ALERT -->
+  <div class="section-box flex flex-col h-[420px]">
+
+    <div class="section-title text-red-400">
+      ⚠️ Murid Perlu Perhatian
+    </div>
 
     <!-- 🔥 SCROLL DALAM -->
     <div id="alertList"
@@ -1090,7 +1101,6 @@ function toggleSection(id){
     arrow.innerText = "▼";
   }
 }
-
 </script>
 
 <!-- LETAK SEBELUM </body> -->

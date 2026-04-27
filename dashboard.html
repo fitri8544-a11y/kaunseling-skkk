@@ -612,6 +612,11 @@ db.collection("pengunjung").onSnapshot(snapshot => {
   let guru = 0;
   let pelawat = 0;
 
+  // kira jenis pengguna
+if(d.jenis === "Murid") murid++;
+else if(d.jenis === "Guru") guru++;
+else pelawat++;
+
   snapshot.forEach(doc => {
 
   const data = doc.data();

@@ -223,18 +223,6 @@
 
 </div>
 
-
-<!-- ================= ALERT + LIVE ================= -->
-<div class="grid md:grid-cols-2 gap-6 mt-6 items-stretch">
-
-  <!-- ALERT -->
-  <div class="section-box flex flex-col h-[420px]">
-
-    <div class="section-title text-red-400">
-      ⚠️ Murid Perlu Perhatian
-    </div>
-    
-
     <!-- 🔥 SCROLL DALAM -->
     <div id="alertList"
          class="space-y-3 mt-4 overflow-y-auto flex-1 pr-2">
@@ -612,16 +600,9 @@ db.collection("pengunjung").onSnapshot(snapshot => {
   let guru = 0;
   let pelawat = 0;
 
-  // kira jenis pengguna
-if(d.jenis === "Murid") murid++;
-else if(d.jenis === "Guru") guru++;
-else pelawat++;
-
   snapshot.forEach(doc => {
 
-  const data = doc.data();
-  console.log("DATA:", data); // 👈 TAMBAH INI
-
+  const d = doc.data();  // ✅ guna d (konsisten)
 
   // kira jenis pengguna
   if(d.jenis === "Murid") murid++;
@@ -1121,69 +1102,6 @@ function toggleSection(id){
     arrow.innerText = "▼";
   }
 }
-
-function loadMuridPerhatian(){
-
-  firebase.firestore().collection("aktivitiPelajar")
-    .orderBy("masa","desc")
-    .limit(20)
-    .onSnapshot(snapshot => {
-
-      let html = "";
-
-      snapshot.forEach(doc => {
-
-        const data = doc.data();
-
-        if(data.tahap === "RENDAH" || !data.tahap) return;
-
-        // 🎯 WARNA IKUT TAHAP
-        let warna = "bg-green-500";
-        let label = "RENDAH";
-
-        if(data.tahap === "TINGGI"){
-          warna = "bg-red-500";
-          label = "TINGGI";
-        }
-        else if(data.tahap === "SEDERHANA"){
-          warna = "bg-yellow-400 text-black";
-          label = "SEDERHANA";
-        }
-
-        html += `
-          <div class="bg-white rounded-xl p-4 shadow border-l-4 ${warna}">
-
-            <div class="flex justify-between items-center mb-2">
-              <h3 class="font-bold text-gray-800">
-                ${data.nama || "-"}
-              </h3>
-              <span class="text-xs font-semibold px-2 py-1 rounded ${warna}">
-                ${label}
-              </span>
-            </div>
-
-            <p class="text-sm text-gray-600">
-              😟 ${data.mood || "-"}
-            </p>
-
-            <p class="text-xs text-gray-400 mt-2">
-              ${data.kelas || "-"} | ${data.organisasi || "-"}
-            </p>
-
-          </div>
-        `;
-      });
-
-      document.getElementById("alertList").innerHTML = html || `
-        <div class="text-white/70">Tiada murid perlu perhatian</div>
-      `;
-
-    });
-
-}
-
-// 🔥 CALL DI DALAM SCRIPT
-loadMuridPerhatian();
 
 </script>
 

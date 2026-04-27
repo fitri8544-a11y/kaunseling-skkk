@@ -1423,7 +1423,6 @@ function saveMood(){
     closeTracker();
   }, 1200);
 
-
 /* OPEN DETAIL KOMEN */
 function openDetail(nama, kelas, module, komen){
 
@@ -1452,19 +1451,24 @@ function openDetail(nama, kelas, module, komen){
 /* HISTORY */
 function loadHistory(){
 
-  const list = document.getElementById("history");
+  const el = document.getElementById("historyList");
+
+  if(!el) return; // 🔥 INI PALING PENTING
+
   const data = JSON.parse(localStorage.getItem("emotionData")) || [];
 
-  list.innerHTML = "";
+  let html = "";
 
-  data.slice(-5).reverse().forEach(d => {
-    list.innerHTML += `
-      <div class="bg-gray-100 p-2 rounded flex justify-between">
-        <span>${d.mood} ${d.note || ''}</span>
-        <span class="text-xs text-gray-500">${d.time}</span>
+  data.slice(-5).reverse().forEach(item=>{
+    html += `
+      <div class="text-sm text-gray-600 flex justify-between">
+        <span>${item.mood}</span>
+        <span>${item.time}</span>
       </div>
     `;
   });
+
+  el.innerHTML = html;
 }
 
 /* =========================================
@@ -1520,28 +1524,10 @@ function analyzeStatus(){
 }
 
 /* =========================================
-   🧘 TEKNIK INTERVENSI (FINAL)
+   🧘 TEKNIK INTERVENSI (FINAL CLEAN)
 ========================================= */
 
-function openIntervensi(){
-  closeAllModals(); // 🔥 tambah
-  document.getElementById("intervensiModal").classList.remove("hidden");
-}
-
-
-/* ================= SUARA ================= */
-function speak(text){
-  speechSynthesis.cancel(); // 🔥 elak suara bertindih
-  const msg = new SpeechSynthesisUtterance(text);
-  msg.lang = "ms-MY";
-  msg.rate = 0.9; // lebih tenang & sesuai murid
-  speechSynthesis.speak(msg);
-}
-
-/* =========================================
-   🤖 THERAPIST AI ENGINE
-========================================= */
-
+/* ========= GLOBAL ========= */
 let therapyInterval;
 let countdownInterval;
 let isRunning = false;
@@ -1555,21 +1541,22 @@ const steps = [
 let stepIndex = 0;
 let seconds = 4;
 
-/* ================= START ================= */
-function startTherapy(){
-
-  if(isRunning) return;
-
-  isRunning = true;
-  runStep();
-
-  therapyInterval = setInterval(runStep, 4000);
-  startCountdown();
-
-  document.getElementById("statusText").innerText = "Latihan sedang berjalan...";
+/* ========= OPEN ========= */
+function openIntervensi(){
+  closeAllModals();
+  document.getElementById("intervensiModal").classList.remove("hidden");
 }
 
-/* ================= STEP ================= */
+/* ========= SUARA ========= */
+function speak(text){
+  speechSynthesis.cancel();
+  const msg = new SpeechSynthesisUtterance(text);
+  msg.lang = "ms-MY";
+  msg.rate = 0.9;
+  speechSynthesis.speak(msg);
+}
+
+/* ========= STEP ========= */
 function runStep(){
 
   const text = document.getElementById("breathText");
@@ -1585,7 +1572,7 @@ function runStep(){
   stepIndex = (stepIndex + 1) % steps.length;
 }
 
-/* ================= COUNTDOWN ================= */
+/* ========= COUNTDOWN ========= */
 function startCountdown(){
 
   clearInterval(countdownInterval);
@@ -1602,16 +1589,32 @@ function startCountdown(){
   },1000);
 }
 
-/* ================= PAUSE ================= */
+/* ========= START ========= */
+function startTherapy(){
+
+  if(isRunning) return;
+
+  isRunning = true;
+
+  runStep();
+  startCountdown();
+
+  therapyInterval = setInterval(runStep, 4000);
+
+  document.getElementById("statusText").innerText = "Latihan sedang berjalan...";
+}
+
+/* ========= PAUSE ========= */
 function pauseTherapy(){
   clearInterval(therapyInterval);
   clearInterval(countdownInterval);
+
   isRunning = false;
 
   document.getElementById("statusText").innerText = "Latihan dijeda";
 }
 
-/* ================= STOP ================= */
+/* ========= STOP ========= */
 function stopTherapy(){
 
   clearInterval(therapyInterval);
@@ -1620,6 +1623,7 @@ function stopTherapy(){
 
   isRunning = false;
   stepIndex = 0;
+  seconds = 4;
 
   document.getElementById("breathText").innerText = "Start";
   document.getElementById("countdown").innerText = "4";
@@ -1628,7 +1632,7 @@ function stopTherapy(){
   document.getElementById("breathCircle").style.transform = "scale(1)";
 }
 
-/* ================= MUSIC ================= */
+/* ========= MUSIC ========= */
 function toggleMusic(){
   const music = document.getElementById("bgMusic");
 
@@ -2074,6 +2078,7 @@ function selectEmoji(el){
   console.log("😊 Emoji dipilih:", window.selectedEmoji);
 }
 
+/* ========= CLOSE ========= */
 function closeIntervensi(){
   stopTherapy();
   document.getElementById("intervensiModal").classList.add("hidden");

@@ -1243,33 +1243,6 @@ for(let i=0; i<15; i++){
 }
 </script>
 
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
-<script>
-const firebaseConfig = {
-  apiKey: "AIzaSyA9R5jKqeJNvBHD-SIOuseAqyb_x909R3Q",
-  authDomain: "PROJECT_ID.firebaseapp.com",
-  projectId: "PROJECT_ID"
-};
-
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
-// tambah visitor
-const ref = db.collection("stats").doc("visitors");
-
-ref.get().then(doc => {
-  if (doc.exists) {
-    ref.update({
-      count: firebase.firestore.FieldValue.increment(1)
-    });
-  } else {
-    ref.set({ count: 1 });
-  }
-});
-</script>
-
 <script>
 const refVisitor = db.collection("stats").doc("visitors");
 

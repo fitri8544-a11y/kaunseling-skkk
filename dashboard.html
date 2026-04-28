@@ -212,20 +212,38 @@ body::after {
 
     </div>
 
-    <!-- ================= SEARCH NAMA ================= -->
-<div class="bg-white/10 p-3 rounded-xl mt-6">
+<!-- ================= ADVANCED FILTER ================= -->
+<div class="bg-white/10 p-3 rounded-xl mt-6 space-y-3">
 
-  <p class="text-xs text-gray-300 uppercase mb-2">
-    🔍 Carian Nama Murid
+  <p class="text-xs text-gray-300 uppercase">
+    🔍 Carian Murid
   </p>
 
+  <!-- NAMA -->
   <input 
     type="text" 
     id="searchNama"
-    placeholder="Contoh: Sofea"
+    placeholder="Nama..."
     class="w-full px-3 py-2 rounded bg-white/20 text-white placeholder-gray-300 outline-none">
-  
-  </div>
+
+  <!-- KELAS -->
+  <select id="filterKelas" 
+    class="w-full px-3 py-2 rounded bg-white/20 text-white outline-none">
+    <option value="">Semua Kelas</option>
+  </select>
+
+  <!-- MODUL -->
+  <select id="filterModul" 
+    class="w-full px-3 py-2 rounded bg-white/20 text-white outline-none">
+    <option value="">Semua Modul</option>
+  </select>
+
+  <!-- RESULT -->
+  <p id="resultCount" class="text-xs text-green-300">
+    0 result
+  </p>
+
+</div>
 
     <!-- ================= SEKOLAH ================= -->
     <div onclick="toggleSection('sekolahList')" 
@@ -834,9 +852,17 @@ db.collection("aktivitiPelajar")
 
   let html = "";
 
+  // ✅ TAMBAH INI
+  const kelasSet = new Set();
+  const modulSet = new Set();
+
   snapshot.forEach(doc => {
 
     const d = doc.data();
+
+    // ✅ TAMBAH INI
+    kelasSet.add(d.kelas);
+    modulSet.add(d.module);
 
     const time = d.masa?.toDate().toLocaleString('ms-MY', {
       day: '2-digit',
@@ -846,7 +872,6 @@ db.collection("aktivitiPelajar")
       minute: '2-digit'
     }) || "-";
 
-    // 🔥 ICON FIX
     let icon = "👤";
     const jenis = (d.jenis || "").toString().trim().toLowerCase();
 
@@ -855,16 +880,16 @@ db.collection("aktivitiPelajar")
     else if (jenis === "admin") icon = "🛠️";
 
     html += `
-  <div class="user-item bg-white/10 p-4 rounded-xl flex justify-between items-center 
-              hover:bg-white/20 transition duration-300"
-       data-nama="${(d.nama || '').toLowerCase()}">
+      <div class="user-item bg-white/10 p-4 rounded-xl flex justify-between items-center 
+                  hover:bg-white/20 transition duration-300"
+           data-nama="${(d.nama || '').toLowerCase()}"
+           data-kelas="${(d.kelas || '').toLowerCase()}"
+           data-modul="${(d.module || '').toLowerCase()}">
 
-        <!-- LEFT -->
         <div>
-
           <div class="flex items-center gap-2">
             <span class="text-2xl">${icon}</span>
-            <span class="font-semibold text-white">
+            <span class="nama font-semibold text-white">
               ${d.nama || "Pengguna"}
             </span>
           </div>
@@ -872,15 +897,12 @@ db.collection("aktivitiPelajar")
           <div class="text-xs text-white/70 mt-1">
             ${d.jenis || "-"} • ${d.kelas || d.organisasi || "-"}
           </div>
-
         </div>
 
-        <!-- RIGHT -->
         <div class="text-right">
           <div class="text-yellow-300 font-semibold">
             ${d.module || "-"}
           </div>
-
           <div class="text-xs text-white/60 mt-1">
             ${time}
           </div>
@@ -892,7 +914,23 @@ db.collection("aktivitiPelajar")
 
   container.innerHTML = html;
 
+  // ✅ STEP 3 (BETUL)
+  const kelasSelect = document.getElementById("filterKelas");
+  const modulSelect = document.getElementById("filterModul");
+
+  kelasSelect.innerHTML = '<option value="">Semua Kelas</option>';
+  modulSelect.innerHTML = '<option value="">Semua Modul</option>';
+
+  kelasSet.forEach(k => {
+    if(k) kelasSelect.innerHTML += `<option value="${k.toLowerCase()}">${k}</option>`;
+  });
+
+  modulSet.forEach(m => {
+    if(m) modulSelect.innerHTML += `<option value="${m.toLowerCase()}">${m}</option>`;
+  });
+
 });
+
 
 // ================= AUTO LOAD (FINAL CLEAN VERSION) =================
 window.onload = function(){
@@ -1309,6 +1347,52 @@ document.getElementById("searchNama").addEventListener("keyup", function() {
   });
 
 });
+
+function applyFilter() {
+
+  const nama = document.getElementById("searchNama").value.toLowerCase();
+  const kelas = document.getElementById("filterKelas").value;
+  const modul = document.getElementById("filterModul").value;
+
+  const items = document.querySelectorAll(".user-item");
+
+  let count = 0;
+
+  items.forEach(item => {
+
+    const n = item.dataset.nama;
+    const k = item.dataset.kelas;
+    const m = item.dataset.modul;
+
+    const matchNama = n.includes(nama);
+    const matchKelas = !kelas || k === kelas;
+    const matchModul = !modul || m === modul;
+
+    if (matchNama && matchKelas && matchModul) {
+      item.style.display = "flex";
+      count++;
+
+      // highlight nama
+      const namaEl = item.querySelector(".nama");
+      namaEl.innerHTML = nama 
+        ? namaEl.textContent.replace(new RegExp(nama, "gi"), 
+          match => `<span class="bg-yellow-400 text-black px-1 rounded">${match}</span>`)
+        : namaEl.textContent;
+
+    } else {
+      item.style.display = "none";
+    }
+
+  });
+
+  document.getElementById("resultCount").innerText = `${count} result`;
+
+}
+
+// EVENT
+document.getElementById("searchNama").addEventListener("keyup", applyFilter);
+document.getElementById("filterKelas").addEventListener("change", applyFilter);
+document.getElementById("filterModul").addEventListener("change", applyFilter);
 </script>
 
 </body>

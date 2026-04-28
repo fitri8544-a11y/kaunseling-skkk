@@ -120,19 +120,71 @@
   <!-- MOBILE MENU -->
   <div id="mobileMenu" class="hidden md:hidden bg-purple-700 px-4 pb-4 space-y-3 text-sm">
 
-    <a href="index.html" class="block">Laman Utama</a>
-    <a href="carta-organisasi.html" class="block">Carta Organisasi</a>
-    <a href="objektif.html" class="block">Visi & Misi</a>
-    <a href="takwim.html" class="block">Takwim</a>
-    <a href="pengenalan.html" class="block">Perkhidmatan</a>
-    <a href="sahsiah.html" class="block">4 Fokus</a>
-    <a href="carta-prs.html" class="block">PRS</a>
-    <a href="healink.html" class="block">HEALINK</a>
-    <a href="bantuan.html" class="block">Bantuan</a>
-    <a href="statistik.html" class="block">Statistik</a>
-    <a href="faq.html" class="block">FAQ</a>
+  <a href="index.html" class="block">Laman Utama</a>
 
+  <!-- MENGENAI -->
+  <div>
+    <button onclick="toggleMobile('m1')" 
+      class="w-full text-left flex justify-between items-center">
+      Mengenai ▼
+    </button>
+
+    <div id="m1" class="hidden pl-4 mt-2 space-y-2">
+      <a href="carta-organisasi.html" class="block">Carta Organisasi</a>
+      <a href="objektif.html" class="block">Visi & Misi</a>
+      <a href="takwim.html" class="block">Takwim</a>
+    </div>
   </div>
+
+  <!-- PERKHIDMATAN -->
+  <div>
+    <button onclick="toggleMobile('m2')" 
+      class="w-full text-left flex justify-between items-center">
+      Perkhidmatan ▼
+    </button>
+
+    <div id="m2" class="hidden pl-4 mt-2 space-y-2">
+      <a href="pengenalan.html">Pengenalan</a>
+      <a href="temujanji.html">Temujanji</a>
+    </div>
+  </div>
+
+  <!-- 4 FOKUS -->
+  <div>
+    <button onclick="toggleMobile('m3')" 
+      class="w-full text-left flex justify-between items-center">
+      4 Fokus ▼
+    </button>
+
+    <div id="m3" class="hidden pl-4 mt-2 space-y-2">
+      <a href="sahsiah.html">Sahsiah</a>
+      <a href="disiplin.html">Disiplin</a>
+      <a href="kerjaya.html">Kerjaya</a>
+      <a href="psikososial.html">Psikososial</a>
+    </div>
+  </div>
+
+  <!-- PRS -->
+  <div>
+    <button onclick="toggleMobile('m4')" 
+      class="w-full text-left flex justify-between items-center">
+      PRS ▼
+    </button>
+
+    <div id="m4" class="hidden pl-4 mt-2 space-y-2">
+      <a href="carta-prs.html">Carta PRS</a>
+      <a href="peranan-prs.html">Peranan</a>
+      <a href="aktiviti-prs.html">Aktiviti</a>
+    </div>
+  </div>
+
+  <!-- MENU BIASA -->
+  <a href="healink.html" class="block">HEALINK</a>
+  <a href="bantuan.html" class="block">Bantuan</a>
+  <a href="statistik.html" class="block">Statistik</a>
+  <a href="faq.html" class="block">FAQ</a>
+
+</div>
 
 </header>
 
@@ -354,6 +406,37 @@ SK Kuala Ketil
 </div>
 
 </footer>
+
+<script>
+function toggleDropdown(id) {
+  document.querySelectorAll('[id^="menu"]').forEach(menu => {
+    if (menu.id !== id) menu.classList.add('hidden');
+  });
+  document.getElementById(id).classList.toggle("hidden");
+}
+
+window.addEventListener("click", function(e) {
+  if (!e.target.closest(".relative")) {
+    document.querySelectorAll('[id^="menu"]').forEach(menu => {
+      menu.classList.add("hidden");
+    });
+  }
+});
+
+const btn = document.getElementById("menuBtn");
+const menu = document.getElementById("mobileMenu");
+
+btn.addEventListener("click", () => {
+  menu.classList.toggle("hidden");
+});
+</script>
+
+<script>
+function toggleMobile(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle("hidden");
+}
+</script>
 
 </body>
 </html>

@@ -15,129 +15,125 @@
 <body class="flex flex-col min-h-screen">
 
 <!-- HEADER -->
-<header class="bg-purple-500 text-white shadow w-full">
+<header class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md sticky top-0 z-50">
 
-  <div class="flex items-center justify-between px-6 py-4">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
 
-    <!-- LOGO + TAJUK -->
-    <div class="flex items-center gap-4">
-
-      <img src="assets/logo-sekolah.png" class="w-12">
-
-      <img src="assets/logo-ts25.png" class="w-12">
+    <!-- LOGO -->
+    <div class="flex items-center gap-3">
+      <img src="assets/logo-sekolah.png" class="h-10">
+      <img src="assets/logo-ts25.png" class="h-10">
 
       <div>
-        <h1 class="font-bold text-lg">Bimbingan & Kaunseling</h1>
-        <p class="text-sm">SK Kuala Ketil</p>
+        <h1 class="text-sm md:text-lg font-bold">Bimbingan & Kaunseling</h1>
+        <p class="text-xs opacity-80">SK Kuala Ketil</p>
       </div>
-
     </div>
 
-<nav class="hidden md:flex gap-6 font-semibold items-center">
+    <!-- DESKTOP MENU -->
+    <nav class="hidden md:flex gap-6 items-center text-sm font-semibold relative">
 
-<a href="index.html">Laman Utama</a>
+      <!-- LAMAN UTAMA -->
+      <a href="index.html" class="hover:text-yellow-300">Laman Utama</a>
 
-<!-- MENGENAI ANJUNG KASIH -->
-<div class="relative group">
-<button class="flex items-center gap-1">
-Mengenai Anjung Kasih ▼
-</button>
+      <!-- MENGENAI -->
+      <div class="relative group inline-block">
+        <button class="flex items-center gap-1 hover:text-yellow-300">
+          Mengenai ▼
+        </button>
 
-<div class="absolute hidden group-hover:block bg-white text-black shadow rounded w-64">
+        <div class="absolute left-0 top-full w-56 
+                    bg-white text-black rounded-xl shadow-xl 
+                    opacity-0 invisible group-hover:opacity-100 group-hover:visible 
+                    transition duration-200 z-50">
 
-<a href="carta-organisasi.html" class="block px-4 py-2 hover:bg-gray-100">
-Carta Organisasi UBK
-</a>
+          <a href="carta-organisasi.html" class="block px-4 py-2 hover:bg-gray-100">Carta Organisasi</a>
+          <a href="objektif.html" class="block px-4 py-2 hover:bg-gray-100">Visi & Misi</a>
+          <a href="takwim.html" class="block px-4 py-2 hover:bg-gray-100">Takwim</a>
+        </div>
+      </div>
 
-<a href="objektif.html" class="block px-4 py-2 hover:bg-gray-100">
-Objektif, Visi & Misi UBK
-</a>
+      <!-- PERKHIDMATAN -->
+      <div class="relative group inline-block">
+        <button class="flex items-center gap-1 hover:text-yellow-300">
+          Perkhidmatan ▼
+        </button>
 
-<a href="takwim.html" class="block px-4 py-2 hover:bg-gray-100">
-Takwim
-</a>
+        <div class="absolute left-0 top-full w-56 
+                    bg-white text-black rounded-xl shadow-xl 
+                    opacity-0 invisible group-hover:opacity-100 group-hover:visible 
+                    transition duration-200 z-50">
 
-</div>
-</div>
+          <a href="pengenalan.html" class="block px-4 py-2 hover:bg-gray-100">Pengenalan</a>
+          <a href="temujanji.html" class="block px-4 py-2 hover:bg-gray-100">Temujanji</a>
+        </div>
+      </div>
 
+      <!-- 4 FOKUS -->
+      <div class="relative group inline-block">
+        <button class="flex items-center gap-1 hover:text-yellow-300">
+          4 Fokus ▼
+        </button>
 
-<!-- PERKHIDMATAN -->
-<div class="relative group">
-<button>Perkhidmatan Kaunseling ▼</button>
+        <div class="absolute left-0 top-full w-56 
+                    bg-white text-black rounded-xl shadow-xl 
+                    opacity-0 invisible group-hover:opacity-100 group-hover:visible 
+                    transition duration-200 z-50">
 
-<div class="absolute hidden group-hover:block bg-white text-black shadow rounded w-64">
+          <a href="sahsiah.html" class="block px-4 py-2 hover:bg-gray-100">Sahsiah</a>
+          <a href="disiplin.html" class="block px-4 py-2 hover:bg-gray-100">Disiplin</a>
+          <a href="kerjaya.html" class="block px-4 py-2 hover:bg-gray-100">Kerjaya</a>
+          <a href="psikososial.html" class="block px-4 py-2 hover:bg-gray-100">Psikososial</a>
+        </div>
+      </div>
 
-<a href="pengenalan.html" class="block px-4 py-2 hover:bg-gray-100">
-Pengenalan
-</a>
+      <!-- PRS -->
+      <div class="relative group inline-block">
+        <button class="flex items-center gap-1 hover:text-yellow-300">
+          PRS ▼
+        </button>
 
-<a href="temujanji.html" class="block px-4 py-2 hover:bg-gray-100">
-Setkan Temujanji Anda
-</a>
+        <div class="absolute left-0 top-full w-56 
+                    bg-white text-black rounded-xl shadow-xl 
+                    opacity-0 invisible group-hover:opacity-100 group-hover:visible 
+                    transition duration-200 z-50">
 
-</div>
-</div>
+          <a href="carta-prs.html" class="block px-4 py-2 hover:bg-gray-100">Carta PRS</a>
+          <a href="peranan-prs.html" class="block px-4 py-2 hover:bg-gray-100">Peranan</a>
+          <a href="aktiviti-prs.html" class="block px-4 py-2 hover:bg-gray-100">Aktiviti</a>
+        </div>
+      </div>
 
+      <!-- MENU LAIN -->
+      <a href="healink.html" class="hover:text-yellow-300">🧠 HEALINK</a>
+      <a href="bantuan.html" class="hover:text-yellow-300">Bantuan</a>
+      <a href="statistik.html" class="hover:text-yellow-300">Statistik</a>
+      <a href="faq.html" class="hover:text-yellow-300">FAQ</a>
 
-<!-- 4 FOKUS -->
-<div class="relative group">
-<button>4 Fokus Perkhidmatan ▼</button>
+    </nav>
 
-<div class="absolute hidden group-hover:block bg-white text-black shadow rounded w-64">
+    <!-- MOBILE BUTTON -->
+    <button id="menuBtn" class="md:hidden text-2xl">☰</button>
 
-<a href="sahsiah.html" class="block px-4 py-2 hover:bg-gray-100">
-Sahsiah Diri Murid
-</a>
+  </div>
 
-<a href="disiplin.html" class="block px-4 py-2 hover:bg-gray-100">
-Peningkatan Disiplin Murid
-</a>
+  <!-- MOBILE MENU -->
+  <div id="mobileMenu" class="hidden md:hidden bg-purple-700 px-4 pb-4 space-y-3 text-sm">
 
-<a href="kerjaya.html" class="block px-4 py-2 hover:bg-gray-100">
-Pendidikan Kerjaya Murid
-</a>
+    <a href="index.html" class="block">Laman Utama</a>
+    <a href="carta-organisasi.html" class="block">Carta Organisasi</a>
+    <a href="objektif.html" class="block">Visi & Misi</a>
+    <a href="takwim.html" class="block">Takwim</a>
+    <a href="pengenalan.html" class="block">Perkhidmatan</a>
+    <a href="sahsiah.html" class="block">4 Fokus</a>
+    <a href="carta-prs.html" class="block">PRS</a>
+    <a href="healink.html" class="block">HEALINK</a>
+    <a href="bantuan.html" class="block">Bantuan</a>
+    <a href="statistik.html" class="block">Statistik</a>
+    <a href="faq.html" class="block">FAQ</a>
 
-<a href="psikososial.html" class="block px-4 py-2 hover:bg-gray-100">
-Psikososial & Mental
-</a>
+  </div>
 
-</div>
-</div>
-
-
-<!-- PRS -->
-<div class="relative group">
-<button>PRS ▼</button>
-
-<div class="absolute hidden group-hover:block bg-white text-black shadow rounded w-64">
-
-<a href="carta-prs.html" class="block px-4 py-2 hover:bg-gray-100">
-Carta Organisasi PRS
-</a>
-
-<a href="peranan-prs.html" class="block px-4 py-2 hover:bg-gray-100">
-Peranan PRS
-</a>
-
-<a href="aktiviti-prs.html" class="block px-4 py-2 hover:bg-gray-100">
-Aktiviti PRS
-</a>
-
-</div>
-</div>
-
-
-<a href="aktiviti.html">Aktiviti & Program</a>
-
-<a href="bantuan.html">Bantuan & Sokongan</a>
-
-<a href="statistik.html">Statistik</a>
-
-<a href="faq.html">FAQ</a>
-
-</nav>
-
-</div>
 </header>
 
 <!-- CONTENT -->

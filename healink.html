@@ -2330,6 +2330,8 @@ for(let i=0; i<5; i++){
   particlesContainer.appendChild(l);
 }
 
+import { doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
 const refHealink = doc(db, "stats", "visitors_healink");
 
 // create jika belum ada

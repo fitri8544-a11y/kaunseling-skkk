@@ -2330,21 +2330,49 @@ for(let i=0; i<5; i++){
   particlesContainer.appendChild(l);
 }
 
-import { doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+type="module">
 
+import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { 
+  getFirestore, 
+  doc, 
+  getDoc, 
+  setDoc, 
+  updateDoc, 
+  increment 
+} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+/* ================= CONFIG ================= */
+const firebaseConfig = {
+  apiKey: "AIzaSyA9R5jKqeJNvBHD-SIOuseAqyb_x909R3Q",
+  authDomain: "bimbingankaunselingskkk.firebaseapp.com",
+  databaseURL: "https://bimbingankaunselingskkk-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "bimbingankaunselingskkk",
+  storageBucket: "bimbingankaunselingskkk.firebasestorage.app",
+  messagingSenderId: "847162891153",
+  appId: "1:847162891153:web:0ff6aa5a6c7276133f1830"
+};
+
+/* ================= INIT ================= */
+const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* ================= HEALINK COUNTER ================= */
 const refHealink = doc(db, "stats", "visitors_healink");
 
 // create jika belum ada
-const snapH = await getDoc(refHealink);
-if (!snapH.exists()) {
+const snap = await getDoc(refHealink);
+if (!snap.exists()) {
   await setDoc(refHealink, { count: 0 });
 }
 
-// kira pelawat (1 device)
+// kira pelawat
 if (!localStorage.getItem("hasVisitedHealink")) {
   await updateDoc(refHealink, { count: increment(1) });
   localStorage.setItem("hasVisitedHealink", "true");
+  console.log("HEALINK +1");
 }
+
 </script>
 
 </body>

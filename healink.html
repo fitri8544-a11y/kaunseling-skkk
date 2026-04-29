@@ -2015,11 +2015,30 @@ const firebaseConfig = {
   appId: "1:847162891153:web:0ff6aa5a6c7276133f1830"
 };
 
-// INIT FIREBASE
+// 🔥 INIT DULU
 firebase.initializeApp(firebaseConfig);
 
-// GLOBAL DB
+// 🔥 DB LEPAS INIT
 const db = firebase.firestore();
+
+// 🔥 BARU BOLEH GUNA
+const refHealink = db.collection("stats").doc("visitors_healink");
+
+// create jika belum ada
+refHealink.get().then(doc => {
+  if (!doc.exists) {
+    refHealink.set({ count: 0 });
+  }
+});
+
+// kira pelawat (1 device)
+if (!localStorage.getItem("hasVisitedHealink")) {
+  refHealink.update({
+    count: firebase.firestore.FieldValue.increment(1)
+  });
+
+  localStorage.setItem("hasVisitedHealink", "true");
+}
 </script>
 
 <!-- 🔥 STEP 3: FUNCTION -->
@@ -2330,36 +2349,5 @@ for(let i=0; i<5; i++){
   particlesContainer.appendChild(l);
 }
 </script>
-
-<script type="module">
-import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
-
-/* CONFIG (SAMA UBK) */
-const firebaseConfig = {
-  apiKey: "AIzaSyA9R5jKqeJNvBHD-SIOuseAqyb_x909R3Q",
-  authDomain: "bimbingankaunselingskkk.firebaseapp.com",
-  projectId: "bimbingankaunselingskkk"
-};
-
-const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-/* HEALINK COUNTER */
-const ref = doc(db, "stats", "visitors_healink");
-
-/* CREATE JIKA TIADA */
-const snap = await getDoc(ref);
-if (!snap.exists()) {
-  await setDoc(ref, { count: 0 });
-}
-
-/* KIRA PELAWAT */
-if (!localStorage.getItem("healink_visit")) {
-  await updateDoc(ref, { count: increment(1) });
-  localStorage.setItem("healink_visit", "true");
-}
-</script>
-
 </body>
 </html>

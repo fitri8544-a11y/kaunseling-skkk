@@ -18,9 +18,22 @@
   <!-- TOP BAR -->
   <div class="flex justify-between items-center mb-4">
 
-    <!-- LEFT: UCAPAN -->
-    <div id="greetingHeader" 
-         class="text-white text-sm md:text-base font-semibold">
+    <!-- LEFT: UCAPAN + VISITOR -->
+    <div>
+      <div id="greetingHeader" 
+           class="text-white text-sm md:text-base font-semibold">
+      </div>
+
+      <!-- VISITOR HEALINK -->
+      <div class="text-xs text-pink-300 mt-1 flex items-center gap-2">
+        🧠 Pelawat: 
+        <span id="visitorHealink" class="font-bold text-white text-sm">
+          0
+        </span>
+        <span class="text-green-400 text-[10px] animate-pulse">
+          ● LIVE
+        </span>
+      </div>
     </div>
 
     <!-- RIGHT: BUTTON -->
@@ -2366,14 +2379,22 @@ window.addEventListener("load", function(){
       return refHealink.set({ count: 1 });
     }
 
-    if (!localStorage.getItem("hasVisitedHealink")) {
-      return refHealink.update({
-        count: firebase.firestore.FieldValue.increment(1)
-      });
-    }
+    // 🔥 LOGIC COUNT (SESSION BASED)
+refHealink.get().then(doc => {
 
-  }).then(() => {
-    localStorage.setItem("hasVisitedHealink", "true");
+  if (!doc.exists) {
+    return refHealink.set({ count: 1 });
+  }
+
+  if (!sessionStorage.getItem("hasVisitedHealink")) {
+    return refHealink.update({
+      count: firebase.firestore.FieldValue.increment(1)
+    });
+  }
+
+}).then(() => {
+  sessionStorage.setItem("hasVisitedHealink", "true");
+});
   });
 
 });

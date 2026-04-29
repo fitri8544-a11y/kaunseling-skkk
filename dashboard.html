@@ -212,6 +212,23 @@ body::after {
 
     </div>
 
+    <!-- HEALINK VISITOR -->
+<div class="bg-white/10 p-4 rounded-xl text-center mt-4 shadow-inner">
+
+  <p class="text-xs text-gray-300 uppercase tracking-wide">
+    🧠 Pelawat HEALINK
+  </p>
+
+  <p id="visitorHealink" class="text-4xl font-extrabold text-pink-300 mt-1">
+    0
+  </p>
+
+  <p class="text-[10px] text-green-400 mt-1 animate-pulse">
+    ● LIVE
+  </p>
+
+</div>
+
 <!-- ================= ADVANCED FILTER ================= -->
 <div class="bg-white/10 p-3 rounded-xl mt-6 space-y-3">
 
@@ -1393,6 +1410,22 @@ function applyFilter() {
 document.getElementById("searchNama").addEventListener("keyup", applyFilter);
 document.getElementById("filterKelas").addEventListener("change", applyFilter);
 document.getElementById("filterModul").addEventListener("change", applyFilter);
+</script>
+
+<script type="module">
+import { doc, onSnapshot } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+// HEALINK DISPLAY
+const refHealink = doc(db, "stats", "visitors_healink");
+
+onSnapshot(refHealink, snap => {
+  if (snap.exists()) {
+    const el = document.getElementById("visitorHealink");
+    if (el) {
+      el.textContent = snap.data().count;
+    }
+  }
+});
 </script>
 
 </body>

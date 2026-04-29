@@ -1412,17 +1412,14 @@ document.getElementById("filterKelas").addEventListener("change", applyFilter);
 document.getElementById("filterModul").addEventListener("change", applyFilter);
 </script>
 
-<script type="module">
-import { doc, onSnapshot } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+<script>
+const refHealink = db.collection("stats").doc("visitors_healink");
 
-// HEALINK DISPLAY
-const refHealink = doc(db, "stats", "visitors_healink");
-
-onSnapshot(refHealink, snap => {
-  if (snap.exists()) {
+refHealink.onSnapshot(doc => {
+  if (doc.exists) {
     const el = document.getElementById("visitorHealink");
     if (el) {
-      el.textContent = snap.data().count;
+      el.innerText = doc.data().count;
     }
   }
 });

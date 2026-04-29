@@ -2018,16 +2018,6 @@ const db = firebase.firestore();
 // 🔥 REF
 const refHealink = db.collection("stats").doc("visitors_healink");
 
-// 🔥 DISPLAY REALTIME
-refHealink.onSnapshot(doc => {
-  if (doc.exists) {
-    const el = document.getElementById("visitorHealink");
-    if (el) {
-      el.innerText = doc.data().count;
-    }
-  }
-});
-
 // 🔥 LOGIC COUNT
 refHealink.get().then(doc => {
 
@@ -2353,6 +2343,30 @@ for(let i=0; i<5; i++){
 
   particlesContainer.appendChild(l);
 }
+
+window.addEventListener("load", function(){
+
+  console.log("HEALINK COUNT");
+
+  const refHealink = db.collection("stats").doc("visitors_healink");
+
+  refHealink.get().then(doc => {
+
+    if (!doc.exists) {
+      return refHealink.set({ count: 1 });
+    }
+
+    if (!localStorage.getItem("hasVisitedHealink")) {
+      return refHealink.update({
+        count: firebase.firestore.FieldValue.increment(1)
+      });
+    }
+
+  }).then(() => {
+    localStorage.setItem("hasVisitedHealink", "true");
+  });
+
+});
 </script>
 </body>
 </html>

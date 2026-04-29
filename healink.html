@@ -929,7 +929,7 @@ setInterval(animateSlogan, 8000);
     </p>
 
     <!-- GRID -->
-    <<div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
 
       <!-- STRESS -->
       <div class="p-4 rounded-2xl bg-red-50 border border-red-200">
@@ -2009,36 +2009,41 @@ function closeMinda(e){
 const firebaseConfig = {
   apiKey: "AIzaSyA9R5jKqeJNvBHD-SIOuseAqyb_x909R3Q",
   authDomain: "bimbingankaunselingskkk.firebaseapp.com",
-  projectId: "bimbingankaunselingskkk",
-  storageBucket: "bimbingankaunselingskkk.firebasestorage.app",
-  messagingSenderId: "847162891153",
-  appId: "1:847162891153:web:0ff6aa5a6c7276133f1830"
+  projectId: "bimbingankaunselingskkk"
 };
 
-// 🔥 INIT DULU
 firebase.initializeApp(firebaseConfig);
-
-// 🔥 DB LEPAS INIT
 const db = firebase.firestore();
 
-// 🔥 BARU BOLEH GUNA
+// 🔥 REF
 const refHealink = db.collection("stats").doc("visitors_healink");
 
-// create jika belum ada
-refHealink.get().then(doc => {
-  if (!doc.exists) {
-    refHealink.set({ count: 0 });
+// 🔥 DISPLAY REALTIME
+refHealink.onSnapshot(doc => {
+  if (doc.exists) {
+    const el = document.getElementById("visitorHealink");
+    if (el) {
+      el.innerText = doc.data().count;
+    }
   }
 });
 
-// kira pelawat (1 device)
-if (!localStorage.getItem("hasVisitedHealink")) {
-  refHealink.update({
-    count: firebase.firestore.FieldValue.increment(1)
-  });
+// 🔥 LOGIC COUNT
+refHealink.get().then(doc => {
 
+  if (!doc.exists) {
+    return refHealink.set({ count: 1 });
+  }
+
+  if (!localStorage.getItem("hasVisitedHealink")) {
+    return refHealink.update({
+      count: firebase.firestore.FieldValue.increment(1)
+    });
+  }
+
+}).then(() => {
   localStorage.setItem("hasVisitedHealink", "true");
-}
+});
 </script>
 
 <!-- 🔥 STEP 3: FUNCTION -->

@@ -1302,27 +1302,23 @@ for(let i=0; i<15; i++){
 <script type="module">
 import { doc, onSnapshot } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-// ================= PORTAL VISITOR =================
+// portal
 const refVisitor = doc(db, "stats", "visitors");
 
 onSnapshot(refVisitor, snap => {
-  if (snap.exists()) {
-    const el = document.getElementById("visitorCount");
-    if (el) {
-      el.textContent = snap.data().count.toLocaleString();
-    }
+  const el = document.getElementById("visitorCount");
+  if (snap.exists() && el) {
+    el.textContent = snap.data().count;
   }
 });
 
-// ================= HEALINK VISITOR =================
+// healink
 const refHealink = doc(db, "stats", "visitors_healink");
 
 onSnapshot(refHealink, snap => {
-  if (snap.exists()) {
-    const el = document.getElementById("visitorHealink");
-    if (el) {
-      el.textContent = snap.data().count.toLocaleString();
-    }
+  const el = document.getElementById("visitorHealink");
+  if (snap.exists() && el) {
+    el.textContent = snap.data().count;
   }
 });
 </script>

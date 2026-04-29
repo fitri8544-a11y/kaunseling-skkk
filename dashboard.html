@@ -212,6 +212,23 @@ body::after {
 
     </div>
 
+    <!-- HEALINK VISITOR -->
+    <div class="bg-white/10 p-4 rounded-xl text-center mt-4 shadow-inner">
+
+      <p class="text-xs text-gray-300 uppercase tracking-wide">
+        🧠 Pelawat HEALINK
+      </p>
+
+      <p id="visitorHealink" class="text-3xl font-extrabold text-pink-300 mt-1">
+      0
+    </p>
+
+    <p class="text-[10px] text-green-400 mt-1 animate-pulse">
+    ● LIVE
+    </p>
+
+</div>
+
 <!-- ================= ADVANCED FILTER ================= -->
 <div class="bg-white/10 p-3 rounded-xl mt-6 space-y-3">
 
@@ -1282,12 +1299,30 @@ for(let i=0; i<15; i++){
 }
 </script>
 
-<script>
-const refVisitor = db.collection("stats").doc("visitors");
+<script type="module">
+import { doc, onSnapshot } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-refVisitor.onSnapshot(doc => {
-  if (doc.exists) {
-    document.getElementById("visitorCount").innerText = doc.data().count;
+// ================= PORTAL VISITOR =================
+const refVisitor = doc(db, "stats", "visitors");
+
+onSnapshot(refVisitor, snap => {
+  if (snap.exists()) {
+    const el = document.getElementById("visitorCount");
+    if (el) {
+      el.textContent = snap.data().count.toLocaleString();
+    }
+  }
+});
+
+// ================= HEALINK VISITOR =================
+const refHealink = doc(db, "stats", "visitors_healink");
+
+onSnapshot(refHealink, snap => {
+  if (snap.exists()) {
+    const el = document.getElementById("visitorHealink");
+    if (el) {
+      el.textContent = snap.data().count.toLocaleString();
+    }
   }
 });
 </script>

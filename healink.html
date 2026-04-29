@@ -2329,6 +2329,20 @@ for(let i=0; i<5; i++){
 
   particlesContainer.appendChild(l);
 }
+
+const refHealink = doc(db, "stats", "visitors_healink");
+
+// create jika belum ada
+const snapH = await getDoc(refHealink);
+if (!snapH.exists()) {
+  await setDoc(refHealink, { count: 0 });
+}
+
+// kira pelawat (1 device)
+if (!localStorage.getItem("hasVisitedHealink")) {
+  await updateDoc(refHealink, { count: increment(1) });
+  localStorage.setItem("hasVisitedHealink", "true");
+}
 </script>
 
 </body>

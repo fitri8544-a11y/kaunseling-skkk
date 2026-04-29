@@ -321,45 +321,23 @@ body::after {
     </div>
 
     <!-- ================= PENGUNJUNG ================= -->
-    <div class="bg-white/10 p-6 rounded-xl mt-6">
+    <div class="card">
+      <div class="title">👥 Analisis Pengunjung</div>
 
-  <h2 class="text-white font-bold text-lg mb-6">
-    👥 Analisis Pengunjung
-  </h2>
+      <div class="grid md:grid-cols-2 gap-6 items-center">
 
-  <div class="grid md:grid-cols-2 gap-6 items-center">
+        <div class="grid grid-cols-3 text-center">
+          <div>👨‍🎓 <br><b id="kpiMurid">0</b></div>
+          <div>👨‍🏫 <br><b id="kpiGuru">0</b></div>
+          <div>👤 <br><b id="kpiPelawat">0</b></div>
+        </div>
 
-    <!-- LEFT: KPI -->
-    <div class="flex justify-around text-center">
+        <div class="h-40">
+          <canvas id="visitorChart"></canvas>
+        </div>
 
-      <div>
-        <div class="text-2xl">🧑‍🎓</div>
-        <div id="muridCount" class="text-white text-xl font-bold">0</div>
-        <div class="text-xs text-gray-300">Murid</div>
       </div>
-
-      <div>
-        <div class="text-2xl">👨‍🏫</div>
-        <div id="guruCount" class="text-white text-xl font-bold">0</div>
-        <div class="text-xs text-gray-300">Guru</div>
-      </div>
-
-      <div>
-        <div class="text-2xl">👁️</div>
-        <div id="visitorCountSmall" class="text-white text-xl font-bold">0</div>
-        <div class="text-xs text-gray-300">Pelawat</div>
-      </div>
-
     </div>
-
-    <!-- RIGHT: CHART -->
-    <div>
-      <canvas id="healinkChart" class="w-full h-52"></canvas>
-    </div>
-
-  </div>
-
-</div>
 
 <!-- ================= KPI ================= -->
 <div class="grid md:grid-cols-4 gap-4">
@@ -1448,22 +1426,13 @@ refHealink.onSnapshot(doc => {
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <script>
 const refVisitor = db.collection("stats").doc("visitors_healink");
 const refAktiviti = db.collection("aktivitiPelajar");
 
 let chart;
-let pelawat = 0;
 
-// 🔥 visitor realtime
-refVisitor.onSnapshot(doc => {
-  if (doc.exists) {
-    pelawat = doc.data().count || 0;
-  }
-});
-
-// 🔥 aktiviti realtime
+// ambil data real-time
 refAktiviti.onSnapshot(snapshot => {
 
   let murid = 0;
@@ -1477,17 +1446,19 @@ refAktiviti.onSnapshot(snapshot => {
     if (jenis === "guru") guru++;
   });
 
-  updateChart(murid, guru, pelawat);
+  // ambil visitor
+  refVisitor.get().then(doc => {
+    const pelawat = doc.exists ? doc.data().count : 0;
+
+    updateChart(murid, guru, pelawat);
+  });
 
 });
 
 
 function updateChart(murid, guru, pelawat){
 
-  const canvas = document.getElementById("healinkChart");
-  if (!canvas) return; // 🔥 elak error
-
-  const ctx = canvas.getContext("2d");
+  const ctx = document.getElementById("healinkChart").getContext("2d");
 
   if(chart) chart.destroy();
 
@@ -1499,25 +1470,22 @@ function updateChart(murid, guru, pelawat){
         label: 'Jumlah',
         data: [murid, guru, pelawat],
         backgroundColor: [
-          '#3b82f6',
-          '#22c55e',
-          '#facc15'
+          '#3b82f6', // murid
+          '#22c55e', // guru
+          '#facc15'  // pelawat
         ],
         borderRadius: 10
       }]
     },
     options: {
-      responsive: true,
       plugins: {
-        legend: { display: false }
+        legend: {
+          display: false
+        }
       },
       scales: {
         y: {
-          beginAtZero: true,
-          ticks: { color: "#fff" }
-        },
-        x: {
-          ticks: { color: "#fff" }
+          beginAtZero: true
         }
       }
     }

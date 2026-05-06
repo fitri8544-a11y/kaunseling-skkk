@@ -10,6 +10,38 @@
 
 <script src="https://cdn.tailwindcss.com"></script>
 
+<style>
+/* Hover effect */
+.gbk-card {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.gbk-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+/* Lightbox background */
+#lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Image dalam fullscreen */
+#lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+</style>
+
 </head>
 
 <body class="bg-gray-100">
@@ -208,9 +240,9 @@ mereka dapat berkembang secara menyeluruh.
 <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
 
 <!-- GAMBAR GBK -->
-<div class="text-center">
+<div class="gbk-card" onclick="openLightbox()">
 <img src="assets/gbk.jpg"
-class="w-64 mx-auto rounded-lg shadow">
+class="w-[260px] rounded-xl shadow-lg">
 </div>
 
 <!-- UCAPAN -->
@@ -237,28 +269,6 @@ Guru Bimbingan & Kaunseling
 </p>
 
 </div>
-
-</div>
-
-<!-- PROFIL RINGKAS GBK -->
-<div class="bg-white rounded-xl shadow p-6 flex items-center gap-6 mt-10">
-
-  <img src="assets/gbk.jpg" 
-       class="w-24 h-24 object-cover rounded-full shadow">
-
-  <div>
-    <h3 class="text-lg font-bold text-blue-900">
-      Pn. Rohilah Binti Hamid
-    </h3>
-    <p class="text-gray-600 text-sm">
-      Guru Bimbingan & Kaunseling
-    </p>
-
-    <a href="profil-gbk.html"
-       class="inline-block mt-3 bg-green-600 text-white px-4 py-1 rounded-full text-sm hover:bg-green-700">
-      Lihat Profil Penuh →
-    </a>
-  </div>
 
 </div>
 
@@ -571,7 +581,20 @@ ref.get().then(doc => {
     ref.set({ count: 1 });
   }
 });
+
+function openLightbox(){
+  document.getElementById("lightbox").style.display = "flex";
+}
+
+function closeLightbox(){
+  document.getElementById("lightbox").style.display = "none";
+}
 </script>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="closeLightbox()">
+  <img src="assets/profil-gbk.png">
+</div>
 
 </body>
 </html>

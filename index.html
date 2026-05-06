@@ -241,8 +241,7 @@ mereka dapat berkembang secara menyeluruh.
 
 <!-- GAMBAR GBK -->
 <div class="gbk-card">
-  <img id="gbkImage"
-       src="assets/gbk.jpg"
+  <img src="assets/gbk.jpg"
        onclick="openLightbox(this)"
        class="w-[260px] rounded-xl shadow-lg cursor-pointer">
 </div>
@@ -585,26 +584,35 @@ ref.get().then(doc => {
 });
 
 function openLightbox(img){
+  console.log("CLICKED"); // 👉 untuk test
+
   const lightbox = document.getElementById("lightbox");
   const lightboxImg = document.getElementById("lightboxImg");
 
-  lightboxImg.src = img.src; // 🔥 ambil gambar terus
-  lightbox.classList.remove("hidden");
+  lightboxImg.src = img.src;
+  lightbox.style.display = "flex";
 }
 
 function closeLightbox(){
-  document.getElementById("lightbox").classList.add("hidden");
+  document.getElementById("lightbox").style.display = "none";
 }
+
+// klik luar gambar untuk tutup
+document.getElementById("lightbox").addEventListener("click", function(e){
+  if(e.target.id === "lightbox"){
+    closeLightbox();
+  }
+});
+
 </script>
 
 <!-- LIGHTBOX -->
-<!-- LIGHTBOX -->
-<div id="lightbox" onclick="closeLightbox()" 
-     class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center">
+<div id="lightbox"
+     style="display:none;"
+     class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center">
 
   <img id="lightboxImg"
        class="max-w-[90%] max-h-[90%] rounded-xl shadow-2xl">
-
 </div>
 
 </body>

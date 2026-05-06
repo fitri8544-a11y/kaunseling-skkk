@@ -584,8 +584,6 @@ ref.get().then(doc => {
 });
 
 function openLightbox(img){
-  console.log("CLICKED"); // 👉 untuk test
-
   const lightbox = document.getElementById("lightbox");
   const lightboxImg = document.getElementById("lightboxImg");
 
@@ -597,22 +595,29 @@ function closeLightbox(){
   document.getElementById("lightbox").style.display = "none";
 }
 
-// klik luar gambar untuk tutup
-document.getElementById("lightbox").addEventListener("click", function(e){
-  if(e.target.id === "lightbox"){
-    closeLightbox();
-  }
+// 🔥 klik background sahaja tutup
+document.getElementById("lightbox").addEventListener("click", function(){
+  closeLightbox();
 });
 
 </script>
 
 <!-- LIGHTBOX -->
 <div id="lightbox"
-     style="display:none;"
-     class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center">
+     class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center"
+     style="display:none;">
 
+  <!-- BUTTON CLOSE -->
+  <button onclick="closeLightbox()"
+          class="absolute top-6 right-6 text-white text-3xl font-bold hover:text-red-400">
+    ✕
+  </button>
+
+  <!-- IMAGE -->
   <img id="lightboxImg"
+       onclick="event.stopPropagation()"
        class="max-w-[90%] max-h-[90%] rounded-xl shadow-2xl">
+
 </div>
 
 </body>

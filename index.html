@@ -592,8 +592,11 @@ function closeLightbox(){
 </script>
 
 <!-- LIGHTBOX -->
-<div id="lightbox" onclick="closeLightbox()">
-  <img src="assets/profil-gbk.png">
+<div class="gbk-card">
+  <img id="gbkImage"
+       src="assets/gbk.jpg"
+       onclick="openLightbox(this)"
+       class="w-[260px] rounded-xl shadow-lg cursor-pointer">
 </div>
 
 </body>

@@ -355,6 +355,82 @@
     </div>
 
 
+<!-- =================================================
+     DATE, TIME & ADMIN
+================================================== -->
+
+<div
+  class="hidden xl:flex items-center gap-3
+         border-l border-[#dcece3] pl-4"
+>
+
+  <!-- DATE & TIME -->
+
+  <div class="flex flex-col items-end leading-tight">
+
+    <span
+      id="header-date"
+      class="text-[11px] font-semibold text-[#617a73]"
+    >
+      --
+    </span>
+
+    <span
+      id="header-time"
+      class="mt-1 text-sm font-bold text-[#075e4c]"
+    >
+      --:--:--
+    </span>
+
+  </div>
+
+
+  <!-- ADMIN LOGIN -->
+
+  <a
+    href="admin-login.html"
+    title="Login Admin"
+    aria-label="Login Admin"
+    class="grid h-10 w-10 place-items-center
+           rounded-xl bg-[#eff8f3]
+           text-[#075e4c]
+           transition
+           hover:bg-[#dcece3]
+           focus-ring"
+  >
+    <i
+      data-lucide="lock-keyhole"
+      class="h-4 w-4"
+    ></i>
+  </a>
+
+</div>
+
+<!-- =================================================
+     MOBILE DATE & TIME
+================================================== -->
+
+<div
+  class="ml-auto mr-3 flex flex-col items-end leading-tight xl:hidden"
+  aria-label="Tarikh dan masa semasa"
+>
+
+  <span
+    id="mobile-header-date"
+    class="text-[9px] font-semibold text-[#617a73] sm:text-[10px]"
+  >
+    --
+  </span>
+
+  <span
+    id="mobile-header-time"
+    class="mt-1 text-xs font-bold text-[#075e4c]"
+  >
+    --:--:--
+  </span>
+
+</div>
+
 
     <!-- =================================================
          MOBILE TOGGLE
@@ -363,7 +439,7 @@
     <button
       id="mobile-toggle"
       type="button"
-      class="mobile-toggle grid h-11 w-11 place-items-center rounded-xl bg-[#eff8f3] text-[#075e4c] focus-ring"
+      class="mobile-toggle grid h-11 w-11 place-items-center rounded-xl bg-[#eff8f3] text-[#075e4c] focus-ring lg:hidden"
       aria-label="Buka menu"
       aria-expanded="false"
     >
@@ -376,168 +452,330 @@
 
 
 
-  <!-- =================================================
-       MOBILE MENU
-  ================================================== -->
+<!-- =================================================
+     MOBILE MENU
+================================================== -->
+
+<div
+  id="mobile-menu"
+  class="mobile-menu bg-white px-5"
+>
 
   <div
-    id="mobile-menu"
-    class="mobile-menu bg-white px-5"
+    class="border-t border-[#dcece3] py-4
+           text-sm font-semibold text-[#31534a]"
   >
 
-    <div
-      class="border-t border-[#dcece3] py-4 text-sm font-semibold text-[#31534a]"
+    <!-- ================= LAMAN UTAMA ================= -->
+
+    <a
+      href="index.html"
+      class="block rounded-lg bg-[#eff8f3]
+             px-3 py-3 text-[#075e4c]"
     >
+      Laman Utama
+    </a>
 
 
-      <a
-        href="index.html"
-        class="block rounded-lg bg-[#eff8f3] px-3 py-3 text-[#075e4c]"
+    <!-- =================================================
+         MENGENAI
+    ================================================== -->
+
+    <div class="mt-2">
+
+      <button
+        type="button"
+        class="mobile-accordion-btn flex w-full items-center
+               justify-between rounded-lg px-3 py-3
+               text-left transition hover:bg-[#eff8f3]"
+        data-mobile-accordion="mengenai"
+        aria-expanded="false"
       >
-        Laman Utama
-      </a>
+        <span>Mengenai</span>
+
+        <i
+          data-lucide="chevron-down"
+          class="h-4 w-4 transition-transform duration-200"
+        ></i>
+      </button>
 
 
       <div
-        class="px-3 pb-1 pt-4 text-[11px] font-bold uppercase tracking-wider text-[#91a69f]"
-      >
-        Mengenai
-      </div>
-
-      <a
-        href="pengenalan.html"
-        class="block rounded-lg px-3 py-2 hover:bg-[#eff8f3]"
-      >
-        Pengenalan
-      </a>
-
-      <a
-        href="objektif.html"
-        class="block rounded-lg px-3 py-2 hover:bg-[#eff8f3]"
-      >
-        Objektif
-      </a>
-
-      <a
-        href="carta-organisasi.html"
-        class="block rounded-lg px-3 py-2 hover:bg-[#eff8f3]"
-      >
-        Carta Organisasi
-      </a>
-
-
-
-      <div
-        class="px-3 pb-1 pt-4 text-[11px] font-bold uppercase tracking-wider text-[#91a69f]"
-      >
-        Perkhidmatan
-      </div>
-
-      <a
-        href="temujanji.html"
-        class="block rounded-lg px-3 py-2 hover:bg-[#eff8f3]"
-      >
-        Temujanji Kaunseling
-      </a>
-
-      <a
-        href="takwim.html"
-        class="block rounded-lg px-3 py-2 hover:bg-[#eff8f3]"
-      >
-        Takwim
-      </a>
-
-
-
-      <div
-        class="px-3 pb-1 pt-4 text-[11px] font-bold uppercase tracking-wider text-[#91a69f]"
-      >
-        4 Fokus
-      </div>
-
-      <a
-        href="sahsiah.html"
-        class="block rounded-lg px-3 py-2 hover:bg-[#eff8f3]"
-      >
-        Sahsiah Diri
-      </a>
-
-      <a
-        href="disiplin.html"
-        class="block rounded-lg px-3 py-2 hover:bg-[#eff8f3]"
-      >
-        Disiplin Diri
-      </a>
-
-      <a
-        href="kerjaya.html"
-        class="block rounded-lg px-3 py-2 hover:bg-[#eff8f3]"
-      >
-        Pendidikan Kerjaya
-      </a>
-
-      <a
-        href="psikososial.html"
-        class="block rounded-lg px-3 py-2 hover:bg-[#eff8f3]"
-      >
-        Psikososial &amp; Kesejahteraan Mental
-      </a>
-
-
-
-      <div
-        class="px-3 pb-1 pt-4 text-[11px] font-bold uppercase tracking-wider text-[#91a69f]"
-      >
-        PRS
-      </div>
-
-      <a
-        href="carta-prs.html"
-        class="block rounded-lg px-3 py-2 hover:bg-[#eff8f3]"
-      >
-        Carta Organisasi PRS
-      </a>
-
-      <a
-        href="peranan-prs.html"
-        class="block rounded-lg px-3 py-2 hover:bg-[#eff8f3]"
-      >
-        Peranan PRS
-      </a>
-
-      <a
-        href="aktiviti-prs.html"
-        class="block rounded-lg px-3 py-2 hover:bg-[#eff8f3]"
-      >
-        Aktiviti PRS
-      </a>
-
-
-
-      <div
-        class="mt-3 border-t border-[#dcece3] pt-3"
+        id="mobile-accordion-mengenai"
+        class="mobile-accordion-content hidden
+               border-l-2 border-[#dcece3]
+               ml-3 pl-2"
       >
 
         <a
-          href="healink.html"
-          class="block rounded-lg px-3 py-3 hover:bg-[#eff8f3]"
+          href="pengenalan.html"
+          class="block rounded-lg px-3 py-2.5
+                 font-medium hover:bg-[#eff8f3]"
         >
-          HEALINK
+          Pengenalan
         </a>
+
+        <a
+          href="objektif.html"
+          class="block rounded-lg px-3 py-2.5
+                 font-medium hover:bg-[#eff8f3]"
+        >
+          Objektif
+        </a>
+
+        <a
+          href="carta-organisasi.html"
+          class="block rounded-lg px-3 py-2.5
+                 font-medium hover:bg-[#eff8f3]"
+        >
+          Carta Organisasi
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- =================================================
+         PERKHIDMATAN
+    ================================================== -->
+
+    <div>
+
+      <button
+        type="button"
+        class="mobile-accordion-btn flex w-full items-center
+               justify-between rounded-lg px-3 py-3
+               text-left transition hover:bg-[#eff8f3]"
+        data-mobile-accordion="perkhidmatan"
+        aria-expanded="false"
+      >
+        <span>Perkhidmatan</span>
+
+        <i
+          data-lucide="chevron-down"
+          class="h-4 w-4 transition-transform duration-200"
+        ></i>
+      </button>
+
+
+      <div
+        id="mobile-accordion-perkhidmatan"
+        class="mobile-accordion-content hidden
+               border-l-2 border-[#dcece3]
+               ml-3 pl-2"
+      >
 
         <a
           href="temujanji.html"
-          class="block rounded-lg px-3 py-3 hover:bg-[#eff8f3]"
+          class="block rounded-lg px-3 py-2.5
+                 font-medium hover:bg-[#eff8f3]"
         >
-          Bantuan
+          Temujanji Kaunseling
+        </a>
+
+        <a
+          href="takwim.html"
+          class="block rounded-lg px-3 py-2.5
+                 font-medium hover:bg-[#eff8f3]"
+        >
+          Takwim
         </a>
 
       </div>
 
+    </div>
+
+
+    <!-- =================================================
+         4 FOKUS
+    ================================================== -->
+
+    <div>
+
+      <button
+        type="button"
+        class="mobile-accordion-btn flex w-full items-center
+               justify-between rounded-lg px-3 py-3
+               text-left transition hover:bg-[#eff8f3]"
+        data-mobile-accordion="fokus"
+        aria-expanded="false"
+      >
+        <span>4 Fokus</span>
+
+        <i
+          data-lucide="chevron-down"
+          class="h-4 w-4 transition-transform duration-200"
+        ></i>
+      </button>
+
+
+      <div
+        id="mobile-accordion-fokus"
+        class="mobile-accordion-content hidden
+               border-l-2 border-[#dcece3]
+               ml-3 pl-2"
+      >
+
+        <a
+          href="sahsiah.html"
+          class="block rounded-lg px-3 py-2.5
+                 font-medium hover:bg-[#eff8f3]"
+        >
+          Sahsiah Diri
+        </a>
+
+        <a
+          href="disiplin.html"
+          class="block rounded-lg px-3 py-2.5
+                 font-medium hover:bg-[#eff8f3]"
+        >
+          Disiplin Diri
+        </a>
+
+        <a
+          href="kerjaya.html"
+          class="block rounded-lg px-3 py-2.5
+                 font-medium hover:bg-[#eff8f3]"
+        >
+          Pendidikan Kerjaya
+        </a>
+
+        <a
+          href="psikososial.html"
+          class="block rounded-lg px-3 py-2.5
+                 font-medium hover:bg-[#eff8f3]"
+        >
+          Psikososial &amp; Kesejahteraan Mental
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- =================================================
+         PRS
+    ================================================== -->
+
+    <div>
+
+      <button
+        type="button"
+        class="mobile-accordion-btn flex w-full items-center
+               justify-between rounded-lg px-3 py-3
+               text-left transition hover:bg-[#eff8f3]"
+        data-mobile-accordion="prs"
+        aria-expanded="false"
+      >
+        <span>PRS</span>
+
+        <i
+          data-lucide="chevron-down"
+          class="h-4 w-4 transition-transform duration-200"
+        ></i>
+      </button>
+
+
+      <div
+        id="mobile-accordion-prs"
+        class="mobile-accordion-content hidden
+               border-l-2 border-[#dcece3]
+               ml-3 pl-2"
+      >
+
+        <a
+          href="carta-prs.html"
+          class="block rounded-lg px-3 py-2.5
+                 font-medium hover:bg-[#eff8f3]"
+        >
+          Carta Organisasi PRS
+        </a>
+
+        <a
+          href="peranan-prs.html"
+          class="block rounded-lg px-3 py-2.5
+                 font-medium hover:bg-[#eff8f3]"
+        >
+          Peranan PRS
+        </a>
+
+        <a
+          href="aktiviti-prs.html"
+          class="block rounded-lg px-3 py-2.5
+                 font-medium hover:bg-[#eff8f3]"
+        >
+          Aktiviti PRS
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- =================================================
+         MENU UTAMA TAMBAHAN
+    ================================================== -->
+
+    <div
+      class="mt-3 border-t border-[#dcece3] pt-3"
+    >
+
+      <!-- HEALINK -->
+
+      <a
+        href="healink.html"
+        class="flex items-center gap-3 rounded-lg
+               px-3 py-3 transition hover:bg-[#eff8f3]"
+      >
+        <i
+          data-lucide="heart-pulse"
+          class="h-4 w-4 text-[#075e4c]"
+        ></i>
+
+        <span>HEALINK</span>
+      </a>
+
+
+      <!-- BANTUAN -->
+
+      <a
+        href="temujanji.html"
+        class="flex items-center gap-3 rounded-lg
+               px-3 py-3 transition hover:bg-[#eff8f3]"
+      >
+        <i
+          data-lucide="life-buoy"
+          class="h-4 w-4 text-[#075e4c]"
+        ></i>
+
+        <span>Bantuan</span>
+      </a>
+
+
+      <!-- LOGIN ADMIN -->
+
+      <a
+        href="admin-login.html"
+        class="mt-2 flex items-center gap-3
+               rounded-xl bg-[#eff8f3]
+               px-3 py-3
+               font-bold text-[#075e4c]
+               transition hover:bg-[#dcece3]"
+      >
+        <i
+          data-lucide="lock-keyhole"
+          class="h-4 w-4"
+        ></i>
+
+        <span>Login Admin</span>
+      </a>
 
     </div>
 
   </div>
+
+</div>
 
 </header>
 

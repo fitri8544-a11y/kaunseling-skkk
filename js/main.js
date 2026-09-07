@@ -901,3 +901,229 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
+
+/* =========================================================
+   HEADER DATE & TIME
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  // ================= DESKTOP =================
+
+  const desktopDate =
+    document.getElementById("header-date");
+
+  const desktopTime =
+    document.getElementById("header-time");
+
+
+  // ================= MOBILE =================
+
+  const mobileDate =
+    document.getElementById("mobile-header-date");
+
+  const mobileTime =
+    document.getElementById("mobile-header-time");
+
+
+  // ================= UPDATE DATE & TIME =================
+
+  function updateDateTime() {
+
+    const now = new Date();
+
+
+    // TARIKH MALAYSIA
+
+    const formattedDate =
+      new Intl.DateTimeFormat("ms-MY", {
+        timeZone: "Asia/Kuala_Lumpur",
+        weekday: "long",
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+      }).format(now);
+
+
+    // MASA MALAYSIA
+
+    const formattedTime =
+      new Intl.DateTimeFormat("ms-MY", {
+        timeZone: "Asia/Kuala_Lumpur",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false
+      }).format(now);
+
+
+    // ================= DESKTOP =================
+
+    if (desktopDate) {
+      desktopDate.textContent = formattedDate;
+    }
+
+    if (desktopTime) {
+      desktopTime.textContent = formattedTime;
+    }
+
+
+    // ================= MOBILE =================
+
+    if (mobileDate) {
+      mobileDate.textContent = formattedDate;
+    }
+
+    if (mobileTime) {
+      mobileTime.textContent = formattedTime;
+    }
+
+  }
+
+
+  // PAPARKAN TERUS
+
+  updateDateTime();
+
+
+  // KEMASKINI SETIAP 1 SAAT
+
+  setInterval(updateDateTime, 1000);
+
+});
+
+/* =========================================================
+   MOBILE MENU ACCORDION
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const accordionButtons =
+    document.querySelectorAll(".mobile-accordion-btn");
+
+
+  if (!accordionButtons.length) return;
+
+
+  /* =====================================================
+     CLOSE ALL ACCORDIONS
+  ===================================================== */
+
+  function closeAllAccordions(exceptButton = null) {
+
+    accordionButtons.forEach((button) => {
+
+      if (button === exceptButton) return;
+
+      const targetName =
+        button.dataset.mobileAccordion;
+
+      const content =
+        document.getElementById(
+          `mobile-accordion-${targetName}`
+        );
+
+      const icon =
+        button.querySelector(
+          '[data-lucide="chevron-down"]'
+        );
+
+
+      // Tutup submenu
+
+      if (content) {
+        content.classList.add("hidden");
+      }
+
+
+      // Reset aria
+
+      button.setAttribute(
+        "aria-expanded",
+        "false"
+      );
+
+
+      // Reset icon
+
+      if (icon) {
+        icon.classList.remove("rotate-180");
+      }
+
+    });
+
+  }
+
+
+  /* =====================================================
+     ACCORDION CLICK
+  ===================================================== */
+
+  accordionButtons.forEach((button) => {
+
+    button.addEventListener("click", () => {
+
+      const targetName =
+        button.dataset.mobileAccordion;
+
+      const content =
+        document.getElementById(
+          `mobile-accordion-${targetName}`
+        );
+
+      if (!content) return;
+
+
+      const icon =
+        button.querySelector(
+          '[data-lucide="chevron-down"]'
+        );
+
+
+      const isOpen =
+        button.getAttribute("aria-expanded") === "true";
+
+
+      /* Tutup accordion lain */
+
+      closeAllAccordions(button);
+
+
+      /* ================= TUTUP ================= */
+
+      if (isOpen) {
+
+        content.classList.add("hidden");
+
+        button.setAttribute(
+          "aria-expanded",
+          "false"
+        );
+
+        if (icon) {
+          icon.classList.remove("rotate-180");
+        }
+
+        return;
+
+      }
+
+
+      /* ================= BUKA ================= */
+
+      content.classList.remove("hidden");
+
+      button.setAttribute(
+        "aria-expanded",
+        "true"
+      );
+
+      if (icon) {
+        icon.classList.add("rotate-180");
+      }
+
+    });
+
+  });
+
+});

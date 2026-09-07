@@ -854,3 +854,50 @@ document.addEventListener(
 
   }
 );
+
+/* =========================================================
+   PORTAL VISITOR COUNTER
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  try {
+
+    if (typeof firebase === "undefined") {
+      console.warn("Firebase belum tersedia untuk visitor counter.");
+      return;
+    }
+
+    const visitorDb = firebase.firestore();
+
+    const visitorRef =
+      visitorDb.collection("stats").doc("visitors");
+
+    visitorRef.set(
+      {
+        count: firebase.firestore.FieldValue.increment(1)
+      },
+      {
+        merge: true
+      }
+    )
+    .then(() => {
+      console.log("Portal visitor count updated.");
+    })
+    .catch((error) => {
+      console.error(
+        "Gagal mengemaskini visitor counter:",
+        error
+      );
+    });
+
+  } catch (error) {
+
+    console.error(
+      "Visitor counter error:",
+      error
+    );
+
+  }
+
+});

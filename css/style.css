@@ -1,0 +1,496 @@
+/* =========================================================
+   PORTAL BIMBINGAN & KAUNSELING
+   SK KUALA KETIL
+   MAIN STYLESHEET
+   2026
+========================================================= */
+
+
+/* =========================================================
+   ROOT / THEME COLORS
+========================================================= */
+
+:root {
+
+  --emerald: #075e4c;
+  --deep: #06473a;
+
+  --sage: #dcece3;
+  --mint: #eff8f3;
+
+  --cream: #fbfaf5;
+
+  --violet: #7663a7;
+
+  --ink: #16332d;
+
+}
+
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+body {
+
+  margin: 0;
+
+  font-family: "DM Sans", sans-serif;
+
+  color: var(--ink);
+
+  background: var(--cream);
+
+  overflow-x: hidden;
+
+}
+
+
+a {
+  text-decoration: none;
+}
+
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+/* =========================================================
+   TYPOGRAPHY
+========================================================= */
+
+.display {
+  font-family: "Fraunces", serif;
+}
+
+
+/* =========================================================
+   SITE
+========================================================= */
+
+.site-shell {
+  width: 100%;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.nav-shadow {
+
+  box-shadow:
+    0 8px 30px
+    rgba(12, 73, 57, 0.08);
+
+}
+
+
+/* =========================================================
+   BACKGROUND PATTERN
+========================================================= */
+
+.pattern {
+
+  background-image:
+
+    radial-gradient(
+      rgba(7, 94, 76, 0.09) 1px,
+      transparent 1px
+    );
+
+  background-size: 20px 20px;
+
+}
+
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.soft-card {
+
+  border:
+    1px solid
+    rgba(7, 94, 76, 0.10);
+
+  box-shadow:
+    0 14px 34px
+    rgba(12, 73, 57, 0.07);
+
+}
+
+
+/* =========================================================
+   CARD HOVER
+========================================================= */
+
+.lift {
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+
+}
+
+
+.lift:hover {
+
+  transform:
+    translateY(-6px);
+
+  box-shadow:
+    0 20px 40px
+    rgba(12, 73, 57, 0.13);
+
+}
+
+
+/* =========================================================
+   DESKTOP NAV DROPDOWN
+========================================================= */
+
+.nav-drop {
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  transform:
+    translateY(8px);
+
+  transition:
+    0.2s ease;
+
+}
+
+
+.nav-group:hover .nav-drop,
+.nav-group:focus-within .nav-drop {
+
+  opacity: 1;
+
+  visibility: visible;
+
+  transform:
+    translateY(0);
+
+}
+
+
+/* =========================================================
+   DROPDOWN LINKS
+========================================================= */
+
+.nav-drop a {
+
+  display: block;
+
+  padding:
+    0.75rem 1rem;
+
+  border-radius:
+    0.75rem;
+
+  color:
+    #31534a;
+
+  font-size:
+    0.875rem;
+
+  font-weight:
+    600;
+
+}
+
+
+.nav-drop a:hover {
+
+  background:
+    var(--mint);
+
+  color:
+    var(--emerald);
+
+}
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+.reveal {
+
+  opacity: 0;
+
+  transform:
+    translateY(22px);
+
+  transition:
+    opacity 0.65s ease,
+    transform 0.65s ease;
+
+}
+
+
+.reveal.visible {
+
+  opacity: 1;
+
+  transform: none;
+
+}
+
+
+/* =========================================================
+   EMOTION CHECK-IN
+========================================================= */
+
+.emotion-response {
+  display: none;
+}
+
+
+.emotion-response.active {
+
+  display: block;
+
+  animation:
+    fade 0.3s ease;
+
+}
+
+
+@keyframes fade {
+
+  from {
+
+    opacity: 0;
+
+    transform:
+      translateY(5px);
+
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform: none;
+
+  }
+
+}
+
+
+/* =========================================================
+   FAQ
+========================================================= */
+
+.faq-answer {
+
+  max-height: 0;
+
+  overflow: hidden;
+
+  transition:
+    max-height 0.3s ease;
+
+}
+
+
+.faq-item.open .faq-answer {
+
+  max-height:
+    220px;
+
+}
+
+
+.faq-chevron {
+
+  transition:
+    transform 0.3s ease;
+
+}
+
+
+.faq-item.open .faq-chevron {
+
+  transform:
+    rotate(180deg);
+
+}
+
+
+/* =========================================================
+   FLOATING HELP
+========================================================= */
+
+.help-menu {
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  transform:
+    translateY(10px);
+
+  transition:
+    0.2s ease;
+
+}
+
+
+.help-menu.open {
+
+  opacity: 1;
+
+  visibility: visible;
+
+  transform: none;
+
+}
+
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+.mobile-menu {
+
+  max-height: 0;
+
+  overflow: hidden;
+
+  transition:
+    max-height 0.3s ease;
+
+}
+
+
+.mobile-menu.open {
+
+  max-height:
+    760px;
+
+}
+
+
+/* =========================================================
+   HERO DECORATION
+========================================================= */
+
+.blob {
+
+  border-radius:
+    44% 56% 59% 41% /
+    43% 43% 57% 57%;
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+.focus-ring:focus-visible {
+
+  outline:
+    3px solid #a78bfa;
+
+  outline-offset:
+    3px;
+
+}
+
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+img {
+
+  max-width: 100%;
+
+  display: block;
+
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+button {
+
+  font-family:
+    inherit;
+
+  cursor:
+    pointer;
+
+}
+
+
+/* =========================================================
+   MOBILE / TABLET
+========================================================= */
+
+@media (max-width: 1023px) {
+
+  .desktop-nav {
+    display: none;
+  }
+
+}
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width: 1024px) {
+
+  .mobile-toggle,
+  .mobile-menu {
+    display: none;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+
+  .reveal,
+  .lift,
+  .nav-drop,
+  .help-menu,
+  .mobile-menu {
+
+    transition: none;
+
+  }
+
+}

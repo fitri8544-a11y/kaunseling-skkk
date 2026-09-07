@@ -1,624 +1,1662 @@
 <!DOCTYPE html>
 <html lang="ms">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Unit Bimbingan & Kaunseling SK Kuala Ketil</title>
+  <!-- =========================================
+       BASIC META
+  ========================================== -->
 
-<link rel="icon" type="image/png" href="assets/logo-sekolah.png">
+  <meta charset="UTF-8">
 
-<script src="https://cdn.tailwindcss.com"></script>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-<style>
-/* Hover effect */
-.gbk-card {
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
+  <meta
+    name="description"
+    content="Portal Bimbingan & Kaunseling SK Kuala Ketil"
+  >
 
-.gbk-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-}
+  <title>
+    Portal Bimbingan & Kaunseling SK Kuala Ketil
+  </title>
 
-/* Lightbox background */
-#lightbox {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.9);
-  z-index: 9999;
-  justify-content: center;
-  align-items: center;
-}
 
-/* Image dalam fullscreen */
-#lightbox img {
-  max-width: 90%;
-  max-height: 90%;
-  border-radius: 12px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-}
-</style>
+  <!-- =========================================
+       TAILWIND CSS
+  ========================================== -->
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+
+
+  <!-- =========================================
+       LUCIDE ICONS
+  ========================================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.577.0/dist/umd/lucide.min.js"></script>
+
+
+  <!-- =========================================
+     FIREBASE
+========================================== -->
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+
+  <!-- =========================================
+       GOOGLE FONTS
+  ========================================== -->
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <!-- =========================================
+       PORTAL CSS
+  ========================================== -->
+
+  <link
+    rel="stylesheet"
+    href="css/style.css"
+  >
 
 </head>
 
-<body class="bg-gray-100">
 
-<header class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md sticky top-0 z-50">
+<!-- =====================================================
+     HEADER
+===================================================== -->
 
-  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+<header
+  id="top"
+  class="sticky top-0 z-50 w-full bg-white/95 backdrop-blur nav-shadow"
+>
 
-    <!-- LOGO -->
-    <div class="flex items-center gap-3">
-      <img src="assets/logo-sekolah.png" class="h-10">
-      <img src="assets/logo-ts25.png" class="h-10">
+  <nav
+    class="mx-auto flex max-w-[1400px] items-center justify-between px-4 py-3 lg:px-7"
+    aria-label="Navigasi utama"
+  >
 
-      <div>
-        <h1 class="text-sm md:text-lg font-bold">Bimbingan & Kaunseling</h1>
-        <p class="text-xs opacity-80">SK Kuala Ketil</p>
+
+    <!-- =================================================
+         BRAND
+    ================================================== -->
+
+    <a
+      href="index.html"
+      class="flex items-center gap-3 rounded-xl focus-ring"
+    >
+
+      <div class="flex -space-x-2">
+
+        <!-- LOGO SEKOLAH -->
+
+        <img
+          src="assets/logo-sekolah.png"
+          alt="Logo SK Kuala Ketil"
+          class="h-11 w-11 rounded-full border-2 border-white object-contain shadow-sm"
+        >
+
+
+        <!-- LOGO TS25 -->
+
+        <img
+          src="assets/logo-ts25.png"
+          alt="Logo TS25"
+          class="h-11 w-11 rounded-full border-2 border-white bg-white object-contain shadow-sm"
+        >
+
       </div>
-    </div>
 
-    <!-- DESKTOP MENU -->
-    <nav class="hidden md:flex gap-6 items-center text-sm font-semibold relative">
+
+      <div class="leading-tight">
+
+        <span
+          class="block text-sm font-bold text-[#16332d]"
+        >
+          Bimbingan &amp; Kaunseling
+        </span>
+
+        <span
+          class="block text-xs text-[#547069]"
+        >
+          SK Kuala Ketil
+        </span>
+
+      </div>
+
+    </a>
+
+
+
+    <!-- =================================================
+         DESKTOP NAVIGATION
+    ================================================== -->
+
+    <div
+      class="desktop-nav items-center gap-1 text-[13px] font-semibold text-[#31534a] lg:flex"
+    >
+
 
       <!-- LAMAN UTAMA -->
-      <a href="index.html" class="hover:text-yellow-300">Laman Utama</a>
 
-      <!-- MENGENAI -->
-      <div class="relative group inline-block">
-        <button class="flex items-center gap-1 hover:text-yellow-300">
-          Mengenai ▼
+      <a
+        href="index.html"
+        class="rounded-lg bg-[#eff8f3] px-3 py-2 text-[#075e4c] focus-ring"
+      >
+        Laman Utama
+      </a>
+
+
+
+      <!-- =================================================
+           MENGENAI
+      ================================================== -->
+
+      <div class="nav-group relative">
+
+        <button
+          type="button"
+          class="flex items-center gap-1 rounded-lg px-3 py-2 hover:bg-[#eff8f3] focus-ring"
+        >
+
+          Mengenai
+
+          <i
+            data-lucide="chevron-down"
+            class="h-3 w-3"
+          ></i>
+
         </button>
 
-        <div class="absolute left-0 top-full w-56 
-                    bg-white text-black rounded-xl shadow-xl 
-                    opacity-0 invisible group-hover:opacity-100 group-hover:visible 
-                    transition duration-200 z-50">
 
-          <a href="carta-organisasi.html" class="block px-4 py-2 hover:bg-gray-100">Carta Organisasi</a>
-          <a href="objektif.html" class="block px-4 py-2 hover:bg-gray-100">Visi & Misi</a>
-          <a href="takwim.html" class="block px-4 py-2 hover:bg-gray-100">Takwim</a>
+        <div
+          class="nav-drop absolute left-0 top-full w-64 rounded-2xl bg-white p-2 soft-card"
+        >
+
+          <a href="pengenalan.html">
+            Pengenalan
+          </a>
+
+          <a href="objektif.html">
+            Objektif
+          </a>
+
+          <a href="carta-organisasi.html">
+            Carta Organisasi
+          </a>
+
         </div>
+
       </div>
 
-      <!-- PERKHIDMATAN -->
-      <div class="relative group inline-block">
-        <button class="flex items-center gap-1 hover:text-yellow-300">
-          Perkhidmatan ▼
+
+
+      <!-- =================================================
+           PERKHIDMATAN
+      ================================================== -->
+
+      <div class="nav-group relative">
+
+        <button
+          type="button"
+          class="flex items-center gap-1 rounded-lg px-3 py-2 hover:bg-[#eff8f3] focus-ring"
+        >
+
+          Perkhidmatan
+
+          <i
+            data-lucide="chevron-down"
+            class="h-3 w-3"
+          ></i>
+
         </button>
 
-        <div class="absolute left-0 top-full w-56 
-                    bg-white text-black rounded-xl shadow-xl 
-                    opacity-0 invisible group-hover:opacity-100 group-hover:visible 
-                    transition duration-200 z-50">
 
-          <a href="pengenalan.html" class="block px-4 py-2 hover:bg-gray-100">Pengenalan</a>
-          <a href="temujanji.html" class="block px-4 py-2 hover:bg-gray-100">Temujanji</a>
+        <div
+          class="nav-drop absolute left-0 top-full w-64 rounded-2xl bg-white p-2 soft-card"
+        >
+
+          <a href="temujanji.html">
+            Temujanji Kaunseling
+          </a>
+
+          <a href="takwim.html">
+            Takwim
+          </a>
+
         </div>
+
       </div>
 
-      <!-- 4 FOKUS -->
-      <div class="relative group inline-block">
-        <button class="flex items-center gap-1 hover:text-yellow-300">
-          4 Fokus ▼
+
+
+      <!-- =================================================
+           4 FOKUS
+      ================================================== -->
+
+      <div class="nav-group relative">
+
+        <button
+          type="button"
+          class="flex items-center gap-1 rounded-lg px-3 py-2 hover:bg-[#eff8f3] focus-ring"
+        >
+
+          4 Fokus
+
+          <i
+            data-lucide="chevron-down"
+            class="h-3 w-3"
+          ></i>
+
         </button>
 
-        <div class="absolute left-0 top-full w-56 
-                    bg-white text-black rounded-xl shadow-xl 
-                    opacity-0 invisible group-hover:opacity-100 group-hover:visible 
-                    transition duration-200 z-50">
 
-          <a href="sahsiah.html" class="block px-4 py-2 hover:bg-gray-100">Sahsiah</a>
-          <a href="disiplin.html" class="block px-4 py-2 hover:bg-gray-100">Disiplin</a>
-          <a href="kerjaya.html" class="block px-4 py-2 hover:bg-gray-100">Kerjaya</a>
-          <a href="psikososial.html" class="block px-4 py-2 hover:bg-gray-100">Psikososial</a>
+        <div
+          class="nav-drop absolute left-0 top-full w-80 rounded-2xl bg-white p-2 soft-card"
+        >
+
+          <a href="sahsiah.html">
+            Pembangunan Sahsiah Diri Murid
+          </a>
+
+          <a href="disiplin.html">
+            Peningkatan Disiplin Diri Murid
+          </a>
+
+          <a href="kerjaya.html">
+            Pendidikan Kerjaya Murid
+          </a>
+
+          <a href="psikososial.html">
+            Psikososial &amp; Kesejahteraan Mental
+          </a>
+
         </div>
+
       </div>
 
-      <!-- PRS -->
-      <div class="relative group inline-block">
-        <button class="flex items-center gap-1 hover:text-yellow-300">
-          PRS ▼
+
+
+      <!-- =================================================
+           PRS
+      ================================================== -->
+
+      <div class="nav-group relative">
+
+        <button
+          type="button"
+          class="flex items-center gap-1 rounded-lg px-3 py-2 hover:bg-[#eff8f3] focus-ring"
+        >
+
+          PRS
+
+          <i
+            data-lucide="chevron-down"
+            class="h-3 w-3"
+          ></i>
+
         </button>
 
-        <div class="absolute left-0 top-full w-56 
-                    bg-white text-black rounded-xl shadow-xl 
-                    opacity-0 invisible group-hover:opacity-100 group-hover:visible 
-                    transition duration-200 z-50">
 
-          <a href="carta-prs.html" class="block px-4 py-2 hover:bg-gray-100">Carta PRS</a>
-          <a href="peranan-prs.html" class="block px-4 py-2 hover:bg-gray-100">Peranan</a>
-          <a href="aktiviti-prs.html" class="block px-4 py-2 hover:bg-gray-100">Aktiviti</a>
+        <div
+          class="nav-drop absolute left-0 top-full w-64 rounded-2xl bg-white p-2 soft-card"
+        >
+
+          <a href="carta-prs.html">
+            Carta Organisasi PRS
+          </a>
+
+          <a href="peranan-prs.html">
+            Peranan PRS
+          </a>
+
+          <a href="aktiviti-prs.html">
+            Aktiviti PRS
+          </a>
+
         </div>
+
       </div>
 
-      <!-- MENU LAIN -->
-      <a href="healink.html" class="hover:text-yellow-300">🧠 HEALINK</a>
-      <a href="bantuan.html" class="hover:text-yellow-300">Bantuan</a>
-      <a href="statistik.html" class="hover:text-yellow-300">Statistik</a>
-      <a href="faq.html" class="hover:text-yellow-300">FAQ</a>
 
-    </nav>
 
-    <!-- MOBILE BUTTON -->
-    <button id="menuBtn" class="md:hidden text-2xl">☰</button>
+      <!-- =================================================
+           HEALINK
+      ================================================== -->
 
-  </div>
+      <a
+        href="healink.html"
+        class="rounded-lg px-3 py-2 hover:bg-[#eff8f3] focus-ring"
+      >
+        HEALINK
+      </a>
 
-  <!-- MOBILE MENU -->
-  <div id="mobileMenu" class="hidden md:hidden bg-purple-700 px-4 pb-4 space-y-3 text-sm">
 
-  <a href="index.html" class="block">Laman Utama</a>
 
-  <!-- MENGENAI -->
-  <div>
-    <button onclick="toggleMobile('m1')" 
-      class="w-full text-left flex justify-between items-center">
-      Mengenai ▼
+      <!-- =================================================
+           BANTUAN
+      ================================================== -->
+
+      <a
+        href="temujanji.html"
+        class="rounded-lg px-3 py-2 hover:bg-[#eff8f3] focus-ring"
+      >
+        Bantuan
+      </a>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         MOBILE TOGGLE
+    ================================================== -->
+
+    <button
+      id="mobile-toggle"
+      type="button"
+      class="mobile-toggle grid h-11 w-11 place-items-center rounded-xl bg-[#eff8f3] text-[#075e4c] focus-ring"
+      aria-label="Buka menu"
+      aria-expanded="false"
+    >
+
+      <i data-lucide="menu"></i>
+
     </button>
 
-    <div id="m1" class="hidden pl-4 mt-2 space-y-2">
-      <a href="carta-organisasi.html" class="block">Carta Organisasi</a>
-      <a href="objektif.html" class="block">Visi & Misi</a>
-      <a href="takwim.html" class="block">Takwim</a>
+  </nav>
+
+
+
+  <!-- =================================================
+       MOBILE MENU
+  ================================================== -->
+
+  <div
+    id="mobile-menu"
+    class="mobile-menu bg-white px-5"
+  >
+
+    <div
+      class="border-t border-[#dcece3] py-4 text-sm font-semibold text-[#31534a]"
+    >
+
+
+      <a
+        href="index.html"
+        class="block rounded-lg bg-[#eff8f3] px-3 py-3 text-[#075e4c]"
+      >
+        Laman Utama
+      </a>
+
+
+      <div
+        class="px-3 pb-1 pt-4 text-[11px] font-bold uppercase tracking-wider text-[#91a69f]"
+      >
+        Mengenai
+      </div>
+
+      <a
+        href="pengenalan.html"
+        class="block rounded-lg px-3 py-2 hover:bg-[#eff8f3]"
+      >
+        Pengenalan
+      </a>
+
+      <a
+        href="objektif.html"
+        class="block rounded-lg px-3 py-2 hover:bg-[#eff8f3]"
+      >
+        Objektif
+      </a>
+
+      <a
+        href="carta-organisasi.html"
+        class="block rounded-lg px-3 py-2 hover:bg-[#eff8f3]"
+      >
+        Carta Organisasi
+      </a>
+
+
+
+      <div
+        class="px-3 pb-1 pt-4 text-[11px] font-bold uppercase tracking-wider text-[#91a69f]"
+      >
+        Perkhidmatan
+      </div>
+
+      <a
+        href="temujanji.html"
+        class="block rounded-lg px-3 py-2 hover:bg-[#eff8f3]"
+      >
+        Temujanji Kaunseling
+      </a>
+
+      <a
+        href="takwim.html"
+        class="block rounded-lg px-3 py-2 hover:bg-[#eff8f3]"
+      >
+        Takwim
+      </a>
+
+
+
+      <div
+        class="px-3 pb-1 pt-4 text-[11px] font-bold uppercase tracking-wider text-[#91a69f]"
+      >
+        4 Fokus
+      </div>
+
+      <a
+        href="sahsiah.html"
+        class="block rounded-lg px-3 py-2 hover:bg-[#eff8f3]"
+      >
+        Sahsiah Diri
+      </a>
+
+      <a
+        href="disiplin.html"
+        class="block rounded-lg px-3 py-2 hover:bg-[#eff8f3]"
+      >
+        Disiplin Diri
+      </a>
+
+      <a
+        href="kerjaya.html"
+        class="block rounded-lg px-3 py-2 hover:bg-[#eff8f3]"
+      >
+        Pendidikan Kerjaya
+      </a>
+
+      <a
+        href="psikososial.html"
+        class="block rounded-lg px-3 py-2 hover:bg-[#eff8f3]"
+      >
+        Psikososial &amp; Kesejahteraan Mental
+      </a>
+
+
+
+      <div
+        class="px-3 pb-1 pt-4 text-[11px] font-bold uppercase tracking-wider text-[#91a69f]"
+      >
+        PRS
+      </div>
+
+      <a
+        href="carta-prs.html"
+        class="block rounded-lg px-3 py-2 hover:bg-[#eff8f3]"
+      >
+        Carta Organisasi PRS
+      </a>
+
+      <a
+        href="peranan-prs.html"
+        class="block rounded-lg px-3 py-2 hover:bg-[#eff8f3]"
+      >
+        Peranan PRS
+      </a>
+
+      <a
+        href="aktiviti-prs.html"
+        class="block rounded-lg px-3 py-2 hover:bg-[#eff8f3]"
+      >
+        Aktiviti PRS
+      </a>
+
+
+
+      <div
+        class="mt-3 border-t border-[#dcece3] pt-3"
+      >
+
+        <a
+          href="healink.html"
+          class="block rounded-lg px-3 py-3 hover:bg-[#eff8f3]"
+        >
+          HEALINK
+        </a>
+
+        <a
+          href="temujanji.html"
+          class="block rounded-lg px-3 py-3 hover:bg-[#eff8f3]"
+        >
+          Bantuan
+        </a>
+
+      </div>
+
+
     </div>
+
   </div>
-
-  <!-- PERKHIDMATAN -->
-  <div>
-    <button onclick="toggleMobile('m2')" 
-      class="w-full text-left flex justify-between items-center">
-      Perkhidmatan ▼
-    </button>
-
-    <div id="m2" class="hidden pl-4 mt-2 space-y-2">
-      <a href="pengenalan.html">Pengenalan</a>
-      <a href="temujanji.html">Temujanji</a>
-    </div>
-  </div>
-
-  <!-- 4 FOKUS -->
-  <div>
-    <button onclick="toggleMobile('m3')" 
-      class="w-full text-left flex justify-between items-center">
-      4 Fokus ▼
-    </button>
-
-    <div id="m3" class="hidden pl-4 mt-2 space-y-2">
-      <a href="sahsiah.html">Sahsiah</a>
-      <a href="disiplin.html">Disiplin</a>
-      <a href="kerjaya.html">Kerjaya</a>
-      <a href="psikososial.html">Psikososial</a>
-    </div>
-  </div>
-
-  <!-- PRS -->
-  <div>
-    <button onclick="toggleMobile('m4')" 
-      class="w-full text-left flex justify-between items-center">
-      PRS ▼
-    </button>
-
-    <div id="m4" class="hidden pl-4 mt-2 space-y-2">
-      <a href="carta-prs.html">Carta PRS</a>
-      <a href="peranan-prs.html">Peranan</a>
-      <a href="aktiviti-prs.html">Aktiviti</a>
-    </div>
-  </div>
-
-  <!-- MENU BIASA -->
-  <a href="healink.html" class="block">HEALINK</a>
-  <a href="bantuan.html" class="block">Bantuan</a>
-  <a href="statistik.html" class="block">Statistik</a>
-  <a href="faq.html" class="block">FAQ</a>
-
-</div>
 
 </header>
 
-<!-- PENGENALAN -->
-<section class="max-w-6xl mx-auto px-6 py-12">
 
-<h3 class="text-2xl font-bold text-green-900 mb-6">
-Pengenalan Unit Bimbingan & Kaunseling
-</h3>
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
 
-<p class="text-gray-700 leading-relaxed">
-Unit Bimbingan dan Kaunseling SK Kuala Ketil berperanan membantu murid
-dalam aspek pembangunan sahsiah, akademik, sosial dan emosi supaya
-mereka dapat berkembang secara menyeluruh.
-</p>
+<main>
 
-</section>
 
-<!-- KATA ALUAN GBK -->
-<section class="bg-white py-12">
+  <!-- ===================================================
+       HERO SECTION
+  ==================================================== -->
 
-<div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
+  <section
+    class="pattern relative overflow-hidden px-4 pb-16 pt-12 lg:px-7 lg:pb-24 lg:pt-20"
+  >
 
-  <!-- GAMBAR GBK -->
-  <div class="flex justify-center">
-    <div class="gbk-card">
-      <img src="assets/gbk.jpg"
-           onclick="openLightbox(this)"
-           class="w-full max-w-sm rounded-xl shadow-lg cursor-pointer">
+    <div
+      class="mx-auto grid max-w-[1320px] items-center gap-12 lg:grid-cols-[1.05fr_.95fr]"
+    >
+
+
+      <!-- ===============================================
+           HERO CONTENT
+      ================================================ -->
+
+      <div class="reveal">
+
+
+        <!-- BADGE -->
+
+        <div
+          class="inline-flex rounded-full bg-[#dcece3] px-4 py-2 text-xs font-bold tracking-[.12em] text-[#075e4c]"
+        >
+          UNIT BIMBINGAN &amp; KAUNSELING · SK KUALA KETIL
+        </div>
+
+
+
+        <!-- TITLE -->
+
+        <h1
+          class="display mt-6 max-w-xl text-5xl font-semibold leading-[1.06] text-[#16332d] lg:text-7xl"
+        >
+
+          Ruang Selamat,
+
+          <span class="block text-[#075e4c]">
+            Langkah Lebih Yakin.
+          </span>
+
+        </h1>
+
+
+
+        <!-- DESCRIPTION -->
+
+        <p
+          class="mt-6 max-w-xl text-lg leading-8 text-[#537069]"
+        >
+          Portal Bimbingan &amp; Kaunseling SK Kuala Ketil
+          menyediakan ruang sokongan, panduan dan sumber
+          untuk membantu murid berkembang dari aspek
+          sahsiah, emosi, akademik dan sosial.
+        </p>
+
+
+
+        <!-- BUTTONS -->
+
+        <div
+          class="mt-8 flex flex-col gap-3 sm:flex-row"
+        >
+
+          <!-- PRIMARY -->
+
+          <a
+            href="#bantuan"
+            class="focus-ring rounded-xl bg-[#075e4c] px-6 py-4 text-center font-bold text-white shadow-lg shadow-emerald-900/15 transition hover:bg-[#06473a]"
+          >
+            Dapatkan Bantuan
+          </a>
+
+
+          <!-- SECONDARY -->
+
+          <a
+            href="pengenalan.html"
+            class="focus-ring rounded-xl border border-[#b9d9ca] bg-white px-6 py-4 text-center font-bold text-[#075e4c] transition hover:bg-[#eff8f3]"
+          >
+            Kenali Perkhidmatan Kami
+          </a>
+
+        </div>
+
+
+
+        <!-- TRUST MESSAGE -->
+
+        <p
+          class="mt-6 flex items-center gap-2 font-semibold text-[#075e4c]"
+        >
+
+          <span>💚</span>
+
+          <span>
+            Kami Sedia Mendengar · Membimbing · Menyokong
+          </span>
+
+        </p>
+
+
+      </div>
+
+
+
+      <!-- ===============================================
+           HERO IMAGE
+      ================================================ -->
+
+      <div
+        class="reveal relative mx-auto w-full max-w-xl"
+      >
+
+
+        <!-- BACKGROUND BLOB -->
+
+        <div
+          class="blob absolute -inset-5 bg-[#dcece3]"
+        ></div>
+
+
+
+        <!-- IMAGE CARD -->
+
+        <div
+          class="relative overflow-hidden rounded-[2.5rem] bg-white p-3 soft-card"
+        >
+
+          <img
+            src="assets/hero-kaunseling.png"
+            alt="Bimbingan dan Kaunseling SK Kuala Ketil"
+            class="h-[390px] w-full rounded-[2rem] object-cover lg:h-[500px]"
+          >
+
+        </div>
+
+
+
+        <!-- FLOATING CARD -->
+
+        <div
+          class="absolute -left-3 bottom-10 rounded-2xl bg-white px-4 py-3 soft-card"
+        >
+
+          <i
+            data-lucide="heart"
+            class="inline h-4 w-4 text-[#7663a7]"
+          ></i>
+
+          <span
+            class="ml-2 text-sm font-bold"
+          >
+            Anda Tidak Bersendirian
+          </span>
+
+        </div>
+
+
+
+        <!-- FLOATING ICON -->
+
+        <div
+          class="absolute -right-2 top-10 grid h-14 w-14 place-items-center rounded-2xl bg-[#7663a7] text-white shadow-lg"
+        >
+
+          <i data-lucide="sparkles"></i>
+
+        </div>
+
+
+      </div>
+
     </div>
-  </div>
 
-  <!-- TEKS -->
-  <div>
-    <h2 class="text-2xl font-bold text-green-800 mb-4">
-      Kata Aluan Guru Bimbingan & Kaunseling
-    </h2>
+  </section>
 
-    <p class="text-gray-700 leading-relaxed mb-4">
-      Selamat datang ke Portal Bimbingan & Kaunseling SK Kuala Ketil.
-      Portal ini diwujudkan sebagai medium untuk membantu murid
-      mendapatkan maklumat berkaitan perkhidmatan kaunseling,
-      motivasi diri serta sokongan emosi.
-    </p>
 
-    <p class="text-gray-700 leading-relaxed mb-4">
-      Semoga portal ini dapat memberi manfaat kepada semua murid
-      dalam membina sahsiah diri yang positif dan sejahtera.
-    </p>
+  <!-- =====================================================
+     QUICK HELP
+     APA YANG ANDA PERLUKAN HARI INI?
+===================================================== -->
 
-    <p class="text-green-700 font-semibold">
-      Guru Bimbingan & Kaunseling
-    </p>
-  </div>
+<section
+  id="bantuan"
+  class="bg-white px-4 py-16 lg:px-7 lg:py-20"
+>
 
-</div>
+  <div class="mx-auto max-w-[1320px]">
 
-</section>
 
-<!-- MOTIVASI MINGGUAN -->
-<section class="bg-green-50 py-12">
+    <!-- ===============================================
+         SECTION HEADER
+    ================================================ -->
 
-<div class="max-w-6xl mx-auto px-6">
+    <div
+      class="reveal mx-auto max-w-2xl text-center"
+    >
 
-<h2 class="text-2xl font-bold text-green-900 mb-8 text-center">
-Motivasi Mingguan
-</h2>
+      <span
+        class="inline-flex rounded-full bg-[#eff8f3] px-4 py-2 text-xs font-bold tracking-[.12em] text-[#075e4c]"
+      >
+        AKSES PANTAS
+      </span>
 
-<div class="grid md:grid-cols-3 gap-6">
 
-<div class="bg-white rounded-lg shadow p-6 text-center">
-<div class="text-4xl mb-3">🌟</div>
-<p class="italic text-gray-700">
-"Kejayaan bermula dengan keyakinan diri."
-</p>
-</div>
+      <h2
+        class="display mt-4 text-3xl font-semibold text-[#16332d] md:text-4xl lg:text-5xl"
+      >
+        Apa yang anda perlukan hari ini?
+      </h2>
 
-<div class="bg-white rounded-lg shadow p-6 text-center">
-<div class="text-4xl mb-3">💪</div>
-<p class="italic text-gray-700">
-"Jangan takut gagal kerana kegagalan adalah guru terbaik."
-</p>
-</div>
 
-<div class="bg-white rounded-lg shadow p-6 text-center">
-<div class="text-4xl mb-3">🎯</div>
-<p class="italic text-gray-700">
-"Usaha hari ini menentukan kejayaan masa depan."
-</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ================= STEM INFOGRAPHIC (MATCH PORTAL) ================= -->
-<section class="mt-10 bg-[#eef5f1] p-8 rounded-xl">
-
-  <h2 class="text-2xl font-bold text-center text-green-800 mb-2">
-    🌍 STEM Vision 360
-  </h2>
-
-  <p class="text-center text-gray-600 mb-6">
-    Membina Masa Depan Murid Secara Holistik
-  </p>
-
-  <!-- LINK -->
-  <div class="text-center mb-8">
-    <a href="https://sites.google.com/moe-dl.edu.my/stemvision360/home" target="_blank"
-       class="inline-block border border-green-700 text-green-700 px-5 py-2 rounded-full hover:bg-green-700 hover:text-white transition">
-      🔗 Lawati Portal STEM Vision 360
-    </a>
-  </div>
-
-  <!-- CARD -->
-  <div class="grid md:grid-cols-4 gap-6 text-center">
-
-    <div class="bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition">
-      <div class="text-3xl mb-2">🧠</div>
-      <h3 class="font-semibold text-gray-800">Pemikiran Kritis</h3>
-      <p class="text-sm text-gray-500 mt-2">
-        Menyelesaikan masalah & membuat keputusan bijak
+      <p
+        class="mx-auto mt-4 max-w-xl leading-7 text-[#617a73]"
+      >
+        Pilih bantuan yang paling sesuai dengan keperluan anda.
+        Kami sedia membantu dan membimbing.
       </p>
+
     </div>
 
-    <div class="bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition">
-      <div class="text-3xl mb-2">💡</div>
-      <h3 class="font-semibold text-gray-800">Kreativiti</h3>
-      <p class="text-sm text-gray-500 mt-2">
-        Inovasi & idea baharu dalam pembelajaran
-      </p>
-    </div>
 
-    <div class="bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition">
-      <div class="text-3xl mb-2">🤝</div>
-      <h3 class="font-semibold text-gray-800">Sosial & Emosi</h3>
-      <p class="text-sm text-gray-500 mt-2">
-        Kesejahteraan mental & empati
-      </p>
-    </div>
 
-    <div class="bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition">
-      <div class="text-3xl mb-2">🚀</div>
-      <h3 class="font-semibold text-gray-800">Teknologi</h3>
-      <p class="text-sm text-gray-500 mt-2">
-        AI & pembelajaran digital masa depan
-      </p>
+    <!-- ===============================================
+         QUICK HELP CARDS
+    ================================================ -->
+
+    <div
+      class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
+    >
+
+
+      <!-- =============================================
+           CARD 1
+      ============================================== -->
+
+      <a
+        href="#checkin"
+        class="reveal lift soft-card group rounded-[1.75rem] bg-[#eff8f3] p-6 focus-ring"
+      >
+
+        <div
+          class="grid h-14 w-14 place-items-center rounded-2xl bg-[#075e4c] text-white"
+        >
+
+          <i
+            data-lucide="messages-square"
+            class="h-6 w-6"
+          ></i>
+
+        </div>
+
+
+        <h3
+          class="mt-6 text-lg font-bold text-[#16332d]"
+        >
+          Saya mahu bercakap dengan seseorang
+        </h3>
+
+
+        <p
+          class="mt-3 text-sm leading-6 text-[#617a73]"
+        >
+          Ada sesuatu yang bermain di fikiran?
+          Kami sedia mendengar tanpa menghakimi.
+        </p>
+
+
+        <div
+          class="mt-6 flex items-center gap-2 text-sm font-bold text-[#075e4c]"
+        >
+
+          Dapatkan Sokongan
+
+          <i
+            data-lucide="arrow-right"
+            class="h-4 w-4 transition-transform group-hover:translate-x-1"
+          ></i>
+
+        </div>
+
+      </a>
+
+
+
+      <!-- =============================================
+           CARD 2
+      ============================================== -->
+
+      <a
+        href="#checkin"
+        class="reveal lift soft-card group rounded-[1.75rem] bg-[#f7f2ff] p-6 focus-ring"
+      >
+
+        <div
+          class="grid h-14 w-14 place-items-center rounded-2xl bg-[#7663a7] text-white"
+        >
+
+          <i
+            data-lucide="heart-pulse"
+            class="h-6 w-6"
+          ></i>
+
+        </div>
+
+
+        <h3
+          class="mt-6 text-lg font-bold text-[#16332d]"
+        >
+          Saya rasa tertekan
+        </h3>
+
+
+        <p
+          class="mt-3 text-sm leading-6 text-[#617a73]"
+        >
+          Kenal pasti emosi anda dan dapatkan panduan
+          untuk mengurus tekanan dengan lebih baik.
+        </p>
+
+
+        <div
+          class="mt-6 flex items-center gap-2 text-sm font-bold text-[#7663a7]"
+        >
+
+          Semak Emosi
+
+          <i
+            data-lucide="arrow-right"
+            class="h-4 w-4 transition-transform group-hover:translate-x-1"
+          ></i>
+
+        </div>
+
+      </a>
+
+
+
+      <!-- =============================================
+           CARD 3
+      ============================================== -->
+
+      <a
+        href="#motivasi"
+        class="reveal lift soft-card group rounded-[1.75rem] bg-[#fff8e7] p-6 focus-ring"
+      >
+
+        <div
+          class="grid h-14 w-14 place-items-center rounded-2xl bg-[#d99a26] text-white"
+        >
+
+          <i
+            data-lucide="sparkles"
+            class="h-6 w-6"
+          ></i>
+
+        </div>
+
+
+        <h3
+          class="mt-6 text-lg font-bold text-[#16332d]"
+        >
+          Saya perlukan motivasi
+        </h3>
+
+
+        <p
+          class="mt-3 text-sm leading-6 text-[#617a73]"
+        >
+          Dapatkan kata-kata positif dan inspirasi
+          untuk meneruskan hari dengan lebih yakin.
+        </p>
+
+
+        <div
+          class="mt-6 flex items-center gap-2 text-sm font-bold text-[#b77912]"
+        >
+
+          Lihat Motivasi
+
+          <i
+            data-lucide="arrow-right"
+            class="h-4 w-4 transition-transform group-hover:translate-x-1"
+          ></i>
+
+        </div>
+
+      </a>
+
+
+
+      <!-- =============================================
+           CARD 4
+      ============================================== -->
+
+      <a
+        href="kerjaya.html"
+        class="reveal lift soft-card group rounded-[1.75rem] bg-[#eef5ff] p-6 focus-ring"
+      >
+
+        <div
+          class="grid h-14 w-14 place-items-center rounded-2xl bg-[#4676a9] text-white"
+        >
+
+          <i
+            data-lucide="graduation-cap"
+            class="h-6 w-6"
+          ></i>
+
+        </div>
+
+
+        <h3
+          class="mt-6 text-lg font-bold text-[#16332d]"
+        >
+          Saya perlukan maklumat kerjaya
+        </h3>
+
+
+        <p
+          class="mt-3 text-sm leading-6 text-[#617a73]"
+        >
+          Terokai minat, potensi diri dan pilihan
+          pendidikan untuk merancang masa hadapan.
+        </p>
+
+
+        <div
+          class="mt-6 flex items-center gap-2 text-sm font-bold text-[#4676a9]"
+        >
+
+          Terokai Kerjaya
+
+          <i
+            data-lucide="arrow-right"
+            class="h-4 w-4 transition-transform group-hover:translate-x-1"
+          ></i>
+
+        </div>
+
+      </a>
+
+
     </div>
 
   </div>
 
-  <!-- KAUNSELING -->
-  <div class="mt-8 bg-white p-5 rounded-xl text-center border border-green-200 text-gray-700">
-    🧠 <b>Peranan Kaunseling:</b> Membantu murid mengurus emosi, meningkatkan keyakinan diri dan kesejahteraan mental
+</section>
+
+<!-- =====================================================
+     MAKLUMAN TERKINI
+===================================================== -->
+
+<section
+  id="makluman"
+  class="bg-[#f5f8f6] px-4 py-16 lg:px-7 lg:py-20"
+>
+
+  <div class="mx-auto max-w-[1320px]">
+
+
+    <!-- HEADER -->
+
+    <div
+      class="reveal flex flex-col gap-4
+             md:flex-row md:items-end
+             md:justify-between"
+    >
+
+      <div>
+
+        <span
+          class="inline-flex items-center gap-2
+                 rounded-full bg-[#dcece3]
+                 px-4 py-2 text-xs font-bold
+                 tracking-[.12em] text-[#075e4c]"
+        >
+
+          <i
+            data-lucide="megaphone"
+            class="h-4 w-4"
+          ></i>
+
+          MAKLUMAN TERKINI
+
+        </span>
+
+
+        <h2
+          class="display mt-4
+                 text-3xl font-semibold
+                 text-[#16332d]
+                 md:text-4xl lg:text-5xl"
+        >
+          Info &amp;
+          <span class="text-[#075e4c]">
+            Perkembangan Terkini
+          </span>
+        </h2>
+
+
+        <p
+          class="mt-4 max-w-2xl
+                 leading-7 text-[#617a73]"
+        >
+          Ikuti makluman, program dan aktiviti terkini
+          Unit Bimbingan &amp; Kaunseling SK Kuala Ketil.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- LOADING -->
+
+    <div
+      id="makluman-loading"
+      class="mt-10 rounded-[1.75rem]
+             bg-white p-8 text-center
+             soft-card"
+    >
+
+      <div
+        class="flex items-center
+               justify-center gap-3
+               text-sm font-semibold
+               text-[#617a73]"
+      >
+
+        <i
+          data-lucide="loader-circle"
+          class="h-5 w-5 animate-spin"
+        ></i>
+
+        Memuatkan makluman...
+
+      </div>
+
+    </div>
+
+
+    <!-- FIRESTORE CARDS -->
+
+    <div
+      id="makluman-list"
+      class="mt-10 hidden
+             grid gap-5
+             md:grid-cols-2
+             lg:grid-cols-3"
+    ></div>
+
+
+    <!-- EMPTY -->
+
+    <div
+      id="makluman-empty"
+      class="mt-10 hidden
+             rounded-[1.75rem]
+             bg-white p-8 text-center
+             soft-card"
+    >
+
+      <div
+        class="mx-auto grid h-12 w-12
+               place-items-center rounded-2xl
+               bg-[#eff8f3] text-[#075e4c]"
+      >
+
+        <i
+          data-lucide="bell"
+          class="h-5 w-5"
+        ></i>
+
+      </div>
+
+
+      <p
+        class="mt-4 font-bold
+               text-[#16332d]"
+      >
+        Tiada makluman terkini.
+      </p>
+
+
+      <p
+        class="mt-2 text-sm
+               text-[#617a73]"
+      >
+        Makluman baharu akan dipaparkan di sini.
+      </p>
+
+    </div>
+
+
   </div>
 
 </section>
 
-<!-- PAUTAN BANTUAN -->
-<section class="max-w-6xl mx-auto px-6 py-12">
 
-<h2 class="text-2xl font-bold text-green-900 mb-8 text-center">
-Pautan Bantuan
-</h2>
+<!-- =====================================================
+     CHECK-IN EMOSI
+===================================================== -->
 
-<div class="grid md:grid-cols-3 gap-6">
+<section
+  id="checkin"
+  class="pattern bg-[#eff8f3] px-4 py-16 lg:px-7 lg:py-24"
+>
 
-<!-- ADUAN BULI -->
-<a href="https://aduanbuli.moe.gov.my/" 
-target="_blank"
-class="block bg-red-500 hover:bg-red-600 text-white p-6 rounded-xl shadow-lg transition">
-
-<div class="text-3xl mb-3">🚨</div>
-
-<h3 class="font-bold text-lg mb-2">
-Aduan Buli Kementerian Pendidikan Malaysia
-</h3>
-
-<p class="text-sm">
-Laporkan kes buli secara rasmi melalui portal
-Aduan Buli KPM.
-</p>
-
-</a>
+  <div class="mx-auto max-w-[1000px]">
 
 
-<!-- TALIAN EMOSI -->
-<a href="talian-emosi.html"
-class="bg-white border rounded-xl shadow hover:shadow-lg p-6 text-center transition">
+    <!-- HEADER -->
 
-<div class="text-4xl mb-3">❤️</div>
+    <div class="reveal mx-auto max-w-2xl text-center">
 
-<h3 class="font-semibold text-lg mb-2">
-Talian Bantuan Emosi
-</h3>
-
-<p class="text-sm text-gray-600">
-Hubungi talian bantuan untuk sokongan emosi.
-</p>
-
-</a>
+      <span
+        class="inline-flex rounded-full bg-white px-4 py-2 text-xs font-bold tracking-[.12em] text-[#075e4c] soft-card"
+      >
+        CHECK-IN EMOSI
+      </span>
 
 
-<!-- MODUL -->
-<a href="modul.html"
-class="bg-white border rounded-xl shadow hover:shadow-lg p-6 text-center transition">
+      <h2
+        class="display mt-5 text-4xl font-semibold text-[#16332d] lg:text-5xl"
+      >
+        Bagaimana perasaan anda
+        <span class="text-[#075e4c]">
+          hari ini?
+        </span>
+      </h2>
 
-<div class="text-4xl mb-3">📚</div>
 
-<h3 class="font-semibold text-lg mb-2">
-Modul Pembelajaran Kendiri
-</h3>
+      <p
+        class="mx-auto mt-4 max-w-xl leading-7 text-[#617a73]"
+      >
+        Pilih emosi yang paling hampir dengan perasaan anda
+        sekarang. Tiada jawapan yang betul atau salah.
+      </p>
 
-<p class="text-sm text-gray-600">
-Bahan pembelajaran untuk pembangunan diri murid.
-</p>
+    </div>
 
-</a>
 
-</div>
+
+    <!-- EMOTION CARD -->
+
+    <div
+      class="reveal mt-10 rounded-[2.25rem] bg-white p-6 soft-card md:p-9"
+    >
+
+
+      <!-- EMOTION BUTTONS -->
+
+      <div
+        class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5"
+        id="emotion-options"
+      >
+
+
+        <!-- GEMBIRA -->
+
+        <button
+          type="button"
+          class="emotion-btn focus-ring rounded-2xl border-2 border-transparent bg-[#eff8f3] p-5 transition hover:-translate-y-1 hover:border-[#8fc5ad]"
+          data-emotion="gembira"
+        >
+
+          <span class="block text-4xl">
+            😊
+          </span>
+
+          <span
+            class="mt-3 block text-sm font-bold text-[#16332d]"
+          >
+            Gembira
+          </span>
+
+        </button>
+
+
+
+        <!-- TENANG -->
+
+        <button
+          type="button"
+          class="emotion-btn focus-ring rounded-2xl border-2 border-transparent bg-[#eef5ff] p-5 transition hover:-translate-y-1 hover:border-[#aac8e5]"
+          data-emotion="tenang"
+        >
+
+          <span class="block text-4xl">
+            😌
+          </span>
+
+          <span
+            class="mt-3 block text-sm font-bold text-[#16332d]"
+          >
+            Tenang
+          </span>
+
+        </button>
+
+
+
+        <!-- SEDIH -->
+
+        <button
+          type="button"
+          class="emotion-btn focus-ring rounded-2xl border-2 border-transparent bg-[#f3f0fb] p-5 transition hover:-translate-y-1 hover:border-[#c9bee5]"
+          data-emotion="sedih"
+        >
+
+          <span class="block text-4xl">
+            😔
+          </span>
+
+          <span
+            class="mt-3 block text-sm font-bold text-[#16332d]"
+          >
+            Sedih
+          </span>
+
+        </button>
+
+
+
+        <!-- RISAU -->
+
+        <button
+          type="button"
+          class="emotion-btn focus-ring rounded-2xl border-2 border-transparent bg-[#fff8e7] p-5 transition hover:-translate-y-1 hover:border-[#efd28f]"
+          data-emotion="risau"
+        >
+
+          <span class="block text-4xl">
+            😟
+          </span>
+
+          <span
+            class="mt-3 block text-sm font-bold text-[#16332d]"
+          >
+            Risau
+          </span>
+
+        </button>
+
+
+
+        <!-- MARAH -->
+
+        <button
+          type="button"
+          class="emotion-btn focus-ring col-span-2 rounded-2xl border-2 border-transparent bg-[#fff0ed] p-5 transition hover:-translate-y-1 hover:border-[#eab8ae] sm:col-span-1"
+          data-emotion="marah"
+        >
+
+          <span class="block text-4xl">
+            😠
+          </span>
+
+          <span
+            class="mt-3 block text-sm font-bold text-[#16332d]"
+          >
+            Marah
+          </span>
+
+        </button>
+
+
+      </div>
+
+
+
+      <!-- =============================================
+           RESPONSE
+      ============================================== -->
+
+      <div
+        id="emotion-response"
+        class="emotion-response mt-7 rounded-2xl bg-[#075e4c] p-6 text-white"
+        aria-live="polite"
+      >
+
+        <div
+          class="flex items-start gap-4"
+        >
+
+          <div
+            class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white/15"
+          >
+
+            <i
+              data-lucide="heart-handshake"
+              class="h-5 w-5"
+            ></i>
+
+          </div>
+
+
+          <div>
+
+            <h3
+              id="emotion-response-title"
+              class="font-bold"
+            >
+            </h3>
+
+
+            <p
+              id="emotion-response-text"
+              class="mt-2 text-sm leading-6 text-white/85"
+            >
+            </p>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- SUPPORT LINK -->
+
+        <div
+          id="emotion-support"
+          class="mt-5 hidden border-t border-white/15 pt-5"
+        >
+
+          <p class="text-sm text-white/80">
+            Perlukan seseorang untuk mendengar?
+          </p>
+
+
+          <a
+            href="temujanji.html"
+            class="mt-3 inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-[#075e4c]"
+          >
+
+            Dapatkan Bantuan
+
+            <i
+              data-lucide="arrow-right"
+              class="h-4 w-4"
+            ></i>
+
+          </a>
+
+        </div>
+
+
+      </div>
+
+
+
+      <!-- PRIVACY MESSAGE -->
+
+      <div
+        class="mt-6 flex items-start justify-center gap-2 text-center text-xs leading-5 text-[#789089]"
+      >
+
+        <i
+          data-lucide="shield-check"
+          class="mt-0.5 h-4 w-4 shrink-0 text-[#075e4c]"
+        ></i>
+
+        <span>
+          Pilihan ini hanya untuk membantu anda mengenali
+          perasaan semasa dan tidak disimpan oleh portal.
+        </span>
+
+      </div>
+
+
+    </div>
+
+  </div>
 
 </section>
 
-<!-- FOOTER -->
-<footer class="bg-purple-500 text-white-300 pt-10 pb-6">
+<!-- =====================================================
+     MOTIVASI MINGGUAN
+     Akan disambungkan ke Firestore kemudian
+===================================================== -->
 
-<div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8 text-center md:text-left">
+<section
+  id="motivasi"
+  class="relative overflow-hidden bg-[#fbfaf5] px-4 py-16 lg:px-7 lg:py-24"
+>
 
-<!-- INFO PORTAL -->
-<div>
-<h3 class="text-lg font-semibold text-white mb-3">
-Portal Anjung Kasih
-</h3>
+  <!-- DECORATION -->
 
-<p class="text-sm text-white-400 leading-relaxed">
-Portal rasmi Unit Bimbingan & Kaunseling
-SK Kuala Ketil yang menyediakan maklumat,
-perkhidmatan kaunseling serta sokongan
-kepada murid dan warga sekolah.
-</p>
-</div>
+  <div
+    class="absolute -left-24 top-10 h-72 w-72 rounded-full bg-[#dcece3]/60 blur-3xl"
+  ></div>
 
-
-<!-- HUBUNGI -->
-<div>
-<h3 class="text-lg font-semibold text-white mb-3">
-Hubungi Kami
-</h3>
-
-<p class="text-sm text-white-400 mb-2">
-📧 kaunseling.skkk@gmail.com
-</p>
-
-<p class="text-sm text-white-400 mb-3">
-📍 SK Kuala Ketil  
-Kuala Ketil, Kedah
-</p>
-
-<a href="https://wa.me/60123456789"
-target="_blank"
-class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
-
-📱 WhatsApp Kaunselor
-
-</a>
-
-</div>
+  <div
+    class="absolute -right-24 bottom-0 h-72 w-72 rounded-full bg-[#e8e1f5]/50 blur-3xl"
+  ></div>
 
 
-<!-- WAKTU OPERASI -->
-<div>
-<h3 class="text-lg font-semibold text-white mb-3">
-Waktu Perkhidmatan
-</h3>
-
-<p class="text-sm text-white-400">
-Ahad – Khamis
-</p>
-
-<p class="text-sm text-white-400">
-7:30 pagi – 2:30 petang
-</p>
-
-<p class="text-sm text-white-400 mt-2">
-Jumaat – Sabtu Cuti
-</p>
-</div>
-
-</div>
+  <div class="relative mx-auto max-w-[1100px]">
 
 
-<!-- GARIS PEMISAH -->
-<div class="max-w-6xl mx-auto px-6 mt-8">
-<hr class="border-gray-700">
-</div>
+    <!-- SECTION HEADER -->
+
+    <div class="reveal text-center">
+
+      <span
+        class="inline-flex items-center gap-2 rounded-full bg-[#eff8f3] px-4 py-2 text-xs font-bold tracking-[.12em] text-[#075e4c]"
+      >
+
+        <i
+          data-lucide="sparkles"
+          class="h-4 w-4"
+        ></i>
+
+        MOTIVASI MINGGUAN
+
+      </span>
 
 
-<!-- COPYRIGHT -->
-<div class="text-center text-sm text-white-500 mt-4">
+      <h2
+        class="display mt-5 text-4xl font-semibold text-[#16332d] lg:text-5xl"
+      >
+        Sedikit Kata,
+        <span class="text-[#075e4c]">
+          Besar Maknanya.
+        </span>
+      </h2>
 
-© 2026 Unit Bimbingan & Kaunseling  
-SK Kuala Ketil
 
-</div>
+      <p
+        class="mx-auto mt-4 max-w-xl leading-7 text-[#617a73]"
+      >
+        Suntikan semangat untuk membantu anda memulakan
+        minggu dengan lebih positif dan yakin.
+      </p>
 
-</footer>
+    </div>
 
-<script>
-function toggleDropdown(id) {
-  document.querySelectorAll('[id^="menu"]').forEach(menu => {
-    if (menu.id !== id) menu.classList.add('hidden');
-  });
-  document.getElementById(id).classList.toggle("hidden");
-}
 
-window.addEventListener("click", function(e) {
-  if (!e.target.closest(".relative")) {
-    document.querySelectorAll('[id^="menu"]').forEach(menu => {
-      menu.classList.add("hidden");
-    });
-  }
-});
 
-const btn = document.getElementById("menuBtn");
-const menu = document.getElementById("mobileMenu");
+    <!-- =================================================
+         MOTIVATION CARD
+    ================================================== -->
 
-btn.addEventListener("click", () => {
-  menu.classList.toggle("hidden");
-});
-</script>
+    <div
+      class="reveal relative mx-auto mt-8 max-w-[900px]
+         overflow-hidden rounded-[2rem]
+         bg-[#075e4c]
+         px-6 py-8 text-white soft-card
+         md:px-10 md:py-9"
+    >
 
-<script>
-function toggleMobile(id) {
-  const el = document.getElementById(id);
-  el.classList.toggle("hidden");
-}
-</script>
 
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+      <!-- DECORATION -->
 
-<script>
-const firebaseConfig = {
-  apiKey: "AIzaSyA9R5jKqeJNvBHD-SIOuseAqyb_x909R3Q",
-  authDomain: "bimbingankaunselingskkk.firebaseapp.com",
-  projectId: "bimbingankaunselingskkk"
-};
+      <div
+        class="absolute -right-16 -top-16 h-52 w-52 rounded-full bg-white/5"
+      ></div>
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+      <div
+        class="absolute -bottom-24 -left-20 h-64 w-64 rounded-full bg-[#7663a7]/20"
+      ></div>
 
-// visitor increment
-const ref = db.collection("stats").doc("visitors");
 
-ref.get().then(doc => {
-  if (doc.exists) {
-    ref.update({
-      count: firebase.firestore.FieldValue.increment(1)
-    });
-  } else {
-    ref.set({ count: 1 });
-  }
-});
 
-function openLightbox(img){
-  const lightbox = document.getElementById("lightbox");
-  const lightboxImg = document.getElementById("lightboxImg");
+      <div
+        class="relative mx-auto max-w-3xl text-center"
+      >
 
-  lightboxImg.src = img.src;
-  lightbox.style.display = "flex";
-}
 
-function closeLightbox(){
-  document.getElementById("lightbox").style.display = "none";
-}
+        <!-- ICON -->
 
-// 🔥 klik background sahaja tutup
-document.getElementById("lightbox").addEventListener("click", function(){
-  closeLightbox();
-});
+        <div
+          class="mx-auto grid h-12 w-12
+                place-items-center rounded-xl
+                bg-white/15"
+        >
 
-</script>
+          <i
+            data-lucide="quote"
+            class="h-6 w-6"
+          ></i>
 
-<!-- LIGHTBOX -->
-<div id="lightbox"
-     class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center"
-     style="display:none;">
+        </div>
 
-  <!-- BUTTON CLOSE -->
-  <button onclick="closeLightbox()"
-          class="absolute top-6 right-6 text-white text-3xl font-bold hover:text-red-400">
-    ✕
-  </button>
 
-  <!-- IMAGE -->
-  <img id="lightboxImg"
-       onclick="event.stopPropagation()"
-       class="max-w-[90%] max-h-[90%] rounded-xl shadow-2xl">
 
-</div>
+        <!-- =============================================
+             MOTIVATION TEXT
+             ID INI AKAN DIGUNAKAN FIRESTORE
+        ============================================== -->
+
+        <blockquote
+          id="motivasi-text"
+          class="display mx-auto mt-5 max-w-3xl
+                 text-xl font-semibold leading-relaxed
+                 md:text-2xl lg:text-3xl"
+        >
+          “Jangan takut untuk bergerak perlahan.
+          Yang penting, jangan berhenti melangkah.”
+        </blockquote>
+
+
+
+        <!-- MOTIVATION DESCRIPTION -->
+
+        <p
+          id="motivasi-description"
+          class="mx-auto mt-4 max-w-2xl
+                 text-sm leading-6 text-white/75
+                 md:text-base"
+        >
+          Setiap usaha kecil yang anda lakukan hari ini
+          membawa anda selangkah lebih dekat kepada
+          matlamat yang ingin dicapai.
+        </p>
+
+
+
+        <!-- DIVIDER -->
+
+        <div
+          class="mx-auto my-5 h-px w-16 bg-white/25"
+        ></div>
+
+
+
+        <!-- WEEK -->
+
+        <div
+          class="flex flex-wrap items-center justify-center gap-3 text-sm"
+        >
+
+          <span
+            class="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2"
+          >
+
+            <i
+              data-lucide="calendar-days"
+              class="h-4 w-4"
+            ></i>
+
+            <span id="motivasi-minggu">
+              Motivasi Minggu Ini
+            </span>
+
+          </span>
+
+
+          <span
+            class="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2"
+          >
+
+            <i
+              data-lucide="heart"
+              class="h-4 w-4"
+            ></i>
+
+            Untuk Anda
+
+          </span>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         SMALL REMINDER
+    ================================================== -->
+
+    <div
+      class="reveal mx-auto mt-7 flex max-w-2xl items-start justify-center gap-3 text-center text-sm leading-6 text-[#617a73]"
+    >
+
+      <i
+        data-lucide="sun"
+        class="mt-0.5 h-5 w-5 shrink-0 text-[#d99a26]"
+      ></i>
+
+      <p>
+        Ingat, kemajuan tidak semestinya besar.
+        Langkah kecil yang konsisten juga membawa perubahan.
+      </p>
+
+    </div>
+
+
+  </div>
+
+</section>
+
+
+</main>
+
+
+  <!-- =========================================
+       PORTAL JAVASCRIPT
+  ========================================== -->
+
+  <script src="js/main.js"></script>
 
 </body>
+
 </html>

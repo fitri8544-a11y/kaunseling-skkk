@@ -1,0 +1,3806 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Dashboard Admin | Bimbingan & Kaunseling SK Kuala Ketil</title>
+
+  <link rel="icon" type="image/png" href="assets/logo-sekolah.png">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:wght@600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    body {
+      font-family: "DM Sans", sans-serif;
+    }
+
+    .display {
+      font-family: "Fraunces", serif;
+    }
+
+    .sidebar-link {
+      transition: all 0.2s ease;
+    }
+
+    .sidebar-link:hover {
+      background: rgba(255,255,255,0.10);
+    }
+
+    .sidebar-link.active {
+      background: rgba(255,255,255,0.16);
+      color: #ffffff;
+    }
+
+    .admin-panel {
+      animation: panelFade 0.25s ease;
+    }
+
+    @keyframes panelFade {
+      from {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+
+<body class="bg-[#f5f8f6] text-slate-800">
+
+  <div class="min-h-screen flex">
+
+
+    <!-- ==================================================
+         SIDEBAR DESKTOP
+    =================================================== -->
+
+    <aside
+      class="hidden md:flex w-72 bg-[#06473a]
+             text-white min-h-screen flex-col
+             fixed left-0 top-0 bottom-0 z-40"
+    >
+
+      <!-- BRAND -->
+      <div class="p-6 border-b border-white/10">
+
+        <div class="flex items-center gap-3">
+
+          <div
+            class="w-12 h-12 bg-white rounded-xl
+                   p-1.5 flex-shrink-0"
+          >
+            <img
+              src="assets/logo-sekolah.png"
+              alt="Logo SK Kuala Ketil"
+              class="w-full h-full object-contain"
+            >
+          </div>
+
+          <div>
+
+            <p class="text-[11px] text-emerald-200 uppercase">
+              Unit Bimbingan & Kaunseling
+            </p>
+
+            <h1 class="font-bold">
+              Portal Admin
+            </h1>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- MENU -->
+      <nav class="p-4 space-y-2 flex-1">
+
+        <button
+          type="button"
+          data-panel="dashboard"
+          class="sidebar-link active
+                 w-full flex items-center gap-3
+                 px-4 py-3 rounded-xl text-left"
+        >
+          <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+          Dashboard
+        </button>
+
+
+        <button
+          type="button"
+          data-panel="makluman"
+          class="sidebar-link
+                 w-full flex items-center gap-3
+                 px-4 py-3 rounded-xl
+                 text-emerald-100 text-left"
+        >
+          <i data-lucide="megaphone" class="w-5 h-5"></i>
+          Pengurusan Makluman
+        </button>
+
+
+        <button
+          type="button"
+          data-panel="motivasi"
+          class="sidebar-link
+                 w-full flex items-center gap-3
+                 px-4 py-3 rounded-xl
+                 text-emerald-100 text-left"
+        >
+          <i data-lucide="sparkles" class="w-5 h-5"></i>
+          Motivasi Mingguan
+        </button>
+
+      </nav>
+
+
+      <!-- LIHAT PORTAL -->
+      <div class="p-4 border-t border-white/10">
+
+        <a
+          href="index.html"
+          class="sidebar-link
+                 flex items-center gap-3
+                 px-4 py-3 rounded-xl
+                 text-emerald-100"
+        >
+          <i data-lucide="external-link" class="w-5 h-5"></i>
+          Lihat Portal
+        </a>
+
+      </div>
+
+    </aside>
+
+
+
+    <!-- ==================================================
+         MAIN
+    =================================================== -->
+
+    <main class="flex-1 md:ml-72 min-w-0">
+
+
+      <!-- TOP BAR -->
+      <header
+        class="bg-white border-b border-slate-200
+               px-5 md:px-8 py-4
+               flex justify-between items-center
+               sticky top-0 z-30"
+      >
+
+        <div>
+
+          <p
+            class="text-xs font-semibold
+                   text-emerald-700 uppercase"
+          >
+            Portal Bimbingan & Kaunseling
+          </p>
+
+          <h2
+            id="pageTitle"
+            class="font-bold text-[#16332d]"
+          >
+            Dashboard Admin
+          </h2>
+
+        </div>
+
+
+        <div class="flex items-center gap-2">
+
+          <!-- MOBILE MENU -->
+          <button
+            id="mobileMenuButton"
+            type="button"
+            class="md:hidden w-10 h-10
+                   rounded-xl bg-slate-100
+                   flex items-center justify-center"
+            aria-label="Buka menu"
+          >
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+
+
+          <!-- LOGOUT -->
+          <button
+            id="logoutButton"
+            type="button"
+            class="flex items-center gap-2
+                   px-4 py-2 rounded-xl
+                   text-sm font-semibold
+                   text-red-600 bg-red-50
+                   hover:bg-red-100 transition"
+          >
+            <i data-lucide="log-out" class="w-4 h-4"></i>
+
+            <span class="hidden sm:inline">
+              Log Keluar
+            </span>
+          </button>
+
+        </div>
+
+      </header>
+
+
+
+      <!-- MOBILE NAV -->
+      <div
+        id="mobileMenu"
+        class="hidden md:hidden
+               bg-[#06473a] text-white
+               px-4 py-4 space-y-2"
+      >
+
+        <button
+          type="button"
+          data-panel="dashboard"
+          class="sidebar-link active
+                 w-full flex items-center gap-3
+                 px-4 py-3 rounded-xl text-left"
+        >
+          <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+          Dashboard
+        </button>
+
+
+        <button
+          type="button"
+          data-panel="makluman"
+          class="sidebar-link
+                 w-full flex items-center gap-3
+                 px-4 py-3 rounded-xl
+                 text-emerald-100 text-left"
+        >
+          <i data-lucide="megaphone" class="w-5 h-5"></i>
+          Pengurusan Makluman
+        </button>
+
+
+        <button
+          type="button"
+          data-panel="motivasi"
+          class="sidebar-link
+                 w-full flex items-center gap-3
+                 px-4 py-3 rounded-xl
+                 text-emerald-100 text-left"
+        >
+          <i data-lucide="sparkles" class="w-5 h-5"></i>
+          Motivasi Mingguan
+        </button>
+
+
+        <a
+          href="index.html"
+          class="sidebar-link
+                 flex items-center gap-3
+                 px-4 py-3 rounded-xl
+                 text-emerald-100"
+        >
+          <i data-lucide="external-link" class="w-5 h-5"></i>
+          Lihat Portal
+        </a>
+
+      </div>
+
+
+
+      <!-- ==================================================
+           CONTENT
+      =================================================== -->
+
+      <div class="p-5 md:p-8 max-w-7xl mx-auto">
+
+
+        <!-- ==================================================
+             PANEL : DASHBOARD
+        =================================================== -->
+
+        <section
+          id="panel-dashboard"
+          class="admin-panel"
+        >
+
+          <!-- WELCOME -->
+          <div class="mb-8">
+
+            <p class="text-sm text-emerald-700 font-semibold">
+              Selamat Datang 👋
+            </p>
+
+            <h2
+              class="display text-3xl md:text-4xl
+                     text-[#16332d] mt-1"
+            >
+              Pengurusan Portal
+            </h2>
+
+            <p class="text-slate-500 mt-2 max-w-2xl">
+              Urus kandungan Portal Bimbingan & Kaunseling
+              SK Kuala Ketil dari satu tempat.
+            </p>
+
+          </div>
+
+
+          <!-- KPI -->
+          <div
+            class="grid sm:grid-cols-2
+                   lg:grid-cols-3 gap-5"
+          >
+
+            <!-- MAKLUMAN -->
+            <button
+              type="button"
+              data-open-panel="makluman"
+              class="bg-white rounded-2xl
+                     border border-slate-200
+                     p-6 shadow-sm text-left
+                     hover:shadow-md
+                     hover:border-emerald-200
+                     transition"
+            >
+
+              <div
+                class="w-11 h-11 rounded-xl
+                       bg-emerald-50 text-emerald-700
+                       flex items-center justify-center mb-4"
+              >
+                <i data-lucide="megaphone" class="w-5 h-5"></i>
+              </div>
+
+              <p class="text-sm text-slate-500">
+                Makluman Aktif
+              </p>
+
+              <p
+                id="kpiMakluman"
+                class="text-3xl font-bold
+                       text-[#16332d] mt-1"
+              >
+                0
+              </p>
+
+              <p class="text-xs text-emerald-700 mt-3 font-semibold">
+                Urus makluman →
+              </p>
+
+            </button>
+
+
+            <!-- MOTIVASI -->
+            <button
+              type="button"
+              data-open-panel="motivasi"
+              class="bg-white rounded-2xl
+                     border border-slate-200
+                     p-6 shadow-sm text-left
+                     hover:shadow-md
+                     hover:border-violet-200
+                     transition"
+            >
+
+              <div
+                class="w-11 h-11 rounded-xl
+                       bg-violet-50 text-violet-700
+                       flex items-center justify-center mb-4"
+              >
+                <i data-lucide="sparkles" class="w-5 h-5"></i>
+              </div>
+
+              <p class="text-sm text-slate-500">
+                Motivasi Mingguan
+              </p>
+
+              <p
+                id="kpiMotivasi"
+                class="text-lg font-bold
+                       text-[#16332d] mt-2"
+              >
+                Belum ditetapkan
+              </p>
+
+              <p class="text-xs text-violet-700 mt-3 font-semibold">
+                Urus motivasi →
+              </p>
+
+            </button>
+
+
+            <!-- STATUS -->
+            <div
+              class="bg-white rounded-2xl
+                     border border-slate-200
+                     p-6 shadow-sm"
+            >
+
+              <div
+                class="w-11 h-11 rounded-xl
+                       bg-blue-50 text-blue-700
+                       flex items-center justify-center mb-4"
+              >
+                <i data-lucide="activity" class="w-5 h-5"></i>
+              </div>
+
+              <p class="text-sm text-slate-500">
+                Status Portal
+              </p>
+
+              <div class="flex items-center gap-2 mt-2">
+
+                <span
+                  class="w-2.5 h-2.5
+                         rounded-full bg-emerald-500"
+                ></span>
+
+                <p class="font-bold text-[#16332d]">
+                  Aktif
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- INFO -->
+          <div
+            class="mt-8 bg-[#eaf5ef]
+                   border border-emerald-100
+                   rounded-2xl p-6"
+          >
+
+            <div class="flex gap-4">
+
+              <div
+                class="w-10 h-10 rounded-xl
+                       bg-white text-emerald-700
+                       flex items-center justify-center
+                       flex-shrink-0"
+              >
+                <i data-lucide="shield-check" class="w-5 h-5"></i>
+              </div>
+
+              <div>
+
+                <h3 class="font-bold text-[#16332d]">
+                  Dashboard Pentadbir
+                </h3>
+
+                <p class="text-sm text-slate-600 mt-1">
+                  Gunakan menu di sebelah kiri untuk mengurus
+                  kandungan yang dipaparkan kepada pengguna portal.
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+
+        <!-- ==================================================
+             PANEL : MAKLUMAN
+        =================================================== -->
+
+        <section
+          id="panel-makluman"
+          class="admin-panel hidden"
+        >
+
+          <!-- HEADER -->
+          <div
+            class="flex flex-col md:flex-row
+                   md:items-center justify-between
+                   gap-4 mb-6"
+          >
+
+            <div>
+
+              <p
+                class="text-xs font-bold tracking-wider
+                       text-emerald-700 uppercase"
+              >
+                Pengurusan Kandungan
+              </p>
+
+              <h2
+                class="display text-3xl md:text-4xl
+                       text-[#16332d] mt-1"
+              >
+                Makluman Terkini
+              </h2>
+
+              <p class="text-sm text-slate-500 mt-2">
+                Tambah dan urus makluman yang dipaparkan
+                pada halaman utama portal.
+              </p>
+
+            </div>
+
+
+            <button
+              id="btnTambahMakluman"
+              type="button"
+              class="inline-flex items-center
+                     justify-center gap-2
+                     bg-[#075e4c] text-white
+                     px-5 py-3 rounded-xl
+                     font-semibold
+                     hover:bg-[#06473a]
+                     transition"
+            >
+              <i data-lucide="plus" class="w-5 h-5"></i>
+              Tambah Makluman
+            </button>
+
+          </div>
+
+
+          <!-- LIST -->
+          <div
+            class="bg-white rounded-2xl
+                   border border-slate-200
+                   shadow-sm overflow-hidden"
+          >
+
+            <div
+              class="px-6 py-5
+                     border-b border-slate-100"
+            >
+
+              <div
+                class="flex flex-col sm:flex-row
+                       sm:items-center
+                       justify-between gap-2"
+              >
+
+                <div>
+
+                  <h3 class="font-bold text-[#16332d]">
+                    Senarai Makluman
+                  </h3>
+
+                  <p class="text-sm text-slate-500 mt-1">
+                    Makluman yang telah ditambah akan
+                    disenaraikan di sini.
+                  </p>
+
+                </div>
+
+
+                <div
+                  class="text-xs font-semibold
+                         text-slate-400"
+                >
+                  <span id="jumlahMakluman">0</span>
+                  makluman
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- EMPTY STATE -->
+            <div
+              id="maklumanEmpty"
+              class="px-6 py-16 text-center"
+            >
+
+              <div
+                class="w-14 h-14 mx-auto
+                       rounded-2xl bg-emerald-50
+                       text-emerald-700
+                       flex items-center
+                       justify-center mb-4"
+              >
+                <i data-lucide="megaphone" class="w-6 h-6"></i>
+              </div>
+
+              <h4 class="font-bold text-[#16332d]">
+                Belum Ada Makluman
+              </h4>
+
+              <p
+                class="text-sm text-slate-500
+                       mt-2 max-w-md mx-auto"
+              >
+                Klik “Tambah Makluman” untuk memasukkan
+                makluman pertama ke dalam portal.
+              </p>
+
+            </div>
+
+
+            <!-- FIRESTORE LIST -->
+            <div
+              id="maklumanList"
+              class="hidden divide-y divide-slate-100"
+            ></div>
+
+          </div>
+
+        </section>
+
+
+
+        <!-- ==================================================
+     PANEL : MOTIVASI
+=================================================== -->
+
+<section
+  id="panel-motivasi"
+  class="admin-panel hidden"
+>
+
+  <!-- HEADER -->
+  <div
+    class="flex flex-col md:flex-row
+           md:items-center justify-between
+           gap-4 mb-6"
+  >
+
+    <div>
+
+      <p
+        class="text-xs font-bold tracking-wider
+               text-violet-700 uppercase"
+      >
+        Pengurusan Kandungan
+      </p>
+
+      <h2
+        class="display text-3xl md:text-4xl
+               text-[#16332d] mt-1"
+      >
+        Motivasi Mingguan
+      </h2>
+
+      <p class="text-sm text-slate-500 mt-2">
+        Urus kata-kata motivasi yang akan dipaparkan
+        pada halaman utama portal.
+      </p>
+
+    </div>
+
+
+    <button
+      id="btnTambahMotivasi"
+      type="button"
+      class="inline-flex items-center
+             justify-center gap-2
+             bg-violet-700 text-white
+             px-5 py-3 rounded-xl
+             font-semibold
+             hover:bg-violet-800
+             transition"
+    >
+      <i
+        data-lucide="plus"
+        class="w-5 h-5"
+      ></i>
+
+      Tambah Motivasi
+    </button>
+
+  </div>
+
+
+  <!-- CURRENT ACTIVE -->
+  <div
+    id="motivasiAktifCard"
+    class="hidden mb-6
+           rounded-2xl
+           bg-gradient-to-br
+           from-violet-700
+           to-violet-900
+           p-6 text-white
+           shadow-sm"
+  >
+
+    <div
+      class="flex items-center gap-2
+             text-xs font-bold
+             uppercase tracking-wider
+             text-violet-200"
+    >
+      <i
+        data-lucide="sparkles"
+        class="w-4 h-4"
+      ></i>
+
+      Sedang Dipaparkan di Portal
+    </div>
+
+
+    <blockquote
+      id="motivasiAktifTeks"
+      class="display mt-4
+             text-2xl leading-relaxed"
+    ></blockquote>
+
+
+    <p
+      id="motivasiAktifPenerangan"
+      class="mt-3 text-sm
+             leading-6 text-white/75"
+    ></p>
+
+
+    <div
+      id="motivasiAktifMinggu"
+      class="mt-5 inline-flex
+             items-center gap-2
+             rounded-full
+             bg-white/10
+             px-4 py-2
+             text-xs font-semibold"
+    ></div>
+
+  </div>
+
+
+  <!-- LIST -->
+  <div
+    class="bg-white rounded-2xl
+           border border-slate-200
+           shadow-sm overflow-hidden"
+  >
+
+    <div
+      class="px-6 py-5
+             border-b border-slate-100"
+    >
+
+      <div
+        class="flex flex-col sm:flex-row
+               sm:items-center
+               justify-between gap-2"
+      >
+
+        <div>
+
+          <h3 class="font-bold text-[#16332d]">
+            Senarai Motivasi
+          </h3>
+
+          <p class="text-sm text-slate-500 mt-1">
+            Semua motivasi yang telah ditambah
+            akan disenaraikan di sini.
+          </p>
+
+        </div>
+
+
+        <div
+          class="text-xs font-semibold
+                 text-slate-400"
+        >
+          <span id="jumlahMotivasi">0</span>
+          motivasi
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- EMPTY STATE -->
+    <div
+      id="motivasiEmpty"
+      class="px-6 py-16 text-center"
+    >
+
+      <div
+        class="w-14 h-14 mx-auto
+               rounded-2xl bg-violet-50
+               text-violet-700
+               flex items-center
+               justify-center mb-4"
+      >
+        <i
+          data-lucide="sparkles"
+          class="w-6 h-6"
+        ></i>
+      </div>
+
+
+      <h4 class="font-bold text-[#16332d]">
+        Belum Ada Motivasi
+      </h4>
+
+
+      <p
+        class="text-sm text-slate-500
+               mt-2 max-w-md mx-auto"
+      >
+        Klik “Tambah Motivasi” untuk memasukkan
+        motivasi mingguan pertama.
+      </p>
+
+    </div>
+
+
+    <!-- FIRESTORE LIST -->
+    <div
+      id="motivasiList"
+      class="hidden divide-y divide-slate-100"
+    ></div>
+
+  </div>
+
+</section>
+
+
+      </div>
+
+    </main>
+
+  </div>
+
+
+
+  <!-- ==================================================
+       MODAL TAMBAH MAKLUMAN
+  =================================================== -->
+
+  <div
+    id="modalMakluman"
+    class="hidden fixed inset-0 z-50
+           bg-black/50 backdrop-blur-sm
+           items-center justify-center p-4"
+  >
+
+    <div
+      class="bg-white w-full max-w-2xl
+             max-h-[90vh] overflow-y-auto
+             rounded-[24px] shadow-2xl"
+    >
+
+      <!-- MODAL HEADER -->
+      <div
+        class="flex items-center justify-between
+               px-6 py-5
+               border-b border-slate-100"
+      >
+
+        <div>
+
+          <p
+            class="text-xs font-bold tracking-wider
+                   text-emerald-700 uppercase"
+          >
+            Pengurusan Portal
+          </p>
+
+          <h2
+            class="text-xl font-bold
+                   text-[#16332d] mt-1"
+          >
+            Tambah Makluman
+          </h2>
+
+        </div>
+
+
+        <button
+          id="btnTutupModal"
+          type="button"
+          class="w-10 h-10 rounded-xl
+                 bg-slate-100 text-slate-500
+                 hover:bg-slate-200
+                 flex items-center justify-center"
+          aria-label="Tutup"
+        >
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+
+      </div>
+
+
+      <!-- FORM -->
+      <form
+        id="formMakluman"
+        class="p-6 space-y-5"
+      >
+
+        <!-- TAJUK -->
+        <div>
+
+          <label
+            for="maklumanTajuk"
+            class="block text-sm font-semibold
+                   text-slate-700 mb-2"
+          >
+            Tajuk Makluman
+            <span class="text-red-500">*</span>
+          </label>
+
+          <input
+            id="maklumanTajuk"
+            type="text"
+            required
+            maxlength="120"
+            placeholder="Contoh: Program Motivasi Murid"
+            class="w-full px-4 py-3 rounded-xl
+                   border border-slate-200
+                   focus:outline-none focus:ring-2
+                   focus:ring-emerald-500"
+          >
+
+        </div>
+
+
+        <!-- KATEGORI + TARIKH -->
+        <div class="grid md:grid-cols-2 gap-5">
+
+          <div>
+
+            <label
+              for="maklumanKategori"
+              class="block text-sm font-semibold
+                     text-slate-700 mb-2"
+            >
+              Kategori
+            </label>
+
+            <select
+              id="maklumanKategori"
+              class="w-full px-4 py-3 rounded-xl
+                     border border-slate-200
+                     bg-white
+                     focus:outline-none focus:ring-2
+                     focus:ring-emerald-500"
+            >
+              <option value="Makluman">Makluman</option>
+              <option value="Program">Program</option>
+              <option value="Aktiviti">Aktiviti</option>
+              <option value="Penting">Penting</option>
+            </select>
+
+          </div>
+
+
+          <div>
+
+            <label
+              for="maklumanTarikh"
+              class="block text-sm font-semibold
+                     text-slate-700 mb-2"
+            >
+              Tarikh
+              <span class="text-red-500">*</span>
+            </label>
+
+            <input
+              id="maklumanTarikh"
+              type="date"
+              required
+              class="w-full px-4 py-3 rounded-xl
+                     border border-slate-200
+                     focus:outline-none focus:ring-2
+                     focus:ring-emerald-500"
+            >
+
+          </div>
+
+        </div>
+
+
+        <!-- KANDUNGAN -->
+        <div>
+
+          <label
+            for="maklumanKandungan"
+            class="block text-sm font-semibold
+                   text-slate-700 mb-2"
+          >
+            Kandungan
+            <span class="text-red-500">*</span>
+          </label>
+
+          <textarea
+            id="maklumanKandungan"
+            required
+            maxlength="600"
+            rows="5"
+            placeholder="Masukkan maklumat ringkas yang ingin disampaikan..."
+            class="w-full px-4 py-3 rounded-xl
+                   border border-slate-200
+                   resize-none
+                   focus:outline-none focus:ring-2
+                   focus:ring-emerald-500"
+          ></textarea>
+
+          <div
+            class="flex justify-between
+                   text-xs text-slate-400 mt-2"
+          >
+            <span>Maksimum 600 aksara.</span>
+
+            <span>
+              <span id="kiraanAksara">0</span>/600
+            </span>
+          </div>
+
+        </div>
+
+
+        <!-- SETTINGS -->
+        <div
+          class="grid sm:grid-cols-2 gap-4
+                 bg-[#f5f8f6] rounded-2xl p-4"
+        >
+
+          <label
+            class="flex items-center gap-3 cursor-pointer"
+          >
+
+            <input
+              id="maklumanAktif"
+              type="checkbox"
+              checked
+              class="w-4 h-4 accent-emerald-700"
+            >
+
+            <div>
+
+              <p class="text-sm font-semibold text-slate-700">
+                Paparkan di Portal
+              </p>
+
+              <p class="text-xs text-slate-500">
+                Status makluman aktif
+              </p>
+
+            </div>
+
+          </label>
+
+
+          <label
+            class="flex items-center gap-3 cursor-pointer"
+          >
+
+            <input
+              id="maklumanPenting"
+              type="checkbox"
+              class="w-4 h-4 accent-amber-500"
+            >
+
+            <div>
+
+              <p class="text-sm font-semibold text-slate-700">
+                Tandakan Penting
+              </p>
+
+              <p class="text-xs text-slate-500">
+                Beri penekanan pada makluman
+              </p>
+
+            </div>
+
+          </label>
+
+        </div>
+
+
+        <!-- ACTION -->
+        <div
+          class="flex flex-col-reverse
+                 sm:flex-row sm:justify-end
+                 gap-3 pt-2"
+        >
+
+          <button
+            id="btnBatalMakluman"
+            type="button"
+            class="px-5 py-3 rounded-xl
+                   font-semibold text-slate-600
+                   bg-slate-100
+                   hover:bg-slate-200 transition"
+          >
+            Batal
+          </button>
+
+
+          <button
+            id="btnSimpanMakluman"
+            type="submit"
+            class="px-5 py-3 rounded-xl
+                   font-semibold text-white
+                   bg-[#075e4c]
+                   hover:bg-[#06473a]
+                   transition
+                   inline-flex items-center
+                   justify-center gap-2"
+          >
+            <i data-lucide="save" class="w-5 h-5"></i>
+            Simpan Makluman
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+  <!-- ==================================================
+     MODAL TAMBAH / EDIT MOTIVASI
+=================================================== -->
+
+<div
+  id="modalMotivasi"
+  class="hidden fixed inset-0 z-50
+         bg-black/50 backdrop-blur-sm
+         items-center justify-center p-4"
+>
+
+  <div
+    class="bg-white w-full max-w-2xl
+           max-h-[90vh] overflow-y-auto
+           rounded-[24px] shadow-2xl"
+  >
+
+    <!-- HEADER -->
+    <div
+      class="flex items-center justify-between
+             px-6 py-5
+             border-b border-slate-100"
+    >
+
+      <div>
+
+        <p
+          class="text-xs font-bold tracking-wider
+                 text-violet-700 uppercase"
+        >
+          Pengurusan Portal
+        </p>
+
+        <h2
+          id="tajukModalMotivasi"
+          class="text-xl font-bold
+                 text-[#16332d] mt-1"
+        >
+          Tambah Motivasi
+        </h2>
+
+      </div>
+
+
+      <button
+        id="btnTutupModalMotivasi"
+        type="button"
+        class="w-10 h-10 rounded-xl
+               bg-slate-100 text-slate-500
+               hover:bg-slate-200
+               flex items-center justify-center"
+        aria-label="Tutup"
+      >
+        <i
+          data-lucide="x"
+          class="w-5 h-5"
+        ></i>
+      </button>
+
+    </div>
+
+
+    <!-- FORM -->
+    <form
+      id="formMotivasi"
+      class="p-6 space-y-5"
+    >
+
+
+      <!-- TEKS MOTIVASI -->
+      <div>
+
+        <label
+          for="motivasiTeks"
+          class="block text-sm font-semibold
+                 text-slate-700 mb-2"
+        >
+          Kata-kata Motivasi
+          <span class="text-red-500">*</span>
+        </label>
+
+        <textarea
+          id="motivasiTeks"
+          required
+          maxlength="250"
+          rows="3"
+          placeholder="Contoh: Jangan takut untuk bergerak perlahan. Yang penting, jangan berhenti melangkah."
+          class="w-full px-4 py-3 rounded-xl
+                 border border-slate-200
+                 resize-none
+                 focus:outline-none focus:ring-2
+                 focus:ring-violet-500"
+        ></textarea>
+
+        <div
+          class="flex justify-between
+                 text-xs text-slate-400 mt-2"
+        >
+          <span>Maksimum 250 aksara.</span>
+
+          <span>
+            <span id="kiraanMotivasiTeks">0</span>/250
+          </span>
+        </div>
+
+      </div>
+
+
+      <!-- PENERANGAN -->
+      <div>
+
+        <label
+          for="motivasiPenerangan"
+          class="block text-sm font-semibold
+                 text-slate-700 mb-2"
+        >
+          Penerangan Ringkas
+          <span class="text-red-500">*</span>
+        </label>
+
+        <textarea
+          id="motivasiPenerangan"
+          required
+          maxlength="400"
+          rows="4"
+          placeholder="Masukkan penerangan ringkas yang menyokong kata-kata motivasi..."
+          class="w-full px-4 py-3 rounded-xl
+                 border border-slate-200
+                 resize-none
+                 focus:outline-none focus:ring-2
+                 focus:ring-violet-500"
+        ></textarea>
+
+        <div
+          class="flex justify-between
+                 text-xs text-slate-400 mt-2"
+        >
+          <span>Maksimum 400 aksara.</span>
+
+          <span>
+            <span id="kiraanMotivasiPenerangan">0</span>/400
+          </span>
+        </div>
+
+      </div>
+
+
+      <!-- LABEL MINGGU -->
+      <div>
+
+        <label
+          for="motivasiMinggu"
+          class="block text-sm font-semibold
+                 text-slate-700 mb-2"
+        >
+          Label Minggu
+          <span class="text-red-500">*</span>
+        </label>
+
+        <input
+          id="motivasiMinggu"
+          type="text"
+          required
+          maxlength="80"
+          placeholder="Contoh: Motivasi Minggu Ini"
+          class="w-full px-4 py-3 rounded-xl
+                 border border-slate-200
+                 focus:outline-none focus:ring-2
+                 focus:ring-violet-500"
+        >
+
+        <p class="text-xs text-slate-400 mt-2">
+          Label ini akan dipaparkan bersama motivasi
+          pada halaman utama portal.
+        </p>
+
+      </div>
+
+
+      <!-- STATUS -->
+      <div
+        class="bg-violet-50
+               rounded-2xl p-4"
+      >
+
+        <label
+          class="flex items-start gap-3 cursor-pointer"
+        >
+
+          <input
+            id="motivasiAktif"
+            type="checkbox"
+            class="w-4 h-4 mt-1
+                   accent-violet-700"
+          >
+
+          <div>
+
+            <p
+              class="text-sm font-semibold
+                     text-slate-700"
+            >
+              Jadikan Motivasi Aktif
+            </p>
+
+            <p
+              class="text-xs text-slate-500 mt-1"
+            >
+              Motivasi aktif akan dipaparkan pada
+              halaman utama portal. Hanya satu motivasi
+              akan ditetapkan sebagai aktif.
+            </p>
+
+          </div>
+
+        </label>
+
+      </div>
+
+
+      <!-- ACTION -->
+      <div
+        class="flex flex-col-reverse
+               sm:flex-row sm:justify-end
+               gap-3 pt-2"
+      >
+
+        <button
+          id="btnBatalMotivasi"
+          type="button"
+          class="px-5 py-3 rounded-xl
+                 font-semibold text-slate-600
+                 bg-slate-100
+                 hover:bg-slate-200 transition"
+        >
+          Batal
+        </button>
+
+
+        <button
+          id="btnSimpanMotivasi"
+          type="submit"
+          class="px-5 py-3 rounded-xl
+                 font-semibold text-white
+                 bg-violet-700
+                 hover:bg-violet-800
+                 transition
+                 inline-flex items-center
+                 justify-center gap-2"
+        >
+
+          <i
+            data-lucide="save"
+            class="w-5 h-5"
+          ></i>
+
+          Simpan Motivasi
+
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+
+  <!-- ==================================================
+       JAVASCRIPT
+  =================================================== -->
+
+  <script>
+
+    // ==================================================
+    // ICONS
+    // ==================================================
+
+    lucide.createIcons();
+
+
+
+    // ==================================================
+    // FIREBASE CONFIG
+    // ==================================================
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA9R5jKqeJNvBHD-SIOuseAqyb_x909R3Q",
+      authDomain: "bimbingankaunselingskkk.firebaseapp.com",
+      projectId: "bimbingankaunselingskkk"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    let editMaklumanId = null;
+
+
+
+    // ==================================================
+    // ADMIN ACCESS
+    // ==================================================
+
+    const PORTAL_ADMIN_EMAILS = [
+      "fitrieusop@moe.gov.my",
+      "g-88050609@moe-dl.edu.my"
+    ];
+
+
+    auth.onAuthStateChanged(async (user) => {
+
+      if (!user) {
+
+        window.location.replace(
+          "admin-login.html"
+        );
+
+        return;
+      }
+
+
+      const email =
+        (user.email || "").toLowerCase();
+
+
+      if (!PORTAL_ADMIN_EMAILS.includes(email)) {
+
+        await auth.signOut();
+
+        window.location.replace(
+          "admin-login.html"
+        );
+
+        return;
+      }
+
+
+      console.log(
+        "Admin Portal:",
+        email
+      );
+
+    });
+
+
+
+    // ==================================================
+    // LOGOUT
+    // ==================================================
+
+    const logoutButton =
+      document.getElementById("logoutButton");
+
+
+    logoutButton.addEventListener(
+      "click",
+      async () => {
+
+        try {
+
+          await auth.signOut();
+
+          window.location.replace(
+            "admin-login.html"
+          );
+
+        } catch (error) {
+
+          console.error(
+            "Logout error:",
+            error
+          );
+
+          alert(
+            "Log keluar tidak berjaya. Sila cuba semula."
+          );
+
+        }
+
+      }
+    );
+
+
+
+    // ==================================================
+    // PANEL NAVIGATION
+    // ==================================================
+
+    const panels = {
+      dashboard:
+        document.getElementById("panel-dashboard"),
+
+      makluman:
+        document.getElementById("panel-makluman"),
+
+      motivasi:
+        document.getElementById("panel-motivasi")
+    };
+
+
+    const panelTitles = {
+      dashboard: "Dashboard Admin",
+      makluman: "Pengurusan Makluman",
+      motivasi: "Motivasi Mingguan"
+    };
+
+
+    const pageTitle =
+      document.getElementById("pageTitle");
+
+
+    function showPanel(panelName) {
+
+      // Hide all panels
+      Object.values(panels).forEach(
+        panel => panel.classList.add("hidden")
+      );
+
+
+      // Show selected
+      if (panels[panelName]) {
+
+        panels[panelName]
+          .classList.remove("hidden");
+
+      }
+
+
+      // Update title
+      pageTitle.textContent =
+        panelTitles[panelName] ||
+        "Dashboard Admin";
+
+
+      // Update sidebar active state
+      document
+        .querySelectorAll("[data-panel]")
+        .forEach(button => {
+
+          const active =
+            button.dataset.panel === panelName;
+
+          button.classList.toggle(
+            "active",
+            active
+          );
+
+        });
+
+
+      // Close mobile menu
+      mobileMenu.classList.add("hidden");
+
+
+      // Return page to top
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }
+
+
+    document
+      .querySelectorAll("[data-panel]")
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            showPanel(
+              button.dataset.panel
+            );
+
+          }
+        );
+
+      });
+
+
+    document
+      .querySelectorAll("[data-open-panel]")
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            showPanel(
+              button.dataset.openPanel
+            );
+
+          }
+        );
+
+      });
+
+
+
+    // ==================================================
+    // MOBILE MENU
+    // ==================================================
+
+    const mobileMenu =
+      document.getElementById("mobileMenu");
+
+    const mobileMenuButton =
+      document.getElementById(
+        "mobileMenuButton"
+      );
+
+
+    mobileMenuButton.addEventListener(
+      "click",
+      () => {
+
+        mobileMenu.classList.toggle(
+          "hidden"
+        );
+
+      }
+    );
+
+
+
+    // ==================================================
+    // MODAL MAKLUMAN
+    // ==================================================
+
+    const modalMakluman =
+      document.getElementById("modalMakluman");
+
+    const btnTambahMakluman =
+      document.getElementById(
+        "btnTambahMakluman"
+      );
+
+    const btnTutupModal =
+      document.getElementById(
+        "btnTutupModal"
+      );
+
+    const btnBatalMakluman =
+      document.getElementById(
+        "btnBatalMakluman"
+      );
+
+    const formMakluman =
+      document.getElementById(
+        "formMakluman"
+      );
+
+
+    function bukaModalMakluman() {
+
+  // ===============================
+  // MODE TAMBAH
+  // ===============================
+
+  editMaklumanId = null;
+
+
+  // Tukar tajuk modal
+  document.querySelector(
+    "#modalMakluman h2"
+  ).textContent =
+    "Tambah Makluman";
+
+
+  // Reset borang
+  formMakluman.reset();
+
+
+  // Default aktif
+  document
+    .getElementById("maklumanAktif")
+    .checked = true;
+
+
+  // Reset kiraan aksara
+  document
+    .getElementById("kiraanAksara")
+    .textContent = "0";
+
+
+  // Reset teks butang
+  document
+    .getElementById("btnSimpanMakluman")
+    .innerHTML = `
+      <i
+        data-lucide="save"
+        class="w-5 h-5"
+      ></i>
+      Simpan Makluman
+    `;
+
+
+  lucide.createIcons();
+
+
+  // Buka modal
+  modalMakluman
+    .classList.remove("hidden");
+
+  modalMakluman
+    .classList.add("flex");
+
+
+  document.body
+    .classList.add("overflow-hidden");
+
+
+  // Fokus pada tajuk
+  setTimeout(() => {
+
+    document
+      .getElementById("maklumanTajuk")
+      .focus();
+
+  }, 100);
+
+}
+
+
+    function tutupModalMakluman() {
+
+      modalMakluman
+        .classList.add("hidden");
+
+      modalMakluman
+        .classList.remove("flex");
+
+      document.body
+        .classList.remove("overflow-hidden");
+
+    }
+
+
+    btnTambahMakluman.addEventListener(
+      "click",
+      bukaModalMakluman
+    );
+
+
+    btnTutupModal.addEventListener(
+      "click",
+      tutupModalMakluman
+    );
+
+
+    btnBatalMakluman.addEventListener(
+      "click",
+      tutupModalMakluman
+    );
+
+
+    modalMakluman.addEventListener(
+      "click",
+      event => {
+
+        if (
+          event.target === modalMakluman
+        ) {
+
+          tutupModalMakluman();
+
+        }
+
+      }
+    );
+
+
+    document.addEventListener(
+      "keydown",
+      event => {
+
+        if (
+          event.key === "Escape" &&
+          !modalMakluman
+            .classList.contains("hidden")
+        ) {
+
+          tutupModalMakluman();
+
+        }
+
+      }
+    );
+
+
+
+    // ==================================================
+    // CHARACTER COUNTER
+    // ==================================================
+
+    const maklumanKandungan =
+      document.getElementById(
+        "maklumanKandungan"
+      );
+
+    const kiraanAksara =
+      document.getElementById(
+        "kiraanAksara"
+      );
+
+
+    maklumanKandungan.addEventListener(
+      "input",
+      () => {
+
+        kiraanAksara.textContent =
+          maklumanKandungan.value.length;
+
+      }
+    );
+
+    // ==================================================
+// MODAL MOTIVASI
+// ==================================================
+
+let editMotivasiId = null;
+
+
+const modalMotivasi =
+  document.getElementById(
+    "modalMotivasi"
+  );
+
+
+const btnTambahMotivasi =
+  document.getElementById(
+    "btnTambahMotivasi"
+  );
+
+
+const btnTutupModalMotivasi =
+  document.getElementById(
+    "btnTutupModalMotivasi"
+  );
+
+
+const btnBatalMotivasi =
+  document.getElementById(
+    "btnBatalMotivasi"
+  );
+
+
+const formMotivasi =
+  document.getElementById(
+    "formMotivasi"
+  );
+
+
+const motivasiTeks =
+  document.getElementById(
+    "motivasiTeks"
+  );
+
+
+const motivasiPenerangan =
+  document.getElementById(
+    "motivasiPenerangan"
+  );
+
+
+const kiraanMotivasiTeks =
+  document.getElementById(
+    "kiraanMotivasiTeks"
+  );
+
+
+const kiraanMotivasiPenerangan =
+  document.getElementById(
+    "kiraanMotivasiPenerangan"
+  );
+
+
+
+// ==================================================
+// BUKA MODAL MOTIVASI
+// MODE TAMBAH
+// ==================================================
+
+function bukaModalMotivasi() {
+
+  editMotivasiId = null;
+
+
+  // Reset borang
+  formMotivasi.reset();
+
+
+  // Tajuk modal
+  document.getElementById(
+    "tajukModalMotivasi"
+  ).textContent =
+    "Tambah Motivasi";
+
+
+  // Reset counter
+  kiraanMotivasiTeks.textContent =
+    "0";
+
+  kiraanMotivasiPenerangan.textContent =
+    "0";
+
+
+  // Reset butang
+  document.getElementById(
+    "btnSimpanMotivasi"
+  ).innerHTML = `
+    <i
+      data-lucide="save"
+      class="w-5 h-5"
+    ></i>
+    Simpan Motivasi
+  `;
+
+
+  lucide.createIcons();
+
+
+  // Buka modal
+  modalMotivasi.classList.remove(
+    "hidden"
+  );
+
+  modalMotivasi.classList.add(
+    "flex"
+  );
+
+
+  document.body.classList.add(
+    "overflow-hidden"
+  );
+
+
+  // Fokus
+  setTimeout(
+    () => {
+
+      motivasiTeks.focus();
+
+    },
+    100
+  );
+
+}
+
+
+
+// ==================================================
+// TUTUP MODAL MOTIVASI
+// ==================================================
+
+function tutupModalMotivasi() {
+
+  modalMotivasi.classList.add(
+    "hidden"
+  );
+
+  modalMotivasi.classList.remove(
+    "flex"
+  );
+
+
+  document.body.classList.remove(
+    "overflow-hidden"
+  );
+
+}
+
+
+
+// ==================================================
+// BUTTON EVENTS
+// ==================================================
+
+btnTambahMotivasi.addEventListener(
+  "click",
+  bukaModalMotivasi
+);
+
+
+btnTutupModalMotivasi.addEventListener(
+  "click",
+  tutupModalMotivasi
+);
+
+
+btnBatalMotivasi.addEventListener(
+  "click",
+  tutupModalMotivasi
+);
+
+
+
+// ==================================================
+// TUTUP JIKA KLIK BACKDROP
+// ==================================================
+
+modalMotivasi.addEventListener(
+  "click",
+  event => {
+
+    if (
+      event.target === modalMotivasi
+    ) {
+
+      tutupModalMotivasi();
+
+    }
+
+  }
+);
+
+
+
+// ==================================================
+// CHARACTER COUNTER
+// ==================================================
+
+motivasiTeks.addEventListener(
+  "input",
+  () => {
+
+    kiraanMotivasiTeks.textContent =
+      motivasiTeks.value.length;
+
+  }
+);
+
+
+motivasiPenerangan.addEventListener(
+  "input",
+  () => {
+
+    kiraanMotivasiPenerangan.textContent =
+      motivasiPenerangan.value.length;
+
+  }
+);
+
+
+    // ==================================================
+// LOAD MAKLUMAN DARI FIRESTORE
+// ==================================================
+
+const maklumanList =
+  document.getElementById("maklumanList");
+
+const maklumanEmpty =
+  document.getElementById("maklumanEmpty");
+
+const jumlahMakluman =
+  document.getElementById("jumlahMakluman");
+
+const kpiMakluman =
+  document.getElementById("kpiMakluman");
+
+
+db.collection("makluman")
+  .orderBy("createdAt", "desc")
+  .onSnapshot(
+    snapshot => {
+
+      // ===============================
+      // RESET LIST
+      // ===============================
+
+      maklumanList.innerHTML = "";
+
+
+      // ===============================
+      // EMPTY STATE
+      // ===============================
+
+      if (snapshot.empty) {
+
+        maklumanEmpty.classList.remove("hidden");
+        maklumanList.classList.add("hidden");
+
+        jumlahMakluman.textContent = "0";
+        kpiMakluman.textContent = "0";
+
+        return;
+      }
+
+
+      maklumanEmpty.classList.add("hidden");
+      maklumanList.classList.remove("hidden");
+
+
+      // ===============================
+      // KPI
+      // ===============================
+
+      jumlahMakluman.textContent =
+        snapshot.size;
+
+
+      let jumlahAktif = 0;
+
+
+      // ===============================
+      // RENDER MAKLUMAN
+      // ===============================
+
+      snapshot.forEach(doc => {
+
+        const data = doc.data();
+
+
+        if (data.status === "aktif") {
+          jumlahAktif++;
+        }
+
+
+        const item =
+          document.createElement("div");
+
+
+        item.className =
+          "px-6 py-5 hover:bg-slate-50 transition";
+
+
+        // ===============================
+        // TARIKH
+        // ===============================
+
+        let tarikhPaparan = "-";
+
+
+        if (data.tarikh) {
+
+          const tarikh =
+            new Date(
+              data.tarikh + "T00:00:00"
+            );
+
+
+          tarikhPaparan =
+            tarikh.toLocaleDateString(
+              "ms-MY",
+              {
+                day: "numeric",
+                month: "long",
+                year: "numeric"
+              }
+            );
+
+        }
+
+
+        // ===============================
+        // STATUS
+        // ===============================
+
+        const statusAktif =
+          data.status === "aktif";
+
+
+        const statusClass =
+          statusAktif
+            ? "bg-emerald-50 text-emerald-700"
+            : "bg-slate-100 text-slate-500";
+
+
+        const statusText =
+          statusAktif
+            ? "Aktif"
+            : "Tidak Aktif";
+
+
+        // ===============================
+        // HTML
+        // ===============================
+
+        item.innerHTML = `
+
+          <div
+            class="flex flex-col
+                   lg:flex-row
+                   lg:items-start
+                   justify-between gap-4"
+          >
+
+            <div class="min-w-0 flex-1">
+
+              <!-- BADGES -->
+              <div
+                class="flex flex-wrap
+                       items-center gap-2 mb-2"
+              >
+
+                <span
+                  class="inline-flex
+                         px-2.5 py-1
+                         rounded-full
+                         bg-emerald-50
+                         text-emerald-700
+                         text-xs font-semibold"
+                >
+                  ${escapeHTML(
+                    data.kategori || "Makluman"
+                  )}
+                </span>
+
+
+                <span
+                  class="inline-flex
+                         px-2.5 py-1
+                         rounded-full
+                         text-xs font-semibold
+                         ${statusClass}"
+                >
+                  ${statusText}
+                </span>
+
+
+                ${
+                  data.penting
+                    ? `
+                      <span
+                        class="inline-flex
+                               items-center gap-1
+                               px-2.5 py-1
+                               rounded-full
+                               bg-amber-50
+                               text-amber-700
+                               text-xs font-semibold"
+                      >
+                        ★ Penting
+                      </span>
+                    `
+                    : ""
+                }
+
+              </div>
+
+
+              <!-- TAJUK -->
+              <h4
+                class="font-bold
+                       text-[#16332d]
+                       text-lg"
+              >
+                ${escapeHTML(
+                  data.tajuk || ""
+                )}
+              </h4>
+
+
+              <!-- KANDUNGAN -->
+              <p
+                class="text-sm
+                       text-slate-600
+                       mt-2 leading-relaxed"
+              >
+                ${escapeHTML(
+                  data.kandungan || ""
+                )}
+              </p>
+
+
+              <!-- TARIKH -->
+              <div
+                class="flex items-center
+                       gap-2 mt-3
+                       text-xs text-slate-400"
+              >
+                <i
+                  data-lucide="calendar-days"
+                  class="w-4 h-4"
+                ></i>
+
+                ${tarikhPaparan}
+              </div>
+
+            </div>
+
+
+            <!-- ACTION PLACEHOLDER -->
+            <div
+              class="flex items-center
+                     gap-2 flex-shrink-0"
+            >
+
+              <button
+  type="button"
+  onclick="editMakluman('${doc.id}')"
+  title="Edit makluman"
+  class="w-9 h-9 rounded-lg
+         bg-blue-50
+         text-blue-600
+         hover:bg-blue-100
+         flex items-center
+         justify-center
+         transition"
+>
+  <i
+    data-lucide="pencil"
+    class="w-4 h-4"
+  ></i>
+</button>
+
+
+              <button
+  type="button"
+  onclick="padamMakluman('${doc.id}')"
+  title="Padam makluman"
+  class="w-9 h-9 rounded-lg
+         bg-red-50
+         text-red-600
+         hover:bg-red-100
+         flex items-center
+         justify-center
+         transition"
+>
+  <i
+    data-lucide="trash-2"
+    class="w-4 h-4"
+  ></i>
+</button>
+
+            </div>
+
+          </div>
+
+        `;
+
+
+        maklumanList.appendChild(item);
+
+      });
+
+
+      // ===============================
+      // UPDATE KPI AKTIF
+      // ===============================
+
+      kpiMakluman.textContent =
+        jumlahAktif;
+
+
+      // Render ikon baharu
+      lucide.createIcons();
+
+    },
+
+    error => {
+
+      console.error(
+        "Load makluman error:",
+        error
+      );
+
+    }
+  );
+
+
+
+// ==================================================
+// ESCAPE HTML
+// Elakkan kandungan Firestore menjadi HTML executable
+// ==================================================
+
+function escapeHTML(value) {
+
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+}
+
+// ==================================================
+// PADAM MAKLUMAN
+// ==================================================
+
+async function padamMakluman(id) {
+
+  const sah =
+    confirm(
+      "Adakah anda pasti mahu memadam makluman ini?\n\nTindakan ini tidak boleh dibatalkan."
+    );
+
+
+  if (!sah) {
+    return;
+  }
+
+
+  try {
+
+    await db
+      .collection("makluman")
+      .doc(id)
+      .delete();
+
+
+    alert(
+      "Makluman berjaya dipadam."
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "Padam makluman error:",
+      error
+    );
+
+
+    alert(
+      "Makluman tidak berjaya dipadam. Sila cuba semula."
+    );
+
+  }
+
+}
+
+// ==================================================
+// EDIT MAKLUMAN
+// ==================================================
+
+async function editMakluman(id) {
+
+  try {
+
+    const doc =
+      await db
+        .collection("makluman")
+        .doc(id)
+        .get();
+
+
+    if (!doc.exists) {
+
+      alert("Makluman tidak ditemui.");
+      return;
+
+    }
+
+
+    const data = doc.data();
+
+    editMaklumanId = id;
+
+
+    // Isi semula borang
+    document.getElementById(
+      "maklumanTajuk"
+    ).value = data.tajuk || "";
+
+
+    document.getElementById(
+      "maklumanKategori"
+    ).value = data.kategori || "Makluman";
+
+
+    document.getElementById(
+      "maklumanTarikh"
+    ).value = data.tarikh || "";
+
+
+    document.getElementById(
+      "maklumanKandungan"
+    ).value = data.kandungan || "";
+
+
+    document.getElementById(
+      "maklumanAktif"
+    ).checked =
+      data.status === "aktif";
+
+
+    document.getElementById(
+      "maklumanPenting"
+    ).checked =
+      data.penting === true;
+
+
+    document.getElementById(
+      "kiraanAksara"
+    ).textContent =
+      (data.kandungan || "").length;
+
+
+    // Tukar tajuk modal
+    document.querySelector(
+      "#modalMakluman h2"
+    ).textContent =
+      "Edit Makluman";
+
+
+    // Tukar butang
+    document.getElementById(
+      "btnSimpanMakluman"
+    ).innerHTML = `
+      <i
+        data-lucide="save"
+        class="w-5 h-5"
+      ></i>
+      Kemaskini Makluman
+    `;
+
+
+    lucide.createIcons();
+
+
+    // Buka modal TANPA reset borang
+    modalMakluman.classList.remove(
+      "hidden"
+    );
+
+    modalMakluman.classList.add(
+      "flex"
+    );
+
+    document.body.classList.add(
+      "overflow-hidden"
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "Edit makluman error:",
+      error
+    );
+
+    alert(
+      "Makluman tidak dapat dibuka."
+    );
+
+  }
+
+}
+
+
+   // ==================================================
+// FORM MAKLUMAN
+// CREATE + UPDATE FIRESTORE
+// ==================================================
+
+formMakluman.addEventListener(
+  "submit",
+  async event => {
+
+    event.preventDefault();
+
+
+    const btnSimpan =
+      document.getElementById(
+        "btnSimpanMakluman"
+      );
+
+
+    const tajuk =
+      document
+        .getElementById("maklumanTajuk")
+        .value
+        .trim();
+
+
+    const kategori =
+      document
+        .getElementById("maklumanKategori")
+        .value;
+
+
+    const tarikh =
+      document
+        .getElementById("maklumanTarikh")
+        .value;
+
+
+    const kandungan =
+      document
+        .getElementById("maklumanKandungan")
+        .value
+        .trim();
+
+
+    const aktif =
+      document
+        .getElementById("maklumanAktif")
+        .checked;
+
+
+    const penting =
+      document
+        .getElementById("maklumanPenting")
+        .checked;
+
+
+    // ===============================
+    // VALIDATION
+    // ===============================
+
+    if (
+      !tajuk ||
+      !tarikh ||
+      !kandungan
+    ) {
+
+      alert(
+        "Sila lengkapkan semua maklumat yang diperlukan."
+      );
+
+      return;
+
+    }
+
+
+    // Simpan status sama ada CREATE atau EDIT
+    const sedangEdit =
+      editMaklumanId !== null;
+
+
+    // ===============================
+    // LOADING BUTTON
+    // ===============================
+
+    btnSimpan.disabled = true;
+
+    btnSimpan.classList.add(
+      "opacity-60",
+      "cursor-not-allowed"
+    );
+
+
+    btnSimpan.innerHTML = `
+      <i
+        data-lucide="loader-circle"
+        class="w-5 h-5 animate-spin"
+      ></i>
+
+      ${
+        sedangEdit
+          ? "Mengemaskini..."
+          : "Menyimpan..."
+      }
+    `;
+
+
+    lucide.createIcons();
+
+
+    try {
+
+      const user =
+        firebase.auth().currentUser;
+
+
+      if (!user) {
+
+        throw new Error(
+          "Sesi admin telah tamat."
+        );
+
+      }
+
+
+      // ===============================
+      // DATA ASAS
+      // ===============================
+
+      const dataMakluman = {
+
+        tajuk: tajuk,
+
+        kategori: kategori,
+
+        tarikh: tarikh,
+
+        kandungan: kandungan,
+
+        status:
+          aktif
+            ? "aktif"
+            : "tidak-aktif",
+
+        penting: penting
+
+      };
+
+
+      // ===============================
+      // UPDATE MAKLUMAN
+      // ===============================
+
+      if (sedangEdit) {
+
+        await db
+          .collection("makluman")
+          .doc(editMaklumanId)
+          .update({
+
+            ...dataMakluman,
+
+            updatedAt:
+              firebase.firestore
+                .FieldValue
+                .serverTimestamp(),
+
+            updatedBy:
+              user.email || ""
+
+          });
+
+
+        alert(
+          "Makluman berjaya dikemaskini."
+        );
+
+      }
+
+
+      // ===============================
+      // TAMBAH MAKLUMAN BARU
+      // ===============================
+
+      else {
+
+        await db
+          .collection("makluman")
+          .add({
+
+            ...dataMakluman,
+
+            createdAt:
+              firebase.firestore
+                .FieldValue
+                .serverTimestamp(),
+
+            createdBy:
+              user.email || ""
+
+          });
+
+
+        alert(
+          "Makluman berjaya disimpan."
+        );
+
+      }
+
+
+      // ===============================
+      // SELESAI
+      // ===============================
+
+      editMaklumanId = null;
+
+      formMakluman.reset();
+
+      tutupModalMakluman();
+
+
+    } catch (error) {
+
+      console.error(
+        sedangEdit
+          ? "Kemaskini makluman error:"
+          : "Simpan makluman error:",
+        error
+      );
+
+
+      alert(
+        sedangEdit
+          ? "Makluman tidak berjaya dikemaskini. Sila cuba semula."
+          : "Makluman tidak berjaya disimpan. Sila cuba semula."
+      );
+
+    } finally {
+
+      btnSimpan.disabled = false;
+
+      btnSimpan.classList.remove(
+        "opacity-60",
+        "cursor-not-allowed"
+      );
+
+
+      btnSimpan.innerHTML = `
+        <i
+          data-lucide="save"
+          class="w-5 h-5"
+        ></i>
+        Simpan Makluman
+      `;
+
+
+      lucide.createIcons();
+
+    }
+
+  }
+);
+
+// ==================================================
+// MOTIVASI MINGGUAN
+// FIRESTORE
+// ==================================================
+
+const motivasiList =
+  document.getElementById(
+    "motivasiList"
+  );
+
+const motivasiEmpty =
+  document.getElementById(
+    "motivasiEmpty"
+  );
+
+const jumlahMotivasi =
+  document.getElementById(
+    "jumlahMotivasi"
+  );
+
+const kpiMotivasi =
+  document.getElementById(
+    "kpiMotivasi"
+  );
+
+const motivasiAktifCard =
+  document.getElementById(
+    "motivasiAktifCard"
+  );
+
+const motivasiAktifTeks =
+  document.getElementById(
+    "motivasiAktifTeks"
+  );
+
+const motivasiAktifPenerangan =
+  document.getElementById(
+    "motivasiAktifPenerangan"
+  );
+
+const motivasiAktifMinggu =
+  document.getElementById(
+    "motivasiAktifMinggu"
+  );
+
+
+
+// ==================================================
+// LOAD MOTIVASI
+// ==================================================
+
+db.collection("motivasi")
+  .orderBy(
+    "createdAt",
+    "desc"
+  )
+  .onSnapshot(
+
+    snapshot => {
+
+      motivasiList.innerHTML = "";
+
+
+      // ==========================================
+      // TIADA MOTIVASI
+      // ==========================================
+
+      if (snapshot.empty) {
+
+        motivasiEmpty.classList.remove(
+          "hidden"
+        );
+
+        motivasiList.classList.add(
+          "hidden"
+        );
+
+        motivasiAktifCard.classList.add(
+          "hidden"
+        );
+
+        jumlahMotivasi.textContent =
+          "0";
+
+        kpiMotivasi.textContent =
+          "Belum ditetapkan";
+
+        return;
+
+      }
+
+
+      // ==========================================
+      // ADA MOTIVASI
+      // ==========================================
+
+      motivasiEmpty.classList.add(
+        "hidden"
+      );
+
+      motivasiList.classList.remove(
+        "hidden"
+      );
+
+      jumlahMotivasi.textContent =
+        snapshot.size;
+
+
+      let motivasiAktifData = null;
+
+
+      snapshot.forEach(
+        doc => {
+
+          const data =
+            doc.data();
+
+          const statusAktif =
+            data.status === "aktif";
+
+
+          // Simpan motivasi aktif
+          if (
+            statusAktif &&
+            !motivasiAktifData
+          ) {
+
+            motivasiAktifData = {
+              id: doc.id,
+              ...data
+            };
+
+          }
+
+
+          const statusClass =
+            statusAktif
+              ? "bg-violet-50 text-violet-700"
+              : "bg-slate-100 text-slate-500";
+
+
+          const statusText =
+            statusAktif
+              ? "Aktif"
+              : "Tidak Aktif";
+
+
+          const item =
+            document.createElement(
+              "div"
+            );
+
+
+          item.className =
+            "px-6 py-5 hover:bg-slate-50 transition";
+
+
+          item.innerHTML = `
+
+            <div
+              class="
+                flex
+                flex-col
+                lg:flex-row
+                lg:items-start
+                justify-between
+                gap-4
+              "
+            >
+
+              <div
+                class="min-w-0 flex-1"
+              >
+
+                <div
+                  class="
+                    flex
+                    flex-wrap
+                    items-center
+                    gap-2
+                    mb-3
+                  "
+                >
+
+                  <span
+                    class="
+                      inline-flex
+                      px-2.5
+                      py-1
+                      rounded-full
+                      text-xs
+                      font-semibold
+                      ${statusClass}
+                    "
+                  >
+                    ${statusText}
+                  </span>
+
+
+                  <span
+                    class="
+                      inline-flex
+                      items-center
+                      gap-1
+                      px-2.5
+                      py-1
+                      rounded-full
+                      bg-amber-50
+                      text-amber-700
+                      text-xs
+                      font-semibold
+                    "
+                  >
+                    <i
+                      data-lucide="calendar-days"
+                      class="w-3.5 h-3.5"
+                    ></i>
+
+                    ${escapeHTML(
+                      data.minggu || ""
+                    )}
+
+                  </span>
+
+                </div>
+
+
+                <blockquote
+                  class="
+                    display
+                    text-lg
+                    font-semibold
+                    leading-relaxed
+                    text-[#16332d]
+                  "
+                >
+                  “${escapeHTML(
+                    data.teks || ""
+                  )}”
+                </blockquote>
+
+
+                <p
+                  class="
+                    mt-2
+                    text-sm
+                    leading-relaxed
+                    text-slate-500
+                  "
+                >
+                  ${escapeHTML(
+                    data.penerangan || ""
+                  )}
+                </p>
+
+              </div>
+
+                            <!-- ACTION BUTTONS -->
+              <div
+                class="
+                  flex
+                  items-center
+                  gap-2
+                  flex-shrink-0
+                "
+              >
+
+                <button
+                  type="button"
+                  onclick="editMotivasi('${doc.id}')"
+                  class="
+                    inline-flex
+                    items-center
+                    justify-center
+                    gap-2
+                    px-3
+                    py-2
+                    rounded-lg
+                    bg-violet-50
+                    text-violet-700
+                    text-xs
+                    font-semibold
+                    hover:bg-violet-100
+                    transition
+                  "
+                >
+                  <i
+                    data-lucide="pencil"
+                    class="w-4 h-4"
+                  ></i>
+
+                  Edit
+                </button>
+
+
+                <button
+                  type="button"
+                  onclick="padamMotivasi('${doc.id}')"
+                  class="
+                    inline-flex
+                    items-center
+                    justify-center
+                    gap-2
+                    px-3
+                    py-2
+                    rounded-lg
+                    bg-red-50
+                    text-red-600
+                    text-xs
+                    font-semibold
+                    hover:bg-red-100
+                    transition
+                  "
+                >
+                  <i
+                    data-lucide="trash-2"
+                    class="w-4 h-4"
+                  ></i>
+
+                  Padam
+                </button>
+
+              </div>
+
+            </div>
+
+          `;
+
+
+          motivasiList.appendChild(
+            item
+          );
+
+        }
+      );
+
+
+      // ==========================================
+      // MOTIVASI AKTIF CARD
+      // ==========================================
+
+      if (motivasiAktifData) {
+
+        motivasiAktifCard.classList.remove(
+          "hidden"
+        );
+
+
+        motivasiAktifTeks.textContent =
+          `“${motivasiAktifData.teks || ""}”`;
+
+
+        motivasiAktifPenerangan.textContent =
+          motivasiAktifData.penerangan || "";
+
+
+        motivasiAktifMinggu.innerHTML = `
+          <i
+            data-lucide="calendar-days"
+            class="w-4 h-4"
+          ></i>
+
+          ${escapeHTML(
+            motivasiAktifData.minggu ||
+            "Motivasi Minggu Ini"
+          )}
+        `;
+
+
+        kpiMotivasi.textContent =
+          "Aktif";
+
+      } else {
+
+        motivasiAktifCard.classList.add(
+          "hidden"
+        );
+
+        kpiMotivasi.textContent =
+          "Belum ditetapkan";
+
+      }
+
+
+      lucide.createIcons();
+
+    },
+
+
+    error => {
+
+      console.error(
+        "Load motivasi error:",
+        error
+      );
+
+    }
+
+  );
+
+  // ==================================================
+// EDIT MOTIVASI
+// ==================================================
+
+async function editMotivasi(id) {
+
+  try {
+
+    const doc =
+      await db
+        .collection("motivasi")
+        .doc(id)
+        .get();
+
+
+    if (!doc.exists) {
+
+      alert(
+        "Motivasi tidak ditemui."
+      );
+
+      return;
+
+    }
+
+
+    const data =
+      doc.data();
+
+
+    // Simpan ID untuk mode EDIT
+    editMotivasiId = id;
+
+
+    // ==========================================
+    // MASUKKAN DATA KE DALAM FORM
+    // ==========================================
+
+    motivasiTeks.value =
+      data.teks || "";
+
+
+    motivasiPenerangan.value =
+      data.penerangan || "";
+
+
+    document.getElementById(
+      "motivasiMinggu"
+    ).value =
+      data.minggu || "";
+
+
+    document.getElementById(
+      "motivasiAktif"
+    ).checked =
+      data.status === "aktif";
+
+
+    // ==========================================
+    // CHARACTER COUNTER
+    // ==========================================
+
+    kiraanMotivasiTeks.textContent =
+      (data.teks || "").length;
+
+
+    kiraanMotivasiPenerangan.textContent =
+      (data.penerangan || "").length;
+
+
+    // ==========================================
+    // TUKAR MODE MODAL
+    // ==========================================
+
+    document.getElementById(
+      "tajukModalMotivasi"
+    ).textContent =
+      "Edit Motivasi";
+
+
+    document.getElementById(
+      "btnSimpanMotivasi"
+    ).innerHTML = `
+      <i
+        data-lucide="save"
+        class="w-5 h-5"
+      ></i>
+      Kemaskini Motivasi
+    `;
+
+
+    lucide.createIcons();
+
+
+    // ==========================================
+    // BUKA MODAL TANPA RESET
+    // ==========================================
+
+    modalMotivasi.classList.remove(
+      "hidden"
+    );
+
+
+    modalMotivasi.classList.add(
+      "flex"
+    );
+
+
+    document.body.classList.add(
+      "overflow-hidden"
+    );
+
+
+    setTimeout(
+      () => {
+
+        motivasiTeks.focus();
+
+      },
+      100
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "Edit motivasi error:",
+      error
+    );
+
+
+    alert(
+      "Motivasi tidak dapat dibuka."
+    );
+
+  }
+
+}
+
+
+// ==================================================
+// PADAM MOTIVASI
+// ==================================================
+
+async function padamMotivasi(id) {
+
+  const sahPadam =
+    confirm(
+      "Adakah anda pasti mahu memadam motivasi ini?\n\nTindakan ini tidak boleh dibatalkan."
+    );
+
+
+  if (!sahPadam) {
+
+    return;
+
+  }
+
+
+  try {
+
+    const user =
+      firebase.auth().currentUser;
+
+
+    if (!user) {
+
+      alert(
+        "Sesi admin telah tamat. Sila log masuk semula."
+      );
+
+      return;
+
+    }
+
+
+    await db
+      .collection("motivasi")
+      .doc(id)
+      .delete();
+
+
+    alert(
+      "Motivasi berjaya dipadam."
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "Padam motivasi error:",
+      error
+    );
+
+
+    alert(
+      "Motivasi tidak berjaya dipadam. Sila cuba semula."
+    );
+
+  }
+
+}
+
+
+// ==================================================
+// FORM MOTIVASI
+// CREATE + UPDATE FIRESTORE
+// ==================================================
+
+formMotivasi.addEventListener(
+  "submit",
+  async event => {
+
+    event.preventDefault();
+
+
+    const btnSimpan =
+      document.getElementById(
+        "btnSimpanMotivasi"
+      );
+
+
+    const teks =
+      motivasiTeks.value.trim();
+
+
+    const penerangan =
+      motivasiPenerangan.value.trim();
+
+
+    const minggu =
+      document
+        .getElementById(
+          "motivasiMinggu"
+        )
+        .value
+        .trim();
+
+
+    const aktif =
+      document
+        .getElementById(
+          "motivasiAktif"
+        )
+        .checked;
+
+
+    // ==========================================
+    // VALIDATION
+    // ==========================================
+
+    if (
+      !teks ||
+      !penerangan ||
+      !minggu
+    ) {
+
+      alert(
+        "Sila lengkapkan semua maklumat motivasi."
+      );
+
+      return;
+
+    }
+
+
+    // Tentukan CREATE atau EDIT
+    const sedangEdit =
+      editMotivasiId !== null;
+
+
+    // Simpan ID sebelum proses async
+    const motivasiIdEdit =
+      editMotivasiId;
+
+
+    // ==========================================
+    // LOADING BUTTON
+    // ==========================================
+
+    btnSimpan.disabled = true;
+
+
+    btnSimpan.classList.add(
+      "opacity-60",
+      "cursor-not-allowed"
+    );
+
+
+    btnSimpan.innerHTML = `
+      <i
+        data-lucide="loader-circle"
+        class="w-5 h-5 animate-spin"
+      ></i>
+
+      ${
+        sedangEdit
+          ? "Mengemaskini..."
+          : "Menyimpan..."
+      }
+    `;
+
+
+    lucide.createIcons();
+
+
+    try {
+
+      const user =
+        firebase.auth().currentUser;
+
+
+      if (!user) {
+
+        throw new Error(
+          "Sesi admin telah tamat."
+        );
+
+      }
+
+
+      // ==========================================
+      // JIKA DIPILIH AKTIF
+      // NYAHAKTIF MOTIVASI LAIN
+      // ==========================================
+
+      if (aktif) {
+
+        const snapshotAktif =
+          await db
+            .collection("motivasi")
+            .where(
+              "status",
+              "==",
+              "aktif"
+            )
+            .get();
+
+
+        const batch =
+          db.batch();
+
+
+        snapshotAktif.forEach(
+          doc => {
+
+            // Jika sedang edit,
+            // jangan update dokumen sendiri di sini.
+            if (
+              sedangEdit &&
+              doc.id === motivasiIdEdit
+            ) {
+
+              return;
+
+            }
+
+
+            batch.update(
+              doc.ref,
+              {
+
+                status:
+                  "tidak-aktif",
+
+                updatedAt:
+                  firebase.firestore
+                    .FieldValue
+                    .serverTimestamp(),
+
+                updatedBy:
+                  user.email || ""
+
+              }
+            );
+
+          }
+        );
+
+
+        await batch.commit();
+
+      }
+
+
+      // ==========================================
+      // DATA MOTIVASI
+      // ==========================================
+
+      const dataMotivasi = {
+
+        teks: teks,
+
+        penerangan: penerangan,
+
+        minggu: minggu,
+
+        status:
+          aktif
+            ? "aktif"
+            : "tidak-aktif",
+
+        updatedAt:
+          firebase.firestore
+            .FieldValue
+            .serverTimestamp(),
+
+        updatedBy:
+          user.email || ""
+
+      };
+
+
+      // ==========================================
+      // EDIT MOTIVASI
+      // ==========================================
+
+      if (sedangEdit) {
+
+        await db
+          .collection("motivasi")
+          .doc(motivasiIdEdit)
+          .update(
+            dataMotivasi
+          );
+
+
+        alert(
+          "Motivasi berjaya dikemaskini."
+        );
+
+      }
+
+
+      // ==========================================
+      // TAMBAH MOTIVASI BARU
+      // ==========================================
+
+      else {
+
+        await db
+          .collection("motivasi")
+          .add({
+
+            ...dataMotivasi,
+
+            createdAt:
+              firebase.firestore
+                .FieldValue
+                .serverTimestamp(),
+
+            createdBy:
+              user.email || ""
+
+          });
+
+
+        alert(
+          "Motivasi berjaya disimpan."
+        );
+
+      }
+
+
+      // ==========================================
+      // SELESAI
+      // ==========================================
+
+      editMotivasiId = null;
+
+
+      formMotivasi.reset();
+
+
+      kiraanMotivasiTeks.textContent =
+        "0";
+
+
+      kiraanMotivasiPenerangan.textContent =
+        "0";
+
+
+      tutupModalMotivasi();
+
+
+    } catch (error) {
+
+      console.error(
+        sedangEdit
+          ? "Kemaskini motivasi error:"
+          : "Simpan motivasi error:",
+        error
+      );
+
+
+      alert(
+        sedangEdit
+          ? "Motivasi tidak berjaya dikemaskini. Sila cuba semula."
+          : "Motivasi tidak berjaya disimpan. Sila cuba semula."
+      );
+
+
+    } finally {
+
+      btnSimpan.disabled = false;
+
+
+      btnSimpan.classList.remove(
+        "opacity-60",
+        "cursor-not-allowed"
+      );
+
+
+      btnSimpan.innerHTML = `
+        <i
+          data-lucide="save"
+          class="w-5 h-5"
+        ></i>
+
+        ${
+          editMotivasiId !== null
+            ? "Kemaskini Motivasi"
+            : "Simpan Motivasi"
+        }
+      `;
+
+
+      lucide.createIcons();
+
+    }
+
+  }
+);
+
+  </script>
+
+</body>
+</html>

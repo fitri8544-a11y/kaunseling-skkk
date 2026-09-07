@@ -711,6 +711,11 @@ document.addEventListener(
   "DOMContentLoaded",
   () => {
 
+    const motivasiSection =
+      document.getElementById(
+        "motivasi"
+      );
+
     const motivasiText =
       document.getElementById(
         "motivasi-text"
@@ -758,7 +763,7 @@ document.addEventListener(
     };
 
 
-    // Elakkan initialize dua kali
+    // Elakkan initialize Firebase dua kali
     if (!firebase.apps.length) {
 
       firebase.initializeApp(
@@ -788,49 +793,76 @@ document.addEventListener(
 
         snapshot => {
 
-          // Tiada motivasi aktif:
-          // kekalkan teks asal sebagai fallback
+          // ==========================================
+          // TIADA MOTIVASI AKTIF
+          // ==========================================
+
           if (snapshot.empty) {
 
             console.log(
               "Tiada motivasi aktif."
             );
 
+
+            // Sembunyikan keseluruhan seksyen
+            // supaya motivasi lama tidak dipaparkan
+
+            if (motivasiSection) {
+
+              motivasiSection.style.display =
+                "none";
+
+            }
+
+
             return;
 
           }
 
 
+          // ==========================================
+          // ADA MOTIVASI AKTIF
+          // ==========================================
+
           const data =
             snapshot.docs[0].data();
 
 
+          // Pastikan seksyen dipaparkan semula
+          // jika admin mengaktifkan motivasi
+
+          if (motivasiSection) {
+
+            motivasiSection.style.display =
+              "";
+
+          }
+
+
           // ==========================================
-          // UPDATE HOMEPAGE
+          // UPDATE TEKS MOTIVASI
           // ==========================================
 
-          if (data.teks) {
-
-            motivasiText.textContent =
-              `“${data.teks}”`;
-
-          }
+          motivasiText.textContent =
+            data.teks
+              ? `“${data.teks}”`
+              : "";
 
 
-          if (data.penerangan) {
+          // ==========================================
+          // UPDATE PENERANGAN
+          // ==========================================
 
-            motivasiDescription.textContent =
-              data.penerangan;
-
-          }
+          motivasiDescription.textContent =
+            data.penerangan || "";
 
 
-          if (data.minggu) {
+          // ==========================================
+          // UPDATE LABEL MINGGU
+          // ==========================================
 
-            motivasiMinggu.textContent =
-              data.minggu;
-
-          }
+          motivasiMinggu.textContent =
+            data.minggu || "";
 
 
           console.log(

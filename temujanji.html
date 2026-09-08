@@ -1,332 +1,1558 @@
 <!DOCTYPE html>
 <html lang="ms">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Unit Bimbingan & Kaunseling SK Kuala Ketil</title>
+  <meta charset="UTF-8">
 
-<link rel="icon" type="image/png" href="assets/logo-sekolah.png">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-<script src="https://cdn.tailwindcss.com"></script>
+  <title>
+    Bantuan | Unit Bimbingan & Kaunseling SK Kuala Ketil
+  </title>
+
+  <link
+    rel="icon"
+    type="image/png"
+    href="assets/logo-sekolah.png"
+  >
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link
+    rel="stylesheet"
+    href="css/style.css"
+  >
 
 </head>
 
-<body class="flex flex-col min-h-screen">
 
-<!-- HEADER -->
-<header class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md sticky top-0 z-50">
+<body class="flex min-h-screen flex-col bg-[#f7fbf8]">
 
-  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
 
-    <!-- LOGO -->
-    <div class="flex items-center gap-3">
-      <img src="assets/logo-sekolah.png" class="h-10">
-      <img src="assets/logo-ts25.png" class="h-10">
+<!-- =================================================
+     HEADER
+================================================== -->
 
-      <div>
-        <h1 class="text-sm md:text-lg font-bold">Bimbingan & Kaunseling</h1>
-        <p class="text-xs opacity-80">SK Kuala Ketil</p>
+<header
+  class="sticky top-0 z-50
+         border-b border-[#dcece3]
+         bg-white/95 backdrop-blur"
+>
+
+  <nav
+    class="mx-auto flex min-h-[72px] max-w-7xl items-center
+           justify-between gap-3 px-4 sm:px-6"
+  >
+
+    <!-- ================= BRAND ================= -->
+
+    <a
+      href="index.html"
+      class="flex min-w-0 items-center gap-3"
+    >
+
+      <div class="flex shrink-0 items-center gap-1">
+
+        <img
+          src="assets/logo-sekolah.png"
+          alt="Logo SK Kuala Ketil"
+          class="h-10 w-auto sm:h-11"
+        >
+
+        <img
+          src="assets/logo-ts25.png"
+          alt="Logo TS25"
+          class="h-10 w-auto sm:h-11"
+        >
+
       </div>
-    </div>
 
-    <!-- DESKTOP MENU -->
-    <nav class="hidden md:flex gap-6 items-center text-sm font-semibold relative">
+
+      <div class="hidden min-w-0 sm:block">
+
+        <p
+          class="truncate text-sm font-extrabold
+                 text-[#173f35]"
+        >
+          Bimbingan &amp; Kaunseling
+        </p>
+
+        <p
+          class="mt-0.5 truncate text-xs
+                 font-medium text-[#617a73]"
+        >
+          SK Kuala Ketil
+        </p>
+
+      </div>
+
+    </a>
+
+
+    <!-- =================================================
+         DESKTOP NAVIGATION
+    ================================================== -->
+
+    <div
+      class="desktop-nav hidden items-center gap-1
+             text-[13px] font-semibold
+             text-[#31534a] lg:flex"
+    >
 
       <!-- LAMAN UTAMA -->
-      <a href="index.html" class="hover:text-yellow-300">Laman Utama</a>
 
-      <!-- MENGENAI -->
-      <div class="relative group inline-block">
-        <button class="flex items-center gap-1 hover:text-yellow-300">
-          Mengenai ▼
+      <a
+        href="index.html"
+        class="rounded-lg px-3 py-2
+               transition
+               hover:bg-[#eff8f3]
+               hover:text-[#075e4c]"
+      >
+        Laman Utama
+      </a>
+
+
+      <!-- ================= MENGENAI ================= -->
+
+      <div class="group relative">
+
+        <button
+          type="button"
+          class="flex items-center gap-1
+                 rounded-lg px-3 py-2
+                 transition
+                 hover:bg-[#eff8f3]
+                 hover:text-[#075e4c]"
+        >
+          Mengenai
+
+          <i
+            data-lucide="chevron-down"
+            class="h-4 w-4"
+          ></i>
+
         </button>
 
-        <div class="absolute left-0 top-full w-56 
-                    bg-white text-black rounded-xl shadow-xl 
-                    opacity-0 invisible group-hover:opacity-100 group-hover:visible 
-                    transition duration-200 z-50">
 
-          <a href="carta-organisasi.html" class="block px-4 py-2 hover:bg-gray-100">Carta Organisasi</a>
-          <a href="objektif.html" class="block px-4 py-2 hover:bg-gray-100">Visi & Misi</a>
-          <a href="takwim.html" class="block px-4 py-2 hover:bg-gray-100">Takwim</a>
+        <div
+          class="invisible absolute left-0 top-full
+                 z-50 w-56 translate-y-2
+                 rounded-xl border border-[#dcece3]
+                 bg-white p-2 opacity-0 shadow-xl
+                 transition-all duration-200
+                 group-hover:visible
+                 group-hover:translate-y-0
+                 group-hover:opacity-100"
+        >
+
+          <a
+            href="pengenalan.html"
+            class="block rounded-lg px-3 py-2.5
+                   hover:bg-[#eff8f3]"
+          >
+            Pengenalan
+          </a>
+
+          <a
+            href="objektif.html"
+            class="block rounded-lg px-3 py-2.5
+                   hover:bg-[#eff8f3]"
+          >
+            Objektif
+          </a>
+
+          <a
+            href="carta-organisasi.html"
+            class="block rounded-lg px-3 py-2.5
+                   hover:bg-[#eff8f3]"
+          >
+            Carta Organisasi
+          </a>
+
+          <a
+            href="takwim.html"
+            class="block rounded-lg px-3 py-2.5
+                   hover:bg-[#eff8f3]"
+          >
+            Takwim
+          </a>
+
         </div>
+
       </div>
 
-      <!-- PERKHIDMATAN -->
-      <div class="relative group inline-block">
-        <button class="flex items-center gap-1 hover:text-yellow-300">
-          Perkhidmatan ▼
+
+      <!-- ================= 4 FOKUS ================= -->
+
+      <div class="group relative">
+
+        <button
+          type="button"
+          class="flex items-center gap-1
+                 rounded-lg px-3 py-2
+                 transition
+                 hover:bg-[#eff8f3]
+                 hover:text-[#075e4c]"
+        >
+          4 Fokus
+
+          <i
+            data-lucide="chevron-down"
+            class="h-4 w-4"
+          ></i>
+
         </button>
 
-        <div class="absolute left-0 top-full w-56 
-                    bg-white text-black rounded-xl shadow-xl 
-                    opacity-0 invisible group-hover:opacity-100 group-hover:visible 
-                    transition duration-200 z-50">
 
-          <a href="pengenalan.html" class="block px-4 py-2 hover:bg-gray-100">Pengenalan</a>
-          <a href="temujanji.html" class="block px-4 py-2 hover:bg-gray-100">Temujanji</a>
+        <div
+          class="invisible absolute left-0 top-full
+                 z-50 w-56 translate-y-2
+                 rounded-xl border border-[#dcece3]
+                 bg-white p-2 opacity-0 shadow-xl
+                 transition-all duration-200
+                 group-hover:visible
+                 group-hover:translate-y-0
+                 group-hover:opacity-100"
+        >
+
+          <a
+            href="sahsiah.html"
+            class="block rounded-lg px-3 py-2.5
+                   hover:bg-[#eff8f3]"
+          >
+            Sahsiah
+          </a>
+
+          <a
+            href="disiplin.html"
+            class="block rounded-lg px-3 py-2.5
+                   hover:bg-[#eff8f3]"
+          >
+            Disiplin
+          </a>
+
+          <a
+            href="kerjaya.html"
+            class="block rounded-lg px-3 py-2.5
+                   hover:bg-[#eff8f3]"
+          >
+            Kerjaya
+          </a>
+
+          <a
+            href="psikososial.html"
+            class="block rounded-lg px-3 py-2.5
+                   hover:bg-[#eff8f3]"
+          >
+            Psikososial
+          </a>
+
         </div>
+
       </div>
 
-      <!-- 4 FOKUS -->
-      <div class="relative group inline-block">
-        <button class="flex items-center gap-1 hover:text-yellow-300">
-          4 Fokus ▼
+
+      <!-- ================= PRS ================= -->
+
+      <div class="group relative">
+
+        <button
+          type="button"
+          class="flex items-center gap-1
+                 rounded-lg px-3 py-2
+                 transition
+                 hover:bg-[#eff8f3]
+                 hover:text-[#075e4c]"
+        >
+          PRS
+
+          <i
+            data-lucide="chevron-down"
+            class="h-4 w-4"
+          ></i>
+
         </button>
 
-        <div class="absolute left-0 top-full w-56 
-                    bg-white text-black rounded-xl shadow-xl 
-                    opacity-0 invisible group-hover:opacity-100 group-hover:visible 
-                    transition duration-200 z-50">
 
-          <a href="sahsiah.html" class="block px-4 py-2 hover:bg-gray-100">Sahsiah</a>
-          <a href="disiplin.html" class="block px-4 py-2 hover:bg-gray-100">Disiplin</a>
-          <a href="kerjaya.html" class="block px-4 py-2 hover:bg-gray-100">Kerjaya</a>
-          <a href="psikososial.html" class="block px-4 py-2 hover:bg-gray-100">Psikososial</a>
+        <div
+          class="invisible absolute left-0 top-full
+                 z-50 w-60 translate-y-2
+                 rounded-xl border border-[#dcece3]
+                 bg-white p-2 opacity-0 shadow-xl
+                 transition-all duration-200
+                 group-hover:visible
+                 group-hover:translate-y-0
+                 group-hover:opacity-100"
+        >
+
+          <a
+            href="carta-prs.html"
+            class="block rounded-lg px-3 py-2.5
+                   hover:bg-[#eff8f3]"
+          >
+            Carta Organisasi PRS
+          </a>
+
+          <a
+            href="peranan-prs.html"
+            class="block rounded-lg px-3 py-2.5
+                   hover:bg-[#eff8f3]"
+          >
+            Peranan PRS
+          </a>
+
+          <a
+            href="aktiviti-prs.html"
+            class="block rounded-lg px-3 py-2.5
+                   hover:bg-[#eff8f3]"
+          >
+            Aktiviti PRS
+          </a>
+
         </div>
+
       </div>
 
-      <!-- PRS -->
-      <div class="relative group inline-block">
-        <button class="flex items-center gap-1 hover:text-yellow-300">
-          PRS ▼
+
+      <!-- HEALINK -->
+
+      <a
+        href="healink.html"
+        class="rounded-lg px-3 py-2
+               transition
+               hover:bg-[#eff8f3]
+               hover:text-[#075e4c]"
+      >
+        HEALINK
+      </a>
+
+
+      <!-- BANTUAN ACTIVE -->
+
+      <a
+        href="bantuan.html"
+        class="rounded-lg bg-[#eff8f3]
+               px-3 py-2
+               font-bold text-[#075e4c]"
+      >
+        Bantuan
+      </a>
+
+    </div>
+
+
+    <!-- =================================================
+         RIGHT SIDE
+    ================================================== -->
+
+    <div class="flex shrink-0 items-center gap-2">
+
+      <!-- DESKTOP DATE TIME -->
+
+      <div
+        class="hidden flex-col items-end
+               leading-tight xl:flex"
+      >
+
+        <span
+          id="header-date"
+          class="text-[11px] font-semibold
+                 text-[#617a73]"
+        >
+          --
+        </span>
+
+        <span
+          id="header-time"
+          class="mt-1 text-xs font-extrabold
+                 text-[#173f35]"
+        >
+          --:--:--
+        </span>
+
+      </div>
+
+
+      <!-- ADMIN -->
+
+      <a
+        href="admin-login.html"
+        aria-label="Login Admin"
+        title="Login Admin"
+        class="hidden h-9 w-9 items-center
+               justify-center rounded-lg
+               border border-[#dcece3]
+               text-[#31534a]
+               transition
+               hover:border-[#07865f]
+               hover:bg-[#eff8f3]
+               hover:text-[#075e4c]
+               lg:flex"
+      >
+        <i
+          data-lucide="lock-keyhole"
+          class="h-4 w-4"
+        ></i>
+      </a>
+
+
+      <!-- MOBILE DATE TIME -->
+
+      <div
+        class="ml-auto mr-3 flex flex-col
+               items-end leading-tight xl:hidden"
+      >
+
+        <span
+          id="mobile-header-date"
+          class="text-[10px] font-semibold
+                 text-[#617a73]"
+        >
+          --
+        </span>
+
+        <span
+          id="mobile-header-time"
+          class="mt-0.5 text-[11px]
+                 font-extrabold text-[#173f35]"
+        >
+          --:--:--
+        </span>
+
+      </div>
+
+
+      <!-- MOBILE TOGGLE -->
+
+      <button
+        id="mobile-toggle"
+        type="button"
+        aria-label="Buka menu"
+        aria-expanded="false"
+        class="grid h-10 w-10 place-items-center
+               rounded-lg border border-[#dcece3]
+               text-[#173f35]
+               transition hover:bg-[#eff8f3]
+               lg:hidden"
+      >
+        <i
+          data-lucide="menu"
+          class="h-5 w-5"
+        ></i>
+      </button>
+
+    </div>
+
+  </nav>
+
+
+  <!-- =================================================
+       MOBILE MENU
+  ================================================== -->
+
+  <div
+    id="mobile-menu"
+    class="mobile-menu border-t
+           border-[#dcece3] bg-white lg:hidden"
+  >
+
+    <div
+      class="mx-auto max-w-7xl space-y-1
+             px-4 py-4 text-sm
+             text-[#31534a] sm:px-6"
+    >
+
+      <!-- LAMAN UTAMA -->
+
+      <a
+        href="index.html"
+        class="block rounded-lg px-3 py-2.5
+               font-semibold
+               hover:bg-[#eff8f3]"
+      >
+        Laman Utama
+      </a>
+
+
+      <!-- ================= MENGENAI ================= -->
+
+      <div>
+
+        <button
+          type="button"
+          data-mobile-accordion="mengenai"
+          aria-expanded="false"
+          class="mobile-accordion-btn
+                 flex w-full items-center
+                 justify-between rounded-lg
+                 px-3 py-2.5 font-semibold
+                 hover:bg-[#eff8f3]"
+        >
+          <span>Mengenai</span>
+
+          <i
+            data-lucide="chevron-down"
+            class="h-4 w-4 transition-transform"
+          ></i>
+
         </button>
 
-        <div class="absolute left-0 top-full w-56 
-                    bg-white text-black rounded-xl shadow-xl 
-                    opacity-0 invisible group-hover:opacity-100 group-hover:visible 
-                    transition duration-200 z-50">
 
-          <a href="carta-prs.html" class="block px-4 py-2 hover:bg-gray-100">Carta PRS</a>
-          <a href="peranan-prs.html" class="block px-4 py-2 hover:bg-gray-100">Peranan</a>
-          <a href="aktiviti-prs.html" class="block px-4 py-2 hover:bg-gray-100">Aktiviti</a>
+        <div
+          id="mobile-accordion-mengenai"
+          class="hidden space-y-1
+                 pb-2 pl-4 pt-1"
+        >
+
+          <a
+            href="pengenalan.html"
+            class="block rounded-lg px-3 py-2.5
+                   font-medium
+                   hover:bg-[#eff8f3]"
+          >
+            Pengenalan
+          </a>
+
+          <a
+            href="objektif.html"
+            class="block rounded-lg px-3 py-2.5
+                   font-medium
+                   hover:bg-[#eff8f3]"
+          >
+            Objektif
+          </a>
+
+          <a
+            href="carta-organisasi.html"
+            class="block rounded-lg px-3 py-2.5
+                   font-medium
+                   hover:bg-[#eff8f3]"
+          >
+            Carta Organisasi
+          </a>
+
+          <a
+            href="takwim.html"
+            class="block rounded-lg px-3 py-2.5
+                   font-medium
+                   hover:bg-[#eff8f3]"
+          >
+            Takwim
+          </a>
+
         </div>
+
       </div>
 
-      <!-- MENU LAIN -->
-      <a href="healink.html" class="hover:text-yellow-300">🧠 HEALINK</a>
-      <a href="bantuan.html" class="hover:text-yellow-300">Bantuan</a>
-      <a href="statistik.html" class="hover:text-yellow-300">Statistik</a>
-      <a href="faq.html" class="hover:text-yellow-300">FAQ</a>
 
-    </nav>
+      <!-- ================= 4 FOKUS ================= -->
 
-    <!-- MOBILE BUTTON -->
-    <button id="menuBtn" class="md:hidden text-2xl">☰</button>
+      <div>
 
-  </div>
+        <button
+          type="button"
+          data-mobile-accordion="fokus"
+          aria-expanded="false"
+          class="mobile-accordion-btn
+                 flex w-full items-center
+                 justify-between rounded-lg
+                 px-3 py-2.5 font-semibold
+                 hover:bg-[#eff8f3]"
+        >
+          <span>4 Fokus</span>
 
-  <!-- MOBILE MENU -->
-  <div id="mobileMenu" class="hidden md:hidden bg-purple-700 px-4 pb-4 space-y-3 text-sm">
+          <i
+            data-lucide="chevron-down"
+            class="h-4 w-4 transition-transform"
+          ></i>
 
-  <a href="index.html" class="block">Laman Utama</a>
+        </button>
 
-  <!-- MENGENAI -->
-  <div>
-    <button onclick="toggleMobile('m1')" 
-      class="w-full text-left flex justify-between items-center">
-      Mengenai ▼
-    </button>
 
-    <div id="m1" class="hidden pl-4 mt-2 space-y-2">
-      <a href="carta-organisasi.html" class="block">Carta Organisasi</a>
-      <a href="objektif.html" class="block">Visi & Misi</a>
-      <a href="takwim.html" class="block">Takwim</a>
+        <div
+          id="mobile-accordion-fokus"
+          class="hidden space-y-1
+                 pb-2 pl-4 pt-1"
+        >
+
+          <a
+            href="sahsiah.html"
+            class="block rounded-lg px-3 py-2.5
+                   font-medium
+                   hover:bg-[#eff8f3]"
+          >
+            Sahsiah
+          </a>
+
+          <a
+            href="disiplin.html"
+            class="block rounded-lg px-3 py-2.5
+                   font-medium
+                   hover:bg-[#eff8f3]"
+          >
+            Disiplin
+          </a>
+
+          <a
+            href="kerjaya.html"
+            class="block rounded-lg px-3 py-2.5
+                   font-medium
+                   hover:bg-[#eff8f3]"
+          >
+            Kerjaya
+          </a>
+
+          <a
+            href="psikososial.html"
+            class="block rounded-lg px-3 py-2.5
+                   font-medium
+                   hover:bg-[#eff8f3]"
+          >
+            Psikososial
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================= PRS ================= -->
+
+      <div>
+
+        <button
+          type="button"
+          data-mobile-accordion="prs"
+          aria-expanded="false"
+          class="mobile-accordion-btn
+                 flex w-full items-center
+                 justify-between rounded-lg
+                 px-3 py-2.5 font-semibold
+                 hover:bg-[#eff8f3]"
+        >
+          <span>PRS</span>
+
+          <i
+            data-lucide="chevron-down"
+            class="h-4 w-4 transition-transform"
+          ></i>
+
+        </button>
+
+
+        <div
+          id="mobile-accordion-prs"
+          class="hidden space-y-1
+                 pb-2 pl-4 pt-1"
+        >
+
+          <a
+            href="carta-prs.html"
+            class="block rounded-lg px-3 py-2.5
+                   font-medium
+                   hover:bg-[#eff8f3]"
+          >
+            Carta Organisasi PRS
+          </a>
+
+          <a
+            href="peranan-prs.html"
+            class="block rounded-lg px-3 py-2.5
+                   font-medium
+                   hover:bg-[#eff8f3]"
+          >
+            Peranan PRS
+          </a>
+
+          <a
+            href="aktiviti-prs.html"
+            class="block rounded-lg px-3 py-2.5
+                   font-medium
+                   hover:bg-[#eff8f3]"
+          >
+            Aktiviti PRS
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <!-- HEALINK -->
+
+      <a
+        href="healink.html"
+        class="block rounded-lg px-3 py-2.5
+               font-semibold
+               hover:bg-[#eff8f3]"
+      >
+        HEALINK
+      </a>
+
+
+      <!-- BANTUAN ACTIVE -->
+
+      <a
+        href="bantuan.html"
+        class="block rounded-lg bg-[#eff8f3]
+               px-3 py-2.5
+               font-bold text-[#075e4c]"
+      >
+        Bantuan
+      </a>
+
+
+      <!-- ADMIN MOBILE -->
+
+      <a
+        href="admin-login.html"
+        class="mt-2 flex items-center gap-2
+               rounded-lg border border-[#dcece3]
+               px-3 py-2.5 font-semibold
+               hover:bg-[#eff8f3]"
+      >
+        <i
+          data-lucide="lock-keyhole"
+          class="h-4 w-4"
+        ></i>
+
+        Login Admin
+      </a>
+
     </div>
+
   </div>
-
-  <!-- PERKHIDMATAN -->
-  <div>
-    <button onclick="toggleMobile('m2')" 
-      class="w-full text-left flex justify-between items-center">
-      Perkhidmatan ▼
-    </button>
-
-    <div id="m2" class="hidden pl-4 mt-2 space-y-2">
-      <a href="pengenalan.html">Pengenalan</a>
-      <a href="temujanji.html">Temujanji</a>
-    </div>
-  </div>
-
-  <!-- 4 FOKUS -->
-  <div>
-    <button onclick="toggleMobile('m3')" 
-      class="w-full text-left flex justify-between items-center">
-      4 Fokus ▼
-    </button>
-
-    <div id="m3" class="hidden pl-4 mt-2 space-y-2">
-      <a href="sahsiah.html">Sahsiah</a>
-      <a href="disiplin.html">Disiplin</a>
-      <a href="kerjaya.html">Kerjaya</a>
-      <a href="psikososial.html">Psikososial</a>
-    </div>
-  </div>
-
-  <!-- PRS -->
-  <div>
-    <button onclick="toggleMobile('m4')" 
-      class="w-full text-left flex justify-between items-center">
-      PRS ▼
-    </button>
-
-    <div id="m4" class="hidden pl-4 mt-2 space-y-2">
-      <a href="carta-prs.html">Carta PRS</a>
-      <a href="peranan-prs.html">Peranan</a>
-      <a href="aktiviti-prs.html">Aktiviti</a>
-    </div>
-  </div>
-
-  <!-- MENU BIASA -->
-  <a href="healink.html" class="block">HEALINK</a>
-  <a href="bantuan.html" class="block">Bantuan</a>
-  <a href="statistik.html" class="block">Statistik</a>
-  <a href="faq.html" class="block">FAQ</a>
-
-</div>
 
 </header>
 
-<!-- HALAMAN SEDANG DIKEMASKINI -->
-<main class="flex-grow flex items-center justify-center bg-gray-100">
 
-<div class="text-center max-w-xl px-6">
+<!-- =================================================
+     MAIN
+================================================== -->
 
-<div class="text-6xl mb-6">🚧</div>
+<main class="flex-grow">
 
-<h1 class="text-3xl font-bold text-gray-800 mb-4">
-Halaman Sedang Dikemaskini
-</h1>
 
-<p class="text-gray-600 leading-relaxed mb-6">
-Maklumat bagi halaman ini sedang dalam proses kemaskini oleh
-Unit Bimbingan & Kaunseling SK Kuala Ketil.
-</p>
+  <!-- =================================================
+       HERO
+  ================================================== -->
 
-<p class="text-gray-500 text-sm">
-Sila kembali semula untuk mendapatkan maklumat terkini.
-Terima kasih atas kesabaran anda.
-</p>
+  <section class="px-6 py-14 sm:py-20">
 
-</div>
+    <div class="mx-auto max-w-6xl">
+
+      <div
+        class="relative overflow-hidden rounded-3xl
+               bg-gradient-to-br
+               from-[#075e4c] via-[#07865f]
+               to-[#0b9b70]
+               px-6 py-12 text-white
+               sm:px-10 sm:py-16"
+      >
+
+        <!-- DECORATION -->
+
+        <div
+          class="absolute -right-16 -top-16
+                 h-52 w-52 rounded-full
+                 bg-white/10"
+        ></div>
+
+        <div
+          class="absolute -bottom-24 -left-20
+                 h-60 w-60 rounded-full
+                 bg-white/10"
+        ></div>
+
+
+        <div
+          class="relative grid items-center
+                 gap-10 lg:grid-cols-[1fr_0.75fr]"
+        >
+
+          <!-- HERO TEXT -->
+
+          <div>
+
+            <div
+              class="inline-flex items-center gap-2
+                     rounded-full
+                     border border-white/20
+                     bg-white/10 px-4 py-2
+                     text-xs font-bold uppercase
+                     tracking-[0.16em]"
+            >
+              <i
+                data-lucide="heart-handshake"
+                class="h-4 w-4"
+              ></i>
+
+              Kami Sedia Membantu
+            </div>
+
+
+            <h1
+              class="mt-6 text-3xl font-extrabold
+                     tracking-tight sm:text-4xl
+                     lg:text-5xl"
+            >
+              Bantuan &amp; Sokongan
+            </h1>
+
+
+            <p
+              class="mt-5 max-w-2xl
+                     text-sm leading-7 text-white/85
+                     sm:text-base"
+            >
+              Anda tidak perlu menghadapi sesuatu
+              masalah seorang diri. Unit Bimbingan
+              &amp; Kaunseling SK Kuala Ketil
+              menyediakan ruang untuk murid
+              mendapatkan bimbingan, berkongsi
+              kebimbangan dan menerima sokongan.
+            </p>
+
+
+            <div
+              class="mt-7 flex flex-wrap gap-3"
+            >
+
+              <a
+                href="temujanji.html"
+                class="inline-flex items-center gap-2
+                       rounded-xl bg-white
+                       px-5 py-3 text-sm font-bold
+                       text-[#075e4c]
+                       transition hover:bg-[#eff8f3]"
+              >
+                <i
+                  data-lucide="calendar-check-2"
+                  class="h-4 w-4"
+                ></i>
+
+                Buat Temujanji
+              </a>
+
+
+              <a
+                href="mailto:kaunseling.skkk@gmail.com"
+                class="inline-flex items-center gap-2
+                       rounded-xl border
+                       border-white/25
+                       bg-white/10 px-5 py-3
+                       text-sm font-bold text-white
+                       transition hover:bg-white/20"
+              >
+                <i
+                  data-lucide="mail"
+                  class="h-4 w-4"
+                ></i>
+
+                Hubungi UBK
+              </a>
+
+            </div>
+
+          </div>
+
+
+          <!-- HERO CARD -->
+
+          <div
+            class="rounded-2xl border
+                   border-white/15
+                   bg-white/10 p-6
+                   backdrop-blur"
+          >
+
+            <div
+              class="grid h-12 w-12
+                     place-items-center
+                     rounded-xl bg-white
+                     text-[#07865f]"
+            >
+              <i
+                data-lucide="shield-heart"
+                class="h-6 w-6"
+              ></i>
+            </div>
+
+
+            <h2
+              class="mt-5 text-lg font-extrabold"
+            >
+              Ruang Selamat untuk Berkongsi
+            </h2>
+
+
+            <p
+              class="mt-3 text-sm leading-7
+                     text-white/80"
+            >
+              Anda boleh mendapatkan sokongan
+              berkaitan pembelajaran, emosi,
+              hubungan rakan sebaya, sahsiah,
+              kerjaya atau perkara lain yang
+              mengganggu kesejahteraan diri.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =================================================
+       JENIS BANTUAN
+  ================================================== -->
+
+  <section
+    class="border-y border-[#dcece3]
+           bg-white px-6 py-14 sm:py-16"
+  >
+
+    <div class="mx-auto max-w-6xl">
+
+      <div class="mx-auto max-w-2xl text-center">
+
+        <p
+          class="text-xs font-bold uppercase
+                 tracking-[0.16em]
+                 text-[#07865f]"
+        >
+          Sokongan UBK
+        </p>
+
+        <h2
+          class="mt-2 text-2xl font-extrabold
+                 text-[#173f35] sm:text-3xl"
+        >
+          Bagaimana Kami Boleh Membantu?
+        </h2>
+
+        <p
+          class="mt-4 text-sm leading-7
+                 text-[#617a73]"
+        >
+          Murid boleh mendapatkan bimbingan
+          mengikut keperluan dan situasi
+          masing-masing.
+        </p>
+
+      </div>
+
+
+      <div
+        class="mt-10 grid gap-5
+               sm:grid-cols-2 lg:grid-cols-4"
+      >
+
+        <!-- EMOSI -->
+
+        <article
+          class="rounded-2xl border
+                 border-[#dcece3]
+                 bg-[#f7fbf8] p-6"
+        >
+
+          <div
+            class="grid h-12 w-12
+                   place-items-center
+                   rounded-xl bg-[#e4f4ec]
+                   text-[#07865f]"
+          >
+            <i
+              data-lucide="heart"
+              class="h-6 w-6"
+            ></i>
+          </div>
+
+          <h3
+            class="mt-5 font-extrabold
+                   text-[#173f35]"
+          >
+            Emosi &amp; Perasaan
+          </h3>
+
+          <p
+            class="mt-3 text-sm leading-6
+                   text-[#617a73]"
+          >
+            Sokongan apabila berasa sedih,
+            tertekan, risau atau memerlukan
+            seseorang untuk mendengar.
+          </p>
+
+        </article>
+
+
+        <!-- PEMBELAJARAN -->
+
+        <article
+          class="rounded-2xl border
+                 border-[#dcece3]
+                 bg-[#f7fbf8] p-6"
+        >
+
+          <div
+            class="grid h-12 w-12
+                   place-items-center
+                   rounded-xl bg-[#e4f4ec]
+                   text-[#07865f]"
+          >
+            <i
+              data-lucide="book-open-check"
+              class="h-6 w-6"
+            ></i>
+          </div>
+
+          <h3
+            class="mt-5 font-extrabold
+                   text-[#173f35]"
+          >
+            Pembelajaran
+          </h3>
+
+          <p
+            class="mt-3 text-sm leading-6
+                   text-[#617a73]"
+          >
+            Bimbingan berkaitan motivasi,
+            pengurusan masa, pembelajaran
+            dan keyakinan diri.
+          </p>
+
+        </article>
+
+
+        <!-- RAKAN SEBAYA -->
+
+        <article
+          class="rounded-2xl border
+                 border-[#dcece3]
+                 bg-[#f7fbf8] p-6"
+        >
+
+          <div
+            class="grid h-12 w-12
+                   place-items-center
+                   rounded-xl bg-[#e4f4ec]
+                   text-[#07865f]"
+          >
+            <i
+              data-lucide="users-round"
+              class="h-6 w-6"
+            ></i>
+          </div>
+
+          <h3
+            class="mt-5 font-extrabold
+                   text-[#173f35]"
+          >
+            Rakan Sebaya
+          </h3>
+
+          <p
+            class="mt-3 text-sm leading-6
+                   text-[#617a73]"
+          >
+            Bantuan berkaitan persahabatan,
+            komunikasi, konflik dan hubungan
+            bersama rakan.
+          </p>
+
+        </article>
+
+
+        <!-- HALA TUJU -->
+
+        <article
+          class="rounded-2xl border
+                 border-[#dcece3]
+                 bg-[#f7fbf8] p-6"
+        >
+
+          <div
+            class="grid h-12 w-12
+                   place-items-center
+                   rounded-xl bg-[#e4f4ec]
+                   text-[#07865f]"
+          >
+            <i
+              data-lucide="compass"
+              class="h-6 w-6"
+            ></i>
+          </div>
+
+          <h3
+            class="mt-5 font-extrabold
+                   text-[#173f35]"
+          >
+            Hala Tuju Diri
+          </h3>
+
+          <p
+            class="mt-3 text-sm leading-6
+                   text-[#617a73]"
+          >
+            Membantu murid mengenali
+            kekuatan diri, minat, potensi
+            dan hala tuju masa hadapan.
+          </p>
+
+        </article>
+
+      </div>
+
+    </div>
+
+  </section>
 
 </main>
 
-<!-- FOOTER -->
-<footer class="bg-purple-500 text-white-300 pt-10 pb-6">
 
-<div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8 text-center md:text-left">
+<!-- =================================================
+     FOOTER
+================================================== -->
 
-<!-- INFO PORTAL -->
-<div>
-<h3 class="text-lg font-semibold text-white mb-3">
-Portal Anjung Kasih
-</h3>
+<footer class="border-t border-[#dcece3] bg-white">
 
-<p class="text-sm text-white-400 leading-relaxed">
-Portal rasmi Unit Bimbingan & Kaunseling
-SK Kuala Ketil yang menyediakan maklumat,
-perkhidmatan kaunseling serta sokongan
-kepada murid dan warga sekolah.
-</p>
-</div>
+  <div
+    class="mx-auto grid max-w-7xl gap-10
+           px-6 py-10 md:grid-cols-3"
+  >
 
+    <!-- PORTAL -->
 
-<!-- HUBUNGI -->
-<div>
-<h3 class="text-lg font-semibold text-white mb-3">
-Hubungi Kami
-</h3>
+    <div>
 
-<p class="text-sm text-white-400 mb-2">
-📧 kaunseling.skkk@gmail.com
-</p>
+      <div class="flex items-center gap-3">
 
-<p class="text-sm text-white-400 mb-3">
-📍 SK Kuala Ketil  
-Kuala Ketil, Kedah
-</p>
+        <div class="flex shrink-0 items-center gap-1">
 
-<a href="https://wa.me/60123456789"
-target="_blank"
-class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+          <img
+            src="assets/logo-sekolah.png"
+            alt="Logo SK Kuala Ketil"
+            class="h-11 w-auto"
+          >
 
-📱 WhatsApp Kaunselor
+          <img
+            src="assets/logo-ts25.png"
+            alt="Logo TS25"
+            class="h-11 w-auto"
+          >
 
-</a>
-
-</div>
+        </div>
 
 
-<!-- WAKTU OPERASI -->
-<div>
-<h3 class="text-lg font-semibold text-white mb-3">
-Waktu Perkhidmatan
-</h3>
+        <div>
 
-<p class="text-sm text-white-400">
-Ahad – Khamis
-</p>
+          <h2
+            class="text-sm font-extrabold
+                   text-[#173f35]"
+          >
+            Portal Anjung Kasih
+          </h2>
 
-<p class="text-sm text-white-400">
-7:30 pagi – 2:30 petang
-</p>
+          <p
+            class="mt-1 text-xs font-medium
+                   text-[#617a73]"
+          >
+            Bimbingan &amp; Kaunseling
+            SK Kuala Ketil
+          </p>
 
-<p class="text-sm text-white-400 mt-2">
-Jumaat – Sabtu Cuti
-</p>
-</div>
+        </div>
 
-</div>
-
-
-<!-- GARIS PEMISAH -->
-<div class="max-w-6xl mx-auto px-6 mt-8">
-<hr class="border-gray-700">
-</div>
+      </div>
 
 
-<!-- COPYRIGHT -->
-<div class="text-center text-sm text-white-500 mt-4">
+      <p
+        class="mt-4 max-w-sm text-sm
+               leading-6 text-[#617a73]"
+      >
+        Menyediakan maklumat, bimbingan
+        dan sokongan kepada murid dalam
+        perkembangan diri, pembelajaran
+        dan kesejahteraan.
+      </p>
 
-© 2026 Unit Bimbingan & Kaunseling  
-SK Kuala Ketil
+    </div>
 
-</div>
+
+    <!-- HUBUNGI -->
+
+    <div>
+
+      <h3
+        class="text-sm font-extrabold
+               text-[#173f35]"
+      >
+        Hubungi Kami
+      </h3>
+
+
+      <div
+        class="mt-4 space-y-3
+               text-sm text-[#617a73]"
+      >
+
+        <div class="flex items-start gap-3">
+
+          <i
+            data-lucide="mail"
+            class="mt-0.5 h-4 w-4
+                   shrink-0 text-[#07865f]"
+          ></i>
+
+          <a
+            href="mailto:kaunseling.skkk@gmail.com"
+            class="transition
+                   hover:text-[#075e4c]"
+          >
+            kaunseling.skkk@gmail.com
+          </a>
+
+        </div>
+
+
+        <div class="flex items-start gap-3">
+
+          <i
+            data-lucide="map-pin"
+            class="mt-0.5 h-4 w-4
+                   shrink-0 text-[#07865f]"
+          ></i>
+
+          <span>
+            SK Kuala Ketil,<br>
+            Kuala Ketil, Kedah
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- WAKTU -->
+
+    <div>
+
+      <h3
+        class="text-sm font-extrabold
+               text-[#173f35]"
+      >
+        Waktu Perkhidmatan
+      </h3>
+
+
+      <div
+        class="mt-4 space-y-3
+               text-sm text-[#617a73]"
+      >
+
+        <div class="flex items-start gap-3">
+
+          <i
+            data-lucide="clock-3"
+            class="mt-0.5 h-4 w-4
+                   shrink-0 text-[#07865f]"
+          ></i>
+
+          <div>
+
+            <p
+              class="font-semibold
+                     text-[#31534a]"
+            >
+              Ahad – Khamis
+            </p>
+
+            <p class="mt-1">
+              7:30 pagi – 2:30 petang
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="flex items-start gap-3">
+
+          <i
+            data-lucide="calendar-x-2"
+            class="mt-0.5 h-4 w-4
+                   shrink-0 text-[#07865f]"
+          ></i>
+
+          <div>
+
+            <p
+              class="font-semibold
+                     text-[#31534a]"
+            >
+              Jumaat – Sabtu
+            </p>
+
+            <p class="mt-1">
+              Cuti
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div
+    class="border-t border-[#dcece3]
+           bg-[#f7fbf8]"
+  >
+
+    <div
+      class="mx-auto max-w-7xl px-6 py-4
+             text-center text-xs
+             text-[#617a73]"
+    >
+      © 2026 Unit Bimbingan &amp; Kaunseling
+      SK Kuala Ketil. Hak cipta terpelihara.
+    </div>
+
+  </div>
 
 </footer>
 
-<script>
-function toggleDropdown(id) {
-  document.querySelectorAll('[id^="menu"]').forEach(menu => {
-    if (menu.id !== id) menu.classList.add('hidden');
-  });
-  document.getElementById(id).classList.toggle("hidden");
-}
 
-window.addEventListener("click", function(e) {
-  if (!e.target.closest(".relative")) {
-    document.querySelectorAll('[id^="menu"]').forEach(menu => {
-      menu.classList.add("hidden");
-    });
+<!-- =================================================
+     HEADER INTERACTION
+================================================== -->
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* ================= LUCIDE ================= */
+
+  if (window.lucide) {
+    lucide.createIcons();
   }
-});
 
-const btn = document.getElementById("menuBtn");
-const menu = document.getElementById("mobileMenu");
 
-btn.addEventListener("click", () => {
-  menu.classList.toggle("hidden");
+  /* ================= MOBILE MENU ================= */
+
+  const mobileToggle =
+    document.getElementById("mobile-toggle");
+
+  const mobileMenu =
+    document.getElementById("mobile-menu");
+
+  if (mobileToggle && mobileMenu) {
+
+    mobileToggle.addEventListener("click", () => {
+
+      const isOpen =
+        mobileMenu.classList.toggle("open");
+
+      mobileToggle.setAttribute(
+        "aria-expanded",
+        String(isOpen)
+      );
+
+      mobileToggle.innerHTML = isOpen
+        ? '<i data-lucide="x"></i>'
+        : '<i data-lucide="menu"></i>';
+
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+
+    });
+
+  }
+
+
+  /* ================= MOBILE ACCORDION ================= */
+
+  const accordionButtons =
+    document.querySelectorAll(
+      ".mobile-accordion-btn"
+    );
+
+  accordionButtons.forEach((button) => {
+
+    button.addEventListener("click", () => {
+
+      const target =
+        button.dataset.mobileAccordion;
+
+      const content =
+        document.getElementById(
+          `mobile-accordion-${target}`
+        );
+
+      if (!content) return;
+
+      const willOpen =
+        content.classList.contains("hidden");
+
+
+      /* CLOSE ALL */
+
+      accordionButtons.forEach((otherButton) => {
+
+        const otherTarget =
+          otherButton.dataset.mobileAccordion;
+
+        const otherContent =
+          document.getElementById(
+            `mobile-accordion-${otherTarget}`
+          );
+
+        if (!otherContent) return;
+
+        otherContent.classList.add("hidden");
+
+        otherButton.setAttribute(
+          "aria-expanded",
+          "false"
+        );
+
+        const otherIcon =
+          otherButton.querySelector(
+            '[data-lucide="chevron-down"]'
+          );
+
+        if (otherIcon) {
+          otherIcon.classList.remove(
+            "rotate-180"
+          );
+        }
+
+      });
+
+
+      /* OPEN SELECTED */
+
+      if (willOpen) {
+
+        content.classList.remove("hidden");
+
+        button.setAttribute(
+          "aria-expanded",
+          "true"
+        );
+
+        const icon =
+          button.querySelector(
+            '[data-lucide="chevron-down"]'
+          );
+
+        if (icon) {
+          icon.classList.add("rotate-180");
+        }
+
+      }
+
+    });
+
+  });
+
+
+  /* ================= DATE & TIME ================= */
+
+  const desktopDate =
+    document.getElementById("header-date");
+
+  const desktopTime =
+    document.getElementById("header-time");
+
+  const mobileDate =
+    document.getElementById(
+      "mobile-header-date"
+    );
+
+  const mobileTime =
+    document.getElementById(
+      "mobile-header-time"
+    );
+
+
+  function updateDateTime() {
+
+    const now = new Date();
+
+    const dateText =
+      new Intl.DateTimeFormat(
+        "ms-MY",
+        {
+          timeZone: "Asia/Kuala_Lumpur",
+          weekday: "long",
+          day: "2-digit",
+          month: "short",
+          year: "numeric"
+        }
+      ).format(now);
+
+    const timeText =
+      new Intl.DateTimeFormat(
+        "ms-MY",
+        {
+          timeZone: "Asia/Kuala_Lumpur",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false
+        }
+      ).format(now);
+
+
+    if (desktopDate) {
+      desktopDate.textContent = dateText;
+    }
+
+    if (desktopTime) {
+      desktopTime.textContent = timeText;
+    }
+
+    if (mobileDate) {
+      mobileDate.textContent = dateText;
+    }
+
+    if (mobileTime) {
+      mobileTime.textContent = timeText;
+    }
+
+  }
+
+
+  updateDateTime();
+
+  setInterval(
+    updateDateTime,
+    1000
+  );
+
 });
 </script>
 
-<script>
-function toggleMobile(id) {
-  const el = document.getElementById(id);
-  el.classList.toggle("hidden");
-}
-</script>
 
 </body>
 </html>

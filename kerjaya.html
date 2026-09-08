@@ -10,498 +10,2081 @@
 
 <script src="https://cdn.tailwindcss.com"></script>
 
+<!-- =================================================
+     LUCIDE ICONS
+================================================== -->
+
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<!-- =================================================
+     PORTAL MAIN STYLE
+================================================== -->
+
+<link rel="stylesheet" href="css/style.css"/>
+
 </head>
 
 <body class="flex flex-col min-h-screen">
 
-<!-- HEADER -->
-<header class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md sticky top-0 z-50">
+<!-- =================================================
+     HEADER
+================================================== -->
 
-  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+<header
+  class="sticky top-0 z-50 border-b border-[#dcece3] bg-white/95 backdrop-blur"
+>
 
-    <!-- LOGO -->
-    <div class="flex items-center gap-3">
-      <img src="assets/logo-sekolah.png" class="h-10">
-      <img src="assets/logo-ts25.png" class="h-10">
+  <nav
+    class="mx-auto flex min-h-[72px] max-w-7xl items-center
+           justify-between gap-3 px-4 sm:px-6"
+  >
 
-      <div>
-        <h1 class="text-sm md:text-lg font-bold">Bimbingan & Kaunseling</h1>
-        <p class="text-xs opacity-80">SK Kuala Ketil</p>
+    <!-- BRAND -->
+
+    <a
+      href="index.html"
+      class="flex min-w-0 items-center gap-3"
+    >
+
+      <div class="flex shrink-0 items-center gap-1">
+
+        <img
+          src="assets/logo-sekolah.png"
+          alt="Logo SK Kuala Ketil"
+          class="h-10 w-auto sm:h-11"
+        >
+
+        <img
+          src="assets/logo-ts25.png"
+          alt="Logo TS25"
+          class="h-10 w-auto sm:h-11"
+        >
+
       </div>
-    </div>
 
-    <!-- DESKTOP MENU -->
-    <nav class="hidden md:flex gap-6 items-center text-sm font-semibold relative">
+      <div class="min-w-0 leading-tight">
 
-      <!-- LAMAN UTAMA -->
-      <a href="index.html" class="hover:text-yellow-300">Laman Utama</a>
+        <div
+          class="truncate text-[12px] font-bold
+                 text-[#173f35] sm:text-sm"
+        >
+          Bimbingan &amp; Kaunseling
+        </div>
+
+        <div
+          class="mt-1 text-[10px] font-medium
+                 text-[#617a73] sm:text-xs"
+        >
+          SK Kuala Ketil
+        </div>
+
+      </div>
+
+    </a>
+
+
+    <!-- =================================================
+         DESKTOP NAVIGATION
+    ================================================== -->
+
+    <div
+      class="desktop-nav hidden items-center gap-1
+             text-[13px] font-semibold text-[#31534a] lg:flex"
+    >
+
+      <a
+        href="index.html"
+        class="rounded-xl px-3 py-2 transition
+               hover:bg-[#eff8f3] hover:text-[#075e4c]"
+      >
+        Laman Utama
+      </a>
+
 
       <!-- MENGENAI -->
-      <div class="relative group inline-block">
-        <button class="flex items-center gap-1 hover:text-yellow-300">
-          Mengenai ▼
+
+      <div class="group relative">
+
+        <button
+          type="button"
+          class="flex items-center gap-1 rounded-xl
+                 px-3 py-2 transition hover:bg-[#eff8f3]"
+        >
+          Mengenai
+
+          <i
+            data-lucide="chevron-down"
+            class="h-3.5 w-3.5"
+          ></i>
         </button>
 
-        <div class="absolute left-0 top-full w-56 
-                    bg-white text-black rounded-xl shadow-xl 
-                    opacity-0 invisible group-hover:opacity-100 group-hover:visible 
-                    transition duration-200 z-50">
+        <div
+          class="invisible absolute left-0 top-full z-50
+                 w-56 translate-y-2 rounded-xl
+                 border border-[#dcece3] bg-white p-2
+                 opacity-0 shadow-xl transition-all
+                 duration-200
+                 group-hover:visible
+                 group-hover:translate-y-0
+                 group-hover:opacity-100"
+        >
 
-          <a href="carta-organisasi.html" class="block px-4 py-2 hover:bg-gray-100">Carta Organisasi</a>
-          <a href="objektif.html" class="block px-4 py-2 hover:bg-gray-100">Visi & Misi</a>
-          <a href="takwim.html" class="block px-4 py-2 hover:bg-gray-100">Takwim</a>
+          <a
+            href="pengenalan.html"
+            class="block rounded-lg px-3 py-2.5 hover:bg-[#eff8f3]"
+          >
+            Pengenalan
+          </a>
+
+          <a
+            href="objektif.html"
+            class="block rounded-lg px-3 py-2.5 hover:bg-[#eff8f3]"
+          >
+            Objektif
+          </a>
+
+          <a
+            href="carta-organisasi.html"
+            class="block rounded-lg px-3 py-2.5 hover:bg-[#eff8f3]"
+          >
+            Carta Organisasi
+          </a>
+
+          <a
+            href="takwim.html"
+            class="block rounded-lg px-3 py-2.5 hover:bg-[#eff8f3]"
+          >
+            Takwim
+          </a>
+
         </div>
+
       </div>
 
-      <!-- PERKHIDMATAN -->
-      <div class="relative group inline-block">
-        <button class="flex items-center gap-1 hover:text-yellow-300">
-          Perkhidmatan ▼
+
+      <!-- 4 FOKUS — ACTIVE -->
+
+      <div class="group relative">
+
+        <button
+          type="button"
+          class="flex items-center gap-1 rounded-xl
+                 bg-[#eff8f3] px-3 py-2
+                 text-[#075e4c]"
+        >
+          4 Fokus
+
+          <i
+            data-lucide="chevron-down"
+            class="h-3.5 w-3.5"
+          ></i>
         </button>
 
-        <div class="absolute left-0 top-full w-56 
-                    bg-white text-black rounded-xl shadow-xl 
-                    opacity-0 invisible group-hover:opacity-100 group-hover:visible 
-                    transition duration-200 z-50">
+        <div
+          class="invisible absolute left-0 top-full z-50
+                 w-64 translate-y-2 rounded-xl
+                 border border-[#dcece3] bg-white p-2
+                 opacity-0 shadow-xl transition-all
+                 duration-200
+                 group-hover:visible
+                 group-hover:translate-y-0
+                 group-hover:opacity-100"
+        >
 
-          <a href="pengenalan.html" class="block px-4 py-2 hover:bg-gray-100">Pengenalan</a>
-          <a href="temujanji.html" class="block px-4 py-2 hover:bg-gray-100">Temujanji</a>
+          <a
+            href="sahsiah.html"
+            class="block rounded-lg px-3 py-2.5 hover:bg-[#eff8f3]"
+          >
+            Sahsiah Diri
+          </a>
+
+          <!-- DISIPLIN — ACTIVE -->
+
+          <a
+            href="disiplin.html"
+            class="block rounded-lg px-3 py-2.5
+                  hover:bg-[#eff8f3]"
+          >
+            Disiplin Diri
+          </a>
+
+          <a
+            href="kerjaya.html"
+            class="block rounded-lg bg-[#eff8f3]
+                  px-3 py-2.5 text-[#075e4c]"
+          >
+            Pendidikan Kerjaya
+          </a>
+
+          <a
+            href="psikososial.html"
+            class="block rounded-lg px-3 py-2.5 hover:bg-[#eff8f3]"
+          >
+            Psikososial &amp; Kesejahteraan Mental
+          </a>
+
         </div>
+
       </div>
 
-      <!-- 4 FOKUS -->
-      <div class="relative group inline-block">
-        <button class="flex items-center gap-1 hover:text-yellow-300">
-          4 Fokus ▼
-        </button>
-
-        <div class="absolute left-0 top-full w-56 
-                    bg-white text-black rounded-xl shadow-xl 
-                    opacity-0 invisible group-hover:opacity-100 group-hover:visible 
-                    transition duration-200 z-50">
-
-          <a href="sahsiah.html" class="block px-4 py-2 hover:bg-gray-100">Sahsiah</a>
-          <a href="disiplin.html" class="block px-4 py-2 hover:bg-gray-100">Disiplin</a>
-          <a href="kerjaya.html" class="block px-4 py-2 hover:bg-gray-100">Kerjaya</a>
-          <a href="psikososial.html" class="block px-4 py-2 hover:bg-gray-100">Psikososial</a>
-        </div>
-      </div>
 
       <!-- PRS -->
-      <div class="relative group inline-block">
-        <button class="flex items-center gap-1 hover:text-yellow-300">
-          PRS ▼
+
+      <div class="group relative">
+
+        <button
+          type="button"
+          class="flex items-center gap-1 rounded-xl
+                 px-3 py-2 transition hover:bg-[#eff8f3]"
+        >
+          PRS
+
+          <i
+            data-lucide="chevron-down"
+            class="h-3.5 w-3.5"
+          ></i>
         </button>
 
-        <div class="absolute left-0 top-full w-56 
-                    bg-white text-black rounded-xl shadow-xl 
-                    opacity-0 invisible group-hover:opacity-100 group-hover:visible 
-                    transition duration-200 z-50">
+        <div
+          class="invisible absolute left-0 top-full z-50
+                 w-60 translate-y-2 rounded-xl
+                 border border-[#dcece3] bg-white p-2
+                 opacity-0 shadow-xl transition-all
+                 duration-200
+                 group-hover:visible
+                 group-hover:translate-y-0
+                 group-hover:opacity-100"
+        >
 
-          <a href="carta-prs.html" class="block px-4 py-2 hover:bg-gray-100">Carta PRS</a>
-          <a href="peranan-prs.html" class="block px-4 py-2 hover:bg-gray-100">Peranan</a>
-          <a href="aktiviti-prs.html" class="block px-4 py-2 hover:bg-gray-100">Aktiviti</a>
+          <a
+            href="carta-prs.html"
+            class="block rounded-lg px-3 py-2.5 hover:bg-[#eff8f3]"
+          >
+            Carta Organisasi PRS
+          </a>
+
+          <a
+            href="peranan-prs.html"
+            class="block rounded-lg px-3 py-2.5 hover:bg-[#eff8f3]"
+          >
+            Peranan PRS
+          </a>
+
+          <a
+            href="aktiviti-prs.html"
+            class="block rounded-lg px-3 py-2.5 hover:bg-[#eff8f3]"
+          >
+            Aktiviti PRS
+          </a>
+
         </div>
+
       </div>
 
-      <!-- MENU LAIN -->
-      <a href="healink.html" class="hover:text-yellow-300">🧠 HEALINK</a>
-      <a href="bantuan.html" class="hover:text-yellow-300">Bantuan</a>
-      <a href="statistik.html" class="hover:text-yellow-300">Statistik</a>
-      <a href="faq.html" class="hover:text-yellow-300">FAQ</a>
 
-    </nav>
+      <a
+        href="healink.html"
+        class="rounded-xl px-3 py-2 transition
+               hover:bg-[#eff8f3] hover:text-[#075e4c]"
+      >
+        HEALINK
+      </a>
+
+      <a
+        href="temujanji.html"
+        class="rounded-xl px-3 py-2 transition
+               hover:bg-[#eff8f3] hover:text-[#075e4c]"
+      >
+        Bantuan
+      </a>
+
+    </div>
+
+
+    <!-- DATE, TIME & ADMIN — DESKTOP -->
+
+    <div
+      class="hidden xl:flex items-center gap-3
+             border-l border-[#dcece3] pl-4"
+    >
+
+      <div class="flex flex-col items-end leading-tight">
+
+        <span
+          id="header-date"
+          class="text-[11px] font-semibold text-[#617a73]"
+        >
+          --
+        </span>
+
+        <span
+          id="header-time"
+          class="mt-1 text-sm font-bold text-[#075e4c]"
+        >
+          --:--:--
+        </span>
+
+      </div>
+
+      <a
+        href="admin-login.html"
+        title="Login Admin"
+        aria-label="Login Admin"
+        class="grid h-10 w-10 place-items-center
+               rounded-xl bg-[#eff8f3] text-[#075e4c]
+               transition hover:bg-[#dcece3]"
+      >
+        <i
+          data-lucide="lock-keyhole"
+          class="h-4 w-4"
+        ></i>
+      </a>
+
+    </div>
+
+
+    <!-- MOBILE DATE & TIME -->
+
+    <div
+      class="ml-auto mr-3 flex flex-col items-end
+             leading-tight xl:hidden"
+      aria-label="Tarikh dan masa semasa"
+    >
+
+      <span
+        id="mobile-header-date"
+        class="text-[9px] font-semibold
+               text-[#617a73] sm:text-[10px]"
+      >
+        --
+      </span>
+
+      <span
+        id="mobile-header-time"
+        class="mt-1 text-xs font-bold text-[#075e4c]"
+      >
+        --:--:--
+      </span>
+
+    </div>
+
 
     <!-- MOBILE BUTTON -->
-    <button id="menuBtn" class="md:hidden text-2xl">☰</button>
 
-  </div>
-
-  <!-- MOBILE MENU -->
-  <div id="mobileMenu" class="hidden md:hidden bg-purple-700 px-4 pb-4 space-y-3 text-sm">
-
-  <a href="index.html" class="block">Laman Utama</a>
-
-  <!-- MENGENAI -->
-  <div>
-    <button onclick="toggleMobile('m1')" 
-      class="w-full text-left flex justify-between items-center">
-      Mengenai ▼
+    <button
+      id="mobile-toggle"
+      type="button"
+      class="mobile-toggle grid h-11 w-11 shrink-0
+             place-items-center rounded-xl
+             bg-[#eff8f3] text-[#075e4c]
+             transition hover:bg-[#dcece3] lg:hidden"
+      aria-label="Buka menu"
+      aria-expanded="false"
+    >
+      <i data-lucide="menu"></i>
     </button>
 
-    <div id="m1" class="hidden pl-4 mt-2 space-y-2">
-      <a href="carta-organisasi.html" class="block">Carta Organisasi</a>
-      <a href="objektif.html" class="block">Visi & Misi</a>
-      <a href="takwim.html" class="block">Takwim</a>
+  </nav>
+
+
+  <!-- =================================================
+       MOBILE MENU
+  ================================================== -->
+
+  <div
+    id="mobile-menu"
+    class="mobile-menu bg-white px-5"
+  >
+
+    <div
+      class="border-t border-[#dcece3] py-4
+             text-sm font-semibold text-[#31534a]"
+    >
+
+      <a
+        href="index.html"
+        class="block rounded-lg px-3 py-3 hover:bg-[#eff8f3]"
+      >
+        Laman Utama
+      </a>
+
+
+      <!-- MENGENAI -->
+
+      <div class="mt-2">
+
+        <button
+          type="button"
+          class="mobile-accordion-btn flex w-full
+                 items-center justify-between rounded-lg
+                 px-3 py-3 text-left transition
+                 hover:bg-[#eff8f3]"
+          data-mobile-accordion="mengenai"
+          aria-expanded="false"
+        >
+          <span>Mengenai</span>
+
+          <i
+            data-lucide="chevron-down"
+            class="h-4 w-4 transition-transform duration-200"
+          ></i>
+        </button>
+
+        <div
+          id="mobile-accordion-mengenai"
+          class="mobile-accordion-content hidden
+                 ml-3 border-l-2 border-[#dcece3] pl-2"
+        >
+
+          <a
+            href="pengenalan.html"
+            class="block rounded-lg px-3 py-2.5
+                   font-medium hover:bg-[#eff8f3]"
+          >
+            Pengenalan
+          </a>
+
+          <a
+            href="objektif.html"
+            class="block rounded-lg px-3 py-2.5
+                   font-medium hover:bg-[#eff8f3]"
+          >
+            Objektif
+          </a>
+
+          <a
+            href="carta-organisasi.html"
+            class="block rounded-lg px-3 py-2.5
+                   font-medium hover:bg-[#eff8f3]"
+          >
+            Carta Organisasi
+          </a>
+
+          <a
+            href="takwim.html"
+            class="block rounded-lg px-3 py-2.5
+                   font-medium hover:bg-[#eff8f3]"
+          >
+            Takwim
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <!-- 4 FOKUS — ACTIVE -->
+
+      <div>
+
+        <button
+          type="button"
+          class="mobile-accordion-btn flex w-full
+                 items-center justify-between rounded-lg
+                 bg-[#eff8f3] px-3 py-3
+                 text-left text-[#075e4c]"
+          data-mobile-accordion="fokus"
+          aria-expanded="false"
+        >
+          <span>4 Fokus</span>
+
+          <i
+            data-lucide="chevron-down"
+            class="h-4 w-4 transition-transform duration-200"
+          ></i>
+        </button>
+
+        <div
+          id="mobile-accordion-fokus"
+          class="mobile-accordion-content hidden
+                 ml-3 border-l-2 border-[#dcece3] pl-2"
+        >
+
+          <a
+            href="sahsiah.html"
+            class="block rounded-lg px-3 py-2.5
+                   font-medium hover:bg-[#eff8f3]"
+          >
+            Sahsiah Diri
+          </a>
+
+          <!-- DISIPLIN — ACTIVE -->
+
+          <a
+            href="disiplin.html"
+            class="block rounded-lg px-3 py-2.5
+                  font-medium hover:bg-[#eff8f3]"
+          >
+            Disiplin Diri
+          </a>
+
+          <a
+            href="kerjaya.html"
+            class="block rounded-lg bg-[#eff8f3]
+                  px-3 py-2.5 text-[#075e4c]"
+          >
+            Pendidikan Kerjaya
+          </a>
+
+          <a
+            href="psikososial.html"
+            class="block rounded-lg px-3 py-2.5
+                   font-medium hover:bg-[#eff8f3]"
+          >
+            Psikososial &amp; Kesejahteraan Mental
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <!-- PRS -->
+
+      <div>
+
+        <button
+          type="button"
+          class="mobile-accordion-btn flex w-full
+                 items-center justify-between rounded-lg
+                 px-3 py-3 text-left transition
+                 hover:bg-[#eff8f3]"
+          data-mobile-accordion="prs"
+          aria-expanded="false"
+        >
+          <span>PRS</span>
+
+          <i
+            data-lucide="chevron-down"
+            class="h-4 w-4 transition-transform duration-200"
+          ></i>
+        </button>
+
+        <div
+          id="mobile-accordion-prs"
+          class="mobile-accordion-content hidden
+                 ml-3 border-l-2 border-[#dcece3] pl-2"
+        >
+
+          <a
+            href="carta-prs.html"
+            class="block rounded-lg px-3 py-2.5
+                   font-medium hover:bg-[#eff8f3]"
+          >
+            Carta Organisasi PRS
+          </a>
+
+          <a
+            href="peranan-prs.html"
+            class="block rounded-lg px-3 py-2.5
+                   font-medium hover:bg-[#eff8f3]"
+          >
+            Peranan PRS
+          </a>
+
+          <a
+            href="aktiviti-prs.html"
+            class="block rounded-lg px-3 py-2.5
+                   font-medium hover:bg-[#eff8f3]"
+          >
+            Aktiviti PRS
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <!-- MENU TAMBAHAN -->
+
+      <div class="mt-3 border-t border-[#dcece3] pt-3">
+
+        <a
+          href="healink.html"
+          class="flex items-center gap-3 rounded-lg
+                 px-3 py-3 transition hover:bg-[#eff8f3]"
+        >
+          <i
+            data-lucide="heart-pulse"
+            class="h-4 w-4 text-[#075e4c]"
+          ></i>
+
+          <span>HEALINK</span>
+        </a>
+
+        <a
+          href="temujanji.html"
+          class="flex items-center gap-3 rounded-lg
+                 px-3 py-3 transition hover:bg-[#eff8f3]"
+        >
+          <i
+            data-lucide="life-buoy"
+            class="h-4 w-4 text-[#075e4c]"
+          ></i>
+
+          <span>Bantuan</span>
+        </a>
+
+        <a
+          href="admin-login.html"
+          class="mt-2 flex items-center gap-3
+                 rounded-xl bg-[#eff8f3]
+                 px-3 py-3 font-bold text-[#075e4c]
+                 transition hover:bg-[#dcece3]"
+        >
+          <i
+            data-lucide="lock-keyhole"
+            class="h-4 w-4"
+          ></i>
+
+          <span>Login Admin</span>
+        </a>
+
+      </div>
+
     </div>
+
   </div>
-
-  <!-- PERKHIDMATAN -->
-  <div>
-    <button onclick="toggleMobile('m2')" 
-      class="w-full text-left flex justify-between items-center">
-      Perkhidmatan ▼
-    </button>
-
-    <div id="m2" class="hidden pl-4 mt-2 space-y-2">
-      <a href="pengenalan.html">Pengenalan</a>
-      <a href="temujanji.html">Temujanji</a>
-    </div>
-  </div>
-
-  <!-- 4 FOKUS -->
-  <div>
-    <button onclick="toggleMobile('m3')" 
-      class="w-full text-left flex justify-between items-center">
-      4 Fokus ▼
-    </button>
-
-    <div id="m3" class="hidden pl-4 mt-2 space-y-2">
-      <a href="sahsiah.html">Sahsiah</a>
-      <a href="disiplin.html">Disiplin</a>
-      <a href="kerjaya.html">Kerjaya</a>
-      <a href="psikososial.html">Psikososial</a>
-    </div>
-  </div>
-
-  <!-- PRS -->
-  <div>
-    <button onclick="toggleMobile('m4')" 
-      class="w-full text-left flex justify-between items-center">
-      PRS ▼
-    </button>
-
-    <div id="m4" class="hidden pl-4 mt-2 space-y-2">
-      <a href="carta-prs.html">Carta PRS</a>
-      <a href="peranan-prs.html">Peranan</a>
-      <a href="aktiviti-prs.html">Aktiviti</a>
-    </div>
-  </div>
-
-  <!-- MENU BIASA -->
-  <a href="healink.html" class="block">HEALINK</a>
-  <a href="bantuan.html" class="block">Bantuan</a>
-  <a href="statistik.html" class="block">Statistik</a>
-  <a href="faq.html" class="block">FAQ</a>
-
-</div>
 
 </header>
 
-<!-- PENDIDIKAN KERJAYA MURID -->
-<section class="py-12 bg-white">
+<!-- =================================================
+     PENDIDIKAN KERJAYA HERO
+================================================== -->
 
-<div class="max-w-6xl mx-auto px-6">
+<main class="flex-grow bg-[#f7fbf8]">
 
-<h2 class="text-3xl font-bold text-green-900 text-center mb-6">
-Pendidikan Kerjaya Murid
-</h2>
+<section
+  class="border-b border-[#dcece3]
+         bg-gradient-to-b from-[#eff8f3] to-[#f7fbf8]
+         px-6 py-12 sm:py-16"
+>
 
-<p class="text-gray-700 text-center max-w-3xl mx-auto leading-relaxed">
-Perkhidmatan pendidikan kerjaya membantu murid memahami
-potensi diri serta merancang masa hadapan dengan lebih jelas.
-Melalui pelbagai program bimbingan kerjaya, murid didedahkan
-dengan maklumat pendidikan, kemahiran kebolehpasaran dan
-peluang kerjaya masa hadapan.
-</p>
+  <div class="mx-auto max-w-4xl text-center">
 
-</div>
+    <!-- BADGE -->
 
-</section>
+    <div
+      class="mb-5 inline-flex items-center gap-2
+             rounded-full border border-[#cfe7da]
+             bg-white px-4 py-2
+             text-xs font-bold uppercase
+             tracking-[0.14em]
+             text-[#075e4c] shadow-sm"
+    >
+      <i
+        data-lucide="compass"
+        class="h-4 w-4"
+      ></i>
 
-
-
-<!-- POTENSI DIRI -->
-<section class="py-12 bg-gray-100">
-
-<div class="max-w-6xl mx-auto px-6">
-
-<h3 class="text-2xl font-bold text-green-900 text-center mb-10">
-Mengenali Potensi Diri
-</h3>
-
-<div class="grid md:grid-cols-3 gap-6">
-
-<div class="bg-white p-6 rounded-xl shadow">
-<h4 class="font-bold mb-2">Inventori Minat Kerjaya (IMK)</h4>
-<p class="text-sm text-gray-700">
-Membantu murid mengenal pasti kecenderungan kerjaya
-berdasarkan personaliti seperti Realistik, Investigatif,
-Artistik, Sosial, Enterprising dan Konvensional.
-</p>
-</div>
-
-<div class="bg-white p-6 rounded-xl shadow">
-<h4 class="font-bold mb-2">Inventori Kecerdasan Pelbagai (IKP)</h4>
-<p class="text-sm text-gray-700">
-Mengenal pasti kekuatan intelek murid seperti
-logik, bahasa, visual, muzik atau kinestetik.
-</p>
-</div>
-
-<div class="bg-white p-6 rounded-xl shadow">
-<h4 class="font-bold mb-2">Sesi Interpretasi Profil</h4>
-<p class="text-sm text-gray-700">
-Guru Bimbingan dan Kaunseling membantu murid
-mentafsir keputusan ujian psikometrik untuk
-memilih laluan pendidikan yang sesuai.
-</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
+      4 Fokus UBK
+    </div>
 
 
+    <!-- ICON -->
 
-<!-- PENEROKAAN KERJAYA -->
-<section class="py-12 bg-white">
-
-<div class="max-w-6xl mx-auto px-6">
-
-<h3 class="text-2xl font-bold text-green-900 text-center mb-10">
-Penerokaan Peluang Pendidikan & Kerjaya
-</h3>
-
-<div class="grid md:grid-cols-3 gap-6">
-
-<div class="bg-blue-50 p-6 rounded-xl shadow">
-<h4 class="font-bold mb-2">Portal Halatuju Pendidikan</h4>
-<p class="text-sm">
-Maklumat mengenai laluan pendidikan seperti
-Matrikulasi, Asasi, Diploma dan TVET.
-</p>
-</div>
-
-<div class="bg-blue-50 p-6 rounded-xl shadow">
-<h4 class="font-bold mb-2">Pameran Kerjaya & IPT</h4>
-<p class="text-sm">
-Program yang mempertemukan murid dengan
-wakil universiti, kolej dan industri.
-</p>
-</div>
-
-<div class="bg-blue-50 p-6 rounded-xl shadow">
-<h4 class="font-bold mb-2">Trend Kerjaya Masa Hadapan</h4>
-<p class="text-sm">
-Pendedahan kepada kerjaya baharu seperti
-Kecerdasan Buatan (AI), Ekonomi Digital dan
-Teknologi Hijau.
-</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
+    <div
+      class="mx-auto mb-5 grid h-16 w-16
+             place-items-center rounded-2xl
+             bg-[#e3f3eb] text-[#07865f]"
+    >
+      <i
+        data-lucide="briefcase-business"
+        class="h-8 w-8"
+      ></i>
+    </div>
 
 
+    <!-- TITLE -->
 
-<!-- KEMAHIRAN -->
-<section class="py-12 bg-gray-100">
+    <h1
+      class="text-3xl font-extrabold tracking-tight
+             text-[#173f35]
+             sm:text-4xl lg:text-5xl"
+    >
+      Pendidikan
+      <span class="text-[#07865f]">
+        Kerjaya Murid
+      </span>
+    </h1>
 
-<div class="max-w-6xl mx-auto px-6">
 
-<h3 class="text-2xl font-bold text-green-900 text-center mb-10">
-Kemahiran Kebolehpasaran
-</h3>
+    <!-- DESCRIPTION -->
 
-<div class="grid md:grid-cols-3 gap-6">
+    <p
+      class="mx-auto mt-5 max-w-3xl
+             text-sm leading-7 text-[#617a73]
+             sm:text-base"
+    >
+      Perkhidmatan pendidikan kerjaya membantu murid
+      memahami potensi diri serta merancang masa hadapan
+      dengan lebih jelas. Melalui pelbagai program
+      bimbingan kerjaya, murid didedahkan dengan maklumat
+      pendidikan, kemahiran kebolehpasaran dan peluang
+      kerjaya masa hadapan.
+    </p>
 
-<div class="bg-white p-6 rounded-xl shadow text-center">
-<h4 class="font-bold mb-2">Penulisan Resume & CV</h4>
-<p class="text-sm">
-Teknik menyediakan dokumen permohonan kerja
-yang profesional.
-</p>
-</div>
 
-<div class="bg-white p-6 rounded-xl shadow text-center">
-<h4 class="font-bold mb-2">Simulasi Temuduga</h4>
-<p class="text-sm">
-Latihan komunikasi berkesan dan teknik
-menjawab soalan temuduga dengan yakin.
-</p>
-</div>
+    <!-- VALUES -->
 
-<div class="bg-white p-6 rounded-xl shadow text-center">
-<h4 class="font-bold mb-2">Kemahiran KBAT</h4>
-<p class="text-sm">
-Membina pemikiran kritikal dan kemahiran
-penyelesaian masalah.
-</p>
-</div>
+    <div
+      class="mt-7 flex flex-wrap
+             justify-center gap-2"
+    >
 
-</div>
+      <span
+        class="rounded-full border border-[#cfe7da]
+               bg-white px-4 py-2
+               text-xs font-semibold text-[#31534a]"
+      >
+        Potensi Diri
+      </span>
 
-</div>
+      <span
+        class="rounded-full border border-[#cfe7da]
+               bg-white px-4 py-2
+               text-xs font-semibold text-[#31534a]"
+      >
+        Halatuju Pendidikan
+      </span>
+
+      <span
+        class="rounded-full border border-[#cfe7da]
+               bg-white px-4 py-2
+               text-xs font-semibold text-[#31534a]"
+      >
+        Kemahiran
+      </span>
+
+      <span
+        class="rounded-full border border-[#cfe7da]
+               bg-white px-4 py-2
+               text-xs font-semibold text-[#31534a]"
+      >
+        Kerjaya Masa Hadapan
+      </span>
+
+    </div>
+
+  </div>
 
 </section>
 
 
 
-<!-- LALUAN KERJAYA -->
-<section class="py-12 bg-white">
+<!-- =================================================
+     MENGENALI POTENSI DIRI
+================================================== -->
 
-<div class="max-w-5xl mx-auto px-6">
+<section class="px-6 py-12 sm:py-16">
 
-<h3 class="text-2xl font-bold text-green-900 text-center mb-8">
-Bimbingan Laluan Kerjaya
-</h3>
+  <div class="mx-auto max-w-6xl">
 
-<ul class="space-y-4 text-gray-700">
+    <!-- SECTION HEADER -->
 
-<li>
-<strong>Menengah Rendah:</strong>
-Fokus kepada pemilihan pakej mata pelajaran
-seperti Sains, Sastera atau Teknikal.
-</li>
+    <div class="mx-auto mb-10 max-w-3xl text-center">
 
-<li>
-<strong>Menengah Atas:</strong>
-Fokus kepada pemilihan kursus universiti,
-permohonan biasiswa dan persediaan ke alam pekerjaan.
-</li>
+      <p
+        class="text-xs font-bold uppercase
+               tracking-[0.16em] text-[#07865f]"
+      >
+        Kenali Diri
+      </p>
 
-</ul>
+      <h2
+        class="mt-2 text-2xl font-extrabold
+               text-[#173f35] sm:text-3xl"
+      >
+        Mengenali Potensi Diri
+      </h2>
 
-</div>
+      <p
+        class="mx-auto mt-3 max-w-2xl
+               text-sm leading-6 text-[#617a73]"
+      >
+        Membantu murid mengenali minat, kecerdasan
+        dan kekuatan diri sebagai asas dalam membuat
+        pilihan pendidikan serta kerjaya.
+      </p>
+
+    </div>
+
+
+    <!-- CARDS -->
+
+    <div class="grid gap-6 md:grid-cols-3">
+
+
+      <!-- CARD 1 -->
+
+      <article
+        class="rounded-2xl border border-[#dcece3]
+               bg-white p-6 shadow-sm
+               transition duration-300
+               hover:-translate-y-1 hover:shadow-lg"
+      >
+
+        <div
+          class="mb-5 grid h-12 w-12
+                 place-items-center rounded-xl
+                 bg-[#e8f5ee] text-[#07865f]"
+        >
+          <i
+            data-lucide="search-check"
+            class="h-6 w-6"
+          ></i>
+        </div>
+
+        <span
+          class="text-xs font-bold uppercase
+                 tracking-wider text-[#07865f]"
+        >
+          Minat Kerjaya
+        </span>
+
+        <h3
+          class="mt-2 text-lg font-bold
+                 text-[#173f35]"
+        >
+          Inventori Minat Kerjaya (IMK)
+        </h3>
+
+        <p
+          class="mt-3 text-sm leading-6
+                 text-[#617a73]"
+        >
+          Membantu murid mengenal pasti kecenderungan
+          kerjaya berdasarkan personaliti seperti
+          Realistik, Investigatif, Artistik, Sosial,
+          Enterprising dan Konvensional.
+        </p>
+
+      </article>
+
+
+      <!-- CARD 2 -->
+
+      <article
+        class="rounded-2xl border border-[#dcece3]
+               bg-white p-6 shadow-sm
+               transition duration-300
+               hover:-translate-y-1 hover:shadow-lg"
+      >
+
+        <div
+          class="mb-5 grid h-12 w-12
+                 place-items-center rounded-xl
+                 bg-[#e8f5ee] text-[#07865f]"
+        >
+          <i
+            data-lucide="brain"
+            class="h-6 w-6"
+          ></i>
+        </div>
+
+        <span
+          class="text-xs font-bold uppercase
+                 tracking-wider text-[#07865f]"
+        >
+          Kekuatan Diri
+        </span>
+
+        <h3
+          class="mt-2 text-lg font-bold
+                 text-[#173f35]"
+        >
+          Inventori Kecerdasan Pelbagai (IKP)
+        </h3>
+
+        <p
+          class="mt-3 text-sm leading-6
+                 text-[#617a73]"
+        >
+          Mengenal pasti kekuatan intelek murid
+          seperti logik, bahasa, visual, muzik
+          atau kinestetik.
+        </p>
+
+      </article>
+
+
+      <!-- CARD 3 -->
+
+      <article
+        class="rounded-2xl border border-[#dcece3]
+               bg-white p-6 shadow-sm
+               transition duration-300
+               hover:-translate-y-1 hover:shadow-lg"
+      >
+
+        <div
+          class="mb-5 grid h-12 w-12
+                 place-items-center rounded-xl
+                 bg-[#e8f5ee] text-[#07865f]"
+        >
+          <i
+            data-lucide="chart-no-axes-combined"
+            class="h-6 w-6"
+          ></i>
+        </div>
+
+        <span
+          class="text-xs font-bold uppercase
+                 tracking-wider text-[#07865f]"
+        >
+          Bimbingan
+        </span>
+
+        <h3
+          class="mt-2 text-lg font-bold
+                 text-[#173f35]"
+        >
+          Sesi Interpretasi Profil
+        </h3>
+
+        <p
+          class="mt-3 text-sm leading-6
+                 text-[#617a73]"
+        >
+          Guru Bimbingan dan Kaunseling membantu
+          murid mentafsir keputusan ujian psikometrik
+          untuk memilih laluan pendidikan yang sesuai.
+        </p>
+
+      </article>
+
+    </div>
+
+  </div>
 
 </section>
 
 
-<!-- MOTIVASI -->
-<section class="py-10 bg-white text-center">
+<!-- =================================================
+     PENEROKAAN PENDIDIKAN & KERJAYA
+================================================== -->
 
-<p class="italic text-green-900 font-semibold">
-"Pilih kerjaya yang anda cintai, dan anda tidak perlu bekerja
-walaupun sehari dalam hidup anda."
-</p>
+<section
+  class="border-y border-[#dcece3]
+         bg-white px-6 py-12 sm:py-16"
+>
 
-<p class="text-sm text-gray-500 mt-2">
-— Confucius
-</p>
+  <div class="mx-auto max-w-6xl">
+
+    <!-- SECTION HEADER -->
+
+    <div class="mx-auto mb-10 max-w-3xl text-center">
+
+      <p
+        class="text-xs font-bold uppercase
+               tracking-[0.16em] text-[#07865f]"
+      >
+        Teroka Masa Hadapan
+      </p>
+
+      <h2
+        class="mt-2 text-2xl font-extrabold
+               text-[#173f35] sm:text-3xl"
+      >
+        Penerokaan Peluang Pendidikan
+        <span class="text-[#07865f]">
+          &amp; Kerjaya
+        </span>
+      </h2>
+
+      <p
+        class="mx-auto mt-3 max-w-2xl
+               text-sm leading-6 text-[#617a73]"
+      >
+        Memberi pendedahan kepada murid tentang
+        pilihan pendidikan, institusi pengajian
+        dan perkembangan kerjaya masa hadapan.
+      </p>
+
+    </div>
+
+
+    <!-- CARDS -->
+
+    <div class="grid gap-6 md:grid-cols-3">
+
+
+      <!-- CARD 1 -->
+
+      <article
+        class="rounded-2xl border border-[#dcece3]
+               bg-[#f7fbf8] p-6
+               transition duration-300
+               hover:-translate-y-1 hover:shadow-lg"
+      >
+
+        <div
+          class="mb-5 grid h-12 w-12
+                 place-items-center rounded-xl
+                 bg-white text-[#07865f]
+                 shadow-sm"
+        >
+          <i
+            data-lucide="graduation-cap"
+            class="h-6 w-6"
+          ></i>
+        </div>
+
+        <span
+          class="text-xs font-bold uppercase
+                 tracking-wider text-[#07865f]"
+        >
+          Laluan Pendidikan
+        </span>
+
+        <h3
+          class="mt-2 text-lg font-bold
+                 text-[#173f35]"
+        >
+          Portal Halatuju Pendidikan
+        </h3>
+
+        <p
+          class="mt-3 text-sm leading-6
+                 text-[#617a73]"
+        >
+          Maklumat mengenai laluan pendidikan
+          seperti Matrikulasi, Asasi, Diploma
+          dan TVET.
+        </p>
+
+      </article>
+
+
+      <!-- CARD 2 -->
+
+      <article
+        class="rounded-2xl border border-[#dcece3]
+               bg-[#f7fbf8] p-6
+               transition duration-300
+               hover:-translate-y-1 hover:shadow-lg"
+      >
+
+        <div
+          class="mb-5 grid h-12 w-12
+                 place-items-center rounded-xl
+                 bg-white text-[#07865f]
+                 shadow-sm"
+        >
+          <i
+            data-lucide="school"
+            class="h-6 w-6"
+          ></i>
+        </div>
+
+        <span
+          class="text-xs font-bold uppercase
+                 tracking-wider text-[#07865f]"
+        >
+          Pendedahan
+        </span>
+
+        <h3
+          class="mt-2 text-lg font-bold
+                 text-[#173f35]"
+        >
+          Pameran Kerjaya &amp; IPT
+        </h3>
+
+        <p
+          class="mt-3 text-sm leading-6
+                 text-[#617a73]"
+        >
+          Program yang mempertemukan murid
+          dengan wakil universiti, kolej
+          dan industri.
+        </p>
+
+      </article>
+
+
+      <!-- CARD 3 -->
+
+      <article
+        class="rounded-2xl border border-[#dcece3]
+               bg-[#f7fbf8] p-6
+               transition duration-300
+               hover:-translate-y-1 hover:shadow-lg"
+      >
+
+        <div
+          class="mb-5 grid h-12 w-12
+                 place-items-center rounded-xl
+                 bg-white text-[#07865f]
+                 shadow-sm"
+        >
+          <i
+            data-lucide="rocket"
+            class="h-6 w-6"
+          ></i>
+        </div>
+
+        <span
+          class="text-xs font-bold uppercase
+                 tracking-wider text-[#07865f]"
+        >
+          Masa Hadapan
+        </span>
+
+        <h3
+          class="mt-2 text-lg font-bold
+                 text-[#173f35]"
+        >
+          Trend Kerjaya Masa Hadapan
+        </h3>
+
+        <p
+          class="mt-3 text-sm leading-6
+                 text-[#617a73]"
+        >
+          Pendedahan kepada kerjaya baharu
+          seperti Kecerdasan Buatan (AI),
+          Ekonomi Digital dan Teknologi Hijau.
+        </p>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =================================================
+     KEMAHIRAN KEBOLEHPASARAN
+================================================== -->
+
+<section class="px-6 py-12 sm:py-16">
+
+  <div class="mx-auto max-w-6xl">
+
+    <!-- SECTION HEADER -->
+
+    <div class="mx-auto mb-10 max-w-3xl text-center">
+
+      <p
+        class="text-xs font-bold uppercase
+               tracking-[0.16em] text-[#07865f]"
+      >
+        Persediaan Masa Hadapan
+      </p>
+
+      <h2
+        class="mt-2 text-2xl font-extrabold
+               text-[#173f35] sm:text-3xl"
+      >
+        Kemahiran Kebolehpasaran
+      </h2>
+
+      <p
+        class="mx-auto mt-3 max-w-2xl
+               text-sm leading-6 text-[#617a73]"
+      >
+        Membina kemahiran asas yang membantu murid
+        membuat persediaan untuk pendidikan lanjutan
+        dan dunia kerjaya pada masa hadapan.
+      </p>
+
+    </div>
+
+
+    <!-- CARDS -->
+
+    <div class="grid gap-6 md:grid-cols-3">
+
+
+      <!-- CARD 1 -->
+
+      <article
+        class="rounded-2xl border border-[#dcece3]
+               bg-white p-6 text-center shadow-sm
+               transition duration-300
+               hover:-translate-y-1 hover:shadow-lg"
+      >
+
+        <div
+          class="mx-auto mb-5 grid h-14 w-14
+                 place-items-center rounded-2xl
+                 bg-[#e8f5ee] text-[#07865f]"
+        >
+          <i
+            data-lucide="file-user"
+            class="h-7 w-7"
+          ></i>
+        </div>
+
+        <span
+          class="text-xs font-bold uppercase
+                 tracking-wider text-[#07865f]"
+        >
+          Dokumen Profesional
+        </span>
+
+        <h3
+          class="mt-2 text-lg font-bold
+                 text-[#173f35]"
+        >
+          Penulisan Resume &amp; CV
+        </h3>
+
+        <p
+          class="mt-3 text-sm leading-6
+                 text-[#617a73]"
+        >
+          Teknik menyediakan dokumen permohonan
+          kerja yang profesional.
+        </p>
+
+      </article>
+
+
+      <!-- CARD 2 -->
+
+      <article
+        class="rounded-2xl border border-[#dcece3]
+               bg-white p-6 text-center shadow-sm
+               transition duration-300
+               hover:-translate-y-1 hover:shadow-lg"
+      >
+
+        <div
+          class="mx-auto mb-5 grid h-14 w-14
+                 place-items-center rounded-2xl
+                 bg-[#e8f5ee] text-[#07865f]"
+        >
+          <i
+            data-lucide="messages-square"
+            class="h-7 w-7"
+          ></i>
+        </div>
+
+        <span
+          class="text-xs font-bold uppercase
+                 tracking-wider text-[#07865f]"
+        >
+          Komunikasi
+        </span>
+
+        <h3
+          class="mt-2 text-lg font-bold
+                 text-[#173f35]"
+        >
+          Simulasi Temuduga
+        </h3>
+
+        <p
+          class="mt-3 text-sm leading-6
+                 text-[#617a73]"
+        >
+          Latihan komunikasi berkesan dan teknik
+          menjawab soalan temuduga dengan yakin.
+        </p>
+
+      </article>
+
+
+      <!-- CARD 3 -->
+
+      <article
+        class="rounded-2xl border border-[#dcece3]
+               bg-white p-6 text-center shadow-sm
+               transition duration-300
+               hover:-translate-y-1 hover:shadow-lg"
+      >
+
+        <div
+          class="mx-auto mb-5 grid h-14 w-14
+                 place-items-center rounded-2xl
+                 bg-[#e8f5ee] text-[#07865f]"
+        >
+          <i
+            data-lucide="lightbulb"
+            class="h-7 w-7"
+          ></i>
+        </div>
+
+        <span
+          class="text-xs font-bold uppercase
+                 tracking-wider text-[#07865f]"
+        >
+          Pemikiran
+        </span>
+
+        <h3
+          class="mt-2 text-lg font-bold
+                 text-[#173f35]"
+        >
+          Kemahiran KBAT
+        </h3>
+
+        <p
+          class="mt-3 text-sm leading-6
+                 text-[#617a73]"
+        >
+          Membina pemikiran kritikal dan kemahiran
+          penyelesaian masalah.
+        </p>
+
+      </article>
+
+    </div>
+
+  </div>
 
 </section>
 
 
 
-<!-- FOOTER -->
-<footer class="bg-purple-500 text-white-300 pt-10 pb-6">
+<!-- =================================================
+     BIMBINGAN LALUAN KERJAYA
+================================================== -->
 
-<div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8 text-center md:text-left">
+<section
+  class="border-y border-[#dcece3]
+         bg-white px-6 py-12 sm:py-16"
+>
 
-<!-- INFO PORTAL -->
-<div>
-<h3 class="text-lg font-semibold text-white mb-3">
-Portal Anjung Kasih
-</h3>
+  <div class="mx-auto max-w-5xl">
 
-<p class="text-sm text-white-400 leading-relaxed">
-Portal rasmi Unit Bimbingan & Kaunseling
-SK Kuala Ketil yang menyediakan maklumat,
-perkhidmatan kaunseling serta sokongan
-kepada murid dan warga sekolah.
-</p>
-</div>
+    <!-- SECTION HEADER -->
 
+    <div class="mx-auto mb-10 max-w-3xl text-center">
 
-<!-- HUBUNGI -->
-<div>
-<h3 class="text-lg font-semibold text-white mb-3">
-Hubungi Kami
-</h3>
+      <p
+        class="text-xs font-bold uppercase
+               tracking-[0.16em] text-[#07865f]"
+      >
+        Rancang Halatuju
+      </p>
 
-<p class="text-sm text-white-400 mb-2">
-📧 kaunseling.skkk@gmail.com
-</p>
+      <h2
+        class="mt-2 text-2xl font-extrabold
+               text-[#173f35] sm:text-3xl"
+      >
+        Bimbingan Laluan Kerjaya
+      </h2>
 
-<p class="text-sm text-white-400 mb-3">
-📍 SK Kuala Ketil  
-Kuala Ketil, Kedah
-</p>
+      <p
+        class="mx-auto mt-3 max-w-2xl
+               text-sm leading-6 text-[#617a73]"
+      >
+        Bimbingan kerjaya membantu murid membuat
+        pilihan pendidikan yang lebih terancang
+        berdasarkan tahap pembelajaran dan
+        matlamat masa hadapan.
+      </p>
 
-<a href="https://wa.me/60123456789"
-target="_blank"
-class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
-
-📱 WhatsApp Kaunselor
-
-</a>
-
-</div>
+    </div>
 
 
-<!-- WAKTU OPERASI -->
-<div>
-<h3 class="text-lg font-semibold text-white mb-3">
-Waktu Perkhidmatan
-</h3>
+    <!-- PATHWAY -->
 
-<p class="text-sm text-white-400">
-Ahad – Khamis
-</p>
-
-<p class="text-sm text-white-400">
-7:30 pagi – 2:30 petang
-</p>
-
-<p class="text-sm text-white-400 mt-2">
-Jumaat – Sabtu Cuti
-</p>
-</div>
-
-</div>
+    <div class="grid gap-6 md:grid-cols-2">
 
 
-<!-- GARIS PEMISAH -->
-<div class="max-w-6xl mx-auto px-6 mt-8">
-<hr class="border-gray-700">
-</div>
+      <!-- MENENGAH RENDAH -->
+
+      <article
+        class="relative overflow-hidden
+               rounded-2xl border border-[#dcece3]
+               bg-[#f7fbf8] p-7"
+      >
+
+        <div
+          class="absolute right-0 top-0
+                 h-24 w-24 rounded-bl-full
+                 bg-[#e8f5ee]"
+        ></div>
+
+        <div class="relative">
+
+          <div
+            class="mb-5 grid h-12 w-12
+                   place-items-center rounded-xl
+                   bg-white text-[#07865f]
+                   shadow-sm"
+          >
+            <i
+              data-lucide="book-open-check"
+              class="h-6 w-6"
+            ></i>
+          </div>
+
+          <span
+            class="text-xs font-bold uppercase
+                   tracking-[0.14em]
+                   text-[#07865f]"
+          >
+            Tahap 01
+          </span>
+
+          <h3
+            class="mt-2 text-xl font-extrabold
+                   text-[#173f35]"
+          >
+            Menengah Rendah
+          </h3>
+
+          <p
+            class="mt-4 text-sm leading-7
+                   text-[#617a73]"
+          >
+            Fokus kepada pemilihan pakej mata
+            pelajaran seperti Sains, Sastera
+            atau Teknikal.
+          </p>
+
+        </div>
+
+      </article>
 
 
-<!-- COPYRIGHT -->
-<div class="text-center text-sm text-white-500 mt-4">
+      <!-- MENENGAH ATAS -->
 
-© 2026 Unit Bimbingan & Kaunseling  
-SK Kuala Ketil
+      <article
+        class="relative overflow-hidden
+               rounded-2xl border border-[#dcece3]
+               bg-[#f7fbf8] p-7"
+      >
 
-</div>
+        <div
+          class="absolute right-0 top-0
+                 h-24 w-24 rounded-bl-full
+                 bg-[#e8f5ee]"
+        ></div>
+
+        <div class="relative">
+
+          <div
+            class="mb-5 grid h-12 w-12
+                   place-items-center rounded-xl
+                   bg-white text-[#07865f]
+                   shadow-sm"
+          >
+            <i
+              data-lucide="graduation-cap"
+              class="h-6 w-6"
+            ></i>
+          </div>
+
+          <span
+            class="text-xs font-bold uppercase
+                   tracking-[0.14em]
+                   text-[#07865f]"
+          >
+            Tahap 02
+          </span>
+
+          <h3
+            class="mt-2 text-xl font-extrabold
+                   text-[#173f35]"
+          >
+            Menengah Atas
+          </h3>
+
+          <p
+            class="mt-4 text-sm leading-7
+                   text-[#617a73]"
+          >
+            Fokus kepada pemilihan kursus universiti,
+            permohonan biasiswa dan persediaan
+            ke alam pekerjaan.
+          </p>
+
+        </div>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =================================================
+     MOTIVASI KERJAYA
+================================================== -->
+
+<section class="px-6 py-12 sm:py-16">
+
+  <div class="mx-auto max-w-4xl">
+
+    <div
+      class="relative overflow-hidden
+             rounded-2xl border border-[#cfe7da]
+             bg-[#eff8f3]
+             px-6 py-9 text-center
+             sm:px-10 sm:py-11"
+    >
+
+      <!-- DECORATION -->
+
+      <div
+        class="absolute -right-10 -top-10
+               h-32 w-32 rounded-full
+               bg-[#dff1e7]"
+      ></div>
+
+      <div
+        class="absolute -bottom-12 -left-12
+               h-32 w-32 rounded-full
+               bg-[#e3f3eb]"
+      ></div>
+
+
+      <!-- CONTENT -->
+
+      <div class="relative">
+
+        <div
+          class="mx-auto mb-5 grid h-12 w-12
+                 place-items-center rounded-xl
+                 bg-white text-[#07865f]
+                 shadow-sm"
+        >
+          <i
+            data-lucide="quote"
+            class="h-6 w-6"
+          ></i>
+        </div>
+
+        <p
+          class="text-xs font-bold uppercase
+                 tracking-[0.16em]
+                 text-[#07865f]"
+        >
+          Inspirasi Kerjaya
+        </p>
+
+        <blockquote
+          class="mx-auto mt-4 max-w-2xl
+                 text-lg font-bold leading-8
+                 text-[#173f35]
+                 sm:text-xl"
+        >
+          “Pilih kerjaya yang anda cintai,
+          dan anda tidak perlu bekerja walaupun
+          sehari dalam hidup anda.”
+        </blockquote>
+
+        <p
+          class="mt-4 text-sm font-semibold
+                 text-[#617a73]"
+        >
+          — Confucius
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+  <!-- =================================================
+       FOOTER CONTENT
+  ================================================== -->
+
+  <div
+    class="mx-auto grid max-w-7xl gap-10
+           px-6 py-10
+           md:grid-cols-3"
+  >
+
+    <!-- ================= PORTAL ================= -->
+
+    <div>
+
+      <div class="mb-4 flex items-center gap-3">
+
+        <div class="flex items-center gap-1">
+
+          <img
+            src="assets/logo-sekolah.png"
+            alt="Logo SK Kuala Ketil"
+            class="h-10 w-auto"
+          >
+
+          <img
+            src="assets/logo-ts25.png"
+            alt="Logo TS25"
+            class="h-10 w-auto"
+          >
+
+        </div>
+
+        <div>
+
+          <h3
+            class="text-sm font-bold text-[#173f35]"
+          >
+            Bimbingan &amp; Kaunseling
+          </h3>
+
+          <p
+            class="text-xs text-[#617a73]"
+          >
+            SK Kuala Ketil
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <p
+        class="max-w-sm text-sm leading-6
+               text-[#617a73]"
+      >
+        Portal rasmi Unit Bimbingan &amp; Kaunseling
+        SK Kuala Ketil yang menyediakan maklumat,
+        perkhidmatan bimbingan serta sokongan kepada
+        murid dan warga sekolah.
+      </p>
+
+    </div>
+
+
+    <!-- ================= HUBUNGI ================= -->
+
+    <div>
+
+      <h3
+        class="mb-4 text-sm font-bold
+               uppercase tracking-[0.12em]
+               text-[#075e4c]"
+      >
+        Hubungi Kami
+      </h3>
+
+
+      <div
+        class="space-y-3 text-sm text-[#617a73]"
+      >
+
+        <div class="flex items-start gap-3">
+
+          <i
+            data-lucide="mail"
+            class="mt-0.5 h-4 w-4 shrink-0
+                   text-[#075e4c]"
+          ></i>
+
+          <span>
+            kaunseling.skkk@gmail.com
+          </span>
+
+        </div>
+
+
+        <div class="flex items-start gap-3">
+
+          <i
+            data-lucide="map-pin"
+            class="mt-0.5 h-4 w-4 shrink-0
+                   text-[#075e4c]"
+          ></i>
+
+          <span>
+            SK Kuala Ketil<br>
+            Kuala Ketil, Kedah
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <a
+        href="https://wa.me/60123456789"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-5 inline-flex items-center gap-2
+               rounded-xl bg-[#075e4c]
+               px-4 py-2.5 text-sm font-bold
+               text-white transition
+               hover:bg-[#064c3e]"
+      >
+
+        <i
+          data-lucide="message-circle"
+          class="h-4 w-4"
+        ></i>
+
+        WhatsApp Kaunselor
+
+      </a>
+
+    </div>
+
+
+    <!-- ================= WAKTU PERKHIDMATAN ================= -->
+
+    <div>
+
+      <h3
+        class="mb-4 text-sm font-bold
+               uppercase tracking-[0.12em]
+               text-[#075e4c]"
+      >
+        Waktu Perkhidmatan
+      </h3>
+
+
+      <div
+        class="space-y-4 text-sm text-[#617a73]"
+      >
+
+        <div class="flex items-start gap-3">
+
+          <i
+            data-lucide="calendar-days"
+            class="mt-0.5 h-4 w-4 shrink-0
+                   text-[#075e4c]"
+          ></i>
+
+          <div>
+
+            <p
+              class="font-semibold text-[#31534a]"
+            >
+              Ahad – Khamis
+            </p>
+
+            <p class="mt-1">
+              7:30 pagi – 2:30 petang
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="flex items-start gap-3">
+
+          <i
+            data-lucide="moon"
+            class="mt-0.5 h-4 w-4 shrink-0
+                   text-[#075e4c]"
+          ></i>
+
+          <div>
+
+            <p
+              class="font-semibold text-[#31534a]"
+            >
+              Jumaat – Sabtu
+            </p>
+
+            <p class="mt-1">
+              Cuti
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =================================================
+       FOOTER BOTTOM
+  ================================================== -->
+
+  <div
+    class="border-t border-[#dcece3] bg-white"
+  >
+
+    <div
+      class="mx-auto flex max-w-7xl
+             flex-col items-center justify-between
+             gap-2 px-6 py-4
+             text-center text-xs text-[#71877f]
+             sm:flex-row sm:text-left"
+    >
+
+      <p>
+        © 2026 Unit Bimbingan &amp; Kaunseling
+        SK Kuala Ketil
+      </p>
+
+      <p>
+        Portal Bimbingan &amp; Kaunseling
+      </p>
+
+    </div>
+
+  </div>
 
 </footer>
 
-<script>
-function toggleDropdown(id) {
-  document.querySelectorAll('[id^="menu"]').forEach(menu => {
-    if (menu.id !== id) menu.classList.add('hidden');
-  });
-  document.getElementById(id).classList.toggle("hidden");
-}
 
-window.addEventListener("click", function(e) {
-  if (!e.target.closest(".relative")) {
-    document.querySelectorAll('[id^="menu"]').forEach(menu => {
-      menu.classList.add("hidden");
-    });
+<!-- =================================================
+     HEADER INTERACTION
+================================================== -->
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* =============================================
+     LUCIDE ICONS
+  ============================================= */
+
+  if (typeof lucide !== "undefined") {
+    lucide.createIcons();
   }
+
+
+  /* =============================================
+     MOBILE MENU
+  ============================================= */
+
+  const mobileToggle =
+    document.getElementById("mobile-toggle");
+
+  const mobileMenu =
+    document.getElementById("mobile-menu");
+
+  if (mobileToggle && mobileMenu) {
+
+    mobileToggle.addEventListener("click", () => {
+
+      const isOpen =
+        mobileToggle.getAttribute("aria-expanded") === "true";
+
+      mobileToggle.setAttribute(
+        "aria-expanded",
+        String(!isOpen)
+      );
+
+      mobileMenu.classList.toggle(
+        "open",
+        !isOpen
+      );
+
+
+      /* MENU ↔ X */
+
+      const icon =
+        mobileToggle.querySelector("svg");
+
+      if (icon) {
+
+        icon.setAttribute(
+          "data-lucide",
+          isOpen ? "menu" : "x"
+        );
+
+        lucide.createIcons();
+
+      }
+
+    });
+
+  }
+
+
+  /* =============================================
+     MOBILE ACCORDION
+  ============================================= */
+
+  const accordionButtons =
+    document.querySelectorAll(
+      ".mobile-accordion-btn"
+    );
+
+
+  function closeAllAccordions(
+    exceptButton = null
+  ) {
+
+    accordionButtons.forEach((button) => {
+
+      if (button === exceptButton) return;
+
+      const targetName =
+        button.dataset.mobileAccordion;
+
+      const content =
+        document.getElementById(
+          `mobile-accordion-${targetName}`
+        );
+
+      if (content) {
+        content.classList.add("hidden");
+      }
+
+      button.setAttribute(
+        "aria-expanded",
+        "false"
+      );
+
+
+      const icon =
+        button.querySelector("svg");
+
+      if (icon) {
+        icon.classList.remove("rotate-180");
+      }
+
+    });
+
+  }
+
+
+  accordionButtons.forEach((button) => {
+
+    button.addEventListener("click", () => {
+
+      const targetName =
+        button.dataset.mobileAccordion;
+
+      const content =
+        document.getElementById(
+          `mobile-accordion-${targetName}`
+        );
+
+      if (!content) return;
+
+
+      const isOpen =
+        button.getAttribute("aria-expanded") === "true";
+
+
+      /* Tutup accordion lain */
+
+      closeAllAccordions(button);
+
+
+      /* Toggle accordion semasa */
+
+      if (isOpen) {
+
+        content.classList.add("hidden");
+
+        button.setAttribute(
+          "aria-expanded",
+          "false"
+        );
+
+      } else {
+
+        content.classList.remove("hidden");
+
+        button.setAttribute(
+          "aria-expanded",
+          "true"
+        );
+
+      }
+
+
+      /* Rotate arrow */
+
+      const icon =
+        button.querySelector("svg");
+
+      if (icon) {
+
+        icon.classList.toggle(
+          "rotate-180",
+          !isOpen
+        );
+
+      }
+
+    });
+
+  });
+
+
+  /* =============================================
+     MALAYSIA DATE & TIME
+  ============================================= */
+
+  const desktopDate =
+    document.getElementById("header-date");
+
+  const desktopTime =
+    document.getElementById("header-time");
+
+  const mobileDate =
+    document.getElementById("mobile-header-date");
+
+  const mobileTime =
+    document.getElementById("mobile-header-time");
+
+
+  function updateDateTime() {
+
+    const now = new Date();
+
+
+    const formattedDate =
+      new Intl.DateTimeFormat("ms-MY", {
+        timeZone: "Asia/Kuala_Lumpur",
+        weekday: "long",
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+      }).format(now);
+
+
+    const formattedTime =
+      new Intl.DateTimeFormat("ms-MY", {
+        timeZone: "Asia/Kuala_Lumpur",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false
+      }).format(now);
+
+
+    if (desktopDate) {
+      desktopDate.textContent =
+        formattedDate;
+    }
+
+    if (desktopTime) {
+      desktopTime.textContent =
+        formattedTime;
+    }
+
+    if (mobileDate) {
+      mobileDate.textContent =
+        formattedDate;
+    }
+
+    if (mobileTime) {
+      mobileTime.textContent =
+        formattedTime;
+    }
+
+  }
+
+
+  updateDateTime();
+
+  setInterval(
+    updateDateTime,
+    1000
+  );
+
 });
-
-const btn = document.getElementById("menuBtn");
-const menu = document.getElementById("mobileMenu");
-
-btn.addEventListener("click", () => {
-  menu.classList.toggle("hidden");
-});
-</script>
-
-<script>
-function toggleMobile(id) {
-  const el = document.getElementById(id);
-  el.classList.toggle("hidden");
-}
 </script>
 
 </body>

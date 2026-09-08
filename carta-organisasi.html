@@ -16,6 +16,18 @@
 
 <script src="https://unpkg.com/lucide@latest"></script>
 
+<!-- =================================================
+     FIREBASE
+================================================== -->
+
+<script
+  src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js">
+</script>
+
+<script
+  src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js">
+</script>
+
 
 <!-- =================================================
      PORTAL MAIN STYLE
@@ -646,40 +658,223 @@
 
 </header>
 
-<!-- CARTA ORGANISASI UBK -->
-<main class="flex-grow bg-gray-100 py-10">
+<!-- =================================================
+     CARTA ORGANISASI UBK
+================================================== -->
 
-<div class="max-w-6xl mx-auto px-6">
+<main class="flex-grow bg-[#f7fbf8]">
 
-<!-- TAJUK -->
-<div class="text-center mb-8">
-  <h1 class="text-3xl font-bold text-blue-900 mb-2">
-    Carta Organisasi Unit Bimbingan & Kaunseling
-  </h1>
-  <p class="text-gray-600">
-    Sekolah Kebangsaan Kuala Ketil
-  </p>
-</div>
+  <section class="px-6 py-12 sm:py-16">
 
-<!-- GAMBAR CARTA -->
-<div class="bg-white rounded-xl shadow-lg p-4 mb-8">
+    <div class="mx-auto max-w-5xl">
 
-  <img src="assets/carta-ubk.png" 
-       alt="Carta Organisasi UBK"
-       class="w-full rounded-lg">
 
-</div>
+      <!-- =================================================
+           HEADER PAGE
+      ================================================== -->
 
-<!-- MAKLUMAN -->
-<div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded shadow">
+      <div class="mb-10 text-center">
 
-  <p class="text-yellow-800 text-sm">
-    ⚠️ Maklumat carta organisasi ini akan dikemaskini dari semasa ke semasa.
-  </p>
+        <!-- ICON -->
 
-</div>
+        <div
+          class="mx-auto mb-5 grid h-14 w-14
+                 place-items-center rounded-2xl
+                 bg-[#e8f5ee] text-[#075e4c]"
+        >
+          <i
+            data-lucide="network"
+            class="h-7 w-7"
+          ></i>
+        </div>
 
-</div>
+
+        <!-- BADGE -->
+
+        <div
+          class="mx-auto mb-4 inline-flex
+                 items-center gap-2
+                 rounded-full
+                 border border-[#cfe7da]
+                 bg-white px-4 py-2
+                 text-xs font-bold
+                 uppercase tracking-[0.14em]
+                 text-[#07865f]"
+        >
+          <i
+            data-lucide="users"
+            class="h-4 w-4"
+          ></i>
+
+          Unit Bimbingan &amp; Kaunseling
+        </div>
+
+
+        <!-- TITLE -->
+
+        <h1
+          class="text-3xl font-extrabold
+                 tracking-tight text-[#173f35]
+                 sm:text-4xl"
+        >
+          Carta Organisasi UBK
+        </h1>
+
+
+        <!-- DESCRIPTION -->
+
+        <p
+          class="mx-auto mt-4 max-w-2xl
+                 text-sm leading-7
+                 text-[#617a73]
+                 sm:text-base"
+        >
+          Carta Organisasi Unit Bimbingan &amp;
+          Kaunseling SK Kuala Ketil.
+        </p>
+
+      </div>
+
+
+      <!-- =================================================
+           CARTA ORGANISASI UBK — DYNAMIC
+      ================================================== -->
+
+      <div
+        id="cartaUBKContainer"
+        class="mb-8"
+      >
+
+
+        <!-- ================= LOADING ================= -->
+
+        <div
+          id="cartaUBKLoading"
+          class="flex min-h-[300px]
+                 items-center justify-center
+                 rounded-xl bg-white
+                 p-6 shadow-lg"
+        >
+
+          <div class="text-center">
+
+            <i
+              data-lucide="loader-circle"
+              class="mx-auto h-8 w-8
+                     animate-spin text-[#075e4c]"
+            ></i>
+
+            <p
+              class="mt-3 text-sm
+                     font-medium text-slate-500"
+            >
+              Memuatkan carta organisasi...
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================= GAMBAR ================= -->
+
+        <div
+          id="cartaUBKImageContainer"
+          class="hidden rounded-xl
+                 bg-white p-4 shadow-lg"
+        >
+
+          <img
+            id="cartaUBKImage"
+            src=""
+            alt="Carta Organisasi Unit Bimbingan dan Kaunseling SK Kuala Ketil"
+            class="w-full rounded-lg
+                   object-contain"
+          >
+
+        </div>
+
+
+        <!-- ================= TIADA CARTA ================= -->
+
+        <div
+          id="cartaUBKEmpty"
+          class="hidden min-h-[300px]
+                 items-center justify-center
+                 rounded-xl bg-white
+                 p-6 shadow-lg"
+        >
+
+          <div class="text-center">
+
+            <div
+              class="mx-auto grid h-12 w-12
+                     place-items-center
+                     rounded-xl bg-[#eff8f3]
+                     text-[#075e4c]"
+            >
+              <i
+                data-lucide="construction"
+                class="h-6 w-6"
+              ></i>
+            </div>
+
+
+            <p
+              class="mt-4 text-base
+                     font-extrabold
+                     text-[#173f35]"
+            >
+              Carta Organisasi Sedang Dikemaskini
+            </p>
+
+
+            <p
+              class="mx-auto mt-2 max-w-md
+                     text-sm leading-6
+                     text-[#617a73]"
+            >
+              Carta organisasi Unit Bimbingan &amp;
+              Kaunseling akan dipaparkan setelah
+              proses kemaskini selesai.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           BACK
+      ================================================== -->
+
+      <div class="text-center">
+
+        <a
+          href="index.html"
+          class="inline-flex items-center gap-2
+                 rounded-xl bg-[#075e4c]
+                 px-5 py-3
+                 text-sm font-bold text-white
+                 shadow-sm transition
+                 hover:bg-[#064c3e]"
+        >
+          <i
+            data-lucide="arrow-left"
+            class="h-4 w-4"
+          ></i>
+
+          Kembali ke Laman Utama
+        </a>
+
+      </div>
+
+
+    </div>
+
+  </section>
 
 </main>
 
@@ -1182,6 +1377,200 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
 });
+</script>
+
+<!-- =================================================
+     CARTA ORGANISASI UBK — FIRESTORE
+================================================== -->
+
+<script>
+
+const cartaFirebaseConfig = {
+  apiKey: "AIzaSyA9R5jKqeJNvBHD-SIOuseAqyb_x909R3Q",
+  authDomain: "bimbingankaunselingskkk.firebaseapp.com",
+  projectId: "bimbingankaunselingskkk"
+};
+
+
+/* ================= FIREBASE ================= */
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(cartaFirebaseConfig);
+}
+
+const cartaDb =
+  firebase.firestore();
+
+
+/* ================= ELEMENTS ================= */
+
+const cartaUBKLoading =
+  document.getElementById(
+    "cartaUBKLoading"
+  );
+
+const cartaUBKImage =
+  document.getElementById(
+    "cartaUBKImage"
+  );
+
+const cartaUBKEmpty =
+  document.getElementById(
+    "cartaUBKEmpty"
+  );
+
+
+/* ================= EMPTY STATE ================= */
+
+function paparCartaUBKEmpty() {
+
+  cartaUBKLoading.classList.add(
+    "hidden"
+  );
+
+  cartaUBKImage.classList.add(
+    "hidden"
+  );
+
+  cartaUBKEmpty.classList.remove(
+    "hidden"
+  );
+
+  cartaUBKEmpty.classList.add(
+    "flex"
+  );
+
+}
+
+
+/* ================= LOAD CARTA ================= */
+
+async function loadCartaUBK() {
+
+  try {
+
+    const doc =
+      await cartaDb
+        .collection("halamanPortal")
+        .doc("cartaOrganisasiUBK")
+        .get();
+
+
+    /* ================= TIADA DATA ================= */
+
+    if (!doc.exists) {
+
+      paparCartaUBKEmpty();
+
+      return;
+
+    }
+
+
+    const data =
+      doc.data();
+
+
+    /* ================= STATUS ================= */
+
+    if (
+      data.status !== "aktif" ||
+      !data.imageUrl
+    ) {
+
+      paparCartaUBKEmpty();
+
+      return;
+
+    }
+
+
+    /* ================= IMAGE URL ================= */
+
+    let imageUrl =
+      data.imageUrl.trim();
+
+
+    /*
+      Tukar Google Drive sharing URL
+      kepada URL gambar terus.
+    */
+
+    const driveMatch =
+      imageUrl.match(
+        /\/file\/d\/([^/]+)/
+      );
+
+
+    if (driveMatch) {
+
+      const fileId =
+        driveMatch[1];
+
+      imageUrl =
+        `https://drive.google.com/thumbnail?id=${fileId}&sz=w2000`;
+
+    }
+
+
+    /* ================= IMAGE SUCCESS ================= */
+
+    cartaUBKImage.onload = () => {
+
+      cartaUBKLoading.classList.add(
+        "hidden"
+      );
+
+      cartaUBKEmpty.classList.add(
+        "hidden"
+      );
+
+      cartaUBKEmpty.classList.remove(
+        "flex"
+      );
+
+      cartaUBKImage.classList.remove(
+        "hidden"
+      );
+
+    };
+
+
+    /* ================= IMAGE ERROR ================= */
+
+    cartaUBKImage.onerror = () => {
+
+      console.error(
+        "Carta UBK image gagal dimuatkan."
+      );
+
+      paparCartaUBKEmpty();
+
+    };
+
+
+    cartaUBKImage.src =
+      imageUrl;
+
+
+  } catch (error) {
+
+    console.error(
+      "Load Carta UBK error:",
+      error
+    );
+
+    paparCartaUBKEmpty();
+
+  }
+
+}
+
+
+/* ================= START ================= */
+
+loadCartaUBK();
+
 </script>
 
 </body>

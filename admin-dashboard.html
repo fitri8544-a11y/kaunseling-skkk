@@ -154,6 +154,23 @@
           Motivasi Mingguan
         </button>
 
+        <button
+          type="button"
+          data-panel="halaman"
+          class="nav-item flex w-full items-center gap-3
+                rounded-xl px-4 py-3 text-left
+                text-sm font-semibold transition"
+        >
+          <i
+            data-lucide="panels-top-left"
+            class="h-5 w-5"
+          ></i>
+
+          <span>
+            Pengurusan Halaman
+          </span>
+        </button>
+
       </nav>
 
 
@@ -293,6 +310,24 @@
           <i data-lucide="sparkles" class="w-5 h-5"></i>
           Motivasi Mingguan
         </button>
+
+        <!-- PENGURUSAN HALAMAN -->
+
+      <button
+        type="button"
+        data-panel="halaman"
+        class="sidebar-link
+              w-full flex items-center gap-3
+              px-4 py-3 rounded-xl
+              text-emerald-100 text-left"
+      >
+        <i
+          data-lucide="panels-top-left"
+          class="w-5 h-5"
+        ></i>
+
+        Pengurusan Halaman
+      </button>
 
 
         <a
@@ -856,6 +891,311 @@
       id="motivasiList"
       class="hidden divide-y divide-slate-100"
     ></div>
+
+  </div>
+
+</section>
+
+<!-- =================================================
+     PANEL — PENGURUSAN HALAMAN
+================================================== -->
+
+<section
+  id="panel-halaman"
+  class="admin-panel hidden"
+>
+
+  <!-- HEADER -->
+
+  <div
+    class="mb-8 flex flex-col gap-4
+           sm:flex-row sm:items-end
+           sm:justify-between"
+  >
+
+    <div>
+
+      <p
+        class="text-xs font-bold uppercase
+               tracking-[0.16em]
+               text-emerald-600"
+      >
+        Kandungan Portal
+      </p>
+
+      <h1
+        class="mt-2 text-2xl font-extrabold
+               text-slate-800 sm:text-3xl"
+      >
+        Pengurusan Halaman
+      </h1>
+
+      <p
+        class="mt-2 max-w-2xl text-sm
+               leading-6 text-slate-500"
+      >
+        Kemaskini kandungan halaman portal
+        tanpa perlu mengubah kod HTML.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- CARDS -->
+
+  <div
+    class="grid gap-5
+           md:grid-cols-2 xl:grid-cols-3"
+  >
+
+
+    <!-- =============================================
+         CARTA ORGANISASI UBK
+    ============================================== -->
+
+    <article
+      class="rounded-2xl border
+             border-slate-200 bg-white
+             p-6 shadow-sm"
+    >
+
+      <div
+        class="flex items-start
+               justify-between gap-4"
+      >
+
+        <div
+          class="grid h-12 w-12
+                 place-items-center
+                 rounded-xl bg-emerald-50
+                 text-emerald-600"
+        >
+          <i
+            data-lucide="network"
+            class="h-6 w-6"
+          ></i>
+        </div>
+
+
+        <span
+          id="statusCartaUBK"
+          class="rounded-full
+                 bg-slate-100 px-3 py-1
+                 text-xs font-bold
+                 text-slate-500"
+        >
+          Belum dikonfigurasi
+        </span>
+
+      </div>
+
+
+      <h2
+        class="mt-5 text-lg font-extrabold
+               text-slate-800"
+      >
+        Carta Organisasi UBK
+      </h2>
+
+
+      <p
+        class="mt-2 text-sm leading-6
+               text-slate-500"
+      >
+        Urus gambar carta organisasi
+        Unit Bimbingan &amp; Kaunseling
+        yang dipaparkan pada portal.
+      </p>
+
+
+      <button
+        id="btnUrusCartaUBK"
+        type="button"
+        class="mt-6 inline-flex
+               items-center gap-2
+               rounded-xl bg-emerald-600
+               px-4 py-2.5
+               text-sm font-bold text-white
+               transition
+               hover:bg-emerald-700"
+      >
+        <i
+          data-lucide="image"
+          class="h-4 w-4"
+        ></i>
+
+        Urus Kandungan
+      </button>
+
+    </article>
+
+
+    <!-- =============================================
+     CARTA ORGANISASI PRS
+============================================== -->
+
+<article
+  class="rounded-2xl border
+         border-slate-200 bg-white
+         p-6 shadow-sm"
+>
+
+  <div
+    class="flex items-start
+           justify-between gap-4"
+  >
+
+    <!-- ICON -->
+
+    <div
+      class="grid h-12 w-12
+             place-items-center
+             rounded-xl bg-emerald-50
+             text-emerald-700"
+    >
+      <i
+        data-lucide="users-round"
+        class="h-6 w-6"
+      ></i>
+    </div>
+
+
+    <!-- STATUS -->
+
+    <span
+      id="statusCartaPRS"
+      class="inline-flex items-center gap-1.5
+             rounded-full bg-amber-50
+             px-3 py-1 text-xs font-bold
+             text-amber-700"
+    >
+
+      <span
+        class="h-2 w-2 rounded-full
+               bg-amber-500"
+      ></span>
+
+      Belum dikonfigurasi
+
+    </span>
+
+  </div>
+
+
+  <!-- TITLE -->
+
+  <h2
+    class="mt-5 text-lg font-extrabold
+           text-slate-800"
+  >
+    Carta Organisasi PRS
+  </h2>
+
+
+  <!-- DESCRIPTION -->
+
+  <p
+    class="mt-2 text-sm leading-6
+           text-slate-500"
+  >
+    Pengurusan carta organisasi
+    Pembimbing Rakan Sebaya.
+  </p>
+
+
+  <!-- ACTION -->
+
+  <div
+    class="mt-6 border-t
+           border-slate-100 pt-5"
+  >
+
+    <button
+      id="btnUrusCartaPRS"
+      type="button"
+      class="inline-flex items-center
+             justify-center gap-2
+             rounded-xl bg-emerald-700
+             px-4 py-2.5
+             text-sm font-bold text-white
+             transition
+             hover:bg-emerald-800"
+    >
+
+      <i
+        data-lucide="settings-2"
+        class="h-4 w-4"
+      ></i>
+
+      Urus Kandungan
+
+    </button>
+
+  </div>
+
+</article>
+
+
+    <!-- =============================================
+         AKTIVITI PRS
+    ============================================== -->
+
+    <article
+      class="rounded-2xl border
+             border-slate-200 bg-white
+             p-6 shadow-sm"
+    >
+
+      <div
+        class="flex items-start
+               justify-between gap-4"
+      >
+
+        <div
+          class="grid h-12 w-12
+                 place-items-center
+                 rounded-xl bg-slate-100
+                 text-slate-500"
+        >
+          <i
+            data-lucide="calendar-heart"
+            class="h-6 w-6"
+          ></i>
+        </div>
+
+
+        <span
+          class="rounded-full
+                 bg-amber-50 px-3 py-1
+                 text-xs font-bold
+                 text-amber-600"
+        >
+          Akan Datang
+        </span>
+
+      </div>
+
+
+      <h2
+        class="mt-5 text-lg font-extrabold
+               text-slate-800"
+      >
+        Aktiviti PRS
+      </h2>
+
+
+      <p
+        class="mt-2 text-sm leading-6
+               text-slate-500"
+      >
+        Tambah dan urus aktiviti
+        Pembimbing Rakan Sebaya
+        yang akan dipaparkan pada portal.
+      </p>
+
+    </article>
 
   </div>
 
@@ -1425,6 +1765,572 @@
 
 </div>
 
+<!-- ==================================================
+     MODAL : CARTA ORGANISASI UBK
+=================================================== -->
+
+<div
+  id="modalCartaUBK"
+  class="fixed inset-0 z-[100] hidden
+         items-center justify-center
+         bg-slate-950/50 p-4 backdrop-blur-sm"
+>
+
+  <div
+    class="w-full max-w-2xl overflow-hidden
+           rounded-3xl bg-white shadow-2xl"
+  >
+
+    <!-- HEADER -->
+
+    <div
+      class="flex items-center justify-between
+             border-b border-slate-200
+             px-6 py-5"
+    >
+
+      <div class="flex items-center gap-3">
+
+        <div
+          class="grid h-11 w-11 place-items-center
+                 rounded-xl bg-emerald-50
+                 text-emerald-600"
+        >
+          <i
+            data-lucide="network"
+            class="h-5 w-5"
+          ></i>
+        </div>
+
+        <div>
+          <p
+            class="text-xs font-bold uppercase
+                   tracking-wider text-emerald-600"
+          >
+            Pengurusan Halaman
+          </p>
+
+          <h2
+            class="text-lg font-extrabold
+                   text-slate-800"
+          >
+            Carta Organisasi UBK
+          </h2>
+        </div>
+
+      </div>
+
+
+      <button
+        id="btnTutupCartaUBK"
+        type="button"
+        aria-label="Tutup"
+        class="grid h-10 w-10 place-items-center
+               rounded-xl bg-slate-100
+               text-slate-500 transition
+               hover:bg-slate-200"
+      >
+        <i
+          data-lucide="x"
+          class="h-5 w-5"
+        ></i>
+      </button>
+
+    </div>
+
+
+    <!-- BODY -->
+
+    <form
+      id="formCartaUBK"
+      class="space-y-6 p-6"
+    >
+
+      <!-- URL -->
+
+      <div>
+
+        <label
+          for="cartaUBKUrl"
+          class="mb-2 block text-sm
+                 font-bold text-slate-700"
+        >
+          Pautan Gambar Carta Organisasi
+        </label>
+
+        <input
+          id="cartaUBKUrl"
+          type="url"
+          placeholder="https://..."
+          autocomplete="off"
+          class="w-full rounded-xl
+                 border border-slate-300
+                 px-4 py-3 text-sm
+                 outline-none transition
+                 focus:border-emerald-500
+                 focus:ring-4
+                 focus:ring-emerald-500/10"
+        >
+
+        <p
+          class="mt-2 text-xs leading-5
+                 text-slate-500"
+        >
+          Masukkan pautan terus kepada gambar
+          carta organisasi yang ingin dipaparkan.
+        </p>
+
+      </div>
+
+
+      <!-- PREVIEW -->
+
+      <div>
+
+        <div
+          class="mb-2 flex items-center
+                 justify-between gap-3"
+        >
+          <p
+            class="text-sm font-bold
+                   text-slate-700"
+          >
+            Preview
+          </p>
+
+          <span
+            id="statusPreviewCartaUBK"
+            class="text-xs font-semibold
+                   text-slate-400"
+          >
+            Belum ada gambar
+          </span>
+        </div>
+
+
+        <div
+          class="flex min-h-[240px]
+                 items-center justify-center
+                 overflow-hidden rounded-2xl
+                 border border-dashed
+                 border-slate-300
+                 bg-slate-50 p-4"
+        >
+
+          <!-- EMPTY -->
+
+          <div
+            id="previewCartaUBKEmpty"
+            class="text-center"
+          >
+
+            <div
+              class="mx-auto grid h-12 w-12
+                     place-items-center
+                     rounded-xl bg-white
+                     text-slate-400 shadow-sm"
+            >
+              <i
+                data-lucide="image"
+                class="h-6 w-6"
+              ></i>
+            </div>
+
+            <p
+              class="mt-3 text-sm font-semibold
+                     text-slate-500"
+            >
+              Preview gambar akan dipaparkan di sini
+            </p>
+
+          </div>
+
+
+          <!-- IMAGE -->
+
+          <img
+            id="previewCartaUBK"
+            src=""
+            alt="Preview Carta Organisasi UBK"
+            class="hidden max-h-[420px]
+                   max-w-full rounded-xl
+                   object-contain"
+          >
+
+        </div>
+
+      </div>
+
+
+      <!-- STATUS -->
+
+      <label
+        class="flex cursor-pointer
+               items-start gap-3
+               rounded-xl border
+               border-slate-200
+               bg-slate-50 p-4"
+      >
+
+        <input
+          id="cartaUBKAktif"
+          type="checkbox"
+          checked
+          class="mt-1 h-4 w-4
+                 accent-emerald-600"
+        >
+
+        <div>
+
+          <p
+            class="text-sm font-bold
+                   text-slate-700"
+          >
+            Terbitkan pada portal
+          </p>
+
+          <p
+            class="mt-1 text-xs leading-5
+                   text-slate-500"
+          >
+            Jika diaktifkan, gambar ini akan
+            digunakan pada halaman Carta
+            Organisasi UBK.
+          </p>
+
+        </div>
+
+      </label>
+
+
+      <!-- ACTION -->
+
+      <div
+        class="flex flex-col-reverse gap-3
+               border-t border-slate-100
+               pt-5 sm:flex-row
+               sm:justify-end"
+      >
+
+        <button
+          id="btnBatalCartaUBK"
+          type="button"
+          class="rounded-xl border
+                 border-slate-300
+                 px-5 py-3 text-sm
+                 font-bold text-slate-600
+                 transition hover:bg-slate-50"
+        >
+          Batal
+        </button>
+
+
+        <button
+          id="btnSimpanCartaUBK"
+          type="submit"
+          class="inline-flex items-center
+                 justify-center gap-2
+                 rounded-xl bg-emerald-600
+                 px-5 py-3 text-sm
+                 font-bold text-white
+                 transition
+                 hover:bg-emerald-700"
+        >
+          <i
+            data-lucide="save"
+            class="h-4 w-4"
+          ></i>
+
+          Simpan &amp; Terbitkan
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+<!-- =====================================================
+     MODAL CARTA ORGANISASI PRS
+===================================================== -->
+
+<div
+  id="modalCartaPRS"
+  class="fixed inset-0 z-[100]
+         hidden items-center justify-center
+         bg-slate-950/50 p-4
+         backdrop-blur-sm"
+>
+
+  <div
+    class="w-full max-w-3xl
+           overflow-hidden rounded-3xl
+           bg-white shadow-2xl"
+  >
+
+    <!-- ================= HEADER ================= -->
+
+    <div
+      class="flex items-center justify-between
+             border-b border-slate-100
+             px-6 py-5"
+    >
+
+      <div>
+
+        <p
+          class="text-xs font-bold uppercase
+                 tracking-[0.16em]
+                 text-emerald-600"
+        >
+          Pengurusan Halaman
+        </p>
+
+        <h2
+          class="mt-1 text-xl font-extrabold
+                 text-slate-800"
+        >
+          Carta Organisasi PRS
+        </h2>
+
+      </div>
+
+
+      <button
+        id="btnTutupCartaPRS"
+        type="button"
+        class="grid h-10 w-10
+               place-items-center rounded-xl
+               bg-slate-100 text-slate-500
+               transition hover:bg-slate-200
+               hover:text-slate-700"
+        aria-label="Tutup"
+      >
+        <i
+          data-lucide="x"
+          class="h-5 w-5"
+        ></i>
+      </button>
+
+    </div>
+
+
+    <!-- ================= FORM ================= -->
+
+    <form
+      id="formCartaPRS"
+      class="p-6"
+    >
+
+      <!-- URL -->
+
+      <div>
+
+        <label
+          for="cartaPRSUrl"
+          class="mb-2 block text-sm
+                 font-bold text-slate-700"
+        >
+          Pautan Gambar Carta
+        </label>
+
+        <input
+          id="cartaPRSUrl"
+          type="url"
+          placeholder="Masukkan pautan Google Drive atau pautan gambar"
+          class="w-full rounded-xl
+                 border border-slate-200
+                 px-4 py-3 text-sm
+                 text-slate-700 outline-none
+                 transition
+                 focus:border-emerald-500
+                 focus:ring-4
+                 focus:ring-emerald-50"
+        >
+
+        <p
+          class="mt-2 text-xs
+                 leading-5 text-slate-400"
+        >
+          Anda boleh menggunakan pautan
+          perkongsian gambar daripada Google Drive.
+        </p>
+
+      </div>
+
+
+      <!-- ================= PREVIEW ================= -->
+
+      <div class="mt-6">
+
+        <div
+          class="mb-2 flex items-center
+                 justify-between gap-3"
+        >
+
+          <label
+            class="text-sm font-bold
+                   text-slate-700"
+          >
+            Pratonton Carta
+          </label>
+
+          <span
+            id="statusPreviewCartaPRS"
+            class="text-xs font-semibold
+                   text-slate-400"
+          >
+            Belum ada gambar
+          </span>
+
+        </div>
+
+
+        <div
+          class="flex min-h-[260px]
+                 items-center justify-center
+                 overflow-hidden rounded-2xl
+                 border border-dashed
+                 border-slate-200
+                 bg-slate-50 p-4"
+        >
+
+          <img
+            id="previewCartaPRS"
+            src=""
+            alt="Pratonton Carta Organisasi PRS"
+            class="hidden max-h-[420px]
+                   w-full object-contain"
+          >
+
+
+          <div
+            id="previewCartaPRSEmpty"
+            class="text-center"
+          >
+
+            <div
+              class="mx-auto grid h-12 w-12
+                     place-items-center
+                     rounded-xl bg-white
+                     text-slate-400 shadow-sm"
+            >
+              <i
+                data-lucide="image"
+                class="h-6 w-6"
+              ></i>
+            </div>
+
+            <p
+              class="mt-3 text-sm
+                     font-semibold text-slate-400"
+            >
+              Masukkan pautan gambar
+              untuk melihat pratonton.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================= STATUS ================= -->
+
+      <label
+        class="mt-6 flex cursor-pointer
+               items-start gap-3
+               rounded-2xl
+               border border-slate-200
+               bg-slate-50 p-4"
+      >
+
+        <input
+          id="cartaPRSAktif"
+          type="checkbox"
+          class="mt-1 h-4 w-4
+                 accent-emerald-700"
+        >
+
+        <div>
+
+          <p
+            class="text-sm font-bold
+                   text-slate-700"
+          >
+            Terbitkan pada portal
+          </p>
+
+          <p
+            class="mt-1 text-xs
+                   leading-5 text-slate-500"
+          >
+            Jika diaktifkan, carta ini akan
+            dipaparkan pada halaman
+            Carta Organisasi PRS.
+          </p>
+
+        </div>
+
+      </label>
+
+
+      <!-- ================= ACTION ================= -->
+
+      <div
+        class="mt-6 flex flex-col-reverse
+               gap-3 border-t
+               border-slate-100 pt-5
+               sm:flex-row sm:justify-end"
+      >
+
+        <button
+          id="btnBatalCartaPRS"
+          type="button"
+          class="rounded-xl border
+                 border-slate-200
+                 px-5 py-2.5
+                 text-sm font-bold
+                 text-slate-600
+                 transition
+                 hover:bg-slate-50"
+        >
+          Batal
+        </button>
+
+
+        <button
+          id="btnSimpanCartaPRS"
+          type="submit"
+          class="inline-flex items-center
+                 justify-center gap-2
+                 rounded-xl bg-emerald-700
+                 px-5 py-2.5
+                 text-sm font-bold text-white
+                 transition
+                 hover:bg-emerald-800"
+        >
+
+          <i
+            data-lucide="save"
+            class="h-4 w-4"
+          ></i>
+
+          Simpan &amp; Terbitkan
+
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
 
 
   <!-- ==================================================
@@ -1556,14 +2462,18 @@
         document.getElementById("panel-makluman"),
 
       motivasi:
-        document.getElementById("panel-motivasi")
+        document.getElementById("panel-motivasi"),
+
+      halaman:
+        document.getElementById("panel-halaman")
     };
 
 
     const panelTitles = {
       dashboard: "Dashboard Admin",
       makluman: "Pengurusan Makluman",
-      motivasi: "Motivasi Mingguan"
+      motivasi: "Motivasi Mingguan",
+      halaman: "Pengurusan Halaman"
     };
 
 
@@ -2100,6 +3010,1151 @@ motivasiPenerangan.addEventListener(
 
     kiraanMotivasiPenerangan.textContent =
       motivasiPenerangan.value.length;
+
+  }
+);
+
+/* =====================================================
+   CARTA ORGANISASI UBK
+===================================================== */
+
+const btnUrusCartaUBK =
+  document.getElementById("btnUrusCartaUBK");
+
+const modalCartaUBK =
+  document.getElementById("modalCartaUBK");
+
+const btnTutupCartaUBK =
+  document.getElementById("btnTutupCartaUBK");
+
+const btnBatalCartaUBK =
+  document.getElementById("btnBatalCartaUBK");
+
+const cartaUBKUrl =
+  document.getElementById("cartaUBKUrl");
+
+const previewCartaUBK =
+  document.getElementById("previewCartaUBK");
+
+const previewCartaUBKEmpty =
+  document.getElementById("previewCartaUBKEmpty");
+
+const statusPreviewCartaUBK =
+  document.getElementById("statusPreviewCartaUBK");
+
+
+/* ================= OPEN MODAL ================= */
+
+async function bukaModalCartaUBK() {
+
+  modalCartaUBK.classList.remove("hidden");
+  modalCartaUBK.classList.add("flex");
+
+  document.body.classList.add(
+    "overflow-hidden"
+  );
+
+
+  try {
+
+    statusPreviewCartaUBK.textContent =
+      "Memuatkan data...";
+
+
+    const doc =
+      await db
+        .collection("halamanPortal")
+        .doc("cartaOrganisasiUBK")
+        .get();
+
+
+    if (!doc.exists) {
+
+      statusPreviewCartaUBK.textContent =
+        "Belum ada gambar";
+
+      return;
+
+    }
+
+
+    const data =
+      doc.data();
+
+
+    /* ================= URL ================= */
+
+    const url =
+      data.imageUrl || "";
+
+    cartaUBKUrl.value = url;
+
+
+    /* ================= STATUS ================= */
+
+    cartaUBKAktif.checked =
+      data.status === "aktif";
+
+
+    /* ================= PREVIEW ================= */
+
+    if (!url) {
+
+      previewCartaUBK.src = "";
+
+      previewCartaUBK.classList.add(
+        "hidden"
+      );
+
+      previewCartaUBKEmpty.classList.remove(
+        "hidden"
+      );
+
+      statusPreviewCartaUBK.textContent =
+        "Belum ada gambar";
+
+      return;
+
+    }
+
+
+    let imageUrl = url;
+
+
+    // Tukar Google Drive sharing URL
+    // kepada URL gambar untuk preview
+    const driveMatch =
+      url.match(/\/file\/d\/([^/]+)/);
+
+
+    if (driveMatch) {
+
+      const fileId =
+        driveMatch[1];
+
+      imageUrl =
+        `https://drive.google.com/thumbnail?id=${fileId}&sz=w1600`;
+
+    }
+
+
+    previewCartaUBK.onload = () => {
+
+      previewCartaUBKEmpty.classList.add(
+        "hidden"
+      );
+
+      previewCartaUBK.classList.remove(
+        "hidden"
+      );
+
+      statusPreviewCartaUBK.textContent =
+        "Gambar berjaya dimuatkan";
+
+    };
+
+
+    previewCartaUBK.onerror = () => {
+
+      previewCartaUBK.classList.add(
+        "hidden"
+      );
+
+      previewCartaUBKEmpty.classList.remove(
+        "hidden"
+      );
+
+      statusPreviewCartaUBK.textContent =
+        "Gambar tidak dapat dimuatkan";
+
+    };
+
+
+    previewCartaUBK.src =
+      imageUrl;
+
+
+  } catch (error) {
+
+    console.error(
+      "Load Carta UBK error:",
+      error
+    );
+
+    statusPreviewCartaUBK.textContent =
+      "Data tidak dapat dimuatkan";
+
+  }
+
+}
+
+
+/* ================= CLOSE MODAL ================= */
+
+function tutupModalCartaUBK() {
+
+  modalCartaUBK.classList.add("hidden");
+
+  modalCartaUBK.classList.remove("flex");
+
+  document.body.classList.remove(
+    "overflow-hidden"
+  );
+
+}
+
+
+/* ================= BUTTON EVENTS ================= */
+
+btnUrusCartaUBK?.addEventListener(
+  "click",
+  bukaModalCartaUBK
+);
+
+btnTutupCartaUBK?.addEventListener(
+  "click",
+  tutupModalCartaUBK
+);
+
+btnBatalCartaUBK?.addEventListener(
+  "click",
+  tutupModalCartaUBK
+);
+
+
+/* ================= CLOSE BACKDROP ================= */
+
+modalCartaUBK?.addEventListener(
+  "click",
+  (event) => {
+
+    if (event.target === modalCartaUBK) {
+      tutupModalCartaUBK();
+    }
+
+  }
+);
+
+
+/* ================= IMAGE PREVIEW ================= */
+
+cartaUBKUrl?.addEventListener(
+  "input",
+  () => {
+
+    const url =
+      cartaUBKUrl.value.trim();
+
+    if (!url) {
+
+      previewCartaUBK.src = "";
+
+      previewCartaUBK.classList.add("hidden");
+
+      previewCartaUBKEmpty.classList.remove(
+        "hidden"
+      );
+
+      statusPreviewCartaUBK.textContent =
+        "Belum ada gambar";
+
+      return;
+
+    }
+
+
+    statusPreviewCartaUBK.textContent =
+      "Memuatkan gambar...";
+
+
+    previewCartaUBK.onload = () => {
+
+      previewCartaUBKEmpty.classList.add(
+        "hidden"
+      );
+
+      previewCartaUBK.classList.remove(
+        "hidden"
+      );
+
+      statusPreviewCartaUBK.textContent =
+        "Gambar berjaya dimuatkan";
+
+    };
+
+
+    previewCartaUBK.onerror = () => {
+
+      previewCartaUBK.classList.add(
+        "hidden"
+      );
+
+      previewCartaUBKEmpty.classList.remove(
+        "hidden"
+      );
+
+      statusPreviewCartaUBK.textContent =
+        "Gambar tidak dapat dimuatkan";
+
+    };
+
+
+    let imageUrl = url;
+
+    // Sokong pautan perkongsian Google Drive
+    const driveMatch =
+      url.match(/\/file\/d\/([^/]+)/);
+
+    if (driveMatch) {
+
+      const fileId =
+        driveMatch[1];
+
+      imageUrl =
+        `https://drive.google.com/thumbnail?id=${fileId}&sz=w1600`;
+
+    }
+
+    previewCartaUBK.src = imageUrl;
+
+  }
+);
+
+
+/* =====================================================
+   CARTA ORGANISASI PRS
+===================================================== */
+
+const btnUrusCartaPRS =
+  document.getElementById("btnUrusCartaPRS");
+
+const modalCartaPRS =
+  document.getElementById("modalCartaPRS");
+
+const btnTutupCartaPRS =
+  document.getElementById("btnTutupCartaPRS");
+
+const btnBatalCartaPRS =
+  document.getElementById("btnBatalCartaPRS");
+
+const cartaPRSUrl =
+  document.getElementById("cartaPRSUrl");
+
+const previewCartaPRS =
+  document.getElementById("previewCartaPRS");
+
+const previewCartaPRSEmpty =
+  document.getElementById("previewCartaPRSEmpty");
+
+const statusPreviewCartaPRS =
+  document.getElementById("statusPreviewCartaPRS");
+
+const cartaPRSAktif =
+  document.getElementById("cartaPRSAktif");
+
+
+/* ================= OPEN MODAL ================= */
+
+async function bukaModalCartaPRS() {
+
+  modalCartaPRS.classList.remove("hidden");
+  modalCartaPRS.classList.add("flex");
+
+  document.body.classList.add(
+    "overflow-hidden"
+  );
+
+  try {
+
+    statusPreviewCartaPRS.textContent =
+      "Memuatkan data...";
+
+
+    const doc =
+      await db
+        .collection("halamanPortal")
+        .doc("cartaOrganisasiPRS")
+        .get();
+
+
+    /* ================= TIADA DATA ================= */
+
+    if (!doc.exists) {
+
+      cartaPRSUrl.value = "";
+
+      cartaPRSAktif.checked = false;
+
+      previewCartaPRS.src = "";
+
+      previewCartaPRS.classList.add(
+        "hidden"
+      );
+
+      previewCartaPRSEmpty.classList.remove(
+        "hidden"
+      );
+
+      statusPreviewCartaPRS.textContent =
+        "Belum ada gambar";
+
+      return;
+    }
+
+
+    const data =
+      doc.data();
+
+
+    /* ================= LOAD DATA ================= */
+
+    const url =
+      data.imageUrl || "";
+
+    cartaPRSUrl.value =
+      url;
+
+    cartaPRSAktif.checked =
+      data.status === "aktif";
+
+
+    /* ================= TIADA URL ================= */
+
+    if (!url) {
+
+      previewCartaPRS.src = "";
+
+      previewCartaPRS.classList.add(
+        "hidden"
+      );
+
+      previewCartaPRSEmpty.classList.remove(
+        "hidden"
+      );
+
+      statusPreviewCartaPRS.textContent =
+        "Belum ada gambar";
+
+      return;
+    }
+
+
+    /* ================= IMAGE URL ================= */
+
+    let imageUrl =
+      url;
+
+
+    /* GOOGLE DRIVE */
+
+    const driveMatch =
+      url.match(/\/file\/d\/([^/]+)/);
+
+
+    if (driveMatch) {
+
+      const fileId =
+        driveMatch[1];
+
+      imageUrl =
+        `https://drive.google.com/thumbnail?id=${fileId}&sz=w1600`;
+
+    }
+
+
+    /* ================= SUCCESS ================= */
+
+    previewCartaPRS.onload = () => {
+
+      previewCartaPRSEmpty.classList.add(
+        "hidden"
+      );
+
+      previewCartaPRS.classList.remove(
+        "hidden"
+      );
+
+      statusPreviewCartaPRS.textContent =
+        "Gambar berjaya dimuatkan";
+
+    };
+
+
+    /* ================= ERROR ================= */
+
+    previewCartaPRS.onerror = () => {
+
+      previewCartaPRS.classList.add(
+        "hidden"
+      );
+
+      previewCartaPRSEmpty.classList.remove(
+        "hidden"
+      );
+
+      statusPreviewCartaPRS.textContent =
+        "Gambar tidak dapat dimuatkan";
+
+    };
+
+
+    previewCartaPRS.src =
+      imageUrl;
+
+
+  } catch (error) {
+
+    console.error(
+      "Load Carta PRS error:",
+      error
+    );
+
+    statusPreviewCartaPRS.textContent =
+      "Data tidak dapat dimuatkan";
+
+  }
+
+}
+
+
+/* ================= CLOSE MODAL ================= */
+
+function tutupModalCartaPRS() {
+
+  modalCartaPRS.classList.add("hidden");
+
+  modalCartaPRS.classList.remove("flex");
+
+  document.body.classList.remove(
+    "overflow-hidden"
+  );
+
+}
+
+
+/* ================= PREVIEW IMAGE ================= */
+
+cartaPRSUrl?.addEventListener(
+  "input",
+  () => {
+
+    const url =
+      cartaPRSUrl.value.trim();
+
+    /* TIADA URL */
+
+    if (!url) {
+
+      previewCartaPRS.src = "";
+
+      previewCartaPRS.classList.add(
+        "hidden"
+      );
+
+      previewCartaPRSEmpty.classList.remove(
+        "hidden"
+      );
+
+      statusPreviewCartaPRS.textContent =
+        "Belum ada gambar";
+
+      return;
+    }
+
+
+    statusPreviewCartaPRS.textContent =
+      "Memuatkan gambar...";
+
+
+    let imageUrl = url;
+
+
+    /* GOOGLE DRIVE */
+
+    const driveMatch =
+      url.match(/\/file\/d\/([^/]+)/);
+
+
+    if (driveMatch) {
+
+      const fileId =
+        driveMatch[1];
+
+      imageUrl =
+        `https://drive.google.com/thumbnail?id=${fileId}&sz=w1600`;
+
+    }
+
+
+    /* BERJAYA LOAD */
+
+    previewCartaPRS.onload = () => {
+
+      previewCartaPRSEmpty.classList.add(
+        "hidden"
+      );
+
+      previewCartaPRS.classList.remove(
+        "hidden"
+      );
+
+      statusPreviewCartaPRS.textContent =
+        "Gambar berjaya dimuatkan";
+
+    };
+
+
+    /* GAGAL LOAD */
+
+    previewCartaPRS.onerror = () => {
+
+      previewCartaPRS.classList.add(
+        "hidden"
+      );
+
+      previewCartaPRSEmpty.classList.remove(
+        "hidden"
+      );
+
+      statusPreviewCartaPRS.textContent =
+        "Gambar tidak dapat dimuatkan";
+
+    };
+
+
+    previewCartaPRS.src =
+      imageUrl;
+
+  }
+);
+
+
+/* ================= EVENTS ================= */
+
+btnUrusCartaPRS?.addEventListener(
+  "click",
+  bukaModalCartaPRS
+);
+
+btnTutupCartaPRS?.addEventListener(
+  "click",
+  tutupModalCartaPRS
+);
+
+btnBatalCartaPRS?.addEventListener(
+  "click",
+  tutupModalCartaPRS
+);
+
+
+/* ================= CLICK OUTSIDE ================= */
+
+modalCartaPRS?.addEventListener(
+  "click",
+  event => {
+
+    if (event.target === modalCartaPRS) {
+
+      tutupModalCartaPRS();
+
+    }
+
+  }
+);
+
+/* =====================================================
+   STATUS PENGURUSAN HALAMAN
+===================================================== */
+
+const statusCartaUBK =
+  document.getElementById(
+    "statusCartaUBK"
+  );
+
+const statusCartaPRS =
+  document.getElementById(
+    "statusCartaPRS"
+  );
+
+
+/* =====================================================
+   UPDATE STATUS BADGE
+===================================================== */
+
+function updateStatusHalaman(
+  element,
+  status
+) {
+
+  if (!element) return;
+
+
+  /* ================= AKTIF ================= */
+
+  if (status === "aktif") {
+
+    element.className = `
+      inline-flex items-center gap-1.5
+      rounded-full bg-emerald-50
+      px-3 py-1 text-xs font-bold
+      text-emerald-700
+    `;
+
+    element.innerHTML = `
+      <span
+        class="h-2 w-2 rounded-full
+               bg-emerald-500"
+      ></span>
+
+      Aktif
+    `;
+
+    return;
+  }
+
+
+  /* ================= TIDAK AKTIF ================= */
+
+  if (status === "tidak-aktif") {
+
+    element.className = `
+      inline-flex items-center gap-1.5
+      rounded-full bg-slate-100
+      px-3 py-1 text-xs font-bold
+      text-slate-600
+    `;
+
+    element.innerHTML = `
+      <span
+        class="h-2 w-2 rounded-full
+               bg-slate-400"
+      ></span>
+
+      Tidak Aktif
+    `;
+
+    return;
+  }
+
+
+  /* ================= BELUM DIKONFIGURASI ================= */
+
+  element.className = `
+    inline-flex items-center gap-1.5
+    rounded-full bg-amber-50
+    px-3 py-1 text-xs font-bold
+    text-amber-700
+  `;
+
+  element.innerHTML = `
+    <span
+      class="h-2 w-2 rounded-full
+             bg-amber-500"
+    ></span>
+
+    Belum dikonfigurasi
+  `;
+
+}
+
+
+/* =====================================================
+   LOAD STATUS DARI FIRESTORE
+===================================================== */
+
+function loadStatusHalamanPortal() {
+
+  /* ================= UBK ================= */
+
+  db
+    .collection("halamanPortal")
+    .doc("cartaOrganisasiUBK")
+    .onSnapshot(
+      doc => {
+
+        if (!doc.exists) {
+
+          updateStatusHalaman(
+            statusCartaUBK,
+            null
+          );
+
+          return;
+        }
+
+        const data =
+          doc.data();
+
+        updateStatusHalaman(
+          statusCartaUBK,
+          data.status
+        );
+
+      },
+      error => {
+
+        console.error(
+          "Status Carta UBK error:",
+          error
+        );
+
+      }
+    );
+
+
+  /* ================= PRS ================= */
+
+  db
+    .collection("halamanPortal")
+    .doc("cartaOrganisasiPRS")
+    .onSnapshot(
+      doc => {
+
+        if (!doc.exists) {
+
+          updateStatusHalaman(
+            statusCartaPRS,
+            null
+          );
+
+          return;
+        }
+
+        const data =
+          doc.data();
+
+        updateStatusHalaman(
+          statusCartaPRS,
+          data.status
+        );
+
+      },
+      error => {
+
+        console.error(
+          "Status Carta PRS error:",
+          error
+        );
+
+      }
+    );
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+loadStatusHalamanPortal();
+
+
+/* =====================================================
+   SIMPAN CARTA ORGANISASI UBK KE FIRESTORE
+===================================================== */
+
+const formCartaUBK =
+  document.getElementById("formCartaUBK");
+
+const cartaUBKAktif =
+  document.getElementById("cartaUBKAktif");
+
+const btnSimpanCartaUBK =
+  document.getElementById("btnSimpanCartaUBK");
+
+
+formCartaUBK?.addEventListener(
+  "submit",
+  async event => {
+
+    event.preventDefault();
+
+
+    const imageUrl =
+      cartaUBKUrl.value.trim();
+
+    const aktif =
+      cartaUBKAktif.checked;
+
+
+    /* ================= VALIDATION ================= */
+
+    if (!imageUrl) {
+
+      alert(
+        "Sila masukkan pautan gambar Carta Organisasi UBK."
+      );
+
+      cartaUBKUrl.focus();
+
+      return;
+
+    }
+
+
+    /* ================= LOADING ================= */
+
+    btnSimpanCartaUBK.disabled = true;
+
+    btnSimpanCartaUBK.classList.add(
+      "opacity-60",
+      "cursor-not-allowed"
+    );
+
+    btnSimpanCartaUBK.innerHTML = `
+      <i
+        data-lucide="loader-circle"
+        class="w-4 h-4 animate-spin"
+      ></i>
+
+      Menyimpan...
+    `;
+
+    lucide.createIcons();
+
+
+    try {
+
+      const user =
+        firebase.auth().currentUser;
+
+
+      if (!user) {
+
+        throw new Error(
+          "Sesi admin telah tamat."
+        );
+
+      }
+
+
+      /* ================= FIRESTORE ================= */
+
+      await db
+        .collection("halamanPortal")
+        .doc("cartaOrganisasiUBK")
+        .set(
+          {
+
+            imageUrl: imageUrl,
+
+            status:
+              aktif
+                ? "aktif"
+                : "tidak-aktif",
+
+            updatedAt:
+              firebase.firestore
+                .FieldValue
+                .serverTimestamp(),
+
+            updatedBy:
+              user.email || ""
+
+          },
+          {
+            merge: true
+          }
+        );
+
+
+      /* ================= SUCCESS ================= */
+
+      alert(
+        "Carta Organisasi UBK berjaya disimpan."
+      );
+
+      tutupModalCartaUBK();
+
+
+    } catch (error) {
+
+      console.error(
+        "Simpan Carta UBK error:",
+        error
+      );
+
+      alert(
+        "Carta Organisasi UBK tidak berjaya disimpan. Sila cuba semula."
+      );
+
+    } finally {
+
+      btnSimpanCartaUBK.disabled = false;
+
+      btnSimpanCartaUBK.classList.remove(
+        "opacity-60",
+        "cursor-not-allowed"
+      );
+
+      btnSimpanCartaUBK.innerHTML = `
+        <i
+          data-lucide="save"
+          class="w-4 h-4"
+        ></i>
+
+        Simpan & Terbitkan
+      `;
+
+      lucide.createIcons();
+
+    }
+
+  }
+);
+
+/* =====================================================
+   SIMPAN CARTA ORGANISASI PRS KE FIRESTORE
+===================================================== */
+
+const formCartaPRS =
+  document.getElementById("formCartaPRS");
+
+const btnSimpanCartaPRS =
+  document.getElementById("btnSimpanCartaPRS");
+
+
+formCartaPRS?.addEventListener(
+  "submit",
+  async event => {
+
+    event.preventDefault();
+
+
+    const imageUrl =
+      cartaPRSUrl.value.trim();
+
+    const aktif =
+      cartaPRSAktif.checked;
+
+
+    /* ================= VALIDATION ================= */
+
+    if (!imageUrl) {
+
+      alert(
+        "Sila masukkan pautan gambar Carta Organisasi PRS."
+      );
+
+      cartaPRSUrl.focus();
+
+      return;
+    }
+
+
+    /* ================= BUTTON LOADING ================= */
+
+    btnSimpanCartaPRS.disabled = true;
+
+    btnSimpanCartaPRS.classList.add(
+      "opacity-60",
+      "cursor-not-allowed"
+    );
+
+    btnSimpanCartaPRS.innerHTML = `
+      <i
+        data-lucide="loader-circle"
+        class="w-4 h-4 animate-spin"
+      ></i>
+
+      Menyimpan...
+    `;
+
+    lucide.createIcons();
+
+
+    try {
+
+      /* ================= USER ================= */
+
+      const user =
+        firebase.auth().currentUser;
+
+
+      if (!user) {
+
+        throw new Error(
+          "Sesi admin telah tamat."
+        );
+
+      }
+
+
+      /* ================= FIRESTORE ================= */
+
+      await db
+        .collection("halamanPortal")
+        .doc("cartaOrganisasiPRS")
+        .set(
+          {
+
+            imageUrl: imageUrl,
+
+            status:
+              aktif
+                ? "aktif"
+                : "tidak-aktif",
+
+            updatedAt:
+              firebase.firestore
+                .FieldValue
+                .serverTimestamp(),
+
+            updatedBy:
+              user.email || ""
+
+          },
+          {
+            merge: true
+          }
+        );
+
+
+      /* ================= SUCCESS ================= */
+
+      alert(
+        "Carta Organisasi PRS berjaya disimpan."
+      );
+
+      tutupModalCartaPRS();
+
+
+    } catch (error) {
+
+      console.error(
+        "Simpan Carta PRS error:",
+        error
+      );
+
+
+      alert(
+        "Carta Organisasi PRS tidak berjaya disimpan. Sila cuba semula."
+      );
+
+
+    } finally {
+
+      /* ================= RESET BUTTON ================= */
+
+      btnSimpanCartaPRS.disabled = false;
+
+      btnSimpanCartaPRS.classList.remove(
+        "opacity-60",
+        "cursor-not-allowed"
+      );
+
+      btnSimpanCartaPRS.innerHTML = `
+        <i
+          data-lucide="save"
+          class="w-4 h-4"
+        ></i>
+
+        Simpan & Terbitkan
+      `;
+
+      lucide.createIcons();
+
+    }
 
   }
 );

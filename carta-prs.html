@@ -12,6 +12,18 @@
 
 <script src="https://unpkg.com/lucide@latest"></script>
 
+<!-- =================================================
+     FIREBASE
+================================================== -->
+
+<script
+  src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js">
+</script>
+
+<script
+  src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js">
+</script>
+
 <link rel="stylesheet" href="css/style.css"/>
 
 </head>
@@ -645,156 +657,206 @@
 
 <main class="flex-grow bg-[#f7fbf8]">
 
-  <section class="px-6 py-16 sm:py-20">
+  <section class="px-6 py-12 sm:py-16">
 
-    <div class="mx-auto max-w-4xl">
+    <div class="mx-auto max-w-5xl">
+
+
+      <!-- =================================================
+           HEADER PAGE
+      ================================================== -->
+
+      <div class="mb-10 text-center">
+
+        <div
+          class="mx-auto mb-5 grid h-14 w-14
+                 place-items-center rounded-2xl
+                 bg-[#e8f5ee] text-[#075e4c]"
+        >
+          <i
+            data-lucide="network"
+            class="h-7 w-7"
+          ></i>
+        </div>
+
+
+        <div
+          class="mx-auto mb-4 inline-flex
+                 items-center gap-2
+                 rounded-full
+                 border border-[#cfe7da]
+                 bg-white px-4 py-2
+                 text-xs font-bold
+                 uppercase tracking-[0.14em]
+                 text-[#07865f]"
+        >
+          <i
+            data-lucide="users"
+            class="h-4 w-4"
+          ></i>
+
+          Pembimbing Rakan Sebaya
+        </div>
+
+
+        <h1
+          class="text-3xl font-extrabold
+                 tracking-tight text-[#173f35]
+                 sm:text-4xl"
+        >
+          Carta Organisasi PRS
+        </h1>
+
+
+        <p
+          class="mx-auto mt-4 max-w-2xl
+                 text-sm leading-7
+                 text-[#617a73]
+                 sm:text-base"
+        >
+          Carta Organisasi Pembimbing Rakan Sebaya
+          (PRS) Unit Bimbingan &amp; Kaunseling
+          SK Kuala Ketil.
+        </p>
+
+      </div>
+
+
+      <!-- =================================================
+           CARTA ORGANISASI PRS — DYNAMIC
+      ================================================== -->
 
       <div
-        class="relative overflow-hidden rounded-3xl
-               border border-[#cfe7da]
-               bg-gradient-to-br
-               from-[#075e4c] via-[#07865f]
-               to-[#0b9b70]
-               px-6 py-12 text-center text-white
-               shadow-sm
-               sm:px-10 sm:py-16"
+        id="cartaPRSArea"
+        class="mb-8"
       >
 
-        <!-- DECORATION -->
+
+        <!-- ================= LOADING ================= -->
 
         <div
-          class="absolute -right-16 -top-16
-                 h-48 w-48 rounded-full
-                 bg-white/10"
-        ></div>
+          id="cartaPRSLoading"
+          class="flex min-h-[300px]
+                 items-center justify-center
+                 rounded-xl bg-white
+                 p-6 shadow-lg"
+        >
+
+          <div class="text-center">
+
+            <i
+              data-lucide="loader-circle"
+              class="mx-auto h-8 w-8
+                     animate-spin text-[#075e4c]"
+            ></i>
+
+            <p
+              class="mt-3 text-sm
+                     font-medium text-slate-500"
+            >
+              Memuatkan carta organisasi...
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================= GAMBAR ================= -->
 
         <div
-          class="absolute -bottom-20 -left-16
-                 h-52 w-52 rounded-full
-                 bg-white/10"
-        ></div>
+          id="cartaPRSImageContainer"
+          class="hidden rounded-xl
+                 bg-white p-4 shadow-lg"
+        >
 
-
-        <!-- CONTENT -->
-
-        <div class="relative">
-
-          <div
-            class="mx-auto mb-6 grid h-16 w-16
-                   place-items-center rounded-2xl
-                   bg-white/15 backdrop-blur"
+          <img
+            id="cartaPRSImage"
+            src=""
+            alt="Carta Organisasi Pembimbing Rakan Sebaya SK Kuala Ketil"
+            class="w-full rounded-lg
+                   object-contain"
           >
-            <i
-              data-lucide="network"
-              class="h-8 w-8"
-            ></i>
-          </div>
+
+        </div>
 
 
-          <div
-            class="mx-auto mb-5 inline-flex
-                   items-center gap-2 rounded-full
-                   border border-white/20
-                   bg-white/10 px-4 py-2
-                   text-xs font-bold uppercase
-                   tracking-[0.16em]"
-          >
-            <i
-              data-lucide="users"
-              class="h-4 w-4"
-            ></i>
+        <!-- ================= TIADA CARTA ================= -->
 
-            Pembimbing Rakan Sebaya
-          </div>
+        <div
+          id="cartaPRSEmpty"
+          class="hidden min-h-[300px]
+                 items-center justify-center
+                 rounded-xl bg-white
+                 p-6 shadow-lg"
+        >
 
-
-          <h1
-            class="text-3xl font-extrabold
-                   tracking-tight sm:text-4xl"
-          >
-            Carta Organisasi PRS
-          </h1>
-
-
-          <p
-            class="mx-auto mt-5 max-w-2xl
-                   text-sm leading-7 text-white/85
-                   sm:text-base"
-          >
-            Maklumat carta organisasi
-            Pembimbing Rakan Sebaya (PRS)
-            sedang dalam proses dikemaskini oleh
-            Unit Bimbingan &amp; Kaunseling
-            SK Kuala Ketil.
-          </p>
-
-
-          <!-- STATUS -->
-
-          <div
-            class="mx-auto mt-8 flex max-w-xl
-                   items-start gap-4 rounded-2xl
-                   border border-white/15
-                   bg-white/10 p-5 text-left
-                   backdrop-blur"
-          >
+          <div class="text-center">
 
             <div
-              class="grid h-10 w-10 shrink-0
-                     place-items-center rounded-xl
-                     bg-white text-[#07865f]"
+              class="mx-auto grid h-12 w-12
+                     place-items-center
+                     rounded-xl bg-[#eff8f3]
+                     text-[#075e4c]"
             >
               <i
                 data-lucide="construction"
-                class="h-5 w-5"
+                class="h-6 w-6"
               ></i>
             </div>
 
-            <div>
 
-              <p class="text-sm font-extrabold">
-                Sedang Dikemaskini
-              </p>
-
-              <p
-                class="mt-1 text-sm
-                       leading-6 text-white/80"
-              >
-                Carta organisasi terkini akan
-                dipaparkan di halaman ini setelah
-                proses kemaskini selesai.
-              </p>
-
-            </div>
-
-          </div>
-
-
-          <!-- BACK -->
-
-          <div class="mt-8">
-
-            <a
-              href="index.html"
-              class="inline-flex items-center gap-2
-                     rounded-xl bg-white
-                     px-5 py-3
-                     text-sm font-bold text-[#075e4c]
-                     transition hover:bg-[#eff8f3]"
+            <p
+              class="mt-4 text-base
+                     font-extrabold
+                     text-[#173f35]"
             >
-              <i
-                data-lucide="arrow-left"
-                class="h-4 w-4"
-              ></i>
+              Carta Organisasi Sedang Dikemaskini
+            </p>
 
-              Kembali ke Laman Utama
-            </a>
+
+            <p
+              class="mx-auto mt-2 max-w-md
+                     text-sm leading-6
+                     text-[#617a73]"
+            >
+              Carta organisasi Pembimbing Rakan Sebaya
+              akan dipaparkan setelah proses
+              kemaskini selesai.
+            </p>
 
           </div>
 
         </div>
 
       </div>
+
+
+      <!-- =================================================
+           BACK
+      ================================================== -->
+
+      <div class="text-center">
+
+        <a
+          href="index.html"
+          class="inline-flex items-center gap-2
+                 rounded-xl bg-[#075e4c]
+                 px-5 py-3
+                 text-sm font-bold text-white
+                 shadow-sm transition
+                 hover:bg-[#064c3e]"
+        >
+          <i
+            data-lucide="arrow-left"
+            class="h-4 w-4"
+          ></i>
+
+          Kembali ke Laman Utama
+        </a>
+
+      </div>
+
 
     </div>
 
@@ -1252,6 +1314,207 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
 });
+</script>
+
+<!-- =================================================
+     CARTA ORGANISASI PRS — FIRESTORE
+================================================== -->
+
+<script>
+
+const cartaPRSFirebaseConfig = {
+  apiKey: "AIzaSyA9R5jKqeJNvBHD-SIOuseAqyb_x909R3Q",
+  authDomain: "bimbingankaunselingskkk.firebaseapp.com",
+  projectId: "bimbingankaunselingskkk"
+};
+
+
+/* ================= FIREBASE ================= */
+
+if (!firebase.apps.length) {
+
+  firebase.initializeApp(
+    cartaPRSFirebaseConfig
+  );
+
+}
+
+
+const cartaPRSDb =
+  firebase.firestore();
+
+
+/* ================= ELEMENTS ================= */
+
+const cartaPRSLoading =
+  document.getElementById(
+    "cartaPRSLoading"
+  );
+
+const cartaPRSImageContainer =
+  document.getElementById(
+    "cartaPRSImageContainer"
+  );
+
+const cartaPRSImage =
+  document.getElementById(
+    "cartaPRSImage"
+  );
+
+const cartaPRSEmpty =
+  document.getElementById(
+    "cartaPRSEmpty"
+  );
+
+
+/* ================= EMPTY STATE ================= */
+
+function paparCartaPRSEmpty() {
+
+  cartaPRSLoading.classList.add(
+    "hidden"
+  );
+
+  cartaPRSImageContainer.classList.add(
+    "hidden"
+  );
+
+  cartaPRSEmpty.classList.remove(
+    "hidden"
+  );
+
+  cartaPRSEmpty.classList.add(
+    "flex"
+  );
+
+}
+
+
+/* ================= LOAD CARTA ================= */
+
+async function loadCartaPRS() {
+
+  try {
+
+    const doc =
+      await cartaPRSDb
+        .collection("halamanPortal")
+        .doc("cartaOrganisasiPRS")
+        .get();
+
+
+    /* TIADA DOCUMENT */
+
+    if (!doc.exists) {
+
+      paparCartaPRSEmpty();
+
+      return;
+
+    }
+
+
+    const data =
+      doc.data();
+
+
+    /* TIDAK AKTIF / TIADA URL */
+
+    if (
+      data.status !== "aktif" ||
+      !data.imageUrl
+    ) {
+
+      paparCartaPRSEmpty();
+
+      return;
+
+    }
+
+
+    /* ================= IMAGE URL ================= */
+
+    let imageUrl =
+      data.imageUrl.trim();
+
+
+    /* GOOGLE DRIVE */
+
+    const driveMatch =
+      imageUrl.match(
+        /\/file\/d\/([^/]+)/
+      );
+
+
+    if (driveMatch) {
+
+      const fileId =
+        driveMatch[1];
+
+      imageUrl =
+        `https://drive.google.com/thumbnail?id=${fileId}&sz=w2000`;
+
+    }
+
+
+    /* ================= IMAGE SUCCESS ================= */
+
+    cartaPRSImage.onload = () => {
+
+      cartaPRSLoading.classList.add(
+        "hidden"
+      );
+
+      cartaPRSEmpty.classList.add(
+        "hidden"
+      );
+
+      cartaPRSEmpty.classList.remove(
+        "flex"
+      );
+
+      cartaPRSImageContainer.classList.remove(
+        "hidden"
+      );
+
+    };
+
+
+    /* ================= IMAGE ERROR ================= */
+
+    cartaPRSImage.onerror = () => {
+
+      console.error(
+        "Carta PRS image gagal dimuatkan."
+      );
+
+      paparCartaPRSEmpty();
+
+    };
+
+
+    cartaPRSImage.src =
+      imageUrl;
+
+
+  } catch (error) {
+
+    console.error(
+      "Load Carta PRS error:",
+      error
+    );
+
+    paparCartaPRSEmpty();
+
+  }
+
+}
+
+
+/* ================= START ================= */
+
+loadCartaPRS();
+
 </script>
 
 </body>

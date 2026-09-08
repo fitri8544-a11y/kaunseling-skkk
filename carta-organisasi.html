@@ -1414,6 +1414,11 @@ const cartaUBKImage =
     "cartaUBKImage"
   );
 
+const cartaUBKImageContainer =
+  document.getElementById(
+    "cartaUBKImageContainer"
+  );
+
 const cartaUBKEmpty =
   document.getElementById(
     "cartaUBKEmpty"
@@ -1425,6 +1430,10 @@ const cartaUBKEmpty =
 function paparCartaUBKEmpty() {
 
   cartaUBKLoading.classList.add(
+    "hidden"
+  );
+
+  cartaUBKImageContainer.classList.add(
     "hidden"
   );
 
@@ -1517,23 +1526,27 @@ async function loadCartaUBK() {
 
     cartaUBKImage.onload = () => {
 
-      cartaUBKLoading.classList.add(
-        "hidden"
-      );
+    cartaUBKLoading.classList.add(
+      "hidden"
+    );
 
-      cartaUBKEmpty.classList.add(
-        "hidden"
-      );
+    cartaUBKEmpty.classList.add(
+      "hidden"
+    );
 
-      cartaUBKEmpty.classList.remove(
-        "flex"
-      );
+    cartaUBKEmpty.classList.remove(
+      "flex"
+    );
 
-      cartaUBKImage.classList.remove(
-        "hidden"
-      );
+    cartaUBKImage.classList.remove(
+      "hidden"
+    );
 
-    };
+    cartaUBKImageContainer.classList.remove(
+      "hidden"
+    );
+
+  };
 
 
     /* ================= IMAGE ERROR ================= */

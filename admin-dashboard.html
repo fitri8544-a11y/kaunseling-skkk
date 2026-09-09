@@ -1246,63 +1246,110 @@
 
 
     <!-- =============================================
-         AKTIVITI PRS
-    ============================================== -->
+     AKTIVITI PRS
+============================================== -->
 
-    <article
-      class="rounded-2xl border
-             border-slate-200 bg-white
-             p-6 shadow-sm"
+<article
+  class="rounded-2xl border
+         border-slate-200 bg-white
+         p-6 shadow-sm"
+>
+
+  <div
+    class="flex items-start
+           justify-between gap-4"
+  >
+
+    <!-- ICON -->
+
+    <div
+      class="grid h-12 w-12
+             place-items-center
+             rounded-xl bg-emerald-50
+             text-emerald-700"
+    >
+      <i
+        data-lucide="calendar-heart"
+        class="h-6 w-6"
+      ></i>
+    </div>
+
+
+    <!-- STATUS -->
+
+    <span
+      id="statusAktivitiPRS"
+      class="inline-flex items-center gap-1.5
+             rounded-full bg-amber-50
+             px-3 py-1 text-xs font-bold
+             text-amber-700"
     >
 
-      <div
-        class="flex items-start
-               justify-between gap-4"
-      >
+      <span
+        class="h-2 w-2 rounded-full
+               bg-amber-500"
+      ></span>
 
-        <div
-          class="grid h-12 w-12
-                 place-items-center
-                 rounded-xl bg-slate-100
-                 text-slate-500"
-        >
-          <i
-            data-lucide="calendar-heart"
-            class="h-6 w-6"
-          ></i>
-        </div>
+      Belum dikonfigurasi
+
+    </span>
+
+  </div>
 
 
-        <span
-          class="rounded-full
-                 bg-amber-50 px-3 py-1
-                 text-xs font-bold
-                 text-amber-600"
-        >
-          Akan Datang
-        </span>
+  <!-- TITLE -->
 
-      </div>
+  <h2
+    class="mt-5 text-lg font-extrabold
+           text-slate-800"
+  >
+    Aktiviti PRS
+  </h2>
 
 
-      <h2
-        class="mt-5 text-lg font-extrabold
-               text-slate-800"
-      >
-        Aktiviti PRS
-      </h2>
+  <!-- DESCRIPTION -->
+
+  <p
+    class="mt-2 text-sm leading-6
+           text-slate-500"
+  >
+    Tambah dan urus aktiviti
+    Pembimbing Rakan Sebaya
+    yang akan dipaparkan pada portal.
+  </p>
 
 
-      <p
-        class="mt-2 text-sm leading-6
-               text-slate-500"
-      >
-        Tambah dan urus aktiviti
-        Pembimbing Rakan Sebaya
-        yang akan dipaparkan pada portal.
-      </p>
+  <!-- ACTION -->
 
-    </article>
+  <div
+    class="mt-6 border-t
+           border-slate-100 pt-5"
+  >
+
+    <button
+      id="btnUrusAktivitiPRS"
+      type="button"
+      class="inline-flex items-center
+             justify-center gap-2
+             rounded-xl bg-emerald-700
+             px-4 py-2.5
+             text-sm font-bold text-white
+             transition
+             hover:bg-emerald-800"
+    >
+
+      <i
+        data-lucide="settings-2"
+        class="h-4 w-4"
+      ></i>
+
+      Urus Kandungan
+
+    </button>
+
+  </div>
+
+</article>
 
   </div>
 
@@ -2799,6 +2846,455 @@
 </div>
 
 
+<!-- =====================================================
+     MODAL AKTIVITI PRS
+===================================================== -->
+
+<div
+  id="modalAktivitiPRS"
+  class="fixed inset-0 z-[100] hidden
+         items-center justify-center
+         bg-slate-950/50 p-4
+         backdrop-blur-sm"
+>
+
+  <div
+    class="w-full max-w-3xl
+           max-h-[90vh] overflow-y-auto
+           rounded-3xl bg-white
+           shadow-2xl"
+  >
+
+    <!-- HEADER -->
+
+    <div
+      class="sticky top-0 z-10
+             flex items-center justify-between
+             border-b border-slate-100
+             bg-white px-6 py-5"
+    >
+
+      <div class="flex items-center gap-3">
+
+        <div
+          class="grid h-11 w-11
+                 place-items-center rounded-xl
+                 bg-emerald-50
+                 text-emerald-700"
+        >
+          <i
+            data-lucide="calendar-heart"
+            class="h-5 w-5"
+          ></i>
+        </div>
+
+        <div>
+
+          <p
+            class="text-xs font-bold uppercase
+                   tracking-[0.16em]
+                   text-emerald-600"
+          >
+            Pengurusan Halaman
+          </p>
+
+          <h2
+            class="mt-1 text-xl font-extrabold
+                   text-slate-800"
+          >
+            Aktiviti PRS
+          </h2>
+
+        </div>
+
+      </div>
+
+
+      <button
+        id="btnTutupAktivitiPRS"
+        type="button"
+        aria-label="Tutup"
+        class="grid h-10 w-10
+               place-items-center rounded-xl
+               bg-slate-100 text-slate-500
+               transition hover:bg-slate-200"
+      >
+        <i
+          data-lucide="x"
+          class="h-5 w-5"
+        ></i>
+      </button>
+
+    </div>
+
+
+    <!-- BODY -->
+
+    <!-- BODY -->
+
+<div class="p-6">
+
+  <form
+    id="formAktivitiPRS"
+    class="space-y-5"
+  >
+
+    <!-- TAJUK AKTIVITI -->
+
+    <div>
+
+      <label
+        for="aktivitiPRSTajuk"
+        class="mb-2 block text-sm
+               font-bold text-slate-700"
+      >
+        Tajuk Aktiviti
+        <span class="text-red-500">*</span>
+      </label>
+
+      <input
+        id="aktivitiPRSTajuk"
+        type="text"
+        required
+        maxlength="120"
+        placeholder="Contoh: Bengkel Pembimbing Rakan Sebaya"
+        class="w-full rounded-xl
+               border border-slate-300
+               px-4 py-3 text-sm
+               outline-none transition
+               focus:border-emerald-500
+               focus:ring-4
+               focus:ring-emerald-500/10"
+      >
+
+    </div>
+
+
+    <!-- TARIKH + TEMPAT -->
+
+    <div class="grid gap-5 sm:grid-cols-2">
+
+      <div>
+
+        <label
+          for="aktivitiPRSTarikh"
+          class="mb-2 block text-sm
+                 font-bold text-slate-700"
+        >
+          Tarikh Aktiviti
+          <span class="text-red-500">*</span>
+        </label>
+
+        <input
+          id="aktivitiPRSTarikh"
+          type="date"
+          required
+          class="w-full rounded-xl
+                 border border-slate-300
+                 px-4 py-3 text-sm
+                 outline-none transition
+                 focus:border-emerald-500
+                 focus:ring-4
+                 focus:ring-emerald-500/10"
+        >
+
+      </div>
+
+
+      <div>
+
+        <label
+          for="aktivitiPRSTempat"
+          class="mb-2 block text-sm
+                 font-bold text-slate-700"
+        >
+          Tempat
+        </label>
+
+        <input
+          id="aktivitiPRSTempat"
+          type="text"
+          maxlength="120"
+          placeholder="Contoh: Dewan SK Kuala Ketil"
+          class="w-full rounded-xl
+                 border border-slate-300
+                 px-4 py-3 text-sm
+                 outline-none transition
+                 focus:border-emerald-500
+                 focus:ring-4
+                 focus:ring-emerald-500/10"
+        >
+
+      </div>
+
+    </div>
+
+
+    <!-- PENERANGAN -->
+
+    <div>
+
+      <label
+        for="aktivitiPRSPenerangan"
+        class="mb-2 block text-sm
+               font-bold text-slate-700"
+      >
+        Penerangan Ringkas
+        <span class="text-red-500">*</span>
+      </label>
+
+      <textarea
+        id="aktivitiPRSPenerangan"
+        required
+        maxlength="500"
+        rows="4"
+        placeholder="Masukkan penerangan ringkas mengenai aktiviti..."
+        class="w-full resize-none
+               rounded-xl
+               border border-slate-300
+               px-4 py-3 text-sm
+               outline-none transition
+               focus:border-emerald-500
+               focus:ring-4
+               focus:ring-emerald-500/10"
+      ></textarea>
+
+      <div
+        class="mt-2 flex justify-between
+               text-xs text-slate-400"
+      >
+        <span>Maksimum 500 aksara.</span>
+
+        <span>
+          <span id="kiraanAktivitiPRS">0</span>/500
+        </span>
+      </div>
+
+    </div>
+
+
+    <!-- GAMBAR -->
+
+    <div>
+
+      <label
+        for="aktivitiPRSGambar"
+        class="mb-2 block text-sm
+               font-bold text-slate-700"
+      >
+        Pautan Gambar
+      </label>
+
+      <input
+        id="aktivitiPRSGambar"
+        type="url"
+        placeholder="Google Drive atau pautan gambar"
+        class="w-full rounded-xl
+               border border-slate-300
+               px-4 py-3 text-sm
+               outline-none transition
+               focus:border-emerald-500
+               focus:ring-4
+               focus:ring-emerald-500/10"
+      >
+
+      <p
+        class="mt-2 text-xs
+               leading-5 text-slate-500"
+      >
+        Pilihan. Masukkan pautan gambar
+        aktiviti jika ingin memaparkan
+        gambar pada portal.
+      </p>
+
+    </div>
+
+
+    <!-- STATUS -->
+
+    <label
+      class="flex cursor-pointer
+             items-start gap-3
+             rounded-xl border
+             border-slate-200
+             bg-slate-50 p-4"
+    >
+
+      <input
+        id="aktivitiPRSAktif"
+        type="checkbox"
+        checked
+        class="mt-1 h-4 w-4
+               accent-emerald-600"
+      >
+
+      <div>
+
+        <p
+          class="text-sm font-bold
+                 text-slate-700"
+        >
+          Paparkan pada portal
+        </p>
+
+        <p
+          class="mt-1 text-xs
+                 leading-5 text-slate-500"
+        >
+          Aktiviti ini akan dipaparkan
+          pada halaman Aktiviti PRS
+          apabila diaktifkan.
+        </p>
+
+      </div>
+
+    </label>
+
+
+    <!-- ACTION -->
+
+    <div
+      class="flex flex-col-reverse gap-3
+             border-t border-slate-100
+             pt-5 sm:flex-row
+             sm:justify-end"
+    >
+
+      <button
+        id="btnBatalAktivitiPRS"
+        type="button"
+        class="rounded-xl border
+               border-slate-300
+               px-5 py-3 text-sm
+               font-bold text-slate-600
+               transition hover:bg-slate-50"
+      >
+        Batal
+      </button>
+
+
+      <button
+        id="btnSimpanAktivitiPRS"
+        type="submit"
+        class="inline-flex items-center
+               justify-center gap-2
+               rounded-xl bg-emerald-700
+               px-5 py-3 text-sm
+               font-bold text-white
+               transition
+               hover:bg-emerald-800"
+      >
+
+        <i
+          data-lucide="save"
+          class="h-4 w-4"
+        ></i>
+
+        Simpan Aktiviti
+
+      </button>
+
+    </div>
+
+  </form>
+
+  <!-- =====================================================
+     SENARAI AKTIVITI PRS
+===================================================== -->
+
+<div
+  class="mt-8 border-t
+         border-slate-200 pt-6"
+>
+
+  <div
+    class="flex items-center
+           justify-between gap-4"
+  >
+
+    <div>
+
+      <h3
+        class="text-base font-extrabold
+               text-slate-800"
+      >
+        Senarai Aktiviti
+      </h3>
+
+      <p
+        class="mt-1 text-sm
+               text-slate-500"
+      >
+        Aktiviti PRS yang telah disimpan.
+      </p>
+
+    </div>
+
+    <span
+      class="rounded-full
+             bg-emerald-50
+             px-3 py-1
+             text-xs font-bold
+             text-emerald-700"
+    >
+      <span id="jumlahAktivitiPRS">0</span>
+      aktiviti
+    </span>
+
+  </div>
+
+
+  <!-- LOADING -->
+
+  <div
+    id="aktivitiPRSLoading"
+    class="hidden py-10 text-center
+           text-sm text-slate-400"
+  >
+    Memuatkan aktiviti...
+  </div>
+
+
+  <!-- EMPTY -->
+
+  <div
+    id="aktivitiPRSEmpty"
+    class="hidden py-10 text-center"
+  >
+
+    <i
+      data-lucide="calendar-x"
+      class="mx-auto h-8 w-8
+             text-slate-300"
+    ></i>
+
+    <p
+      class="mt-3 text-sm
+             font-semibold
+             text-slate-500"
+    >
+      Belum ada aktiviti.
+    </p>
+
+  </div>
+
+
+  <!-- LIST -->
+
+  <div
+    id="aktivitiPRSList"
+    class="mt-5 space-y-3"
+  ></div>
+
+</div>
+
+</div>
+
+  </div>
+
+</div>
+
+
 
   <!-- ==================================================
        JAVASCRIPT
@@ -2874,6 +3370,12 @@
         "Admin Portal:",
         email
       );
+
+      /* ==========================================
+        MULAKAN AKTIVITI PRS SELEPAS AUTH SIAP
+      ========================================== */
+
+      muatAktivitiPRS();
 
     });
 
@@ -6912,6 +7414,1364 @@ formMotivasi.addEventListener(
 
   }
 );
+
+/* =====================================================
+   AKTIVITI PRS — SISTEM LENGKAP
+===================================================== */
+
+
+/* =====================================================
+   ELEMENT
+===================================================== */
+
+const btnUrusAktivitiPRS =
+  document.getElementById(
+    "btnUrusAktivitiPRS"
+  );
+
+const modalAktivitiPRS =
+  document.getElementById(
+    "modalAktivitiPRS"
+  );
+
+const btnTutupAktivitiPRS =
+  document.getElementById(
+    "btnTutupAktivitiPRS"
+  );
+
+const btnBatalAktivitiPRS =
+  document.getElementById(
+    "btnBatalAktivitiPRS"
+  );
+
+const formAktivitiPRS =
+  document.getElementById(
+    "formAktivitiPRS"
+  );
+
+const aktivitiPRSTajuk =
+  document.getElementById(
+    "aktivitiPRSTajuk"
+  );
+
+const aktivitiPRSTarikh =
+  document.getElementById(
+    "aktivitiPRSTarikh"
+  );
+
+const aktivitiPRSTempat =
+  document.getElementById(
+    "aktivitiPRSTempat"
+  );
+
+const aktivitiPRSPenerangan =
+  document.getElementById(
+    "aktivitiPRSPenerangan"
+  );
+
+const aktivitiPRSGambar =
+  document.getElementById(
+    "aktivitiPRSGambar"
+  );
+
+const aktivitiPRSAktif =
+  document.getElementById(
+    "aktivitiPRSAktif"
+  );
+
+const btnSimpanAktivitiPRS =
+  document.getElementById(
+    "btnSimpanAktivitiPRS"
+  );
+
+const kiraanAktivitiPRS =
+  document.getElementById(
+    "kiraanAktivitiPRS"
+  );
+
+const aktivitiPRSList =
+  document.getElementById(
+    "aktivitiPRSList"
+  );
+
+const aktivitiPRSEmpty =
+  document.getElementById(
+    "aktivitiPRSEmpty"
+  );
+
+const aktivitiPRSLoading =
+  document.getElementById(
+    "aktivitiPRSLoading"
+  );
+
+const jumlahAktivitiPRS =
+  document.getElementById(
+    "jumlahAktivitiPRS"
+  );
+
+const statusAktivitiPRS =
+  document.getElementById(
+    "statusAktivitiPRS"
+  );
+
+
+/* =====================================================
+   EDIT STATE
+===================================================== */
+
+let editAktivitiPRSId = null;
+
+let unsubscribeAktivitiPRS = null;
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTMLAktivitiPRS(value) {
+
+  const div =
+    document.createElement("div");
+
+  div.textContent =
+    String(value ?? "");
+
+  return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   FORMAT TARIKH
+===================================================== */
+
+function formatTarikhAktivitiPRS(
+  tarikh
+) {
+
+  if (!tarikh) {
+    return "-";
+  }
+
+  const date =
+    new Date(
+      `${tarikh}T00:00:00`
+    );
+
+  if (
+    Number.isNaN(
+      date.getTime()
+    )
+  ) {
+    return tarikh;
+  }
+
+  return date.toLocaleDateString(
+    "ms-MY",
+    {
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    }
+  );
+
+}
+
+
+/* =====================================================
+   GOOGLE DRIVE IMAGE
+===================================================== */
+
+function formatGambarAktivitiPRS(
+  url
+) {
+
+  if (!url) {
+    return "";
+  }
+
+  const value =
+    String(url).trim();
+
+  const driveMatch =
+    value.match(
+      /\/file\/d\/([^/]+)/
+    );
+
+  if (driveMatch) {
+
+    return (
+      "https://drive.google.com/thumbnail?id=" +
+      encodeURIComponent(
+        driveMatch[1]
+      ) +
+      "&sz=w1600"
+    );
+
+  }
+
+
+  const idMatch =
+    value.match(
+      /[?&]id=([^&]+)/
+    );
+
+  if (
+    value.includes(
+      "drive.google.com"
+    ) &&
+    idMatch
+  ) {
+
+    return (
+      "https://drive.google.com/thumbnail?id=" +
+      encodeURIComponent(
+        idMatch[1]
+      ) +
+      "&sz=w1600"
+    );
+
+  }
+
+  return value;
+
+}
+
+
+/* =====================================================
+   RESET BORANG
+===================================================== */
+
+function resetBorangAktivitiPRS() {
+
+  editAktivitiPRSId = null;
+
+  if (formAktivitiPRS) {
+    formAktivitiPRS.reset();
+  }
+
+  if (aktivitiPRSAktif) {
+    aktivitiPRSAktif.checked =
+      true;
+  }
+
+  if (kiraanAktivitiPRS) {
+    kiraanAktivitiPRS.textContent =
+      "0";
+  }
+
+  if (btnSimpanAktivitiPRS) {
+
+    btnSimpanAktivitiPRS.innerHTML =
+      `
+        <i
+          data-lucide="save"
+          class="h-4 w-4"
+        ></i>
+        Simpan Aktiviti
+      `;
+
+  }
+
+  lucide.createIcons();
+
+}
+
+
+/* =====================================================
+   BUKA MODAL
+===================================================== */
+
+function bukaModalAktivitiPRS() {
+
+  if (!modalAktivitiPRS) {
+    return;
+  }
+
+  modalAktivitiPRS.classList.remove(
+    "hidden"
+  );
+
+  modalAktivitiPRS.classList.add(
+    "flex"
+  );
+
+  document.body.classList.add(
+    "overflow-hidden"
+  );
+
+}
+
+
+/* =====================================================
+   TUTUP MODAL
+===================================================== */
+
+function tutupModalAktivitiPRS() {
+
+  if (!modalAktivitiPRS) {
+    return;
+  }
+
+  modalAktivitiPRS.classList.add(
+    "hidden"
+  );
+
+  modalAktivitiPRS.classList.remove(
+    "flex"
+  );
+
+  document.body.classList.remove(
+    "overflow-hidden"
+  );
+
+  resetBorangAktivitiPRS();
+
+}
+
+
+/* =====================================================
+   EVENT MODAL
+===================================================== */
+
+if (btnUrusAktivitiPRS) {
+
+  btnUrusAktivitiPRS.addEventListener(
+    "click",
+    () => {
+
+      resetBorangAktivitiPRS();
+
+      bukaModalAktivitiPRS();
+
+    }
+  );
+
+}
+
+
+if (btnTutupAktivitiPRS) {
+
+  btnTutupAktivitiPRS.addEventListener(
+    "click",
+    tutupModalAktivitiPRS
+  );
+
+}
+
+
+if (btnBatalAktivitiPRS) {
+
+  btnBatalAktivitiPRS.addEventListener(
+    "click",
+    tutupModalAktivitiPRS
+  );
+
+}
+
+
+if (modalAktivitiPRS) {
+
+  modalAktivitiPRS.addEventListener(
+    "click",
+    event => {
+
+      if (
+        event.target ===
+        modalAktivitiPRS
+      ) {
+
+        tutupModalAktivitiPRS();
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   KIRA AKSARA
+===================================================== */
+
+if (
+  aktivitiPRSPenerangan &&
+  kiraanAktivitiPRS
+) {
+
+  aktivitiPRSPenerangan.addEventListener(
+    "input",
+    () => {
+
+      kiraanAktivitiPRS.textContent =
+        aktivitiPRSPenerangan
+          .value
+          .length;
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   UPDATE STATUS KAD
+===================================================== */
+
+function updateStatusKadAktivitiPRS(
+  jumlah,
+  jumlahAktif
+) {
+
+  if (!statusAktivitiPRS) {
+    return;
+  }
+
+
+  if (jumlah === 0) {
+
+    statusAktivitiPRS.className =
+      `inline-flex items-center gap-1.5
+       rounded-full bg-amber-50
+       px-3 py-1 text-xs font-bold
+       text-amber-700`;
+
+    statusAktivitiPRS.innerHTML =
+      `
+        <span
+          class="h-2 w-2 rounded-full
+                 bg-amber-500"
+        ></span>
+        Belum dikonfigurasi
+      `;
+
+    return;
+
+  }
+
+
+  if (jumlahAktif > 0) {
+
+    statusAktivitiPRS.className =
+      `inline-flex items-center gap-1.5
+       rounded-full bg-emerald-50
+       px-3 py-1 text-xs font-bold
+       text-emerald-700`;
+
+    statusAktivitiPRS.innerHTML =
+      `
+        <span
+          class="h-2 w-2 rounded-full
+                 bg-emerald-500"
+        ></span>
+        Aktif
+      `;
+
+    return;
+
+  }
+
+
+  statusAktivitiPRS.className =
+    `inline-flex items-center gap-1.5
+     rounded-full bg-slate-100
+     px-3 py-1 text-xs font-bold
+     text-slate-600`;
+
+  statusAktivitiPRS.innerHTML =
+    `
+      <span
+        class="h-2 w-2 rounded-full
+               bg-slate-400"
+      ></span>
+      Tidak Aktif
+    `;
+
+}
+
+
+/* =====================================================
+   SIMPAN / KEMASKINI
+===================================================== */
+
+if (formAktivitiPRS) {
+
+  formAktivitiPRS.addEventListener(
+    "submit",
+    async event => {
+
+      event.preventDefault();
+
+
+      const user =
+        auth.currentUser;
+
+      if (!user) {
+
+        alert(
+          "Sesi admin telah tamat. Sila log masuk semula."
+        );
+
+        return;
+
+      }
+
+
+      const tajuk =
+        aktivitiPRSTajuk
+          .value
+          .trim();
+
+      const tarikh =
+        aktivitiPRSTarikh
+          .value;
+
+      const tempat =
+        aktivitiPRSTempat
+          .value
+          .trim();
+
+      const penerangan =
+        aktivitiPRSPenerangan
+          .value
+          .trim();
+
+      const gambar =
+        aktivitiPRSGambar
+          .value
+          .trim();
+
+
+      if (
+        !tajuk ||
+        !tarikh ||
+        !penerangan
+      ) {
+
+        alert(
+          "Sila lengkapkan maklumat wajib."
+        );
+
+        return;
+
+      }
+
+
+      btnSimpanAktivitiPRS.disabled =
+        true;
+
+      btnSimpanAktivitiPRS.innerHTML =
+        `
+          <i
+            data-lucide="loader-circle"
+            class="h-4 w-4 animate-spin"
+          ></i>
+          ${
+            editAktivitiPRSId
+              ? "Mengemaskini..."
+              : "Menyimpan..."
+          }
+        `;
+
+      lucide.createIcons();
+
+
+      try {
+
+        const dataAktiviti = {
+
+          tajuk:
+            tajuk,
+
+          tarikh:
+            tarikh,
+
+          tempat:
+            tempat,
+
+          penerangan:
+            penerangan,
+
+          imageUrl:
+            gambar,
+
+          status:
+            aktivitiPRSAktif.checked
+              ? "aktif"
+              : "tidak-aktif",
+
+          updatedAt:
+            firebase.firestore
+              .FieldValue
+              .serverTimestamp(),
+
+          updatedBy:
+            user.email || ""
+
+        };
+
+
+        /* ================= EDIT ================= */
+
+        if (editAktivitiPRSId) {
+
+          await db
+            .collection(
+              "aktivitiPRS"
+            )
+            .doc(
+              editAktivitiPRSId
+            )
+            .update(
+              dataAktiviti
+            );
+
+          alert(
+            "Aktiviti PRS berjaya dikemaskini."
+          );
+
+        }
+
+
+        /* ================= TAMBAH ================= */
+
+        else {
+
+          await db
+            .collection(
+              "aktivitiPRS"
+            )
+            .add({
+
+              ...dataAktiviti,
+
+              createdAt:
+                firebase.firestore
+                  .FieldValue
+                  .serverTimestamp(),
+
+              createdBy:
+                user.email || ""
+
+            });
+
+          alert(
+            "Aktiviti PRS berjaya disimpan."
+          );
+
+        }
+
+
+        tutupModalAktivitiPRS();
+
+
+      } catch (error) {
+
+        console.error(
+          "Ralat simpan Aktiviti PRS:",
+          error
+        );
+
+        alert(
+          editAktivitiPRSId
+            ? "Aktiviti tidak dapat dikemaskini."
+            : "Aktiviti tidak dapat disimpan."
+        );
+
+      } finally {
+
+        btnSimpanAktivitiPRS.disabled =
+          false;
+
+        if (editAktivitiPRSId) {
+
+          btnSimpanAktivitiPRS.innerHTML =
+            `
+              <i
+                data-lucide="save"
+                class="h-4 w-4"
+              ></i>
+              Kemaskini Aktiviti
+            `;
+
+        } else {
+
+          btnSimpanAktivitiPRS.innerHTML =
+            `
+              <i
+                data-lucide="save"
+                class="h-4 w-4"
+              ></i>
+              Simpan Aktiviti
+            `;
+
+        }
+
+        lucide.createIcons();
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   EDIT AKTIVITI
+===================================================== */
+
+async function editAktivitiPRS(
+  documentId
+) {
+
+  try {
+
+    const doc =
+      await db
+        .collection(
+          "aktivitiPRS"
+        )
+        .doc(
+          documentId
+        )
+        .get();
+
+
+    if (!doc.exists) {
+
+      alert(
+        "Rekod aktiviti tidak ditemui."
+      );
+
+      return;
+
+    }
+
+
+    const data =
+      doc.data();
+
+
+    editAktivitiPRSId =
+      doc.id;
+
+
+    aktivitiPRSTajuk.value =
+      data.tajuk || "";
+
+    aktivitiPRSTarikh.value =
+      data.tarikh || "";
+
+    aktivitiPRSTempat.value =
+      data.tempat || "";
+
+    aktivitiPRSPenerangan.value =
+      data.penerangan || "";
+
+    aktivitiPRSGambar.value =
+      data.imageUrl || "";
+
+    aktivitiPRSAktif.checked =
+      data.status === "aktif";
+
+
+    kiraanAktivitiPRS.textContent =
+      aktivitiPRSPenerangan
+        .value
+        .length;
+
+
+    btnSimpanAktivitiPRS.innerHTML =
+      `
+        <i
+          data-lucide="save"
+          class="h-4 w-4"
+        ></i>
+        Kemaskini Aktiviti
+      `;
+
+
+    lucide.createIcons();
+
+
+    /* SCROLL KE BORANG */
+
+    if (formAktivitiPRS) {
+
+      formAktivitiPRS.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+    }
+
+
+    setTimeout(
+      () => {
+        aktivitiPRSTajuk.focus();
+      },
+      350
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "Ralat edit Aktiviti PRS:",
+      error
+    );
+
+    alert(
+      "Maklumat aktiviti tidak dapat dibuka."
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   PADAM AKTIVITI
+===================================================== */
+
+async function padamAktivitiPRS(
+  documentId,
+  tajuk
+) {
+
+  const sah =
+    confirm(
+      `Padam aktiviti "${tajuk}"?\n\n` +
+      "Rekod yang dipadam tidak boleh dikembalikan."
+    );
+
+
+  if (!sah) {
+    return;
+  }
+
+
+  try {
+
+    await db
+      .collection(
+        "aktivitiPRS"
+      )
+      .doc(
+        documentId
+      )
+      .delete();
+
+
+    if (
+      editAktivitiPRSId ===
+      documentId
+    ) {
+
+      resetBorangAktivitiPRS();
+
+    }
+
+
+    alert(
+      "Aktiviti PRS berjaya dipadam."
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "Ralat padam Aktiviti PRS:",
+      error
+    );
+
+    alert(
+      "Aktiviti tidak dapat dipadam."
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   PAPAR SENARAI REAL-TIME
+===================================================== */
+
+function muatAktivitiPRS() {
+
+  if (
+    !aktivitiPRSList ||
+    !aktivitiPRSEmpty ||
+    !jumlahAktivitiPRS
+  ) {
+    return;
+  }
+
+
+  /* ELAK LISTENER BERGANDA */
+
+  if (unsubscribeAktivitiPRS) {
+    return;
+  }
+
+
+  if (aktivitiPRSLoading) {
+
+    aktivitiPRSLoading.classList.remove(
+      "hidden"
+    );
+
+  }
+
+
+  unsubscribeAktivitiPRS =
+    db
+      .collection(
+        "aktivitiPRS"
+      )
+      .orderBy(
+        "tarikh",
+        "desc"
+      )
+      .onSnapshot(
+
+        snapshot => {
+
+          if (aktivitiPRSLoading) {
+
+            aktivitiPRSLoading.classList.add(
+              "hidden"
+            );
+
+          }
+
+
+          aktivitiPRSList.innerHTML =
+            "";
+
+          jumlahAktivitiPRS.textContent =
+            snapshot.size;
+
+
+          let jumlahAktif = 0;
+
+
+          snapshot.forEach(
+            doc => {
+
+              const data =
+                doc.data();
+
+              if (
+                data.status ===
+                "aktif"
+              ) {
+
+                jumlahAktif++;
+
+              }
+
+            }
+          );
+
+
+          updateStatusKadAktivitiPRS(
+            snapshot.size,
+            jumlahAktif
+          );
+
+
+          /* ================= EMPTY ================= */
+
+          if (snapshot.empty) {
+
+            aktivitiPRSEmpty.classList.remove(
+              "hidden"
+            );
+
+            return;
+
+          }
+
+
+          aktivitiPRSEmpty.classList.add(
+            "hidden"
+          );
+
+
+          /* ================= LIST ================= */
+
+          snapshot.forEach(
+            doc => {
+
+              const data =
+                doc.data();
+
+              const statusAktif =
+                data.status ===
+                "aktif";
+
+              const tajukSelamat =
+                escapeHTMLAktivitiPRS(
+                  data.tajuk || ""
+                );
+
+              const tempatSelamat =
+                escapeHTMLAktivitiPRS(
+                  data.tempat || ""
+                );
+
+              const peneranganSelamat =
+                escapeHTMLAktivitiPRS(
+                  data.penerangan || ""
+                );
+
+              const gambar =
+                formatGambarAktivitiPRS(
+                  data.imageUrl || ""
+                );
+
+
+              const item =
+                document.createElement(
+                  "div"
+                );
+
+
+              item.className =
+                `rounded-2xl border
+                 border-slate-200
+                 bg-white p-4
+                 transition
+                 hover:border-emerald-200
+                 hover:shadow-sm`;
+
+
+              item.innerHTML =
+                `
+
+                <div
+                  class="flex flex-col
+                         gap-4
+                         sm:flex-row
+                         sm:items-start
+                         sm:justify-between"
+                >
+
+                  <!-- CONTENT -->
+
+                  <div
+                    class="min-w-0 flex-1"
+                  >
+
+                    <div
+                      class="flex flex-wrap
+                             items-center
+                             gap-2"
+                    >
+
+                      <h4
+                        class="font-extrabold
+                               text-slate-800"
+                      >
+                        ${tajukSelamat}
+                      </h4>
+
+
+                      <span
+                        class="
+                          rounded-full
+                          px-2.5 py-1
+                          text-[11px]
+                          font-bold
+
+                          ${
+                            statusAktif
+                              ? "bg-emerald-50 text-emerald-700"
+                              : "bg-slate-100 text-slate-500"
+                          }
+                        "
+                      >
+                        ${
+                          statusAktif
+                            ? "Aktif"
+                            : "Tidak Aktif"
+                        }
+                      </span>
+
+                    </div>
+
+
+                    <div
+                      class="mt-2 flex
+                             flex-wrap
+                             gap-x-4 gap-y-1
+                             text-xs
+                             text-slate-500"
+                    >
+
+                      <span
+                        class="inline-flex
+                               items-center
+                               gap-1.5"
+                      >
+
+                        <i
+                          data-lucide="calendar-days"
+                          class="h-3.5 w-3.5"
+                        ></i>
+
+                        ${
+                          formatTarikhAktivitiPRS(
+                            data.tarikh
+                          )
+                        }
+
+                      </span>
+
+
+                      ${
+                        data.tempat
+                          ? `
+
+                            <span
+                              class="inline-flex
+                                     items-center
+                                     gap-1.5"
+                            >
+
+                              <i
+                                data-lucide="map-pin"
+                                class="h-3.5 w-3.5"
+                              ></i>
+
+                              ${tempatSelamat}
+
+                            </span>
+
+                          `
+                          : ""
+                      }
+
+                    </div>
+
+
+                    <p
+                      class="mt-3 text-sm
+                             leading-6
+                             text-slate-500"
+                    >
+                      ${peneranganSelamat}
+                    </p>
+
+
+                    ${
+                      gambar
+                        ? `
+
+                          <div
+                            class="mt-4
+                                   overflow-hidden
+                                   rounded-xl
+                                   border
+                                   border-slate-100
+                                   bg-slate-50"
+                          >
+
+                            <img
+                              src="${escapeHTMLAktivitiPRS(
+                                gambar
+                              )}"
+                              alt="${tajukSelamat}"
+                              class="h-36 w-full
+                                     object-cover"
+                              loading="lazy"
+                              onerror="
+                                this.parentElement.style.display='none';
+                              "
+                            >
+
+                          </div>
+
+                        `
+                        : ""
+                    }
+
+                  </div>
+
+
+                  <!-- ACTION -->
+
+                  <div
+                    class="flex shrink-0
+                           items-center gap-2"
+                  >
+
+                    <button
+                      type="button"
+                      data-edit-aktiviti-prs="${doc.id}"
+                      class="inline-flex
+                             h-9 w-9
+                             items-center
+                             justify-center
+                             rounded-lg
+                             border
+                             border-emerald-200
+                             text-emerald-700
+                             transition
+                             hover:bg-emerald-50"
+                      title="Edit Aktiviti"
+                    >
+
+                      <i
+                        data-lucide="pencil"
+                        class="h-4 w-4"
+                      ></i>
+
+                    </button>
+
+
+                    <button
+                      type="button"
+                      data-delete-aktiviti-prs="${doc.id}"
+                      data-tajuk-aktiviti-prs="${encodeURIComponent(
+                        data.tajuk || ""
+                      )}"
+                      class="inline-flex
+                             h-9 w-9
+                             items-center
+                             justify-center
+                             rounded-lg
+                             border
+                             border-red-200
+                             text-red-600
+                             transition
+                             hover:bg-red-50"
+                      title="Padam Aktiviti"
+                    >
+
+                      <i
+                        data-lucide="trash-2"
+                        class="h-4 w-4"
+                      ></i>
+
+                    </button>
+
+                  </div>
+
+                </div>
+
+              `;
+
+
+              aktivitiPRSList.appendChild(
+                item
+              );
+
+            }
+          );
+
+
+          lucide.createIcons();
+
+        },
+
+
+        error => {
+
+          console.error(
+            "Ralat membaca Aktiviti PRS:",
+            error
+          );
+
+
+          unsubscribeAktivitiPRS =
+            null;
+
+
+          if (aktivitiPRSLoading) {
+
+            aktivitiPRSLoading.classList.add(
+              "hidden"
+            );
+
+          }
+
+        }
+
+      );
+
+}
+
+
+/* =====================================================
+   EVENT DELEGATION — EDIT / DELETE
+===================================================== */
+
+if (aktivitiPRSList) {
+
+  aktivitiPRSList.addEventListener(
+    "click",
+    event => {
+
+      const btnEdit =
+        event.target.closest(
+          "[data-edit-aktiviti-prs]"
+        );
+
+
+      if (btnEdit) {
+
+        const documentId =
+          btnEdit.getAttribute(
+            "data-edit-aktiviti-prs"
+          );
+
+        editAktivitiPRS(
+          documentId
+        );
+
+        return;
+
+      }
+
+
+      const btnDelete =
+        event.target.closest(
+          "[data-delete-aktiviti-prs]"
+        );
+
+
+      if (btnDelete) {
+
+        const documentId =
+          btnDelete.getAttribute(
+            "data-delete-aktiviti-prs"
+          );
+
+        const tajuk =
+          decodeURIComponent(
+            btnDelete.getAttribute(
+              "data-tajuk-aktiviti-prs"
+            ) || ""
+          );
+
+
+        padamAktivitiPRS(
+          documentId,
+          tajuk
+        );
+
+      }
+
+    }
+  );
+
+}
+
 
   </script>
 

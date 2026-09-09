@@ -18,6 +18,10 @@
 
 <script src="https://unpkg.com/lucide@latest"></script>
 
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
 
 <!-- =================================================
      PORTAL MAIN STYLE
@@ -712,6 +716,7 @@
 ================================================== -->
 
 <div
+  id="takwimContent"
   class="overflow-hidden rounded-2xl
          border border-[#dcece3]
          bg-white shadow-sm"
@@ -761,6 +766,7 @@
 
 
     <a
+      id="btnBukaTakwim"
       href="assets/takwim-ubk-2026.pdf"
       target="_blank"
       rel="noopener noreferrer"
@@ -784,12 +790,55 @@
   <!-- PDF -->
 
   <iframe
-    src="assets/takwim-ubk-2026.pdf"
-    title="Takwim UBK SK Kuala Ketil 2026"
-    class="h-[650px] w-full
-           sm:h-[750px]
-           lg:h-[850px]"
-  ></iframe>
+  id="takwimViewer"
+  src="assets/takwim-ubk-2026.pdf"
+  title="Takwim UBK SK Kuala Ketil 2026"
+  class="h-[650px] w-full
+         sm:h-[750px]
+         lg:h-[850px]"
+></iframe>
+
+</div>
+
+
+<!-- =================================================
+     TAKWIM TIDAK AKTIF
+================================================== -->
+
+<div
+  id="takwimTidakAktif"
+  class="hidden rounded-2xl
+         border border-[#dcece3]
+         bg-white px-6 py-16
+         text-center shadow-sm"
+>
+
+  <div
+    class="mx-auto grid h-16 w-16
+           place-items-center rounded-2xl
+           bg-[#eff8f3] text-[#075e4c]"
+  >
+    <i
+      data-lucide="calendar-clock"
+      class="h-8 w-8"
+    ></i>
+  </div>
+
+  <h2
+    class="mt-5 text-xl font-extrabold
+           text-[#173f35]"
+  >
+    Takwim Sedang Dikemaskini
+  </h2>
+
+  <p
+    class="mx-auto mt-3 max-w-lg
+           text-sm leading-6 text-[#617a73]"
+  >
+    Dokumen Takwim &amp; Perancangan Tahunan
+    UBK sedang dikemaskini.
+    Sila semak semula kemudian.
+  </p>
 
 </div>
 
@@ -1004,6 +1053,7 @@
 ================================================== -->
 
 <div
+  id="downloadTakwimSection"
   class="mt-10 rounded-2xl
          border border-[#cfe7da]
          bg-[#eff8f3] p-6
@@ -1045,6 +1095,7 @@
 
 
   <a
+    id="btnDownloadTakwim"
     href="assets/takwim-ubk-2026.pdf"
     download
     class="mt-5 inline-flex w-full
@@ -1562,6 +1613,291 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
 });
+</script>
+
+<script>
+
+/* =====================================================
+   FIREBASE — TAKWIM UBK
+===================================================== */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA9R5jKqeJNvBHD-SIOuseAqyb_x909R3Q",
+  authDomain: "bimbingankaunselingskkk.firebaseapp.com",
+  projectId: "bimbingankaunselingskkk"
+};
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+
+const db =
+  firebase.firestore();
+
+
+/* =====================================================
+   ELEMENT TAKWIM
+===================================================== */
+
+const takwimViewer =
+  document.getElementById(
+    "takwimViewer"
+  );
+
+const btnBukaTakwim =
+  document.getElementById(
+    "btnBukaTakwim"
+  );
+
+const btnDownloadTakwim =
+  document.getElementById(
+    "btnDownloadTakwim"
+  );
+
+const takwimContent =
+  document.getElementById(
+    "takwimContent"
+  );
+
+const takwimTidakAktif =
+  document.getElementById(
+    "takwimTidakAktif"
+  );
+
+const downloadTakwimSection =
+  document.getElementById(
+    "downloadTakwimSection"
+  );
+
+
+/* =====================================================
+   FALLBACK
+===================================================== */
+
+const fallbackTakwim =
+  "assets/takwim-ubk-2026.pdf";
+
+
+/* =====================================================
+   GOOGLE DRIVE URL
+===================================================== */
+
+function prosesUrlTakwim(url) {
+
+  const driveMatch =
+    url.match(
+      /\/file\/d\/([^/]+)/
+    );
+
+  if (driveMatch) {
+
+    const fileId =
+      driveMatch[1];
+
+    return {
+      viewer:
+        `https://drive.google.com/file/d/${fileId}/preview`,
+
+      open:
+        `https://drive.google.com/file/d/${fileId}/view`
+    };
+
+  }
+
+  return {
+    viewer: url,
+    open: url
+  };
+
+}
+
+
+/* =====================================================
+   PAPAR TAKWIM
+===================================================== */
+
+function paparTakwim(url) {
+
+    if (takwimContent) {
+    takwimContent.classList.remove(
+      "hidden"
+    );
+  }
+
+  if (takwimTidakAktif) {
+    takwimTidakAktif.classList.add(
+      "hidden"
+    );
+  }
+
+  if (downloadTakwimSection) {
+    downloadTakwimSection.style.removeProperty(
+      "display"
+    );
+  }
+
+  const processed =
+    prosesUrlTakwim(url);
+
+  if (takwimViewer) {
+    takwimViewer.src =
+      processed.viewer;
+  }
+
+  if (btnBukaTakwim) {
+    btnBukaTakwim.href =
+      processed.open;
+  }
+
+  if (btnDownloadTakwim) {
+
+    btnDownloadTakwim.href =
+      processed.open;
+
+    /*
+      Fail luar seperti Google Drive
+      tidak sesuai menggunakan
+      atribut HTML "download".
+    */
+
+    btnDownloadTakwim.removeAttribute(
+      "download"
+    );
+
+    btnDownloadTakwim.setAttribute(
+      "target",
+      "_blank"
+    );
+
+    btnDownloadTakwim.setAttribute(
+      "rel",
+      "noopener noreferrer"
+    );
+
+  }
+
+}
+
+/* =====================================================
+   PAPAR STATUS TIDAK AKTIF
+===================================================== */
+
+function paparTakwimTidakAktif() {
+
+  if (takwimContent) {
+    takwimContent.classList.add(
+      "hidden"
+    );
+  }
+
+  if (takwimTidakAktif) {
+    takwimTidakAktif.classList.remove(
+      "hidden"
+    );
+  }
+
+  if (downloadTakwimSection) {
+    downloadTakwimSection.style.display =
+      "none";
+  }
+
+  if (typeof lucide !== "undefined") {
+    lucide.createIcons();
+  }
+
+}
+
+
+/* =====================================================
+   LOAD TAKWIM DARI FIRESTORE
+===================================================== */
+
+async function loadTakwimUBK() {
+
+  try {
+
+    const doc =
+      await db
+        .collection("halamanPortal")
+        .doc("takwimUBK")
+        .get();
+
+
+    /* ================= TIADA DATA ================= */
+
+    if (!doc.exists) {
+
+      paparTakwim(
+        fallbackTakwim
+      );
+
+      return;
+
+    }
+
+
+    const data =
+      doc.data();
+
+
+    /* ================= AKTIF ================= */
+
+if (
+  data.status === "aktif" &&
+  data.pdfUrl
+) {
+
+  paparTakwim(
+    data.pdfUrl
+  );
+
+  return;
+
+}
+
+
+/* ================= TIDAK AKTIF ================= */
+
+if (
+  data.status === "tidak-aktif"
+) {
+
+  paparTakwimTidakAktif();
+
+  return;
+
+}
+
+
+/* ================= FALLBACK ================= */
+
+paparTakwim(
+  fallbackTakwim
+);
+
+
+  } catch (error) {
+
+    console.error(
+      "Load Takwim UBK error:",
+      error
+    );
+
+    paparTakwim(
+      fallbackTakwim
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+loadTakwimUBK();
+
 </script>
 
 </body>
